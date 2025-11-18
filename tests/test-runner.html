@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordBridge Tests</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        
+        h1 { color: #4a90d9; }
+        
+        .summary {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .summary.pass {
+            background: #1e4620;
+            border: 1px solid #50c878;
+        }
+        
+        .summary.fail {
+            background: #4a1e1e;
+            border: 1px solid #ff6b6b;
+        }
+        
+        .summary h2 {
+            margin: 0 0 0.5rem;
+        }
+        
+        #console {
+            background: #0a0a12;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .btn {
+            background: #4a90d9;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: #3a7bc8;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 WordBridge Test Suite</h1>
+    
+    <div>
+        <button class="btn" onclick="runTests()">Run All Tests</button>
+        <button class="btn" onclick="clearConsole()">Clear</button>
+    </div>
+    
+    <div id="summary" class="summary" style="display: none;">
+        <h2 id="summary-title">Results</h2>
+        <p id="summary-text"></p>
+    </div>
+    
+    <h3>Console Output</h3>
+    <div id="console"></div>
+    
+    <!-- Load source files -->
+    <script src="../js/storage.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/review.js"></script>
+    <script src="../data/naming.js"></script>
+    <script src="../data/categories.js"></script>
+    <script src="../data/sentences.js"></script>
+    <script src="../js/exercises.js"></script>
+    
+    <!-- Load test framework -->
+    <script src="test-framework.js"></script>
+    
+    <!-- Load tests -->
+    <script src="storage.test.js"></script>
+    <script src="progress.test.js"></script>
+    <script src="review.test.js"></script>
+    <script src="exercises.test.js"></script>
+    
+    <script>
+        // Override console.log to display in page
+        const consoleEl = document.getElementById('console');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            consoleEl.innerHTML += args.map(a => 
+                typeof a === 'object' ? JSON.stringify(a) : a
+            ).join(' ') + '\n';
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            consoleEl.innerHTML += '<span style="color: #ff6b6b;">' + 
+                args.join(' ') + '</span>\n';
+        };
+        
+        function runTests() {
+            consoleEl.innerHTML = '';
+            TestFramework.reset();
+            
+            console.log('Running tests...\n');
+            
+            // Re-run all test files
+            // Note: In a real setup, we'd reload the test scripts
+            // For now, tests run on load
+            
+            TestFramework.printSummary();
+            
+            // Update summary UI
+            const { passed, failed, total } = TestFramework.getSummary();
+            const summaryEl = document.getElementById('summary');
+            const titleEl = document.getElementById('summary-title');
+            const textEl = document.getElementById('summary-text');
+            
+            summaryEl.style.display = 'block';
+            summaryEl.className = 'summary ' + (failed === 0 ? 'pass' : 'fail');
+            titleEl.textContent = failed === 0 ? '✅ All Tests Passed!' : '❌ Tests Failed';
+            textEl.textContent = `${passed} passed, ${failed} failed, ${total} total`;
+        }
+        
+        function clearConsole() {
+            consoleEl.innerHTML = '';
+            document.getElementById('summary').style.display = 'none';
+        }
+        
+        // Run tests on load
+        window.onload = runTests;
+    </script>
+</body>
+</html>
