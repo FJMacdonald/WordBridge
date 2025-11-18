@@ -20,10 +20,23 @@ describe('Review Module', () => {
     });
     
     it('should track times missed', () => {
+        // Start fresh
+        Review.clear();
+        
+        // First miss
         Review.addWord('apple', 'naming', 1);
+        let words = Review.getReviewWords();
+        expect(words[0].timesMissed).toBe(1);
+        
+        // Second miss
         Review.addWord('apple', 'naming', 1);
-        const words = Review.getReviewWords();
+        words = Review.getReviewWords();
         expect(words[0].timesMissed).toBe(2);
+        
+        // Third miss
+        Review.addWord('apple', 'naming', 1);
+        words = Review.getReviewWords();
+        expect(words[0].timesMissed).toBe(3);
     });
     
     it('should not duplicate words', () => {

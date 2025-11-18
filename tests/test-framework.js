@@ -4,12 +4,16 @@
 const TestFramework = {
     results: [],
     currentSuite: '',
+    _beforeEach: null,
+    _afterEach: null,
+    _suiteBeforeEach: null,
     
     /**
      * Define a test suite
      */
     describe(name, fn) {
         this.currentSuite = name;
+        this._suiteBeforeEach = null; // Reset for new suite
         console.log(`\n📦 ${name}`);
         fn();
     },
@@ -20,7 +24,18 @@ const TestFramework = {
     it(description, fn) {
         const testName = `${this.currentSuite} > ${description}`;
         try {
+            // Run beforeEach if defined
+            if (this._suiteBeforeEach) {
+                this._suiteBeforeEach();
+            }
+            
             fn();
+            
+            // Run afterEach if defined
+            if (this._afterEach) {
+                this._afterEach();
+            }
+            
             this.results.push({ name: testName, passed: true });
             console.log(`  ✅ ${description}`);
         } catch (error) {
@@ -124,7 +139,7 @@ const TestFramework = {
      * Run before each test (setup)
      */
     beforeEach(fn) {
-        this._beforeEach = fn;
+        this._suiteBeforeEach = fn;
     },
     
     /**
@@ -170,6 +185,8 @@ const TestFramework = {
     reset() {
         this.results = [];
         this.currentSuite = '';
+        this._suiteBeforeEach = null;
+        this._afterEach = null;
     }
 };
 
@@ -177,5 +194,5 @@ const TestFramework = {
 const describe = TestFramework.describe.bind(TestFramework);
 const it = TestFramework.it.bind(TestFramework);
 const expect = TestFramework.expect.bind(TestFramework);
-const beforeEach = TestFramework.beforeEach.bind(TestFramework);
-const afterEach = TestFramework.afterEach.bind(TestFramework);
+const beforeEach = (fn) => { TestFramework._suiteBeforeEach = fn; };
+const afterEach = (fn) => { TestFramework._afterEach = fn; };

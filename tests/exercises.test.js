@@ -5,7 +5,17 @@ describe('Exercise Engine', () => {
     beforeEach(() => {
         localStorage.clear();
         Review.clear();
-        Progress.init();
+        Progress.state = {
+            xp: 0,
+            level: 1,
+            streak: 0,
+            lastPracticeDate: null,
+            unlockedLevels: { naming: 1, categories: 1, sentences: 1 },
+            bestScores: {},
+            achievements: [],
+            totalSessions: 0,
+            totalActiveTime: 0
+        };
     });
     
     it('should initialize with correct question count', () => {
@@ -21,8 +31,18 @@ describe('Exercise Engine', () => {
     
     it('should return false for invalid exercise type', () => {
         const success = ExerciseEngine.init({
-            type: 'invalid',
+            type: 'invalid_type',
             difficulty: 1,
+            questionCount: 5
+        });
+        
+        expect(success).toBeFalsy();
+    });
+    
+    it('should return false for invalid difficulty level', () => {
+        const success = ExerciseEngine.init({
+            type: 'naming',
+            difficulty: 999, // Non-existent level
             questionCount: 5
         });
         
@@ -76,5 +96,18 @@ describe('Exercise Engine', () => {
         
         const correct = ExerciseEngine.results.filter(r => r.correct).length;
         expect(correct).toBe(1);
+    });
+    
+    it('should not request more questions than available', () => {
+        // If data has fewer questions than requested, should still work
+        const success = ExerciseEngine.init({
+            type: 'naming',
+            difficulty: 1,
+            questionCount: 1000 // Way more than available
+        });
+        
+        expect(success).toBeTruthy();
+        // Should get all available questions
+        expect(ExerciseEngine.questions.length).toBeGreaterThan(0);
     });
 });
