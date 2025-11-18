@@ -115,30 +115,38 @@
             consoleEl.innerHTML += '<span style="color: #ff6b6b;">' + 
                 args.join(' ') + '</span>\n';
         };
+        function reloadTests(callback) {
+            const testScripts = [
+                "storage.test.js",
+                "progress.test.js",
+                "review.test.js",
+                "exercises.test.js"
+            ];
+
+            let loaded = 0;
+
+            testScripts.forEach(src => {
+                const script = document.createElement("script");
+                script.src = src + "?r=" + Math.random(); // Force reload
+                script.onload = () => {
+                    if (++loaded === testScripts.length) callback();
+                };
+                document.body.appendChild(script);
+            });
+        }
+
         
         function runTests() {
             consoleEl.innerHTML = '';
             TestFramework.reset();
-            
             console.log('Running tests...\n');
-            
-            // Re-run all test files
-            // Note: In a real setup, we'd reload the test scripts
-            // For now, tests run on load
-            
-            TestFramework.printSummary();
-            
-            // Update summary UI
-            const { passed, failed, total } = TestFramework.getSummary();
-            const summaryEl = document.getElementById('summary');
-            const titleEl = document.getElementById('summary-title');
-            const textEl = document.getElementById('summary-text');
-            
-            summaryEl.style.display = 'block';
-            summaryEl.className = 'summary ' + (failed === 0 ? 'pass' : 'fail');
-            titleEl.textContent = failed === 0 ? '✅ All Tests Passed!' : '❌ Tests Failed';
-            textEl.textContent = `${passed} passed, ${failed} failed, ${total} total`;
+
+            reloadTests(() => {
+                TestFramework.printSummary();
+                updateSummaryUI();
+            });
         }
+        
         
         function clearConsole() {
             consoleEl.innerHTML = '';
