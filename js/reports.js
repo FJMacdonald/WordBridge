@@ -155,30 +155,5 @@ const Reports = {
         const mins = Math.floor(seconds / 60);
         const secs = Math.round(seconds % 60);
         return `${mins}:${secs.toString().padStart(2, '0')}`;
-    },
-    
-    generateEmailReport() {
-        const summary = this.getWeeklySummary();
-        const progress = Progress.state;
-        
-        const report = `
-WordBridge Weekly Progress Report
-=================================
-
-Week Summary:
-- Sessions Completed: ${summary.totalSessions}
-- Total Practice Time: ${summary.formattedTime}
-- Days Active: ${summary.daysActive}/7
-- Average Score: ${summary.avgScore}%
-
-Current Progress:
-- Level: ${progress.level}
-- Total XP: ${progress.xp}
-- Current Streak: ${progress.streak} days
-
-Keep up the great work!
-        `.trim();
-        
-        return report;
     }
 };

@@ -16,13 +16,19 @@ const ExerciseEngine = {
         this.totalActiveTime = 0;
         this.sessionXP = 0;
         
+        // Check if exercise type exists
+        if (!ExerciseData[config.type]) {
+            console.error('Invalid exercise type:', config.type);
+            return false;
+        }
+        
         // Get base questions for this exercise type and difficulty
         let data = ExerciseData[config.type][config.difficulty];
         if (!data || data.length === 0) {
             console.error('No data for', config.type, config.difficulty);
             return false;
         }
-        
+                
         // Get review questions (words the user previously struggled with)
         const reviewQuestions = Review.createReviewQuestions(
             config.type, 
@@ -50,8 +56,7 @@ const ExerciseEngine = {
         this.questions = this.shuffle(combinedQuestions);
         
         return true;
-    },
-    
+    },    
     start() {
         this.showQuestion();
     },

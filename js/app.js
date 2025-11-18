@@ -236,7 +236,7 @@ const app = {
     
     shareReport() {
         const settings = Settings.get();
-        const report = Reports.generateEmailReport();
+        const report = Reports.generateReport();
         
         if (settings.shareEmail) {
             // In a real app, this would send via API

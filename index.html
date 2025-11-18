@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordBridge - Aphasia Recovery Practice</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">🌉 WordBridge</h1>
+                <div class="user-stats">
+                    <div class="streak-badge" title="Day streak">
+                        <span>🔥</span>
+                        <span id="streak-count">0</span>
+                    </div>
+                    <div class="level-badge">
+                        Level <span id="user-level">1</span>
+                    </div>
+                    <button class="icon-btn" onclick="app.showView('settings')" aria-label="Settings">
+                        ⚙️
+                    </button>
+                </div>
+            </div>
+            <div class="xp-bar-container">
+                <div class="xp-bar">
+                    <div class="xp-fill" id="xp-fill"></div>
+                </div>
+                <div class="xp-text">
+                    <span id="current-xp">0</span> / <span id="next-level-xp">100</span> XP
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <section id="view-dashboard" class="view active">
+                <div class="dashboard-welcome">
+                    <h2>Welcome back!</h2>
+                    <p class="subtitle" id="practice-summary">Start practicing to see your progress</p>
+                </div>
+                
+                <div class="section-header">
+                    <h3>Exercises</h3>
+                </div>
+                <div class="exercise-grid" id="exercise-grid"></div>
+                
+                <div class="section-header">
+                    <h3>This Week</h3>
+                    <button class="text-btn" onclick="app.showView('reports')">View Reports →</button>
+                </div>
+                <div class="week-summary" id="week-summary"></div>
+            </section>
+
+            <!-- Exercise Setup View -->
+            <section id="view-setup" class="view">
+                <div class="setup-container">
+                    <button class="back-btn" onclick="app.showView('dashboard')">← Back</button>
+                    <h2 id="setup-title">Picture Naming</h2>
+                    <p id="setup-description" class="subtitle">Identify objects and images</p>
+                    
+                    <div class="setup-options">
+                        <div class="option-group">
+                            <label>Difficulty Level</label>
+                            <div class="difficulty-selector" id="difficulty-selector"></div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label>Number of Questions</label>
+                            <div class="question-count-selector">
+                                <button class="count-btn" data-count="5">5</button>
+                                <button class="count-btn active" data-count="10">10</button>
+                                <button class="count-btn" data-count="15">15</button>
+                                <button class="count-btn" data-count="20">20</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary btn-large" onclick="app.beginExercise()">
+                        Start Practice
+                    </button>
+                </div>
+            </section>
+
+            <!-- Exercise View -->
+            <section id="view-exercise" class="view">
+                <div class="exercise-container">
+                    <div class="exercise-header">
+                        <span class="exercise-type" id="exercise-type">Naming</span>
+                        <span class="exercise-progress" id="exercise-progress">1 / 10</span>
+                    </div>
+                    
+                    <div class="prompt-area" id="prompt-area"></div>
+                    <div class="answer-area" id="answer-area"></div>
+                    
+                    <div class="hint-area" id="hint-area"></div>
+                </div>
+            </section>
+
+            <!-- Session Report View -->
+            <section id="view-report" class="view">
+                <div class="report-container">
+                    <div class="report-header">
+                        <h2>Session Complete!</h2>
+                        <div class="report-score" id="report-score">85%</div>
+                        <p class="report-message" id="report-message">Great work!</p>
+                    </div>
+                    
+                    <div class="report-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-correct">8/10</div>
+                            <div class="stat-label">Correct</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-time">2:30</div>
+                            <div class="stat-label">Active Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-xp">+80</div>
+                            <div class="stat-label">XP Earned</div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-details" id="report-details">
+                        <!-- Words to review, performance breakdown -->
+                    </div>
+                    
+                    <div class="report-actions">
+                        <button class="btn-secondary" onclick="app.showView('dashboard')">
+                            Back to Menu
+                        </button>
+                        <button class="btn-primary" onclick="app.repeatExercise()">
+                            Practice Again
+                        </button>
+                    </div>
+                
+                </div>
+            </section>
+
+            <!-- Weekly Reports View -->
+            <section id="view-reports" class="view">
+                <div class="reports-container">
+                    <button class="back-btn" onclick="app.showView('dashboard')">← Back</button>
+                    <h2>Progress Reports</h2>
+                    
+                    <div class="report-tabs">
+                        <button class="tab-btn active" data-tab="week">This Week</button>
+                        <button class="tab-btn" data-tab="history">History</button>
+                    </div>
+                    
+                    <div class="weekly-report" id="weekly-report"></div>
+                </div>
+            </section>
+
+            <!-- Settings View -->
+            <section id="view-settings" class="view">
+                <div class="settings-container">
+                    <button class="back-btn" onclick="app.showView('dashboard')">← Back</button>
+                    <h2>Settings</h2>
+                    
+                    <div class="settings-group">
+                        <h3>Preferences</h3>
+                        
+                        <div class="form-group">
+                            <label for="daily-goal">Daily Practice Goal (minutes)</label>
+                            <select id="daily-goal">
+                                <option value="5">5 minutes</option>
+                                <option value="10" selected>10 minutes</option>
+                                <option value="15">15 minutes</option>
+                                <option value="20">20 minutes</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="sound-effects" checked>
+                                <span>Sound effects</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group danger-zone">
+                        <h3>Data</h3>
+                        <button class="btn-danger" onclick="Settings.exportData()">
+                            Export All Data
+                        </button>
+                        <button class="btn-danger-outline" onclick="Settings.clearData()">
+                            Reset All Progress
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section id="view-custom" class="view">
+                <div class="custom-exercises-container">
+                    <button class="back-btn" onclick="app.showView('settings')">← Back to Settings</button>
+                    <h2>Custom Exercises</h2>
+                    <p class="subtitle">Create personalized exercises with family photos and familiar content</p>
+                    
+                    <!-- Create New Exercise -->
+                    <div class="card" style="margin: 1.5rem 0;">
+                        <h3>Create New Exercise</h3>
+                        
+                        <div class="form-group">
+                            <label for="custom-type">Exercise Type</label>
+                            <select id="custom-type" onchange="app.updateCustomForm()">
+                                <option value="naming">Picture Naming</option>
+                                <option value="categories">Word Categories</option>
+                                <option value="sentences">Sentence Completion</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Naming specific -->
+                        <div id="naming-fields">
+                            <div class="form-group">
+                                <label for="custom-image">Image</label>
+                                <input type="file" id="custom-image" accept="image/*" onchange="app.previewCustomImage(this)">
+                                <div id="image-preview" style="margin-top: 0.5rem;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Categories specific -->
+                        <div id="categories-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="custom-prompt">Question</label>
+                                <input type="text" id="custom-prompt" placeholder="Which is a FOOD?">
+                            </div>
+                        </div>
+                        
+                        <!-- Sentences specific -->
+                        <div id="sentences-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="custom-sentence">Sentence (use ___ for blank)</label>
+                                <input type="text" id="custom-sentence" placeholder="The sun is ___">
+                            </div>
+                        </div>
+                        
+                        <!-- Common fields -->
+                        <div class="form-group">
+                            <label for="custom-answer">Correct Answer</label>
+                            <input type="text" id="custom-answer" placeholder="Enter the correct answer">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Wrong Answers (distractors)</label>
+                            <input type="text" id="custom-distractor-1" placeholder="Wrong answer 1" style="margin-bottom: 0.5rem;">
+                            <input type="text" id="custom-distractor-2" placeholder="Wrong answer 2" style="margin-bottom: 0.5rem;">
+                            <input type="text" id="custom-distractor-3" placeholder="Wrong answer 3">
+                        </div>
+                        
+                        <button class="btn-primary" onclick="app.saveCustomExercise()">
+                            Add Exercise
+                        </button>
+                    </div>
+                    
+                    <!-- Import/Export -->
+                    <div class="card" style="margin: 1.5rem 0;">
+                        <h3>Share Exercises</h3>
+                        <p class="settings-desc">Export exercises to share with other devices or import from a caregiver.</p>
+                        
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button class="btn-secondary" onclick="CustomExercises.export()">
+                                📤 Export Exercises
+                            </button>
+                            <label class="btn-secondary" style="cursor: pointer;">
+                                📥 Import Exercises
+                                <input type="file" accept=".json" style="display: none;" onchange="app.importCustomExercises(this)">
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Existing Custom Exercises -->
+                    <div class="card">
+                        <h3>Your Custom Exercises</h3>
+                        <div id="custom-exercises-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Achievement Toast -->
+    <div class="achievement-toast" id="achievement-toast">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-text">
+            <div class="achievement-title" id="achievement-title">Achievement Unlocked!</div>
+            <div class="achievement-desc" id="achievement-desc">Description here</div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/review.js"></script>
+    <script src="data/naming.js"></script>
+    <script src="data/categories.js"></script>
+    <script src="data/sentences.js"></script>
+    <script src="js/exercises.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/customExercises.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

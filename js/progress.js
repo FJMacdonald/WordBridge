@@ -133,6 +133,12 @@ const Progress = {
     },
     
     showAchievement(title, desc) {
+        // Check if running in test environment
+        if (typeof document === 'undefined' || !document.getElementById('achievement-toast')) {
+            console.log(`Achievement: ${title} - ${desc}`);
+            return;
+        }
+        
         const toast = document.getElementById('achievement-toast');
         document.getElementById('achievement-title').textContent = title;
         document.getElementById('achievement-desc').textContent = desc;
@@ -141,13 +147,26 @@ const Progress = {
     },
     
     updateUI() {
-        document.getElementById('user-level').textContent = this.state.level;
-        document.getElementById('streak-count').textContent = this.state.streak;
-        document.getElementById('current-xp').textContent = this.state.xp;
-        document.getElementById('next-level-xp').textContent = this.getXPForNextLevel();
+        // Check if DOM elements exist (not in test environment)
+        if (typeof document === 'undefined') return;
+        
+        const levelEl = document.getElementById('user-level');
+        const streakEl = document.getElementById('streak-count');
+        const currentXpEl = document.getElementById('current-xp');
+        const nextLevelXpEl = document.getElementById('next-level-xp');
+        const xpFillEl = document.getElementById('xp-fill');
+        
+        if (!levelEl || !streakEl || !currentXpEl || !nextLevelXpEl || !xpFillEl) {
+            return; // Elements don't exist, skip UI update
+        }
+        
+        levelEl.textContent = this.state.level;
+        streakEl.textContent = this.state.streak;
+        currentXpEl.textContent = this.state.xp;
+        nextLevelXpEl.textContent = this.getXPForNextLevel();
         
         const xpPercent = (this.state.xp / this.getXPForNextLevel()) * 100;
-        document.getElementById('xp-fill').style.width = `${xpPercent}%`;
+        xpFillEl.style.width = `${xpPercent}%`;
     },
     
     getUnlockedLevel(type) {

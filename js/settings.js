@@ -4,8 +4,6 @@
  */
 const Settings = {
     defaults: {
-        shareEmail: '',
-        autoShare: false,
         dailyGoal: 10,
         soundEffects: true
     },
@@ -22,19 +20,8 @@ const Settings = {
         const settings = this.get();
         
         // Populate form fields
-        document.getElementById('share-email').value = settings.shareEmail || '';
-        document.getElementById('auto-share').checked = settings.autoShare;
         document.getElementById('daily-goal').value = settings.dailyGoal;
         document.getElementById('sound-effects').checked = settings.soundEffects;
-    },
-    
-    saveEmail() {
-        const settings = this.get();
-        settings.shareEmail = document.getElementById('share-email').value;
-        settings.autoShare = document.getElementById('auto-share').checked;
-        this.save(settings);
-        
-        Progress.showAchievement('Saved!', 'Email settings updated');
     },
     
     exportData() {
