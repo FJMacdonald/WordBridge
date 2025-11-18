@@ -2,96 +2,165 @@
  * Picture Naming Exercise Data
  * 7 difficulty levels
  */
-const NamingData = {
-    1: [ // Common concrete nouns
-        { emoji: '🍎', answer: 'apple', options: ['apple', 'orange', 'banana', 'pear'] },
-        { emoji: '🏠', answer: 'house', options: ['house', 'building', 'store', 'tent'] },
-        { emoji: '🚗', answer: 'car', options: ['car', 'bus', 'truck', 'van'] },
-        { emoji: '☀️', answer: 'sun', options: ['sun', 'moon', 'star', 'light'] },
-        { emoji: '📚', answer: 'book', options: ['book', 'paper', 'letter', 'card'] },
-        { emoji: '🐕', answer: 'dog', options: ['dog', 'cat', 'wolf', 'fox'] },
-        { emoji: '🪑', answer: 'chair', options: ['chair', 'table', 'bench', 'stool'] },
-        { emoji: '🔑', answer: 'key', options: ['key', 'lock', 'door', 'ring'] },
-        { emoji: '👟', answer: 'shoe', options: ['shoe', 'sock', 'boot', 'slipper'] },
-        { emoji: '🎂', answer: 'cake', options: ['cake', 'pie', 'bread', 'cookie'] },
-        { emoji: '🌳', answer: 'tree', options: ['tree', 'flower', 'bush', 'plant'] },
-        { emoji: '✈️', answer: 'airplane', options: ['airplane', 'helicopter', 'bird', 'kite'] },
-        { emoji: '⌚', answer: 'watch', options: ['watch', 'clock', 'ring', 'bracelet'] },
-        { emoji: '🍕', answer: 'pizza', options: ['pizza', 'pie', 'bread', 'pancake'] },
-        { emoji: '🌧️', answer: 'rain', options: ['rain', 'snow', 'cloud', 'storm'] }
-    ],
+const NamingData = [
+    // Emoji-based (simple, always available)
+    { type: 'emoji', emoji: '🍎', answer: 'apple', options: ['apple', 'orange', 'banana', 'pear'] },
+    { type: 'emoji', emoji: '🏠', answer: 'house', options: ['house', 'building', 'store', 'tent'] },
+    { type: 'emoji', emoji: '🚗', answer: 'car', options: ['car', 'bus', 'truck', 'van'] },
+    { type: 'emoji', emoji: '☀️', answer: 'sun', options: ['sun', 'moon', 'star', 'light'] },
+    { type: 'emoji', emoji: '📚', answer: 'book', options: ['book', 'paper', 'letter', 'card'] },
+    { type: 'emoji', emoji: '🐕', answer: 'dog', options: ['dog', 'cat', 'wolf', 'fox'] },
+    { type: 'emoji', emoji: '🪑', answer: 'chair', options: ['chair', 'table', 'bench', 'stool'] },
+    { type: 'emoji', emoji: '🔑', answer: 'key', options: ['key', 'lock', 'door', 'ring'] },
+    { type: 'emoji', emoji: '👟', answer: 'shoe', options: ['shoe', 'sock', 'boot', 'slipper'] },
+    { type: 'emoji', emoji: '🎂', answer: 'cake', options: ['cake', 'pie', 'bread', 'cookie'] },
+    { type: 'emoji', emoji: '🌳', answer: 'tree', options: ['tree', 'flower', 'bush', 'plant'] },
+    { type: 'emoji', emoji: '✈️', answer: 'airplane', options: ['airplane', 'helicopter', 'bird', 'kite'] },
+    { type: 'emoji', emoji: '⌚', answer: 'watch', options: ['watch', 'clock', 'ring', 'bracelet'] },
+    { type: 'emoji', emoji: '🍕', answer: 'pizza', options: ['pizza', 'pie', 'bread', 'pancake'] },
+    { type: 'emoji', emoji: '🌧️', answer: 'rain', options: ['rain', 'snow', 'cloud', 'storm'] },
+    { type: 'emoji', emoji: '🐈', answer: 'cat', options: ['cat', 'dog', 'rabbit', 'mouse'] },
+    { type: 'emoji', emoji: '🌺', answer: 'flower', options: ['flower', 'tree', 'grass', 'leaf'] },
+    { type: 'emoji', emoji: '🍌', answer: 'banana', options: ['banana', 'apple', 'orange', 'grape'] },
+    { type: 'emoji', emoji: '🚌', answer: 'bus', options: ['bus', 'car', 'train', 'truck'] },
+    { type: 'emoji', emoji: '🎸', answer: 'guitar', options: ['guitar', 'piano', 'drum', 'violin'] },
+    { type: 'emoji', emoji: '📱', answer: 'phone', options: ['phone', 'computer', 'tablet', 'radio'] },
+    { type: 'emoji', emoji: '🛏️', answer: 'bed', options: ['bed', 'couch', 'chair', 'table'] },
+    { type: 'emoji', emoji: '🚿', answer: 'shower', options: ['shower', 'bath', 'sink', 'toilet'] },
+    { type: 'emoji', emoji: '🥛', answer: 'milk', options: ['milk', 'water', 'juice', 'coffee'] },
+    { type: 'emoji', emoji: '🍳', answer: 'egg', options: ['egg', 'bacon', 'bread', 'cheese'] },
+    { type: 'emoji', emoji: '🧦', answer: 'sock', options: ['sock', 'shoe', 'glove', 'hat'] },
+    { type: 'emoji', emoji: '🪥', answer: 'toothbrush', options: ['toothbrush', 'comb', 'brush', 'razor'] },
+    { type: 'emoji', emoji: '🚪', answer: 'door', options: ['door', 'window', 'wall', 'gate'] },
+    { type: 'emoji', emoji: '💡', answer: 'light', options: ['light', 'lamp', 'candle', 'torch'] },
+    { type: 'emoji', emoji: '🌙', answer: 'moon', options: ['moon', 'sun', 'star', 'cloud'] },
+    { type: 'emoji', emoji: '🍎', answer: 'apple', options: ['apple', 'orange', 'banana', 'pear'] },
+    { type: 'emoji', emoji: '🏠', answer: 'house', options: ['house', 'building', 'store', 'tent'] },
+    { type: 'emoji', emoji: '🚗', answer: 'car', options: ['car', 'bus', 'truck', 'van'] },
+    { type: 'emoji', emoji: '☀️', answer: 'sun', options: ['sun', 'moon', 'star', 'light'] },
+    { type: 'emoji', emoji: '📚', answer: 'book', options: ['book', 'paper', 'letter', 'card'] },
+    { type: 'emoji', emoji: '🐕', answer: 'dog', options: ['dog', 'cat', 'wolf', 'fox'] },
+    { type: 'emoji', emoji: '🪑', answer: 'chair', options: ['chair', 'table', 'bench', 'stool'] },
+    { type: 'emoji', emoji: '🔑', answer: 'key', options: ['key', 'lock', 'door', 'ring'] },
+    { type: 'emoji', emoji: '👟', answer: 'shoe', options: ['shoe', 'sock', 'boot', 'slipper'] },
+    { type: 'emoji', emoji: '🎂', answer: 'cake', options: ['cake', 'pie', 'bread', 'cookie'] },
+    { type: 'emoji', emoji: '🌳', answer: 'tree', options: ['tree', 'flower', 'bush', 'plant'] },
+    { type: 'emoji', emoji: '✈️', answer: 'airplane', options: ['airplane', 'helicopter', 'bird', 'kite'] },
+    { type: 'emoji', emoji: '⌚', answer: 'watch', options: ['watch', 'clock', 'ring', 'bracelet'] },
+    { type: 'emoji', emoji: '🍕', answer: 'pizza', options: ['pizza', 'pie', 'bread', 'pancake'] },
+    { type: 'emoji', emoji: '🌧️', answer: 'rain', options: ['rain', 'snow', 'cloud', 'storm'] },
+    { type: 'emoji', emoji: '🔧', answer: 'wrench', options: ['wrench', 'hammer', 'screwdriver', 'pliers', 'drill'] },
+    { type: 'emoji', emoji: '🌂', answer: 'umbrella', options: ['umbrella', 'parasol', 'tent', 'cover', 'shade'] },
+    { type: 'emoji', emoji: '🎸', answer: 'guitar', options: ['guitar', 'violin', 'banjo', 'ukulele', 'harp'] },
+    { type: 'emoji', emoji: '🔬', answer: 'microscope', options: ['microscope', 'telescope', 'binoculars', 'magnifier', 'glasses'] },
+    { type: 'emoji', emoji: '🧲', answer: 'magnet', options: ['magnet', 'battery', 'compass', 'metal', 'bolt'] },
+    { type: 'emoji', emoji: '🎺', answer: 'trumpet', options: ['trumpet', 'horn', 'tuba', 'flute', 'clarinet'] },
+    { type: 'emoji', emoji: '🦴', answer: 'bone', options: ['bone', 'stick', 'tooth', 'shell', 'rock'] },
+    { type: 'emoji', emoji: '🧪', answer: 'test tube', options: ['test tube', 'bottle', 'vial', 'jar', 'flask'] },
+    { type: 'emoji', emoji: '🪜', answer: 'ladder', options: ['ladder', 'stairs', 'steps', 'ramp', 'escalator'] },
+    { type: 'emoji', emoji: '🧯', answer: 'fire extinguisher', options: ['fire extinguisher', 'spray can', 'tank', 'bottle', 'cylinder'] },
+    { type: 'emoji', emoji: '🪒', answer: 'razor', options: ['razor', 'knife', 'blade', 'scissors', 'cutter'] },
+    { type: 'emoji', emoji: '🧵', answer: 'thread', options: ['thread', 'string', 'rope', 'wire', 'yarn'] },
+    { type: 'emoji', emoji: '🏃', answer: 'running', options: ['running', 'walking', 'jumping', 'standing', 'sitting'] },
+    { type: 'emoji', emoji: '🏊', answer: 'swimming', options: ['swimming', 'diving', 'floating', 'splashing', 'wading'] },
+    { type: 'emoji', emoji: '😴', answer: 'sleeping', options: ['sleeping', 'resting', 'lying', 'napping', 'dreaming'] },
+    { type: 'emoji', emoji: '🍳', answer: 'cooking', options: ['cooking', 'eating', 'serving', 'cutting', 'mixing'] },
+    { type: 'emoji', emoji: '📖', answer: 'reading', options: ['reading', 'writing', 'studying', 'looking', 'learning'] },
+    { type: 'emoji', emoji: '🎤', answer: 'singing', options: ['singing', 'talking', 'shouting', 'speaking', 'humming'] },
+    { type: 'emoji', emoji: '💃', answer: 'dancing', options: ['dancing', 'jumping', 'moving', 'spinning', 'stepping'] },
+    { type: 'emoji', emoji: '✍️', answer: 'writing', options: ['writing', 'drawing', 'signing', 'marking', 'noting'] },
+    { type: 'emoji', emoji: '🧹', answer: 'sweeping', options: ['sweeping', 'cleaning', 'brushing', 'wiping', 'mopping'] },
+    { type: 'emoji', emoji: '🪴', answer: 'planting', options: ['planting', 'digging', 'growing', 'watering', 'gardening'] },
+    { type: 'emoji', emoji: '☕', answer: 'cup', options: ['cup', 'mug', 'glass', 'bowl', 'pot'] },
+    { type: 'emoji', emoji: '🛋️', answer: 'couch', options: ['couch', 'sofa', 'loveseat', 'chair', 'bench'] },
+    { type: 'emoji', emoji: '⛰️', answer: 'mountain', options: ['mountain', 'hill', 'cliff', 'peak', 'ridge'] },
+    { type: 'emoji', emoji: '🌊', answer: 'wave', options: ['wave', 'water', 'ocean', 'sea', 'tide'] },
+    { type: 'emoji', emoji: '🛤️', answer: 'railroad', options: ['railroad', 'road', 'path', 'track', 'trail'] },
+    { type: 'emoji', emoji: '🧥', answer: 'coat', options: ['coat', 'jacket', 'sweater', 'vest', 'blazer'] },
+    { type: 'emoji', emoji: '🥿', answer: 'flat', options: ['flat', 'loafer', 'slipper', 'sandal', 'sneaker'] },
+    { type: 'emoji', emoji: '📔', answer: 'notebook', options: ['notebook', 'journal', 'diary', 'textbook', 'workbook'] },
+    { type: 'emoji', emoji: '🩺', answer: 'stethoscope', options: ['stethoscope', 'otoscope', 'thermometer', 'syringe', 'bandage', 'probe'] },
+    { type: 'emoji', emoji: '🎻', answer: 'violin', options: ['violin', 'viola', 'cello', 'guitar', 'fiddle', 'bass'] },
+    { type: 'emoji', emoji: '🏛️', answer: 'monument', options: ['monument', 'building', 'temple', 'museum', 'palace', 'landmark'] },
+    { type: 'emoji', emoji: '⚖️', answer: 'scale', options: ['scale', 'balance', 'weight', 'measure', 'meter', 'gauge'] },
+    { type: 'emoji', emoji: '🧭', answer: 'compass', options: ['compass', 'dial', 'gauge', 'meter', 'clock', 'navigation'] },
+    { type: 'emoji', emoji: '🔭', answer: 'telescope', options: ['telescope', 'microscope', 'binoculars', 'periscope', 'lens', 'scope'] },
+    { type: 'emoji', emoji: '🦷', answer: 'toothbrush', options: ['toothbrush', 'toothpaste', 'floss', 'mouthwash', 'brush', 'comb'] },
+    { type: 'emoji', emoji: '🌅', answer: 'sunrise', options: ['sunrise', 'sunset', 'dawn', 'dusk', 'daybreak', 'twilight'] },
+    { type: 'emoji', emoji: '🌈', answer: 'rainbow', options: ['rainbow', 'arch', 'spectrum', 'bow', 'prism', 'colors'] },
+    { type: 'emoji', emoji: '🎆', answer: 'fireworks', options: ['fireworks', 'sparklers', 'explosions', 'rockets', 'flares', 'lights'] },
+    { type: 'emoji', emoji: '🚿', answer: 'showerhead', options: ['showerhead', 'faucet', 'nozzle', 'sprinkler', 'tap', 'spout'] },
     
-    2: [ // Less common objects
-        { emoji: '🔧', answer: 'wrench', options: ['wrench', 'hammer', 'screwdriver', 'pliers', 'drill'] },
-        { emoji: '🌂', answer: 'umbrella', options: ['umbrella', 'parasol', 'tent', 'cover', 'shade'] },
-        { emoji: '🎸', answer: 'guitar', options: ['guitar', 'violin', 'banjo', 'ukulele', 'harp'] },
-        { emoji: '🔬', answer: 'microscope', options: ['microscope', 'telescope', 'binoculars', 'magnifier', 'glasses'] },
-        { emoji: '🧲', answer: 'magnet', options: ['magnet', 'battery', 'compass', 'metal', 'bolt'] },
-        { emoji: '🎺', answer: 'trumpet', options: ['trumpet', 'horn', 'tuba', 'flute', 'clarinet'] },
-        { emoji: '🦴', answer: 'bone', options: ['bone', 'stick', 'tooth', 'shell', 'rock'] },
-        { emoji: '🧪', answer: 'test tube', options: ['test tube', 'bottle', 'vial', 'jar', 'flask'] },
-        { emoji: '🪜', answer: 'ladder', options: ['ladder', 'stairs', 'steps', 'ramp', 'escalator'] },
-        { emoji: '🧯', answer: 'fire extinguisher', options: ['fire extinguisher', 'spray can', 'tank', 'bottle', 'cylinder'] },
-        { emoji: '🪒', answer: 'razor', options: ['razor', 'knife', 'blade', 'scissors', 'cutter'] },
-        { emoji: '🧵', answer: 'thread', options: ['thread', 'string', 'rope', 'wire', 'yarn'] }
-    ],
-    
-    3: [ // Actions (verbs)
-        { emoji: '🏃', answer: 'running', options: ['running', 'walking', 'jumping', 'standing', 'sitting'] },
-        { emoji: '🏊', answer: 'swimming', options: ['swimming', 'diving', 'floating', 'splashing', 'wading'] },
-        { emoji: '😴', answer: 'sleeping', options: ['sleeping', 'resting', 'lying', 'napping', 'dreaming'] },
-        { emoji: '🍳', answer: 'cooking', options: ['cooking', 'eating', 'serving', 'cutting', 'mixing'] },
-        { emoji: '📖', answer: 'reading', options: ['reading', 'writing', 'studying', 'looking', 'learning'] },
-        { emoji: '🎤', answer: 'singing', options: ['singing', 'talking', 'shouting', 'speaking', 'humming'] },
-        { emoji: '💃', answer: 'dancing', options: ['dancing', 'jumping', 'moving', 'spinning', 'stepping'] },
-        { emoji: '✍️', answer: 'writing', options: ['writing', 'drawing', 'signing', 'marking', 'noting'] },
-        { emoji: '🧹', answer: 'sweeping', options: ['sweeping', 'cleaning', 'brushing', 'wiping', 'mopping'] },
-        { emoji: '🪴', answer: 'planting', options: ['planting', 'digging', 'growing', 'watering', 'gardening'] }
-    ],
-    
-    4: [ // Similar items - fine distinctions
-        { emoji: '☕', answer: 'cup', options: ['cup', 'mug', 'glass', 'bowl', 'pot'] },
-        { emoji: '🛋️', answer: 'couch', options: ['couch', 'sofa', 'loveseat', 'chair', 'bench'] },
-        { emoji: '⛰️', answer: 'mountain', options: ['mountain', 'hill', 'cliff', 'peak', 'ridge'] },
-        { emoji: '🌊', answer: 'wave', options: ['wave', 'water', 'ocean', 'sea', 'tide'] },
-        { emoji: '🛤️', answer: 'railroad', options: ['railroad', 'road', 'path', 'track', 'trail'] },
-        { emoji: '🧥', answer: 'coat', options: ['coat', 'jacket', 'sweater', 'vest', 'blazer'] },
-        { emoji: '🥿', answer: 'flat', options: ['flat', 'loafer', 'slipper', 'sandal', 'sneaker'] },
-        { emoji: '📔', answer: 'notebook', options: ['notebook', 'journal', 'diary', 'textbook', 'workbook'] }
-    ],
-    
-    5: [ // Specific vocabulary
-        { emoji: '🩺', answer: 'stethoscope', options: ['stethoscope', 'otoscope', 'thermometer', 'syringe', 'bandage', 'probe'] },
-        { emoji: '🎻', answer: 'violin', options: ['violin', 'viola', 'cello', 'guitar', 'fiddle', 'bass'] },
-        { emoji: '🏛️', answer: 'monument', options: ['monument', 'building', 'temple', 'museum', 'palace', 'landmark'] },
-        { emoji: '⚖️', answer: 'scale', options: ['scale', 'balance', 'weight', 'measure', 'meter', 'gauge'] },
-        { emoji: '🧭', answer: 'compass', options: ['compass', 'dial', 'gauge', 'meter', 'clock', 'navigation'] },
-        { emoji: '🔭', answer: 'telescope', options: ['telescope', 'microscope', 'binoculars', 'periscope', 'lens', 'scope'] }
-    ],
-    
-    6: [ // Compound words & abstract
-        { emoji: '🦷', answer: 'toothbrush', options: ['toothbrush', 'toothpaste', 'floss', 'mouthwash', 'brush', 'comb'] },
-        { emoji: '🌅', answer: 'sunrise', options: ['sunrise', 'sunset', 'dawn', 'dusk', 'daybreak', 'twilight'] },
-        { emoji: '🌈', answer: 'rainbow', options: ['rainbow', 'arch', 'spectrum', 'bow', 'prism', 'colors'] },
-        { emoji: '🎆', answer: 'fireworks', options: ['fireworks', 'sparklers', 'explosions', 'rockets', 'flares', 'lights'] },
-        { emoji: '🚿', answer: 'showerhead', options: ['showerhead', 'faucet', 'nozzle', 'sprinkler', 'tap', 'spout'] }
-    ],
-    
-    7: [ // Scene descriptions (These would ideally use real images)
-        { 
-            emoji: '👨‍👩‍👧‍👦', 
-            answer: 'family', 
-            options: ['family', 'group', 'team', 'crowd', 'people', 'gathering']
-        },
-        { 
-            emoji: '🏖️', 
-            answer: 'beach', 
-            options: ['beach', 'shore', 'coast', 'seaside', 'waterfront', 'seashore']
-        },
-        { 
-            emoji: '🎪', 
-            answer: 'circus', 
-            options: ['circus', 'carnival', 'fair', 'festival', 'theater', 'show']
-        }
-    ]
-};
+    // Photo-based (using reliable free image sources)
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=300&h=300&fit=crop',
+        answer: 'dog',
+        options: ['dog', 'cat', 'wolf', 'bear'],
+        hints: ['It barks', 'Man\'s best friend', 'Woof!']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&h=300&fit=crop',
+        answer: 'cat',
+        options: ['cat', 'dog', 'rabbit', 'fox'],
+        hints: ['It meows', 'Has whiskers', 'Says meow']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1568702846914-96b305d2uj18?w=300&h=300&fit=crop',
+        answer: 'apple',
+        options: ['apple', 'orange', 'peach', 'plum'],
+        hints: ['A fruit', 'Often red or green', 'Keeps the doctor away']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop',
+        answer: 'coffee',
+        options: ['coffee', 'tea', 'cocoa', 'juice'],
+        hints: ['A drink', 'Made from beans', 'Morning beverage']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
+        answer: 'watch',
+        options: ['watch', 'clock', 'compass', 'phone'],
+        hints: ['Tells time', 'Worn on wrist', 'Tick tock']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&h=300&fit=crop',
+        answer: 'food',
+        options: ['food', 'drink', 'plate', 'table'],
+        hints: ['You eat it', 'On a plate', 'Meal time']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=300&h=300&fit=crop',
+        answer: 'computer',
+        options: ['computer', 'television', 'phone', 'tablet'],
+        hints: ['Electronic device', 'Has a keyboard', 'You type on it']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1533750516457-a7f992034fec?w=300&h=300&fit=crop',
+        answer: 'glasses',
+        options: ['glasses', 'sunglasses', 'goggles', 'magnifier'],
+        hints: ['Help you see', 'Worn on face', 'Have lenses']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=300&h=300&fit=crop',
+        answer: 'breakfast',
+        options: ['breakfast', 'lunch', 'dinner', 'snack'],
+        hints: ['A meal', 'Morning time', 'First meal of day']
+    },
+    { 
+        type: 'image', 
+        image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=300&fit=crop',
+        answer: 'book',
+        options: ['book', 'magazine', 'newspaper', 'letter'],
+        hints: ['You read it', 'Has pages', 'Contains stories']
+    }
+];
+

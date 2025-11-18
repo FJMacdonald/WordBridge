@@ -1,25 +1,11 @@
-/**
- * Progress Module
- * Handles XP, levels, streaks, and achievements
- */
 const Progress = {
     state: {
-        xp: 0,
-        level: 1,
         streak: 0,
         lastPracticeDate: null,
-        unlockedLevels: {
-            naming: 1,
-            categories: 1,
-            sentences: 1
-        },
-        bestScores: {},
-        achievements: [],
         totalSessions: 0,
-        totalActiveTime: 0
+        totalActiveTime: 0,
+        weeklyData: null
     },
-    
-    xpPerLevel: 100,
     
     init() {
         const saved = Storage.get('progress');
@@ -32,24 +18,6 @@ const Progress = {
     
     save() {
         Storage.set('progress', this.state);
-    },
-    
-    addXP(amount) {
-        this.state.xp += amount;
-        
-        while (this.state.xp >= this.getXPForNextLevel()) {
-            this.state.xp -= this.getXPForNextLevel();
-            this.state.level++;
-            this.showAchievement('Level Up!', `You reached level ${this.state.level}!`);
-        }
-        
-        this.save();
-        this.updateUI();
-        return amount;
-    },
-    
-    getXPForNextLevel() {
-        return this.xpPerLevel + (this.state.level - 1) * 25;
     },
     
     checkStreak() {
@@ -69,111 +37,105 @@ const Progress = {
         this.save();
     },
     
-    recordSession(type, difficulty, score, activeTime) {
+    recordSession(results) {
         const today = new Date().toDateString();
         
         // Update streak
         if (this.state.lastPracticeDate !== today) {
             this.state.streak++;
             this.state.lastPracticeDate = today;
-            
-            // Streak achievements
-            if (this.state.streak === 3) {
-                this.unlockAchievement('streak_3', 'Three Day Streak', 'Practice 3 days in a row', 25);
-            } else if (this.state.streak === 7) {
-                this.unlockAchievement('streak_7', 'Week Warrior', 'Practice 7 days in a row', 50);
-            } else if (this.state.streak === 30) {
-                this.unlockAchievement('streak_30', 'Monthly Master', 'Practice 30 days in a row', 100);
-            }
-        }
-        
-        // Update best scores
-        const key = `${type}_${difficulty}`;
-        if (!this.state.bestScores[key] || score > this.state.bestScores[key]) {
-            this.state.bestScores[key] = score;
-        }
-        
-        // Unlock next difficulty at 80%
-        if (score >= 80) {
-            const currentMax = this.state.unlockedLevels[type] || 1;
-            if (difficulty === currentMax && difficulty < 7) {
-                this.state.unlockedLevels[type] = difficulty + 1;
-                this.showAchievement('New Level Unlocked!', 
-                    `${type.charAt(0).toUpperCase() + type.slice(1)} Level ${difficulty + 1} is now available`);
-            }
         }
         
         // Update totals
         this.state.totalSessions++;
-        this.state.totalActiveTime += activeTime;
+        this.state.totalActiveTime += results.duration;
         
-        // First session achievement
-        if (this.state.totalSessions === 1) {
-            this.unlockAchievement('first_session', 'First Steps', 'Complete your first practice session', 10);
-        }
-        
-        // Perfect score achievement
-        if (score === 100) {
-            this.unlockAchievement('perfect', 'Perfect!', 'Get 100% on an exercise', 25);
-        }
+        // Update weekly data
+        this.updateWeeklyData(results);
         
         this.save();
         this.updateUI();
     },
     
-    unlockAchievement(id, title, desc, bonusXP = 0) {
-        if (!this.state.achievements.includes(id)) {
-            this.state.achievements.push(id);
-            this.showAchievement(title, desc);
-            if (bonusXP > 0) {
-                this.addXP(bonusXP);
-            }
-            this.save();
-        }
-    },
-    
-    showAchievement(title, desc) {
-        // Check if running in test environment
-        if (typeof document === 'undefined' || !document.getElementById('achievement-toast')) {
-            console.log(`Achievement: ${title} - ${desc}`);
-            return;
+    updateWeeklyData(session) {
+        const weekStart = this.getWeekStart();
+        let weekData = this.state.weeklyData;
+        
+        if (!weekData || weekData.weekStart !== weekStart) {
+            weekData = {
+                weekStart: weekStart,
+                sessions: 0,
+                totalTime: 0,
+                dailyPractice: {}
+            };
         }
         
-        const toast = document.getElementById('achievement-toast');
-        document.getElementById('achievement-title').textContent = title;
-        document.getElementById('achievement-desc').textContent = desc;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 4000);
+        weekData.sessions++;
+        weekData.totalTime += session.duration;
+        weekData.dailyPractice[new Date().toDateString()] = true;
+        
+        this.state.weeklyData = weekData;
+    },
+    
+    getWeekStart() {
+        const now = new Date();
+        const day = now.getDay();
+        const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+        const monday = new Date(now.setDate(diff));
+        return monday.toDateString();
+    },
+    
+    getWeeklySummary() {
+        const weekData = this.state.weeklyData;
+        
+        if (!weekData) {
+            return {
+                totalSessions: 0,
+                formattedTime: '0:00',
+                dailyPractice: this.getWeekDays()
+            };
+        }
+        
+        const mins = Math.floor(weekData.totalTime / 60);
+        const secs = Math.round(weekData.totalTime % 60);
+        
+        return {
+            totalSessions: weekData.sessions,
+            formattedTime: `${mins}:${secs.toString().padStart(2, '0')}`,
+            dailyPractice: this.getWeekDays(weekData.dailyPractice)
+        };
+    },
+    
+    getWeekDays(practiceData = {}) {
+        const days = [];
+        const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        const today = new Date();
+        const currentDay = today.getDay();
+        
+        const monday = new Date(today);
+        monday.setDate(today.getDate() - (currentDay === 0 ? 6 : currentDay - 1));
+        
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(monday);
+            date.setDate(monday.getDate() + i);
+            const dateStr = date.toDateString();
+            
+            days.push({
+                label: dayNames[i],
+                complete: !!practiceData[dateStr],
+                isToday: dateStr === today.toDateString()
+            });
+        }
+        
+        return days;
     },
     
     updateUI() {
-        // Check if DOM elements exist (not in test environment)
         if (typeof document === 'undefined') return;
         
-        const levelEl = document.getElementById('user-level');
         const streakEl = document.getElementById('streak-count');
-        const currentXpEl = document.getElementById('current-xp');
-        const nextLevelXpEl = document.getElementById('next-level-xp');
-        const xpFillEl = document.getElementById('xp-fill');
-        
-        if (!levelEl || !streakEl || !currentXpEl || !nextLevelXpEl || !xpFillEl) {
-            return; // Elements don't exist, skip UI update
+        if (streakEl) {
+            streakEl.textContent = this.state.streak;
         }
-        
-        levelEl.textContent = this.state.level;
-        streakEl.textContent = this.state.streak;
-        currentXpEl.textContent = this.state.xp;
-        nextLevelXpEl.textContent = this.getXPForNextLevel();
-        
-        const xpPercent = (this.state.xp / this.getXPForNextLevel()) * 100;
-        xpFillEl.style.width = `${xpPercent}%`;
-    },
-    
-    getUnlockedLevel(type) {
-        return this.state.unlockedLevels[type] || 1;
-    },
-    
-    getBestScore(type, difficulty) {
-        return this.state.bestScores[`${type}_${difficulty}`] || 0;
     }
 };

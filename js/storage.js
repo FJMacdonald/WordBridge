@@ -1,7 +1,3 @@
-/**
- * Storage Module
- * Handles all localStorage operations with error handling
- */
 const Storage = {
     prefix: 'wordbridge_',
     
@@ -41,15 +37,5 @@ const Storage = {
         } catch (e) {
             console.warn('Storage clear error:', e);
         }
-    },
-    
-    exportAll() {
-        const data = {};
-        Object.keys(localStorage)
-            .filter(key => key.startsWith(this.prefix))
-            .forEach(key => {
-                data[key.replace(this.prefix, '')] = this.get(key.replace(this.prefix, ''));
-            });
-        return data;
     }
 };

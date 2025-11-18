@@ -14,10 +14,7 @@ const CategoriesData = {
         { prompt: 'Which is a NUMBER?', answer: 'seven', options: ['seven', 'silver', 'simple', 'single'] },
         { prompt: 'Which is WEATHER?', answer: 'sunny', options: ['sunny', 'sunday', 'sundae', 'sudden'] },
         { prompt: 'Which is a DRINK?', answer: 'water', options: ['water', 'paper', 'plastic', 'metal'] },
-        { prompt: 'Which is a TOOL?', answer: 'hammer', options: ['hammer', 'hamster', 'hanger', 'helper'] }
-    ],
-    
-    2: [ // More specific
+        { prompt: 'Which is a TOOL?', answer: 'hammer', options: ['hammer', 'hamster', 'hanger', 'helper'] },
         { prompt: 'Which is a VEGETABLE?', answer: 'broccoli', options: ['broccoli', 'strawberry', 'chicken', 'bread', 'cheese'] },
         { prompt: 'Which is a BIRD?', answer: 'sparrow', options: ['sparrow', 'squirrel', 'spider', 'snake', 'snail'] },
         { prompt: 'Which is JEWELRY?', answer: 'necklace', options: ['necklace', 'necktie', 'needle', 'napkin', 'newspaper'] },
@@ -26,46 +23,51 @@ const CategoriesData = {
         { prompt: 'Which is WEATHER?', answer: 'thunder', options: ['thunder', 'thousand', 'thought', 'through', 'thirsty'] },
         { prompt: 'Which is a PLANET?', answer: 'saturn', options: ['saturn', 'satin', 'saddle', 'salmon', 'salad'] },
         { prompt: 'Which is an INSECT?', answer: 'beetle', options: ['beetle', 'beagle', 'beaver', 'beast', 'beauty'] },
-        { prompt: 'Which is a MUSICAL INSTRUMENT?', answer: 'clarinet', options: ['clarinet', 'cabinet', 'climate', 'clinic', 'client'] }
-    ],
-    
-    3: [ // Abstract categories
+        { prompt: 'Which is a MUSICAL INSTRUMENT?', answer: 'clarinet', options: ['clarinet', 'cabinet', 'climate', 'clinic', 'client'] },
         { prompt: 'Which is a FEELING?', answer: 'anxious', options: ['anxious', 'ancient', 'angular', 'antenna', 'antique', 'anthem'] },
         { prompt: 'Which is an OCCUPATION?', answer: 'architect', options: ['architect', 'artichoke', 'article', 'artificial', 'artillery', 'artifact'] },
         { prompt: 'Which is a QUALITY?', answer: 'generous', options: ['generous', 'generate', 'general', 'genuine', 'genetic', 'genius'] },
         { prompt: 'Which is a TIME PERIOD?', answer: 'century', options: ['century', 'central', 'center', 'certain', 'ceremony', 'census'] },
         { prompt: 'Which is a SHAPE?', answer: 'cylinder', options: ['cylinder', 'cycle', 'cyclone', 'cyclist', 'cynic', 'cymbal'] },
-        { prompt: 'Which is an EMOTION?', answer: 'jealousy', options: ['jealousy', 'jeopardy', 'jersey', 'jewelry', 'journey', 'judgment'] }
-    ],
-    
-    4: [ // Synonyms
+        { prompt: 'Which is an EMOTION?', answer: 'jealousy', options: ['jealousy', 'jeopardy', 'jersey', 'jewelry', 'journey', 'judgment'] },
         { prompt: 'Which means HAPPY?', answer: 'elated', options: ['elated', 'elevated', 'elaborate', 'elastic', 'elderly', 'elegant'] },
         { prompt: 'Which means TIRED?', answer: 'exhausted', options: ['exhausted', 'exhibited', 'expanded', 'expected', 'exported', 'expressed'] },
         { prompt: 'Which means ANGRY?', answer: 'furious', options: ['furious', 'famous', 'foreign', 'former', 'formal', 'fortune'] },
         { prompt: 'Which means FAST?', answer: 'rapid', options: ['rapid', 'random', 'ranger', 'ransom', 'rascal', 'rather'] },
         { prompt: 'Which means SMALL?', answer: 'tiny', options: ['tiny', 'tidy', 'timid', 'tissue', 'title', 'toast'] },
-        { prompt: 'Which means BEAUTIFUL?', answer: 'gorgeous', options: ['gorgeous', 'gracious', 'grateful', 'gradually', 'grammar', 'granite'] }
-    ],
-    
-    5: [ // Odd one out
+        { prompt: 'Which means BEAUTIFUL?', answer: 'gorgeous', options: ['gorgeous', 'gracious', 'grateful', 'gradually', 'grammar', 'granite'] },
         { prompt: 'Which does NOT belong?', answer: 'carrot', options: ['rose', 'tulip', 'carrot', 'daisy', 'lily'] },
         { prompt: 'Which does NOT belong?', answer: 'jupiter', options: ['london', 'paris', 'jupiter', 'tokyo', 'berlin'] },
         { prompt: 'Which does NOT belong?', answer: 'violin', options: ['piano', 'drums', 'violin', 'trumpet', 'flute'] },
         { prompt: 'Which does NOT belong?', answer: 'cotton', options: ['wool', 'silk', 'cotton', 'leather', 'denim'] },
-        { prompt: 'Which does NOT belong?', answer: 'walk', options: ['whisper', 'shout', 'walk', 'sing', 'speak'] }
-    ],
-    
-    6: [ // Best fit
+        { prompt: 'Which does NOT belong?', answer: 'walk', options: ['whisper', 'shout', 'walk', 'sing', 'speak'] },
         { prompt: 'Best describes SIZE?', answer: 'enormous', options: ['enormous', 'energetic', 'essential', 'eventual', 'evident', 'eternal'] },
         { prompt: 'Best describes SPEED?', answer: 'swift', options: ['swift', 'sweet', 'swim', 'switch', 'swear', 'swell'] },
         { prompt: 'Best describes TEMPERATURE?', answer: 'freezing', options: ['freezing', 'frequent', 'fresh', 'friendly', 'frighten', 'friction'] },
-        { prompt: 'Best describes STRENGTH?', answer: 'mighty', options: ['mighty', 'mainly', 'merely', 'mostly', 'monthly', 'morally'] }
-    ],
-    
-    7: [ // Antonyms
+        { prompt: 'Best describes STRENGTH?', answer: 'mighty', options: ['mighty', 'mainly', 'merely', 'mostly', 'monthly', 'morally'] },
         { prompt: 'Opposite of ANCIENT?', answer: 'modern', options: ['modern', 'modest', 'moment', 'monitor', 'monster', 'monthly'] },
         { prompt: 'Opposite of GENEROUS?', answer: 'selfish', options: ['selfish', 'serious', 'service', 'several', 'shelter', 'silence'] },
         { prompt: 'Opposite of PERMANENT?', answer: 'temporary', options: ['temporary', 'tendency', 'terminal', 'terrible', 'territory', 'terrific'] },
-        { prompt: 'Opposite of ARTIFICIAL?', answer: 'natural', options: ['natural', 'national', 'navigate', 'negative', 'neighbor', 'network'] }
+        { prompt: 'Opposite of ARTIFICIAL?', answer: 'natural', options: ['natural', 'national', 'navigate', 'negative', 'neighbor', 'network'] },
+        { prompt: 'Which one is a FRUIT?', answer: 'apple', options: ['apple', 'carrot', 'bread', 'milk'] },
+        { prompt: 'Which one is an ANIMAL?', answer: 'elephant', options: ['elephant', 'table', 'car', 'shoe'] },
+        { prompt: 'Which one is CLOTHING?', answer: 'shirt', options: ['shirt', 'apple', 'chair', 'book'] },
+        { prompt: 'Which one is FURNITURE?', answer: 'couch', options: ['couch', 'banana', 'dog', 'rain'] },
+        { prompt: 'Which one is a VEHICLE?', answer: 'bicycle', options: ['bicycle', 'tree', 'phone', 'cup'] },
+        { prompt: 'Which one is a COLOR?', answer: 'blue', options: ['blue', 'chair', 'happy', 'run'] },
+        { prompt: 'Which one is WEATHER?', answer: 'sunny', options: ['sunny', 'table', 'dog', 'book'] },
+        { prompt: 'Which one is a BODY PART?', answer: 'hand', options: ['hand', 'car', 'apple', 'shirt'] },
+        { prompt: 'Which one is a FOOD?', answer: 'sandwich', options: ['sandwich', 'lamp', 'clock', 'shoe'] },
+        { prompt: 'Which one is a DRINK?', answer: 'water', options: ['water', 'chair', 'book', 'shirt'] },
+        { prompt: 'Which one is a TOOL?', answer: 'hammer', options: ['hammer', 'apple', 'dog', 'cloud'] },
+        { prompt: 'Which one is a ROOM?', answer: 'kitchen', options: ['kitchen', 'car', 'tree', 'shoe'] },
+        { prompt: 'Which one is a FEELING?', answer: 'happy', options: ['happy', 'table', 'blue', 'run'] },
+        { prompt: 'Which one is an ACTION?', answer: 'running', options: ['running', 'chair', 'apple', 'blue'] },
+        { prompt: 'Which one is a PLANT?', answer: 'flower', options: ['flower', 'dog', 'car', 'book'] },
+        { prompt: 'Which one is a JOB?', answer: 'doctor', options: ['doctor', 'apple', 'chair', 'blue'] },
+        { prompt: 'Which one is a SEASON?', answer: 'winter', options: ['winter', 'table', 'dog', 'shirt'] },
+        { prompt: 'Which one is a DAY?', answer: 'monday', options: ['monday', 'apple', 'blue', 'chair'] },
+        { prompt: 'Which one is a NUMBER?', answer: 'seven', options: ['seven', 'dog', 'run', 'happy'] },
+        { prompt: 'Which one is a SHAPE?', answer: 'circle', options: ['circle', 'apple', 'dog', 'run'] }
     ]
 };
