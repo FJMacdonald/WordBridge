@@ -15,6 +15,7 @@ const ExerciseEngine = {
         this.total = 0;
         this.startTime = Date.now();
         this.currentQuestion = null;
+        WordTracking.init();
     },
     
     start() {
@@ -22,19 +23,39 @@ const ExerciseEngine = {
     },
     
     getRandomQuestion() {
-        // If we've used all questions, reset
-        if (this.usedIndices.size >= this.questions.length) {
-            this.usedIndices.clear();
+        // Prioritize problem words
+        const problemWords = WordTracking.getProblemWords();
+        const problemWordsList = Object.keys(problemWords);
+        
+        if (problemWordsList.length > 0 && Math.random() < 0.3) {
+            // 30% chance to show a problem word
+            const word = problemWordsList[Math.floor(Math.random() * problemWordsList.length)];
+            const question = this.questions.find(q => q.answer === word);
+            if (question) return question;
         }
         
-        // Find an unused question
-        let index;
-        do {
-            index = Math.floor(Math.random() * this.questions.length);
-        } while (this.usedIndices.has(index));
+        // Filter out mastered words unless we've used all others
+        const masteredWords = Object.keys(WordTracking.getMasteredWords());
+        const availableQuestions = this.questions.filter(q => 
+            !masteredWords.includes(q.answer) && !this.usedIndices.has(this.questions.indexOf(q))
+        );
         
-        this.usedIndices.add(index);
-        return this.questions[index];
+        if (availableQuestions.length === 0) {
+            // Reset if all non-mastered questions used
+            this.usedIndices.clear();
+            
+            // Still try to avoid mastered words
+            const nonMastered = this.questions.filter(q => !masteredWords.includes(q.answer));
+            if (nonMastered.length > 0) {
+                return nonMastered[Math.floor(Math.random() * nonMastered.length)];
+            }
+            
+            return this.questions[Math.floor(Math.random() * this.questions.length)];
+        }
+        
+        const question = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+        this.usedIndices.add(this.questions.indexOf(question));
+        return question;
     },
     
     showNextQuestion() {
@@ -97,6 +118,9 @@ const ExerciseEngine = {
     checkAnswer(selected, button) {
         const correct = selected.toLowerCase() === this.currentQuestion.answer.toLowerCase();
         this.total++;
+        
+        // Track the answer
+        WordTracking.trackAnswer(this.currentQuestion.answer, correct, this.type);
         
         if (correct) {
             this.correct++;

@@ -6,9 +6,6 @@ const SpeakEngine = {
     startTime: null,
     currentQuestion: null,
     currentHintIndex: 0,
-    reviewQueue: [],
-    turnsSinceReview: new Map(),
-    difficultWords: new Map(), // Track difficulty
     
     init() {
         this.questions = ExerciseData.speak;
@@ -18,19 +15,7 @@ const SpeakEngine = {
         this.startTime = Date.now();
         this.currentQuestion = null;
         this.currentHintIndex = 0;
-        this.reviewQueue = [];
-        this.turnsSinceReview = new Map();
-        this.loadDifficultWords();
-    },
-    
-    loadDifficultWords() {
-        const saved = Storage.get('difficultWords', {});
-        this.difficultWords = new Map(Object.entries(saved));
-    },
-    
-    saveDifficultWords() {
-        const obj = Object.fromEntries(this.difficultWords);
-        Storage.set('difficultWords', obj);
+        WordTracking.init();
     },
     
     start() {
@@ -38,36 +23,19 @@ const SpeakEngine = {
     },
     
     getNextQuestion() {
-        const settings = Storage.get('settings', { problemWordFrequency: 3 });
+        // Prioritize problem words
+        const problemWords = WordTracking.getProblemWords();
+        const problemWordsList = Object.keys(problemWords);
         
-        // Check for due difficult words first
-        for (const [word, data] of this.difficultWords) {
-            if (data.turnsSinceShown >= settings.problemWordFrequency) {
-                const question = this.questions.find(q => q.answer === word);
-                if (question) {
-                    data.turnsSinceShown = 0;
-                    this.saveDifficultWords();
-                    this.incrementAllTurnCounters();
-                    return question;
-                }
-            }
+        if (problemWordsList.length > 0 && Math.random() < 0.3) {
+            // 30% chance to show a problem word
+            const word = problemWordsList[Math.floor(Math.random() * problemWordsList.length)];
+            const question = this.questions.find(q => q.answer === word);
+            if (question) return question;
         }
         
-        // Check review queue
-        for (let i = 0; i < this.reviewQueue.length; i++) {
-            const reviewItem = this.reviewQueue[i];
-            const turnsSince = this.turnsSinceReview.get(reviewItem) || 0;
-            
-            if (turnsSince >= 3) {
-                this.reviewQueue.splice(i, 1);
-                this.turnsSinceReview.delete(reviewItem);
-                this.incrementAllTurnCounters();
-                return reviewItem;
-            }
-        }
-        
-        // Get new random question (excluding mastered words)
-        const masteredWords = Storage.get('masteredWords', []);
+        // Filter out mastered words
+        const masteredWords = Object.keys(WordTracking.getMasteredWords());
         const availableQuestions = this.questions.filter(q => 
             !masteredWords.includes(q.answer) && !this.usedIndices.has(this.questions.indexOf(q))
         );
@@ -79,23 +47,8 @@ const SpeakEngine = {
         
         const question = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
         this.usedIndices.add(this.questions.indexOf(question));
-        this.incrementAllTurnCounters();
         
         return question;
-    },
-    
-    incrementAllTurnCounters() {
-        // Increment review queue counters
-        for (const item of this.reviewQueue) {
-            const current = this.turnsSinceReview.get(item) || 0;
-            this.turnsSinceReview.set(item, current + 1);
-        }
-        
-        // Increment difficult word counters
-        for (const [word, data] of this.difficultWords) {
-            data.turnsSinceShown++;
-        }
-        this.saveDifficultWords();
     },
     
     showNextQuestion() {
@@ -114,7 +67,7 @@ const SpeakEngine = {
             `;
         } else {
             promptArea.innerHTML = `
-                <div class="prompt-emoji">${this.currentQuestion.image}</div>
+                <div class="prompt-emoji">${this.currentQuestion.image || '🖼️'}</div>
                 <div class="prompt-instruction">What is this?</div>
             `;
         }
@@ -126,7 +79,6 @@ const SpeakEngine = {
         document.getElementById('hint-btn').classList.remove('disabled');
     },
     
-    // Generate hints dynamically based on word
     getHints() {
         const word = this.currentQuestion.answer;
         const firstLetter = word[0].toUpperCase();
@@ -136,44 +88,21 @@ const SpeakEngine = {
         return [
             { type: 'letters', text: `${firstLetter} ${blanks}` },
             { type: 'phrase', text: phrases[0] || `Think of something you might say...` },
-            { type: 'phrase', text: phrases[1] || `It's on the tip of your tongue...` },
             { type: 'sound', text: `Starts with "${firstLetter}"` },
             { type: 'word', text: word.toUpperCase().split('').join(' - ') }
         ];
-    },
-    
-    speakPhoneme(letter) {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            
-            // Map letters to phonetic sounds
-            const phonemes = {
-                'A': 'ah', 'B': 'buh', 'C': 'kuh', 'D': 'duh', 'E': 'eh',
-                'F': 'fff', 'G': 'guh', 'H': 'huh', 'I': 'ih', 'J': 'juh',
-                'K': 'kuh', 'L': 'lll', 'M': 'mmm', 'N': 'nnn', 'O': 'oh',
-                'P': 'puh', 'Q': 'kwuh', 'R': 'rrr', 'S': 'sss', 'T': 'tuh',
-                'U': 'uh', 'V': 'vvv', 'W': 'wuh', 'X': 'ks', 'Y': 'yuh', 'Z': 'zzz'
-            };
-            
-            const sound = phonemes[letter.toUpperCase()] || letter;
-            const utterance = new SpeechSynthesisUtterance(sound);
-            utterance.rate = 0.6;
-            utterance.pitch = 1.0;
-            utterance.volume = 1.0;
-            
-            window.speechSynthesis.speak(utterance);
-        }
     },
     
     speakWordStart(word) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             
-            // Speak just the beginning sound of the word
-            const start = word.substring(0, 2);
+            // Speak first 2-3 letters as a blend
+            const start = word.substring(0, Math.min(3, Math.ceil(word.length / 2)));
             const utterance = new SpeechSynthesisUtterance(start);
-            utterance.rate = 0.4;
+            utterance.rate = 0.3; // Very slow
             utterance.pitch = 1.0;
+            utterance.volume = 1.0;
             
             window.speechSynthesis.speak(utterance);
         }
@@ -184,12 +113,23 @@ const SpeakEngine = {
             window.speechSynthesis.cancel();
             
             const utterance = new SpeechSynthesisUtterance(word);
-            utterance.rate = 0.3; // Very slow
-            utterance.pitch = 1.0;
+            utterance.rate = 0.2; // Even slower than before
+            utterance.pitch = 0.9; // Slightly lower pitch
             utterance.volume = 1.0;
+            
+            // Add pauses between syllables for longer words
+            if (word.length > 6) {
+                const syllables = this.estimateSyllables(word);
+                utterance.rate = 0.15; // Extra slow for long words
+            }
             
             window.speechSynthesis.speak(utterance);
         }
+    },
+    
+    estimateSyllables(word) {
+        // Simple syllable estimation
+        return word.toLowerCase().replace(/[^aeiou]/g, '').length || 1;
     },
     
     showNextHint() {
@@ -212,7 +152,6 @@ const SpeakEngine = {
                 break;
                 
             case 'phrase':
-                // Replace the word with a blank in the phrase
                 const displayPhrase = hint.text.replace(
                     new RegExp(word, 'gi'), 
                     '______'
@@ -224,15 +163,12 @@ const SpeakEngine = {
                 hintHTML = `
                     <div class="hint-item hint-with-audio">
                         <span>${hint.text}</span>
-                        <button class="audio-btn" onclick="SpeakEngine.speakPhoneme('${firstLetter}'); SpeakEngine.speakWordStart('${word}')">
-                            🔊
+                        <button class="audio-btn" onclick="SpeakEngine.speakWordStart('${word}')">
+                            🔊 Hear Start
                         </button>
                     </div>
                 `;
-                setTimeout(() => {
-                    this.speakPhoneme(firstLetter);
-                    setTimeout(() => this.speakWordStart(word), 600);
-                }, 100);
+                setTimeout(() => this.speakWordStart(word), 100);
                 break;
                 
             case 'word':
@@ -240,7 +176,7 @@ const SpeakEngine = {
                     <div class="hint-item hint-with-audio hint-answer">
                         <span>${hint.text}</span>
                         <button class="audio-btn" onclick="SpeakEngine.speakWord('${word}')">
-                            🔊
+                            🔊 Full Word
                         </button>
                     </div>
                 `;
@@ -268,10 +204,9 @@ const SpeakEngine = {
         this.total++;
         
         const word = this.currentQuestion.answer;
-        const hintsUsed = this.currentHintIndex;
         
-        // Track success for mastery
-        this.trackSuccess(word, hintsUsed);
+        // Track the success
+        WordTracking.trackAnswer(word, true, 'speak');
         
         // Brief success feedback
         const promptArea = document.getElementById('speak-prompt-area');
@@ -287,11 +222,8 @@ const SpeakEngine = {
         
         const word = this.currentQuestion.answer;
         
-        // Track as difficult
-        this.trackDifficulty(word);
-        
-        // Add to review queue
-        this.addToReview(this.currentQuestion);
+        // Track the failure
+        WordTracking.trackAnswer(word, false, 'speak');
         
         // Show the answer
         const hintDisplay = document.getElementById('hint-display');
@@ -299,7 +231,7 @@ const SpeakEngine = {
             <div class="hint-answer-reveal">
                 <span>The word is: <strong>${word.toUpperCase()}</strong></span>
                 <button class="audio-btn" onclick="SpeakEngine.speakWord('${word}')">
-                    🔊
+                    🔊 Listen
                 </button>
             </div>
         `;
@@ -309,73 +241,6 @@ const SpeakEngine = {
         setTimeout(() => {
             this.showNextQuestion();
         }, 2500);
-    },
-    
-    trackDifficulty(word) {
-        const data = this.difficultWords.get(word) || {
-            attempts: 0,
-            failures: 0,
-            turnsSinceShown: 0
-        };
-        
-        data.attempts++;
-        data.failures++;
-        data.turnsSinceShown = 0;
-        
-        this.difficultWords.set(word, data);
-        this.saveDifficultWords();
-    },
-    
-    trackSuccess(word, hintsUsed) {
-        // Get existing tracking data
-        let wordStats = Storage.get('wordStats', {});
-        
-        if (!wordStats[word]) {
-            wordStats[word] = {
-                successes: 0,
-                attempts: 0,
-                consecutiveSuccesses: 0
-            };
-        }
-        
-        wordStats[word].successes++;
-        wordStats[word].attempts++;
-        
-        // Only count as "clean" success if minimal hints used
-        if (hintsUsed <= 1) {
-            wordStats[word].consecutiveSuccesses++;
-        } else {
-            wordStats[word].consecutiveSuccesses = 0;
-        }
-        
-        // Check for mastery
-        const settings = Storage.get('settings', { masteryThreshold: 5 });
-        if (wordStats[word].consecutiveSuccesses >= settings.masteryThreshold) {
-            this.markAsMastered(word);
-        }
-        
-        Storage.set('wordStats', wordStats);
-        
-        // Remove from difficult words if doing well
-        if (wordStats[word].consecutiveSuccesses >= 2) {
-            this.difficultWords.delete(word);
-            this.saveDifficultWords();
-        }
-    },
-    
-    markAsMastered(word) {
-        const mastered = Storage.get('masteredWords', []);
-        if (!mastered.includes(word)) {
-            mastered.push(word);
-            Storage.set('masteredWords', mastered);
-        }
-    },
-    
-    addToReview(question) {
-        if (!this.reviewQueue.includes(question)) {
-            this.reviewQueue.push(question);
-            this.turnsSinceReview.set(question, 0);
-        }
     },
     
     getResults() {

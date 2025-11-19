@@ -9,6 +9,7 @@ const Settings = {
         const current = Storage.get('settings', {});
         const merged = { ...this.defaults, ...current };
         Storage.set('settings', merged);
+        WordTracking.init();
     },
     
     get(key) {
@@ -29,10 +30,21 @@ const Settings = {
         }
     },
     
+    resetProblemWord(word) {
+        WordTracking.resetProblemWord(word);
+        this.render();
+        document.getElementById('view-settings').innerHTML = this.render();
+    },
+    
+    unmasterWord(word) {
+        WordTracking.unmasterWord(word);
+        this.render();
+        document.getElementById('view-settings').innerHTML = this.render();
+    },
+    
     render() {
         const settings = Storage.get('settings', this.defaults);
-        const masteredCount = Storage.get('masteredWords', []).length;
-        const difficultCount = Object.keys(Storage.get('difficultWords', {})).length;
+        const summary = WordTracking.getStatsSummary();
         
         return `
             <div class="settings-container">
@@ -40,39 +52,75 @@ const Settings = {
                 <h2>Settings</h2>
                 
                 <div class="settings-group">
-                    <h3>Learning</h3>
+                    <h3>Learning Preferences</h3>
                     
                     <div class="setting-item">
-                        <label for="problem-freq">Problem word frequency</label>
-                        <p class="setting-description">Show difficult words every N turns</p>
-                        <select id="problem-freq" onchange="Settings.set('problemWordFrequency', parseInt(this.value))">
-                            <option value="2" ${settings.problemWordFrequency === 2 ? 'selected' : ''}>Every 2 turns</option>
-                            <option value="3" ${settings.problemWordFrequency === 3 ? 'selected' : ''}>Every 3 turns</option>
-                            <option value="5" ${settings.problemWordFrequency === 5 ? 'selected' : ''}>Every 5 turns</option>
-                        </select>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <label for="mastery-threshold">Mastery threshold</label>
-                        <p class="setting-description">Consecutive successes needed to master a word</p>
+                        <label for="mastery-threshold">Words to master</label>
+                        <p class="setting-description">Consecutive correct answers needed to master a word</p>
                         <select id="mastery-threshold" onchange="Settings.set('masteryThreshold', parseInt(this.value))">
-                            <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>3 times</option>
-                            <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>5 times</option>
-                            <option value="7" ${settings.masteryThreshold === 7 ? 'selected' : ''}>7 times</option>
+                            <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>3 correct</option>
+                            <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>5 correct</option>
+                            <option value="7" ${settings.masteryThreshold === 7 ? 'selected' : ''}>7 correct</option>
+                            <option value="10" ${settings.masteryThreshold === 10 ? 'selected' : ''}>10 correct</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="settings-group">
-                    <h3>Progress</h3>
-                    <div class="stats-summary">
-                        <p>Words mastered: <strong>${masteredCount}</strong></p>
-                        <p>Difficult words: <strong>${difficultCount}</strong></p>
+                    <h3>Problem Words (${summary.problemWordCount})</h3>
+                    <p class="setting-description">Words you're having trouble with. Get 3 correct in a row to remove.</p>
+                    <div class="word-list">
+                        ${summary.problemWords.length === 0 ? 
+                            '<p class="empty-message">No problem words yet!</p>' :
+                            summary.problemWords.map(item => `
+                                <div class="word-item problem-word">
+                                    <div class="word-info">
+                                        <span class="word-text">${item.word}</span>
+                                        <span class="word-stat">${item.ratio} wrong</span>
+                                        <span class="word-accuracy">${item.accuracy}% correct</span>
+                                    </div>
+                                    <button class="reset-btn" onclick="Settings.resetProblemWord('${item.word}')">
+                                        Reset
+                                    </button>
+                                </div>
+                            `).join('')
+                        }
                     </div>
                 </div>
                 
                 <div class="settings-group">
-                    <h3>Data</h3>
+                    <h3>Mastered Words (${summary.masteredWordCount})</h3>
+                    <p class="setting-description">Words you've mastered! These appear less frequently.</p>
+                    <div class="word-list">
+                        ${summary.masteredWords.length === 0 ? 
+                            '<p class="empty-message">No mastered words yet. Keep practicing!</p>' :
+                            summary.masteredWords.map(item => `
+                                <div class="word-item mastered-word">
+                                    <div class="word-info">
+                                        <span class="word-text">${item.word}</span>
+                                        <span class="word-date">Mastered ${item.masteredAt}</span>
+                                        <span class="word-accuracy">${item.accuracy}% accuracy</span>
+                                    </div>
+                                    <button class="unmaster-btn" onclick="Settings.unmasterWord('${item.word}')">
+                                        Practice Again
+                                    </button>
+                                </div>
+                            `).join('')
+                        }
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h3>Progress Summary</h3>
+                    <div class="stats-summary">
+                        <p>Total words attempted: <strong>${summary.totalWordsAttempted}</strong></p>
+                        <p>Problem words: <strong>${summary.problemWordCount}</strong></p>
+                        <p>Mastered words: <strong>${summary.masteredWordCount}</strong></p>
+                    </div>
+                </div>
+                
+                <div class="settings-group danger-zone">
+                    <h3>Data Management</h3>
                     <button class="btn-danger-outline" onclick="Settings.clearData()">
                         Reset All Progress
                     </button>
