@@ -6,6 +6,8 @@ const SpeakEngine = {
     startTime: null,
     currentQuestion: null,
     currentHintIndex: 0,
+    turnCount: 0,
+    justShowedCustom: false,
     
     init() {
         this.questions = ExerciseData.speak;
@@ -15,6 +17,8 @@ const SpeakEngine = {
         this.startTime = Date.now();
         this.currentQuestion = null;
         this.currentHintIndex = 0;
+        this.turnCount = 0;
+        this.justShowedCustom = false;
         WordTracking.init();
     },
     
@@ -23,12 +27,38 @@ const SpeakEngine = {
     },
     
     getNextQuestion() {
+        this.turnCount++;
+        
+        // First turn always shows custom if available
+        const customQuestions = this.questions.filter(q => q.isCustom);
+        if (this.turnCount === 1 && customQuestions.length > 0) {
+            this.justShowedCustom = true;
+            return customQuestions[Math.floor(Math.random() * customQuestions.length)];
+        }
+        
+        // Check custom frequency setting
+        const customFrequency = Settings.get('customFrequency') || 0.4;
+        const shouldShowCustom = !this.justShowedCustom && 
+                                Math.random() < customFrequency && 
+                                customQuestions.length > 0;
+        
+        if (shouldShowCustom) {
+            const masteredWords = Object.keys(WordTracking.getMasteredWords());
+            const availableCustom = customQuestions.filter(q => !masteredWords.includes(q.answer));
+            
+            if (availableCustom.length > 0) {
+                this.justShowedCustom = true;
+                return availableCustom[Math.floor(Math.random() * availableCustom.length)];
+            }
+        }
+        
+        this.justShowedCustom = false;
+        
         // Prioritize problem words
         const problemWords = WordTracking.getProblemWords();
         const problemWordsList = Object.keys(problemWords);
         
         if (problemWordsList.length > 0 && Math.random() < 0.3) {
-            // 30% chance to show a problem word
             const word = problemWordsList[Math.floor(Math.random() * problemWordsList.length)];
             const question = this.questions.find(q => q.answer === word);
             if (question) return question;
@@ -65,9 +95,16 @@ const SpeakEngine = {
                 <div class="prompt-emoji">${this.currentQuestion.emoji}</div>
                 <div class="prompt-instruction">What is this?</div>
             `;
+        } else if (this.currentQuestion.image) {
+            promptArea.innerHTML = `
+                <img src="${this.currentQuestion.image}" alt="Say this word" class="prompt-image"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="prompt-text" style="display:none;">Image not found</div>
+                <div class="prompt-instruction">What is this?</div>
+            `;
         } else {
             promptArea.innerHTML = `
-                <div class="prompt-emoji">${this.currentQuestion.image || '🖼️'}</div>
+                <div class="prompt-emoji">🖼️</div>
                 <div class="prompt-instruction">What is this?</div>
             `;
         }
@@ -88,24 +125,9 @@ const SpeakEngine = {
         return [
             { type: 'letters', text: `${firstLetter} ${blanks}` },
             { type: 'phrase', text: phrases[0] || `Think of something you might say...` },
-            { type: 'sound', text: `Starts with "${firstLetter}"` },
+            { type: 'phrase2', text: phrases[1] || `It's on the tip of your tongue...` },
             { type: 'word', text: word.toUpperCase().split('').join(' - ') }
         ];
-    },
-    
-    speakWordStart(word) {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            
-            // Speak first 2-3 letters as a blend
-            const start = word.substring(0, Math.min(3, Math.ceil(word.length / 2)));
-            const utterance = new SpeechSynthesisUtterance(start);
-            utterance.rate = 0.3; // Very slow
-            utterance.pitch = 1.0;
-            utterance.volume = 1.0;
-            
-            window.speechSynthesis.speak(utterance);
-        }
     },
     
     speakWord(word) {
@@ -113,23 +135,16 @@ const SpeakEngine = {
             window.speechSynthesis.cancel();
             
             const utterance = new SpeechSynthesisUtterance(word);
-            utterance.rate = 0.2; // Even slower than before
-            utterance.pitch = 0.9; // Slightly lower pitch
+            utterance.rate = 0.2;
+            utterance.pitch = 0.9;
             utterance.volume = 1.0;
             
-            // Add pauses between syllables for longer words
             if (word.length > 6) {
-                const syllables = this.estimateSyllables(word);
-                utterance.rate = 0.15; // Extra slow for long words
+                utterance.rate = 0.15;
             }
             
             window.speechSynthesis.speak(utterance);
         }
-    },
-    
-    estimateSyllables(word) {
-        // Simple syllable estimation
-        return word.toLowerCase().replace(/[^aeiou]/g, '').length || 1;
     },
     
     showNextHint() {
@@ -142,7 +157,6 @@ const SpeakEngine = {
         const hint = hints[this.currentHintIndex];
         const hintDisplay = document.getElementById('hint-display');
         const word = this.currentQuestion.answer;
-        const firstLetter = word[0].toUpperCase();
         
         let hintHTML = '';
         
@@ -152,6 +166,7 @@ const SpeakEngine = {
                 break;
                 
             case 'phrase':
+            case 'phrase2':
                 const displayPhrase = hint.text.replace(
                     new RegExp(word, 'gi'), 
                     '______'
@@ -159,24 +174,12 @@ const SpeakEngine = {
                 hintHTML = `<div class="hint-item hint-phrase">"${displayPhrase}"</div>`;
                 break;
                 
-            case 'sound':
-                hintHTML = `
-                    <div class="hint-item hint-with-audio">
-                        <span>${hint.text}</span>
-                        <button class="audio-btn" onclick="SpeakEngine.speakWordStart('${word}')">
-                            🔊 Hear Start
-                        </button>
-                    </div>
-                `;
-                setTimeout(() => this.speakWordStart(word), 100);
-                break;
-                
             case 'word':
                 hintHTML = `
                     <div class="hint-item hint-with-audio hint-answer">
                         <span>${hint.text}</span>
                         <button class="audio-btn" onclick="SpeakEngine.speakWord('${word}')">
-                            🔊 Full Word
+                            🔊 Hear It
                         </button>
                     </div>
                 `;
@@ -187,7 +190,6 @@ const SpeakEngine = {
         hintDisplay.innerHTML += hintHTML;
         this.currentHintIndex++;
         
-        // Update button
         const hintBtn = document.getElementById('hint-btn');
         if (this.currentHintIndex >= hints.length) {
             hintBtn.textContent = 'No more hints';
@@ -204,11 +206,8 @@ const SpeakEngine = {
         this.total++;
         
         const word = this.currentQuestion.answer;
-        
-        // Track the success
         WordTracking.trackAnswer(word, true, 'speak');
         
-        // Brief success feedback
         const promptArea = document.getElementById('speak-prompt-area');
         promptArea.innerHTML += `<div class="success-flash">✓ Great job!</div>`;
         
@@ -221,11 +220,8 @@ const SpeakEngine = {
         this.total++;
         
         const word = this.currentQuestion.answer;
-        
-        // Track the failure
         WordTracking.trackAnswer(word, false, 'speak');
         
-        // Show the answer
         const hintDisplay = document.getElementById('hint-display');
         hintDisplay.innerHTML = `
             <div class="hint-answer-reveal">

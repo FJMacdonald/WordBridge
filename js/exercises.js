@@ -6,6 +6,8 @@ const ExerciseEngine = {
     total: 0,
     startTime: null,
     currentQuestion: null,
+    turnCount: 0,
+    justShowedCustom: false,
     
     init(type) {
         this.type = type;
@@ -15,6 +17,8 @@ const ExerciseEngine = {
         this.total = 0;
         this.startTime = Date.now();
         this.currentQuestion = null;
+        this.turnCount = 0;
+        this.justShowedCustom = false;
         WordTracking.init();
     },
     
@@ -23,12 +27,39 @@ const ExerciseEngine = {
     },
     
     getRandomQuestion() {
+        this.turnCount++;
+        
+        // First turn always shows custom if available
+        const customQuestions = this.questions.filter(q => q.isCustom);
+        if (this.turnCount === 1 && customQuestions.length > 0) {
+            this.justShowedCustom = true;
+            return customQuestions[Math.floor(Math.random() * customQuestions.length)];
+        }
+        
+        // Check custom frequency setting
+        const customFrequency = Settings.get('customFrequency') || 0.4;
+        const shouldShowCustom = !this.justShowedCustom && 
+                                Math.random() < customFrequency && 
+                                customQuestions.length > 0;
+        
+        if (shouldShowCustom) {
+            // Filter out mastered custom words
+            const masteredWords = Object.keys(WordTracking.getMasteredWords());
+            const availableCustom = customQuestions.filter(q => !masteredWords.includes(q.answer));
+            
+            if (availableCustom.length > 0) {
+                this.justShowedCustom = true;
+                return availableCustom[Math.floor(Math.random() * availableCustom.length)];
+            }
+        }
+        
+        this.justShowedCustom = false;
+        
         // Prioritize problem words
         const problemWords = WordTracking.getProblemWords();
         const problemWordsList = Object.keys(problemWords);
         
         if (problemWordsList.length > 0 && Math.random() < 0.3) {
-            // 30% chance to show a problem word
             const word = problemWordsList[Math.floor(Math.random() * problemWordsList.length)];
             const question = this.questions.find(q => q.answer === word);
             if (question) return question;
@@ -76,7 +107,7 @@ const ExerciseEngine = {
         answerArea.innerHTML = `
             <div class="answer-grid">
                 ${shuffledOptions.map(opt => `
-                    <button class="answer-btn" onclick="ExerciseEngine.checkAnswer('${opt.replace(/'/g, "\\'")}', this)">
+                    <button class="answer-btn" onclick="ExerciseEngine.checkAnswer('${this.escapeQuotes(opt)}', this)">
                         ${opt}
                     </button>
                 `).join('')}
@@ -87,20 +118,27 @@ const ExerciseEngine = {
         document.getElementById('hint-area').innerHTML = '';
     },
     
+    escapeQuotes(str) {
+        return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    },
+    
     renderPrompt(question) {
         switch (this.type) {
             case 'naming':
-                if (question.type === 'emoji') {
+                if (question.emoji) {
                     return `
                         <div class="prompt-emoji">${question.emoji}</div>
                         <div class="prompt-instruction">What is this?</div>
                     `;
-                } else {
+                } else if (question.image) {
                     return `
-                        <img src="${question.image}" alt="Identify this" class="prompt-image">
+                        <img src="${question.image}" alt="Identify this" class="prompt-image" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="prompt-text" style="display:none;">Image not found</div>
                         <div class="prompt-instruction">What is this?</div>
                     `;
                 }
+                break;
                 
             case 'categories':
                 return `
