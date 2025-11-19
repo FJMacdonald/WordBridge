@@ -1,7 +1,3 @@
-// js/speak.js
-/**
- * Speak Exercise Engine - Progressive hints with spaced repetition
- */
 const SpeakEngine = {
     questions: [],
     usedIndices: new Set(),
@@ -10,8 +6,9 @@ const SpeakEngine = {
     startTime: null,
     currentQuestion: null,
     currentHintIndex: 0,
-    reviewQueue: [], // Questions to review
-    turnsSinceReview: new Map(), // Track turns since each question
+    reviewQueue: [],
+    turnsSinceReview: new Map(),
+    difficultWords: new Map(), // Track difficulty
     
     init() {
         this.questions = ExerciseData.speak;
@@ -23,6 +20,17 @@ const SpeakEngine = {
         this.currentHintIndex = 0;
         this.reviewQueue = [];
         this.turnsSinceReview = new Map();
+        this.loadDifficultWords();
+    },
+    
+    loadDifficultWords() {
+        const saved = Storage.get('difficultWords', {});
+        this.difficultWords = new Map(Object.entries(saved));
+    },
+    
+    saveDifficultWords() {
+        const obj = Object.fromEntries(this.difficultWords);
+        Storage.set('difficultWords', obj);
     },
     
     start() {
@@ -30,79 +38,126 @@ const SpeakEngine = {
     },
     
     getNextQuestion() {
-        // First, check if any review items are due (3 turns have passed)
+        const settings = Storage.get('settings', { problemWordFrequency: 3 });
+        
+        // Check for due difficult words first
+        for (const [word, data] of this.difficultWords) {
+            if (data.turnsSinceShown >= settings.problemWordFrequency) {
+                const question = this.questions.find(q => q.answer === word);
+                if (question) {
+                    data.turnsSinceShown = 0;
+                    this.saveDifficultWords();
+                    this.incrementAllTurnCounters();
+                    return question;
+                }
+            }
+        }
+        
+        // Check review queue
         for (let i = 0; i < this.reviewQueue.length; i++) {
             const reviewItem = this.reviewQueue[i];
             const turnsSince = this.turnsSinceReview.get(reviewItem) || 0;
             
             if (turnsSince >= 3) {
-                // Remove from review queue and reset counter
                 this.reviewQueue.splice(i, 1);
                 this.turnsSinceReview.delete(reviewItem);
-                
-                // Increment all other counters
-                this.incrementTurnCounters();
-                
+                this.incrementAllTurnCounters();
                 return reviewItem;
             }
         }
         
-        // Otherwise get a new random question
-        if (this.usedIndices.size >= this.questions.length) {
+        // Get new random question (excluding mastered words)
+        const masteredWords = Storage.get('masteredWords', []);
+        const availableQuestions = this.questions.filter(q => 
+            !masteredWords.includes(q.answer) && !this.usedIndices.has(this.questions.indexOf(q))
+        );
+        
+        if (availableQuestions.length === 0) {
             this.usedIndices.clear();
+            return this.questions[Math.floor(Math.random() * this.questions.length)];
         }
         
-        let index;
-        do {
-            index = Math.floor(Math.random() * this.questions.length);
-        } while (this.usedIndices.has(index));
+        const question = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+        this.usedIndices.add(this.questions.indexOf(question));
+        this.incrementAllTurnCounters();
         
-        this.usedIndices.add(index);
-        
-        // Increment all review counters
-        this.incrementTurnCounters();
-        
-        return this.questions[index];
+        return question;
     },
     
-    incrementTurnCounters() {
+    incrementAllTurnCounters() {
+        // Increment review queue counters
         for (const item of this.reviewQueue) {
             const current = this.turnsSinceReview.get(item) || 0;
             this.turnsSinceReview.set(item, current + 1);
         }
+        
+        // Increment difficult word counters
+        for (const [word, data] of this.difficultWords) {
+            data.turnsSinceShown++;
+        }
+        this.saveDifficultWords();
     },
     
     showNextQuestion() {
         this.currentQuestion = this.getNextQuestion();
         this.currentHintIndex = 0;
         
-        // Update progress
         document.getElementById('speak-progress').textContent = 
             `${this.correct} correct`;
         
-        // Show image
+        // Show image/emoji
         const promptArea = document.getElementById('speak-prompt-area');
-        promptArea.innerHTML = `
-            <img src="${this.currentQuestion.image}" alt="Say this word" class="prompt-image-large">
-            <div class="text-center text-gray-600 mt-4">Say what you see</div>
-        `;
+        if (this.currentQuestion.emoji) {
+            promptArea.innerHTML = `
+                <div class="prompt-emoji-large">${this.currentQuestion.emoji}</div>
+                <div class="text-center text-gray-600 mt-4">Say what you see</div>
+            `;
+        } else {
+            promptArea.innerHTML = `
+                <img src="${this.currentQuestion.image}" alt="Say this word" class="prompt-image-large">
+                <div class="text-center text-gray-600 mt-4">Say what you see</div>
+            `;
+        }
         
         // Reset hint display
         document.getElementById('hint-display').innerHTML = '';
         document.getElementById('hint-btn').textContent = '💡 Need a hint';
         document.getElementById('hint-btn').disabled = false;
-        document.getElementById('hint-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+        document.getElementById('hint-btn').classList.remove('disabled');
     },
     
-    speakWord(word, slow = false) {
+    // Generate hints dynamically based on word
+    getHints() {
+        const word = this.currentQuestion.answer;
+        const firstLetter = word[0].toUpperCase();
+        const blanks = '_'.repeat(word.length - 1);
+        const phrases = this.currentQuestion.phrases || [];
+        
+        return [
+            { type: 'letters', text: `${firstLetter} ${blanks}` },
+            { type: 'phrase', text: phrases[0] || `Think of something you might say...` },
+            { type: 'phrase', text: phrases[1] || `It's on the tip of your tongue...` },
+            { type: 'sound', text: `Starts with "${firstLetter}"` },
+            { type: 'word', text: word.toUpperCase().split('').join(' - ') }
+        ];
+    },
+    
+    speakPhoneme(letter) {
         if ('speechSynthesis' in window) {
-            // Cancel any ongoing speech
             window.speechSynthesis.cancel();
             
-            const utterance = new SpeechSynthesisUtterance(word);
+            // Map letters to phonetic sounds
+            const phonemes = {
+                'A': 'ah', 'B': 'buh', 'C': 'kuh', 'D': 'duh', 'E': 'eh',
+                'F': 'fff', 'G': 'guh', 'H': 'huh', 'I': 'ih', 'J': 'juh',
+                'K': 'kuh', 'L': 'lll', 'M': 'mmm', 'N': 'nnn', 'O': 'oh',
+                'P': 'puh', 'Q': 'kwuh', 'R': 'rrr', 'S': 'sss', 'T': 'tuh',
+                'U': 'uh', 'V': 'vvv', 'W': 'wuh', 'X': 'ks', 'Y': 'yuh', 'Z': 'zzz'
+            };
             
-            // Configure for clear pronunciation
-            utterance.rate = slow ? 0.5 : 0.8; // Very slow for final hint
+            const sound = phonemes[letter.toUpperCase()] || letter;
+            const utterance = new SpeechSynthesisUtterance(sound);
+            utterance.rate = 0.6;
             utterance.pitch = 1.0;
             utterance.volume = 1.0;
             
@@ -110,12 +165,26 @@ const SpeakEngine = {
         }
     },
     
-    speakLetter(letter) {
+    speakWordStart(word) {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             
-            const utterance = new SpeechSynthesisUtterance(letter.toUpperCase());
-            utterance.rate = 0.7;
+            // Speak just the beginning sound of the word
+            const start = word.substring(0, 2);
+            const utterance = new SpeechSynthesisUtterance(start);
+            utterance.rate = 0.4;
+            utterance.pitch = 1.0;
+            
+            window.speechSynthesis.speak(utterance);
+        }
+    },
+    
+    speakWord(word) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.rate = 0.3; // Very slow
             utterance.pitch = 1.0;
             utterance.volume = 1.0;
             
@@ -124,67 +193,73 @@ const SpeakEngine = {
     },
     
     showNextHint() {
-        if (this.currentHintIndex >= this.currentQuestion.hints.length) {
+        const hints = this.getHints();
+        
+        if (this.currentHintIndex >= hints.length) {
             return;
         }
         
-        const hint = this.currentQuestion.hints[this.currentHintIndex];
+        const hint = hints[this.currentHintIndex];
         const hintDisplay = document.getElementById('hint-display');
+        const word = this.currentQuestion.answer;
+        const firstLetter = word[0].toUpperCase();
         
-        // Check if this is one of the last two hints
-        const isStartsWithHint = hint.toLowerCase().includes('starts with');
-        const isLastHint = this.currentHintIndex === this.currentQuestion.hints.length - 1;
-        
-        // Create hint element
         let hintHTML = '';
         
-        if (isStartsWithHint) {
-            // Extract the letter from the hint
-            const letterMatch = hint.match(/"([A-Z])"/i);
-            const letter = letterMatch ? letterMatch[1] : hint.slice(-1);
-            
-            hintHTML = `
-                <div class="hint-item hint-with-audio">
-                    <span>${hint}</span>
-                    <button class="audio-btn" onclick="SpeakEngine.speakLetter('${letter}')">
-                        🔊
-                    </button>
-                </div>
-            `;
-            
-            // Auto-speak the letter
-            setTimeout(() => this.speakLetter(letter), 100);
-            
-        } else if (isLastHint) {
-            // This is the spelled-out word - say it slowly
-            hintHTML = `
-                <div class="hint-item hint-with-audio">
-                    <span>${hint}</span>
-                    <button class="audio-btn" onclick="SpeakEngine.speakWord('${this.currentQuestion.answer}', true)">
-                        🔊
-                    </button>
-                </div>
-            `;
-            
-            // Auto-speak the word slowly
-            setTimeout(() => this.speakWord(this.currentQuestion.answer, true), 100);
-            
-        } else {
-            hintHTML = `<div class="hint-item">${hint}</div>`;
+        switch (hint.type) {
+            case 'letters':
+                hintHTML = `<div class="hint-item hint-letters">${hint.text}</div>`;
+                break;
+                
+            case 'phrase':
+                // Replace the word with a blank in the phrase
+                const displayPhrase = hint.text.replace(
+                    new RegExp(word, 'gi'), 
+                    '______'
+                );
+                hintHTML = `<div class="hint-item hint-phrase">"${displayPhrase}"</div>`;
+                break;
+                
+            case 'sound':
+                hintHTML = `
+                    <div class="hint-item hint-with-audio">
+                        <span>${hint.text}</span>
+                        <button class="audio-btn" onclick="SpeakEngine.speakPhoneme('${firstLetter}'); SpeakEngine.speakWordStart('${word}')">
+                            🔊
+                        </button>
+                    </div>
+                `;
+                setTimeout(() => {
+                    this.speakPhoneme(firstLetter);
+                    setTimeout(() => this.speakWordStart(word), 600);
+                }, 100);
+                break;
+                
+            case 'word':
+                hintHTML = `
+                    <div class="hint-item hint-with-audio hint-answer">
+                        <span>${hint.text}</span>
+                        <button class="audio-btn" onclick="SpeakEngine.speakWord('${word}')">
+                            🔊
+                        </button>
+                    </div>
+                `;
+                setTimeout(() => this.speakWord(word), 100);
+                break;
         }
         
         hintDisplay.innerHTML += hintHTML;
         this.currentHintIndex++;
         
-        // Update button text
+        // Update button
         const hintBtn = document.getElementById('hint-btn');
-        if (this.currentHintIndex >= this.currentQuestion.hints.length) {
+        if (this.currentHintIndex >= hints.length) {
             hintBtn.textContent = 'No more hints';
             hintBtn.disabled = true;
-            hintBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            hintBtn.classList.add('disabled');
         } else {
             hintBtn.textContent = 
-                `💡 Another hint (${this.currentQuestion.hints.length - this.currentHintIndex} left)`;
+                `💡 Another hint (${hints.length - this.currentHintIndex} left)`;
         }
     },
     
@@ -192,13 +267,11 @@ const SpeakEngine = {
         this.correct++;
         this.total++;
         
-        // Don't add to review if they got it without all hints
-        const usedAllHints = this.currentHintIndex >= this.currentQuestion.hints.length;
+        const word = this.currentQuestion.answer;
+        const hintsUsed = this.currentHintIndex;
         
-        if (usedAllHints) {
-            // Add to review queue
-            this.addToReview(this.currentQuestion);
-        }
+        // Track success for mastery
+        this.trackSuccess(word, hintsUsed);
         
         // Brief success feedback
         const promptArea = document.getElementById('speak-prompt-area');
@@ -212,30 +285,93 @@ const SpeakEngine = {
     markIncorrect() {
         this.total++;
         
-        // Add to review queue since they couldn't get it
+        const word = this.currentQuestion.answer;
+        
+        // Track as difficult
+        this.trackDifficulty(word);
+        
+        // Add to review queue
         this.addToReview(this.currentQuestion);
         
-        // Show the answer with audio
+        // Show the answer
         const hintDisplay = document.getElementById('hint-display');
         hintDisplay.innerHTML = `
-            <div class="bg-red-50 p-4 rounded-lg flex items-center justify-between">
-                <span class="text-red-700">The word is: <strong class="text-xl">${this.currentQuestion.answer.toUpperCase()}</strong></span>
-                <button class="audio-btn" onclick="SpeakEngine.speakWord('${this.currentQuestion.answer}')">
+            <div class="hint-answer-reveal">
+                <span>The word is: <strong>${word.toUpperCase()}</strong></span>
+                <button class="audio-btn" onclick="SpeakEngine.speakWord('${word}')">
                     🔊
                 </button>
             </div>
         `;
         
-        // Auto-speak the answer
-        setTimeout(() => this.speakWord(this.currentQuestion.answer), 100);
+        setTimeout(() => this.speakWord(word), 100);
         
         setTimeout(() => {
             this.showNextQuestion();
         }, 2500);
     },
     
+    trackDifficulty(word) {
+        const data = this.difficultWords.get(word) || {
+            attempts: 0,
+            failures: 0,
+            turnsSinceShown: 0
+        };
+        
+        data.attempts++;
+        data.failures++;
+        data.turnsSinceShown = 0;
+        
+        this.difficultWords.set(word, data);
+        this.saveDifficultWords();
+    },
+    
+    trackSuccess(word, hintsUsed) {
+        // Get existing tracking data
+        let wordStats = Storage.get('wordStats', {});
+        
+        if (!wordStats[word]) {
+            wordStats[word] = {
+                successes: 0,
+                attempts: 0,
+                consecutiveSuccesses: 0
+            };
+        }
+        
+        wordStats[word].successes++;
+        wordStats[word].attempts++;
+        
+        // Only count as "clean" success if minimal hints used
+        if (hintsUsed <= 1) {
+            wordStats[word].consecutiveSuccesses++;
+        } else {
+            wordStats[word].consecutiveSuccesses = 0;
+        }
+        
+        // Check for mastery
+        const settings = Storage.get('settings', { masteryThreshold: 5 });
+        if (wordStats[word].consecutiveSuccesses >= settings.masteryThreshold) {
+            this.markAsMastered(word);
+        }
+        
+        Storage.set('wordStats', wordStats);
+        
+        // Remove from difficult words if doing well
+        if (wordStats[word].consecutiveSuccesses >= 2) {
+            this.difficultWords.delete(word);
+            this.saveDifficultWords();
+        }
+    },
+    
+    markAsMastered(word) {
+        const mastered = Storage.get('masteredWords', []);
+        if (!mastered.includes(word)) {
+            mastered.push(word);
+            Storage.set('masteredWords', mastered);
+        }
+    },
+    
     addToReview(question) {
-        // Only add if not already in queue
         if (!this.reviewQueue.includes(question)) {
             this.reviewQueue.push(question);
             this.turnsSinceReview.set(question, 0);

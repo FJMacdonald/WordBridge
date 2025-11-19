@@ -1,8 +1,7 @@
 /**
  * Sentence Completion Exercise Data
  */
-const SentencesData = {
-    1: [ // High predictability
+const SentencesData = [ 
         { prompt: 'The sky is ___', answer: 'blue', options: ['blue', 'loud', 'fast', 'heavy'] },
         { prompt: 'I drink water when I am ___', answer: 'thirsty', options: ['thirsty', 'angry', 'tall', 'quiet'] },
         { prompt: 'We sleep in a ___', answer: 'bed', options: ['bed', 'car', 'tree', 'cup'] },
@@ -73,6 +72,466 @@ const SentencesData = {
         { prompt: 'I use a ___ to call people.', answer: 'phone', options: ['phone', 'apple', 'chair', 'dog'] },
         { prompt: 'Rain falls from the ___.', answer: 'clouds', options: ['clouds', 'table', 'car', 'shoe'] },
         { prompt: 'We cook food in the ___.', answer: 'kitchen', options: ['kitchen', 'car', 'book', 'shoe'] },
-        { prompt: 'A fish lives in ___.', answer: 'water', options: ['water', 'chair', 'book', 'car'] }
+        { prompt: 'A fish lives in ___.', answer: 'water', options: ['water', 'chair', 'book', 'car'] },
+  {
+    "prompt": "I drink ___ in the morning",
+    "answer": "coffee",
+    "options": [
+      "coffee",
+      "chair",
+      "book",
+      "shoe"
     ]
-};
+  },
+  {
+    "prompt": "The sky is ___",
+    "answer": "blue",
+    "options": [
+      "blue",
+      "eating",
+      "heavy",
+      "quick"
+    ]
+  },
+  {
+    "prompt": "We sleep in a ___",
+    "answer": "bed",
+    "options": [
+      "bed",
+      "car",
+      "apple",
+      "cloud"
+    ]
+  },
+  {
+    "prompt": "Birds can ___",
+    "answer": "fly",
+    "options": [
+      "fly",
+      "swim",
+      "read",
+      "drive"
+    ]
+  },
+  {
+    "prompt": "Fish live in ___",
+    "answer": "water",
+    "options": [
+      "water",
+      "trees",
+      "cars",
+      "beds"
+    ]
+  },
+  {
+    "prompt": "The sun is ___",
+    "answer": "bright",
+    "options": [
+      "bright",
+      "dark",
+      "wet",
+      "cold"
+    ]
+  },
+  {
+    "prompt": "Ice is ___",
+    "answer": "cold",
+    "options": [
+      "cold",
+      "hot",
+      "soft",
+      "loud"
+    ]
+  },
+  {
+    "prompt": "We see with our ___",
+    "answer": "eyes",
+    "options": [
+      "eyes",
+      "ears",
+      "hands",
+      "feet"
+    ]
+  },
+  {
+    "prompt": "We hear with our ___",
+    "answer": "ears",
+    "options": [
+      "ears",
+      "eyes",
+      "nose",
+      "mouth"
+    ]
+  },
+  {
+    "prompt": "A dog has four ___",
+    "answer": "legs",
+    "options": [
+      "legs",
+      "wings",
+      "arms",
+      "wheels"
+    ]
+  },
+  {
+    "prompt": "Roses are ___",
+    "answer": "red",
+    "options": [
+      "red",
+      "loud",
+      "fast",
+      "heavy"
+    ]
+  },
+  {
+    "prompt": "Sugar is ___",
+    "answer": "sweet",
+    "options": [
+      "sweet",
+      "sour",
+      "salty",
+      "bitter"
+    ]
+  },
+  {
+    "prompt": "The grass is ___",
+    "answer": "green",
+    "options": [
+      "green",
+      "purple",
+      "orange",
+      "pink"
+    ]
+  },
+  {
+    "prompt": "We write with a ___",
+    "answer": "pen",
+    "options": [
+      "pen",
+      "spoon",
+      "shoe",
+      "hat"
+    ]
+  },
+  {
+    "prompt": "A clock tells ___",
+    "answer": "time",
+    "options": [
+      "time",
+      "stories",
+      "jokes",
+      "lies"
+    ]
+  },
+  {
+    "prompt": "Rain falls from ___",
+    "answer": "clouds",
+    "options": [
+      "clouds",
+      "ground",
+      "trees",
+      "houses"
+    ]
+  },
+  {
+    "prompt": "We cook in the ___",
+    "answer": "kitchen",
+    "options": [
+      "kitchen",
+      "bedroom",
+      "garage",
+      "attic"
+    ]
+  },
+  {
+    "prompt": "Books are for ___",
+    "answer": "reading",
+    "options": [
+      "reading",
+      "eating",
+      "wearing",
+      "throwing"
+    ]
+  },
+  {
+    "prompt": "Shoes go on your ___",
+    "answer": "feet",
+    "options": [
+      "feet",
+      "hands",
+      "head",
+      "ears"
+    ]
+  },
+  {
+    "prompt": "We brush our ___",
+    "answer": "teeth",
+    "options": [
+      "teeth",
+      "shoes",
+      "cars",
+      "walls"
+    ]
+  },
+  {
+    "prompt": "An _____ a day keeps the doctor away",
+    "answer": "apple",
+    "options": [
+      "apple",
+      "pizza",
+      "burger",
+      "egg"
+    ]
+  },
+  {
+    "prompt": "Every _____ has its day",
+    "answer": "dog",
+    "options": [
+      "tiger",
+      "elephant",
+      "dog",
+      "cat"
+    ]
+  },
+  {
+    "prompt": "Curiosity killed the _____",
+    "answer": "cat",
+    "options": [
+      "cat",
+      "horse",
+      "sheep",
+      "cow"
+    ]
+  },
+  {
+    "prompt": "A _____ in the hand is worth two in the bush",
+    "answer": "bird",
+    "options": [
+      "bird",
+      "cow",
+      "pig",
+      "elephant"
+    ]
+  },
+  {
+    "prompt": "There are plenty of _____ in the sea",
+    "answer": "fish",
+    "options": [
+      "cow",
+      "mouse",
+      "fish",
+      "elephant"
+    ]
+  },
+  {
+    "prompt": "Don't look a gift _____ in the mouth",
+    "answer": "horse",
+    "options": [
+      "dog",
+      "rabbit",
+      "horse",
+      "sheep"
+    ]
+  },
+  {
+    "prompt": "Still _____s run deep",
+    "answer": "water",
+    "options": [
+      "water",
+      "key",
+      "ring",
+      "picture"
+    ]
+  },
+  {
+    "prompt": "Here comes the _____",
+    "answer": "sun",
+    "options": [
+      "cloud",
+      "sun",
+      "beach",
+      "tree"
+    ]
+  },
+  {
+    "prompt": "Once in a blue _____",
+    "answer": "moon",
+    "options": [
+      "moon",
+      "snow",
+      "mountain",
+      "beach"
+    ]
+  },
+  {
+    "prompt": "Save for a _____y day",
+    "answer": "rain",
+    "options": [
+      "mountain",
+      "beach",
+      "rain",
+      "tree"
+    ]
+  },
+  {
+    "prompt": "A piece of _____",
+    "answer": "cake",
+    "options": [
+      "orange",
+      "banana",
+      "cake",
+      "pizza"
+    ]
+  },
+  {
+    "prompt": "Our daily _____",
+    "answer": "bread",
+    "options": [
+      "pasta",
+      "burger",
+      "banana",
+      "bread"
+    ]
+  },
+  {
+    "prompt": "Walking on _____shells",
+    "answer": "egg",
+    "options": [
+      "banana",
+      "cheese",
+      "coffee",
+      "egg"
+    ]
+  },
+  {
+    "prompt": "Don't cry over spilled _____",
+    "answer": "milk",
+    "options": [
+      "pizza",
+      "milk",
+      "juice",
+      "bread"
+    ]
+  },
+  {
+    "prompt": "Say _____!",
+    "answer": "cheese",
+    "options": [
+      "cheese",
+      "bread",
+      "corn",
+      "juice"
+    ]
+  },
+  {
+    "prompt": "Lend a _____",
+    "answer": "hand",
+    "options": [
+      "foot",
+      "hand",
+      "heart",
+      "leg"
+    ]
+  },
+  {
+    "prompt": "Keep an _____ on it",
+    "answer": "eye",
+    "options": [
+      "brain",
+      "hand",
+      "eye",
+      "ear"
+    ]
+  },
+  {
+    "prompt": "Follow your _____",
+    "answer": "heart",
+    "options": [
+      "foot",
+      "leg",
+      "ear",
+      "heart"
+    ]
+  },
+  {
+    "prompt": "Put your best _____ forward",
+    "answer": "foot",
+    "options": [
+      "ear",
+      "foot",
+      "tooth",
+      "mouth"
+    ]
+  },
+  {
+    "prompt": "Don't judge a _____ by its cover",
+    "answer": "book",
+    "options": [
+      "hotdog",
+      "fox",
+      "gift",
+      "book"
+    ]
+  },
+  {
+    "prompt": "When one _____ closes",
+    "answer": "door",
+    "options": [
+      "door",
+      "cup",
+      "plate",
+      "computer"
+    ]
+  },
+  {
+    "prompt": "The _____ to success",
+    "answer": "key",
+    "options": [
+      "ring",
+      "key",
+      "photographing",
+      "grandmother"
+    ]
+  },
+  {
+    "prompt": "Have a _____",
+    "answer": "ball",
+    "options": [
+      "paper",
+      "ball",
+      "watch",
+      "cherry"
+    ]
+  },
+  {
+    "prompt": "_____ talks",
+    "answer": "money",
+    "options": [
+      "rainbow",
+      "grandmother",
+      "money",
+      "owl"
+    ]
+  },
+  {
+    "prompt": "_____ at the end of the tunnel",
+    "answer": "light",
+    "options": [
+      "broccoli",
+      "light",
+      "icecream",
+      "pencil"
+    ]
+  },
+  {
+    "prompt": "Can't see the forest for the _____s",
+    "answer": "tree",
+    "options": [
+      "tree",
+      "cloud",
+      "star",
+      "ocean"
+    ]
+  }
+]
+

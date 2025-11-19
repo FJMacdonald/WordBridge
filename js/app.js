@@ -25,14 +25,18 @@ const app = {
         this.lastSession = data;
         Storage.set('lastSession', data);
     },
-    
+
     showView(viewName) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(`view-${viewName}`).classList.add('active');
+        const viewElement = document.getElementById(`view-${viewName}`);
+        viewElement.classList.add('active');
         this.currentView = viewName;
         
         if (viewName === 'dashboard') {
             this.renderDashboard();
+        } else if (viewName === 'settings') {
+            // Render settings content
+            viewElement.innerHTML = Settings.render();
         }
     },
     
