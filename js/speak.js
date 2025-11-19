@@ -109,13 +109,13 @@ const SpeakEngine = {
         const promptArea = document.getElementById('speak-prompt-area');
         if (this.currentQuestion.emoji) {
             promptArea.innerHTML = `
-                <div class="prompt-emoji-large">${this.currentQuestion.emoji}</div>
-                <div class="text-center text-gray-600 mt-4">Say what you see</div>
+                <div class="prompt-emoji">${this.currentQuestion.emoji}</div>
+                <div class="prompt-instruction">What is this?</div>
             `;
         } else {
             promptArea.innerHTML = `
-                <img src="${this.currentQuestion.image}" alt="Say this word" class="prompt-image-large">
-                <div class="text-center text-gray-600 mt-4">Say what you see</div>
+                <div class="prompt-emoji">${this.currentQuestion.image}</div>
+                <div class="prompt-instruction">What is this?</div>
             `;
         }
         

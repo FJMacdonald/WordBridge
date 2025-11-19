@@ -24,7 +24,7 @@ const SpeakData = [
   {"emoji": "❤️", "answer": "heart", "phrases": ["Follow your _____", "Cross my _____"]},
   {"emoji": "🐎", "answer": "horse", "phrases": ["Don't look a gift _____ in the mouth", "You can lead a _____ to water"]},
   {"emoji": "💡", "answer": "light", "phrases": ["_____ at the end of the tunnel", "See the _____"]},
-  {"emoji": "💧", "answer": "water", "phrases": ["Still _____s run deep", "_____ under the bridge"]}
+  {"emoji": "💧", "answer": "water", "phrases": ["Still _____s run deep", "_____ under the bridge"]},
   {"emoji": "🔥", "answer": "fire", "phrases": ["Where there's smoke, there's _____", "Add fuel to the _____"]},
   {"emoji": "🧊", "answer": "ice", "phrases": ["Break the _____", "Walk on thin _____"]},
   {"emoji": "🪨", "answer": "rock", "phrases": ["Between a _____ and a hard place", "Solid as a _____"]},
