@@ -1,20 +1,74 @@
-/**
- * Main Application Controller
- */
 const app = {
     currentView: 'dashboard',
+    viewHistory: [],
     lastSession: null,
     
-    init() {
+    async init() {
+        try {
+            await ImageStorage.init();
+            console.log('ImageStorage initialized');
+        } catch (e) {
+            console.error('Failed to initialize ImageStorage:', e);
+        }
+        
         Progress.init();
         Settings.init();
         this.loadLastSession();
         this.renderDashboard();
-        // At the very top of app.js
-        console.log('ExerciseData loaded:', typeof ExerciseData !== 'undefined');
-        if (typeof ExerciseData !== 'undefined') {
-            console.log('Exercise types:', Object.keys(ExerciseData));
+    },
+    
+    toggleMenu() {
+        const menu = document.getElementById('side-menu');
+        menu.classList.toggle('open');
+    },
+    
+    showView(viewName, addToHistory = true) {
+        // Track history for back navigation
+        if (addToHistory && this.currentView !== viewName) {
+            this.viewHistory.push(this.currentView);
+            // Limit history size
+            if (this.viewHistory.length > 10) {
+                this.viewHistory.shift();
+            }
         }
+        
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const viewElement = document.getElementById(`view-${viewName}`);
+        viewElement.classList.add('active');
+        this.currentView = viewName;
+        
+        // Update back button visibility and behavior
+        this.updateBackButtons();
+        
+        if (viewName === 'dashboard') {
+            this.renderDashboard();
+        } else if (viewName === 'settings') {
+            viewElement.innerHTML = Settings.render();
+        } else if (viewName === 'manage-words') {
+            WordManager.render();
+        } else if (viewName === 'add-exercise') {
+            ExerciseForm.init();
+        } else if (viewName === 'progress') {
+            ProgressPage.render();
+        } else if (viewName === 'import-export') {
+            ImportExportPage.render();
+        }
+    },
+    
+    goBack() {
+        if (this.viewHistory.length > 0) {
+            const previousView = this.viewHistory.pop();
+            this.showView(previousView, false);
+        } else {
+            this.showView('dashboard', false);
+        }
+    },
+    
+    updateBackButtons() {
+        // Update all back buttons to use goBack()
+        document.querySelectorAll('.back-btn').forEach(btn => {
+            btn.onclick = () => this.goBack();
+        });
     },
     
     loadLastSession() {
@@ -25,23 +79,8 @@ const app = {
         this.lastSession = data;
         Storage.set('lastSession', data);
     },
-
-    showView(viewName) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const viewElement = document.getElementById(`view-${viewName}`);
-        viewElement.classList.add('active');
-        this.currentView = viewName;
-        
-        if (viewName === 'dashboard') {
-            this.renderDashboard();
-        } else if (viewName === 'settings') {
-            // Render settings content
-            viewElement.innerHTML = Settings.render();
-        }
-    },
     
     renderDashboard() {
-        // Exercise cards
         const exercises = [
             {
                 id: 'naming',
@@ -78,7 +117,6 @@ const app = {
             </button>
         `).join('');
         
-        // Show last session stats if available
         this.renderLastSession();
         this.renderWeekSummary();
     },
@@ -120,10 +158,16 @@ const app = {
                     </div>
                 `).join('')}
             </div>
+            <button class="view-progress-btn" onclick="app.showView('progress')">
+                View Full Progress →
+            </button>
         `;
     },
     
     startExercise(type) {
+        // Clear history when starting exercise - back should finish
+        this.viewHistory = ['dashboard'];
+        
         if (type === 'speak') {
             SpeakEngine.init();
             this.showView('speak');
@@ -136,7 +180,6 @@ const app = {
     },
     
     finishExercise() {
-        // Get results from the appropriate engine
         let results;
         if (this.currentView === 'speak') {
             results = SpeakEngine.getResults();
@@ -144,17 +187,13 @@ const app = {
             results = ExerciseEngine.getResults();
         }
         
-        // Save last session for dashboard display
         this.saveLastSession(results);
-        
-        // Record in weekly progress
         Progress.recordSession(results);
         
-        // Return to dashboard
+        // Clear history and go to dashboard
+        this.viewHistory = [];
         this.showView('dashboard');
     }
 };
 
-
-// Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => app.init());

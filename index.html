@@ -11,28 +11,70 @@
         <!-- Header -->
         <header class="app-header">
             <div class="header-content">
+                <button class="menu-toggle" onclick="app.toggleMenu()" aria-label="Menu">
+                    ☰
+                </button>
                 <h1 class="app-title">🌉 WordBridge</h1>
                 <div class="user-stats">
                     <div class="streak-badge" title="Day streak">
                         <span>🔥</span>
                         <span id="streak-count">0</span>
                     </div>
-                    <button class="icon-btn" onclick="app.showView('settings')" aria-label="Settings">
-                        ⚙️
-                    </button>
                 </div>
             </div>
         </header>
+
+        <!-- Side Menu -->
+        <nav class="side-menu" id="side-menu">
+            <div class="menu-overlay" onclick="app.toggleMenu()"></div>
+            <div class="menu-content">
+                <div class="menu-header">
+                    <h2>Menu</h2>
+                    <button class="close-menu" onclick="app.toggleMenu()">×</button>
+                </div>
+                <ul class="menu-items">
+                    <li>
+                        <button onclick="app.showView('dashboard'); app.toggleMenu();">
+                            🏠 Home
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="app.showView('progress'); app.toggleMenu();">
+                            📈 My Progress
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="app.showView('add-exercise'); app.toggleMenu();">
+                            ➕ Add Exercise
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="app.showView('manage-words'); app.toggleMenu();">
+                            📚 My Words
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="app.showView('import-export'); app.toggleMenu();">
+                            📁 Import/Export
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="app.showView('settings'); app.toggleMenu();">
+                            ⚙️ Settings
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
         <main class="main-content">
             <!-- Dashboard View -->
             <section id="view-dashboard" class="view active">
                 <div class="dashboard-welcome">
                     <h2>Welcome back!</h2>
-                    <p class="subtitle" id="practice-summary">Tap an exercise to start practicing</p>
+                    <p class="subtitle">Tap an exercise to start practicing</p>
                 </div>
                 
-                <!-- Last Session Stats (hidden initially) -->
                 <div class="last-session-stats" id="last-session-stats" style="display: none;">
                     <h3>Last Session</h3>
                     <div class="session-stats-grid">
@@ -64,6 +106,82 @@
                     <h3>This Week</h3>
                 </div>
                 <div class="week-summary" id="week-summary"></div>
+                
+                <button class="fab" onclick="app.showView('add-exercise')" title="Add Exercise">
+                    ➕
+                </button>
+            </section>
+
+            <!-- Progress View -->
+            <section id="view-progress" class="view">
+                <!-- Rendered by ProgressPage.render() -->
+            </section>
+
+            <!-- Add Exercise View -->
+            <section id="view-add-exercise" class="view">
+                <div class="form-container">
+                    <button class="back-btn" onclick="app.goBack()">← Back</button>
+                    <h2>Add New Exercise</h2>
+                    
+                    <div class="form-group">
+                        <label>Exercise Type</label>
+                        <div class="type-selector">
+                            <button class="type-btn active" data-type="naming" onclick="ExerciseForm.setType('naming')">
+                                🖼️ Picture Naming
+                            </button>
+                            <button class="type-btn" data-type="sentences" onclick="ExerciseForm.setType('sentences')">
+                                📝 Sentences
+                            </button>
+                            <button class="type-btn" data-type="categories" onclick="ExerciseForm.setType('categories')">
+                                🏷️ Categories
+                            </button>
+                            <button class="type-btn" data-type="speak" onclick="ExerciseForm.setType('speak')">
+                                🗣️ Speaking
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="exercise-form-fields"></div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-secondary" onclick="ExerciseForm.clear()">Clear</button>
+                        <button class="btn-primary" onclick="ExerciseForm.save()">Save Exercise</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Manage Words View -->
+            <section id="view-manage-words" class="view">
+                <div class="manage-container">
+                    <button class="back-btn" onclick="app.goBack()">← Back</button>
+                    <h2>My Words</h2>
+                    
+                    <div class="filter-bar">
+                        <input type="text" id="word-search" placeholder="Search words..." 
+                               oninput="WordManager.filter()">
+                        <select id="type-filter" onchange="WordManager.filter()">
+                            <option value="all">All Types</option>
+                            <option value="naming">Picture Naming</option>
+                            <option value="sentences">Sentences</option>
+                            <option value="categories">Categories</option>
+                            <option value="speak">Speaking</option>
+                        </select>
+                        <select id="source-filter" onchange="WordManager.filter()">
+                            <option value="all">All Sources</option>
+                            <option value="custom">Custom Only</option>
+                            <option value="builtin">Built-in Only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="word-count" id="word-count">0 exercises</div>
+                    
+                    <div class="word-list-container" id="word-list-container"></div>
+                </div>
+            </section>
+
+            <!-- Import/Export View -->
+            <section id="view-import-export" class="view">
+                <!-- Rendered by ImportExportPage.render() -->
             </section>
 
             <!-- Exercise View -->
@@ -72,11 +190,11 @@
                     <div class="exercise-header">
                         <button class="done-btn" onclick="app.finishExercise()">← Done</button>
                         <span class="exercise-progress" id="exercise-progress">0 correct</span>
+                        <button class="skip-btn" onclick="ExerciseEngine.skip()">Skip →</button>
                     </div>
                     
                     <div class="prompt-area" id="prompt-area"></div>
                     <div class="answer-area" id="answer-area"></div>
-                    
                     <div class="hint-area" id="hint-area"></div>
                 </div>
             </section>
@@ -87,6 +205,7 @@
                     <div class="exercise-header">
                         <button class="done-btn" onclick="app.finishExercise()">← Done</button>
                         <span class="exercise-progress" id="speak-progress">0 correct</span>
+                        <button class="skip-btn" onclick="SpeakEngine.skip()">Skip →</button>
                     </div>
                     
                     <div class="prompt-area" id="speak-prompt-area"></div>
@@ -111,36 +230,29 @@
 
             <!-- Settings View -->
             <section id="view-settings" class="view">
-                <div class="settings-container">
-                    <button class="back-btn" onclick="app.showView('dashboard')">← Back</button>
-                    <h2>Settings</h2>
-                    
-                    <div class="settings-group">
-                        <h3>Data</h3>
-                        <button class="btn-danger-outline" onclick="Settings.clearData()">
-                            Reset All Progress
-                        </button>
-                    </div>
-                </div>
-            </section>
-            <section id="view-settings" class="view">
-                <!-- This will be populated dynamically -->
+                <!-- Rendered by Settings.render() -->
             </section>
         </main>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts - Note the order matters -->
     <script src="data/naming.js"></script>
     <script src="data/sentences.js"></script>
     <script src="data/categories.js"></script>
     <script src="data/speaking.js"></script>
-    <script src="js/exercises.js"></script>
     <script src="js/storage.js"></script>
-    <script src="js/progress.js"></script> 
-    <script src="js/speak.js"></script>
+    <script src="js/imageStorage.js"></script>
+    <script src="js/audioHelper.js"></script>
     <script src="js/wordTracking.js"></script>
+    <script src="js/customExercises.js"></script>
+    <script src="js/exerciseForm.js"></script>
+    <script src="js/wordManager.js"></script>
+    <script src="js/importExport.js"></script>
+    <script src="js/exercises.js"></script>
+    <script src="js/speak.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/progressPage.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/customExercises.js"></script>
 </body>
 </html>

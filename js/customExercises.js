@@ -55,9 +55,12 @@ const CustomExercises = {
         switch(type) {
             case 'naming':
                 // Check for image/emoji
-                if (!exercise.emoji && !exercise.image) {
+                if (!exercise.emoji && !exercise.imageUrl) {
+                    console.log(exercise.imageUrl);
+                    console.log(exercise.emoji);
+                    console.log(exercise);
                     errors.push('Need either "emoji" or "image" field');
-                } else if (exercise.emoji && exercise.image) {
+                } else if (exercise.emoji && exercise.imageUrl) {
                     warnings.push('Has both emoji and image - will use emoji');
                 }
                 
@@ -77,7 +80,7 @@ const CustomExercises = {
                 }
                 
                 // Clean up extra fields
-                if (exercise.emoji) delete exercise.image;
+                if (exercise.emoji) delete exercise.imageUrl;
                 break;
                 
             case 'sentences':
@@ -120,9 +123,9 @@ const CustomExercises = {
                 
             case 'speak':
                 // Check for image/emoji
-                if (!exercise.emoji && !exercise.image) {
+                if (!exercise.emoji && !exercise.imageUrl) {
                     errors.push('Need either "emoji" or "image" field');
-                } else if (exercise.emoji && exercise.image) {
+                } else if (exercise.emoji && exercise.imageUrl) {
                     warnings.push('Has both emoji and image - will use emoji');
                 }
                 
@@ -136,7 +139,7 @@ const CustomExercises = {
                 }
                 
                 // Clean up extra fields
-                if (exercise.emoji) delete exercise.image;
+                if (exercise.emoji) delete exercise.imageUrl;
                 break;
         }
         

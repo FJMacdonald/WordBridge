@@ -3,6 +3,7 @@ const SpeakEngine = {
     usedIndices: new Set(),
     correct: 0,
     total: 0,
+    skipped: 0,
     startTime: null,
     currentQuestion: null,
     currentHintIndex: 0,
@@ -14,6 +15,7 @@ const SpeakEngine = {
         this.usedIndices = new Set();
         this.correct = 0;
         this.total = 0;
+        this.skipped = 0;
         this.startTime = Date.now();
         this.currentQuestion = null;
         this.currentHintIndex = 0;
@@ -26,17 +28,21 @@ const SpeakEngine = {
         this.showNextQuestion();
     },
     
+    skip() {
+        this.skipped++;
+        WordTracking.trackSkip(this.currentQuestion.answer, 'speak');
+        this.showNextQuestion();
+    },
+    
     getNextQuestion() {
         this.turnCount++;
         
-        // First turn always shows custom if available
         const customQuestions = this.questions.filter(q => q.isCustom);
         if (this.turnCount === 1 && customQuestions.length > 0) {
             this.justShowedCustom = true;
             return customQuestions[Math.floor(Math.random() * customQuestions.length)];
         }
         
-        // Check custom frequency setting
         const customFrequency = Settings.get('customFrequency') || 0.4;
         const shouldShowCustom = !this.justShowedCustom && 
                                 Math.random() < customFrequency && 
@@ -54,7 +60,6 @@ const SpeakEngine = {
         
         this.justShowedCustom = false;
         
-        // Prioritize problem words
         const problemWords = WordTracking.getProblemWords();
         const problemWordsList = Object.keys(problemWords);
         
@@ -64,7 +69,6 @@ const SpeakEngine = {
             if (question) return question;
         }
         
-        // Filter out mastered words
         const masteredWords = Object.keys(WordTracking.getMasteredWords());
         const availableQuestions = this.questions.filter(q => 
             !masteredWords.includes(q.answer) && !this.usedIndices.has(this.questions.indexOf(q))
@@ -81,39 +85,69 @@ const SpeakEngine = {
         return question;
     },
     
-    showNextQuestion() {
+    async showNextQuestion() {
         this.currentQuestion = this.getNextQuestion();
         this.currentHintIndex = 0;
         
         document.getElementById('speak-progress').textContent = 
             `${this.correct} correct`;
         
-        // Show image/emoji
+        // Render prompt with async image handling
         const promptArea = document.getElementById('speak-prompt-area');
-        if (this.currentQuestion.emoji) {
-            promptArea.innerHTML = `
-                <div class="prompt-emoji">${this.currentQuestion.emoji}</div>
-                <div class="prompt-instruction">What is this?</div>
-            `;
-        } else if (this.currentQuestion.image) {
-            promptArea.innerHTML = `
-                <img src="${this.currentQuestion.image}" alt="Say this word" class="prompt-image"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <div class="prompt-text" style="display:none;">Image not found</div>
-                <div class="prompt-instruction">What is this?</div>
-            `;
-        } else {
-            promptArea.innerHTML = `
-                <div class="prompt-emoji">🖼️</div>
-                <div class="prompt-instruction">What is this?</div>
-            `;
-        }
+        promptArea.innerHTML = await this.renderPrompt(this.currentQuestion);
         
         // Reset hint display
         document.getElementById('hint-display').innerHTML = '';
         document.getElementById('hint-btn').textContent = '💡 Need a hint';
         document.getElementById('hint-btn').disabled = false;
         document.getElementById('hint-btn').classList.remove('disabled');
+    },
+    
+    async renderPrompt(question) {
+        // Handle emoji first
+        if (question.emoji) {
+            return `
+                <div class="prompt-emoji">${question.emoji}</div>
+                <div class="prompt-instruction">What is this?</div>
+            `;
+        }
+        
+        // Handle local image (uploaded photo)
+        if (question.localImageId) {
+            try {
+                const imageData = await ImageStorage.getImage(question.localImageId);
+                if (imageData) {
+                    return `
+                        <img src="${imageData}" alt="Say this word" class="prompt-image">
+                        <div class="prompt-instruction">What is this?</div>
+                    `;
+                }
+            } catch (e) {
+                console.error('Failed to load local image:', e);
+            }
+            // Fallback if image failed
+            return `
+                <div class="prompt-emoji">🖼️</div>
+                <div class="prompt-instruction">What is this?</div>
+                <div class="prompt-error">Image could not be loaded</div>
+            `;
+        }
+        
+        // Handle URL image (note: lowercase 'l' in imageUrl)
+        if (question.imageUrl) {
+            return `
+                <img src="${question.imageUrl}" alt="Say this word" class="prompt-image"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="prompt-text" style="display:none;">Image not found</div>
+                <div class="prompt-instruction">What is this?</div>
+            `;
+        }
+        
+        // Fallback
+        return `
+            <div class="prompt-emoji">🖼️</div>
+            <div class="prompt-instruction">What is this?</div>
+        `;
     },
     
     getHints() {
@@ -247,6 +281,7 @@ const SpeakEngine = {
         return {
             correct: this.correct,
             total: this.total,
+            skipped: this.skipped,
             time: `${mins}:${secs.toString().padStart(2, '0')}`,
             accuracy: this.total > 0 ? Math.round((this.correct / this.total) * 100) : 0,
             type: 'speak',

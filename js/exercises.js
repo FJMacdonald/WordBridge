@@ -6,22 +6,33 @@ const ExerciseEngine = {
     total: 0,
     startTime: null,
     currentQuestion: null,
+    currentOptions: null,
     turnCount: 0,
     justShowedCustom: false,
+    skipped: 0,
     
     init(type) {
         this.type = type;
-        this.questions = ExerciseData[type];
+        this.questions = ExerciseData[type] || [];
         this.usedIndices = new Set();
         this.correct = 0;
         this.total = 0;
+        this.skipped = 0;
         this.startTime = Date.now();
         this.currentQuestion = null;
+        this.currentOptions = null;
         this.turnCount = 0;
         this.justShowedCustom = false;
         WordTracking.init();
     },
     
+    skip() {
+        this.skipped++;
+        WordTracking.trackSkip(this.currentQuestion.answer, this.type);
+        AudioHelper.stop();
+        this.showNextQuestion();
+    },
+        
     start() {
         this.showNextQuestion();
     },
@@ -29,21 +40,18 @@ const ExerciseEngine = {
     getRandomQuestion() {
         this.turnCount++;
         
-        // First turn always shows custom if available
         const customQuestions = this.questions.filter(q => q.isCustom);
         if (this.turnCount === 1 && customQuestions.length > 0) {
             this.justShowedCustom = true;
             return customQuestions[Math.floor(Math.random() * customQuestions.length)];
         }
         
-        // Check custom frequency setting
         const customFrequency = Settings.get('customFrequency') || 0.4;
         const shouldShowCustom = !this.justShowedCustom && 
                                 Math.random() < customFrequency && 
                                 customQuestions.length > 0;
         
         if (shouldShowCustom) {
-            // Filter out mastered custom words
             const masteredWords = Object.keys(WordTracking.getMasteredWords());
             const availableCustom = customQuestions.filter(q => !masteredWords.includes(q.answer));
             
@@ -55,7 +63,6 @@ const ExerciseEngine = {
         
         this.justShowedCustom = false;
         
-        // Prioritize problem words
         const problemWords = WordTracking.getProblemWords();
         const problemWordsList = Object.keys(problemWords);
         
@@ -65,17 +72,14 @@ const ExerciseEngine = {
             if (question) return question;
         }
         
-        // Filter out mastered words unless we've used all others
         const masteredWords = Object.keys(WordTracking.getMasteredWords());
         const availableQuestions = this.questions.filter(q => 
             !masteredWords.includes(q.answer) && !this.usedIndices.has(this.questions.indexOf(q))
         );
         
         if (availableQuestions.length === 0) {
-            // Reset if all non-mastered questions used
             this.usedIndices.clear();
             
-            // Still try to avoid mastered words
             const nonMastered = this.questions.filter(q => !masteredWords.includes(q.answer));
             if (nonMastered.length > 0) {
                 return nonMastered[Math.floor(Math.random() * nonMastered.length)];
@@ -89,24 +93,24 @@ const ExerciseEngine = {
         return question;
     },
     
-    showNextQuestion() {
+    async showNextQuestion() {
         this.currentQuestion = this.getRandomQuestion();
         
-        // Update progress display
         document.getElementById('exercise-progress').textContent = 
             `${this.correct} correct`;
         
         // Render prompt
         const promptArea = document.getElementById('prompt-area');
-        promptArea.innerHTML = this.renderPrompt(this.currentQuestion);
+        promptArea.innerHTML = await this.renderPrompt(this.currentQuestion);
+        
+        // Shuffle and store options
+        this.currentOptions = this.shuffle([...this.currentQuestion.options]);
         
         // Render answers
         const answerArea = document.getElementById('answer-area');
-        const shuffledOptions = this.shuffle([...this.currentQuestion.options]);
-        
         answerArea.innerHTML = `
             <div class="answer-grid">
-                ${shuffledOptions.map(opt => `
+                ${this.currentOptions.map(opt => `
                     <button class="answer-btn" onclick="ExerciseEngine.checkAnswer('${this.escapeQuotes(opt)}', this)">
                         ${opt}
                     </button>
@@ -114,15 +118,24 @@ const ExerciseEngine = {
             </div>
         `;
         
-        // Clear hint area
-        document.getElementById('hint-area').innerHTML = '';
+        // Clear hint area and add audio button
+        document.getElementById('hint-area').innerHTML = `
+            <button class="audio-help-btn" onclick="ExerciseEngine.playAudio()">
+                🔊 Hear It
+            </button>
+        `;
+        
+        // Auto-play audio if enabled
+        if (Settings.get('autoPlayAudio')) {
+            setTimeout(() => this.playAudio(), 300);
+        }
     },
     
-    escapeQuotes(str) {
-        return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    async playAudio() {
+        await AudioHelper.speakExercise(this.type, this.currentQuestion, this.currentOptions);
     },
-    
-    renderPrompt(question) {
+
+    async renderPrompt(question) {
         switch (this.type) {
             case 'naming':
                 if (question.emoji) {
@@ -130,10 +143,26 @@ const ExerciseEngine = {
                         <div class="prompt-emoji">${question.emoji}</div>
                         <div class="prompt-instruction">What is this?</div>
                     `;
-                } else if (question.image) {
+                } else if (question.localImageId) {
+                    try {
+                        const imageData = await ImageStorage.getImage(question.localImageId);
+                        if (imageData) {
+                            return `
+                                <img src="${imageData}" alt="Identify this" class="prompt-image">
+                                <div class="prompt-instruction">What is this?</div>
+                            `;
+                        }
+                    } catch (e) {
+                        console.error('Failed to load local image:', e);
+                    }
                     return `
-                        <img src="${question.image}" alt="Identify this" class="prompt-image" 
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="prompt-text">Image not available</div>
+                        <div class="prompt-instruction">What is this?</div>
+                    `;
+                } else if (question.imageUrl) {
+                    return `
+                        <img src="${question.imageUrl}" alt="Identify this" class="prompt-image" 
+                            onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <div class="prompt-text" style="display:none;">Image not found</div>
                         <div class="prompt-instruction">What is this?</div>
                     `;
@@ -142,33 +171,38 @@ const ExerciseEngine = {
                 
             case 'categories':
                 return `
-                    <div class="prompt-text">${question.prompt}</div>
+                    <div class="prompt-text prompt-question">${question.prompt}</div>
                 `;
                 
             case 'sentences':
+                // Display the sentence with visual blank
+                const displayPrompt = question.prompt.replace(/_{2,}/g, '<span class="blank-indicator">______</span>');
                 return `
-                    <div class="prompt-text">${question.prompt}</div>
+                    <div class="prompt-text prompt-sentence">${displayPrompt}</div>
                 `;
         }
         return '';
     },
     
+    escapeQuotes(str) {
+        return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    },
+    
     checkAnswer(selected, button) {
+        AudioHelper.stop();
+        
         const correct = selected.toLowerCase() === this.currentQuestion.answer.toLowerCase();
         this.total++;
         
-        // Track the answer
         WordTracking.trackAnswer(this.currentQuestion.answer, correct, this.type);
         
         if (correct) {
             this.correct++;
             button.classList.add('correct');
             
-            // Show brief feedback
             document.getElementById('hint-area').innerHTML = 
-                `<div class="hint-text">✓ Correct!</div>`;
+                `<div class="feedback-text correct">✓ Correct!</div>`;
             
-            // Auto-advance
             setTimeout(() => {
                 this.showNextQuestion();
             }, 800);
@@ -180,12 +214,14 @@ const ExerciseEngine = {
                 button.classList.add('eliminated');
             }, 400);
             
-            // Check if only correct answer remains
             const remaining = document.querySelectorAll('.answer-btn:not(.eliminated)');
             if (remaining.length <= 1) {
-                // Show the answer and move on
-                document.getElementById('hint-area').innerHTML = 
-                    `<div class="hint-text" style="color: var(--warning);">The answer was: ${this.currentQuestion.answer}</div>`;
+                document.getElementById('hint-area').innerHTML = `
+                    <div class="feedback-text incorrect">
+                        The answer is: <strong>${this.currentQuestion.answer}</strong>
+                        <button class="audio-btn-small" onclick="AudioHelper.speakWord('${this.currentQuestion.answer}')">🔊</button>
+                    </div>
+                `;
                 
                 setTimeout(() => {
                     this.showNextQuestion();
@@ -202,13 +238,14 @@ const ExerciseEngine = {
         return {
             correct: this.correct,
             total: this.total,
+            skipped: this.skipped,
             time: `${mins}:${secs.toString().padStart(2, '0')}`,
             accuracy: this.total > 0 ? Math.round((this.correct / this.total) * 100) : 0,
             type: this.type,
             duration: elapsed
         };
-    },
-    
+    },    
+
     shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));

@@ -89,6 +89,40 @@ const WordTracking = {
         Storage.set('problemWords', problemWords);
         Storage.set('masteredWords', masteredWords);
     },
+        
+    trackSkip(word, exerciseType) {
+        const stats = Storage.get('wordStats', {});
+        
+        // Initialize word stats if needed
+        if (!stats[word]) {
+            stats[word] = {
+                totalAttempts: 0,
+                correctAttempts: 0,
+                incorrectAttempts: 0,
+                skippedAttempts: 0,
+                consecutiveCorrect: 0,
+                lastSeen: Date.now(),
+                exercises: {}
+            };
+        }
+        
+        // Track the skip (doesn't affect streak or problem word status)
+        stats[word].skippedAttempts = (stats[word].skippedAttempts || 0) + 1;
+        stats[word].lastSeen = Date.now();
+        
+        if (!stats[word].exercises[exerciseType]) {
+            stats[word].exercises[exerciseType] = {
+                attempts: 0,
+                correct: 0,
+                skipped: 0
+            };
+        }
+        stats[word].exercises[exerciseType].skipped = 
+            (stats[word].exercises[exerciseType].skipped || 0) + 1;
+        
+        Storage.set('wordStats', stats);
+    },
+
     
     getProblemWords() {
         return Storage.get('problemWords', {});
