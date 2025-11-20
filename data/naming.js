@@ -37,7 +37,6 @@ const NamingData = [
     { type: 'emoji', emoji: '🍎', answer: 'apple', options: ['apple', 'orange', 'banana', 'pear'] },
     { type: 'emoji', emoji: '🏠', answer: 'house', options: ['house', 'building', 'store', 'tent'] },
     { type: 'emoji', emoji: '🚗', answer: 'car', options: ['car', 'bus', 'truck', 'van'] },
-    { type: 'emoji', emoji: '☀️', answer: 'sun', options: ['sun', 'moon', 'star', 'light'] },
     { type: 'emoji', emoji: '📚', answer: 'book', options: ['book', 'paper', 'letter', 'card'] },
     { type: 'emoji', emoji: '🐕', answer: 'dog', options: ['dog', 'cat', 'wolf', 'fox'] },
     { type: 'emoji', emoji: '🪑', answer: 'chair', options: ['chair', 'table', 'bench', 'stool'] },

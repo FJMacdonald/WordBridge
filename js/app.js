@@ -23,10 +23,8 @@ const app = {
     },
     
     showView(viewName, addToHistory = true) {
-        // Track history for back navigation
         if (addToHistory && this.currentView !== viewName) {
             this.viewHistory.push(this.currentView);
-            // Limit history size
             if (this.viewHistory.length > 10) {
                 this.viewHistory.shift();
             }
@@ -34,16 +32,17 @@ const app = {
         
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         const viewElement = document.getElementById(`view-${viewName}`);
-        viewElement.classList.add('active');
+        if (viewElement) {
+            viewElement.classList.add('active');
+        }
         this.currentView = viewName;
         
-        // Update back button visibility and behavior
         this.updateBackButtons();
         
         if (viewName === 'dashboard') {
             this.renderDashboard();
         } else if (viewName === 'settings') {
-            viewElement.innerHTML = Settings.render();
+            document.getElementById('view-settings').innerHTML = Settings.render();
         } else if (viewName === 'manage-words') {
             WordManager.render();
         } else if (viewName === 'add-exercise') {
@@ -56,6 +55,9 @@ const app = {
     },
     
     goBack() {
+        // Cleanup any active engines
+        this.cleanupEngines();
+        
         if (this.viewHistory.length > 0) {
             const previousView = this.viewHistory.pop();
             this.showView(previousView, false);
@@ -64,10 +66,21 @@ const app = {
         }
     },
     
+    cleanupEngines() {
+        if (typeof TypingEngine !== 'undefined' && TypingEngine.cleanup) {
+            TypingEngine.cleanup();
+        }
+        if (typeof SentenceTypingEngine !== 'undefined' && SentenceTypingEngine.cleanup) {
+            SentenceTypingEngine.cleanup();
+        }
+        AudioHelper.stop();
+    },
+    
     updateBackButtons() {
-        // Update all back buttons to use goBack()
-        document.querySelectorAll('.back-btn').forEach(btn => {
-            btn.onclick = () => this.goBack();
+        document.querySelectorAll('.back-btn, .done-btn').forEach(btn => {
+            if (!btn.hasAttribute('data-custom-action')) {
+                btn.onclick = () => this.goBack();
+            }
         });
     },
     
@@ -81,103 +94,58 @@ const app = {
     },
     
     renderDashboard() {
-        const exercises = [
-            {
-                id: 'naming',
-                icon: '🖼️',
-                title: 'Picture Naming',
-                description: 'See a picture, pick the word'
-            },
-            {
-                id: 'listening',
-                icon: '👂',
-                title: 'Listening',
-                description: 'Hear a word, pick the picture'
-            },
-            {
-                id: 'typing',
-                icon: '⌨️',
-                title: 'Typing Practice',
-                description: 'See a picture, type the word'
-            },
-            {
-                id: 'categories',
-                icon: '🏷️',
-                title: 'Word Categories',
-                description: 'Find the word that fits'
-            },
-            {
-                id: 'sentences',
-                icon: '📝',
-                title: 'Complete the Sentence',
-                description: 'Fill in the missing word'
-            },
-            {
-                id: 'speak',
-                icon: '🗣️',
-                title: 'Speak It',
-                description: 'See a picture, say the word'
-            }
+        // Main exercises
+        const mainExercises = [
+            { id: 'naming', icon: '🖼️', title: 'Picture Naming', description: 'See a picture, pick the word' },
+            { id: 'listening', icon: '👂', title: 'Listening', description: 'Hear a word, pick the picture' },
+            { id: 'typing', icon: '⌨️', title: 'Typing', description: 'See a picture, type the word' },
+            { id: 'sentences', icon: '📝', title: 'Sentences', description: 'Complete the sentence' },
+            { id: 'sentence-typing', icon: '✍️', title: 'Sentence Typing', description: 'Type the missing word' },
+            { id: 'categories', icon: '🏷️', title: 'Categories', description: 'Find the word that fits' },
+            { id: 'speak', icon: '🗣️', title: 'Speak It', description: 'Say the word out loud' }
+        ];
+        
+        // Language exercises
+        const languageExercises = [
+            { id: 'rhyming', icon: '🎵', title: 'Rhyming', description: 'Find words that rhyme' },
+            { id: 'firstsound', icon: '🔤', title: 'First Sounds', description: 'Match starting sounds' },
+            { id: 'association', icon: '🔗', title: 'Word Association', description: 'Find related words' },
+            { id: 'synonym', icon: '↔️', title: 'Synonyms & Antonyms', description: 'Same or opposite meaning' },
+            { id: 'definition', icon: '📖', title: 'Definitions', description: 'Match words to meanings' },
+            { id: 'scramble', icon: '🔀', title: 'Sentence Order', description: 'Put words in order' }
         ];
         
         const grid = document.getElementById('exercise-grid');
-        grid.innerHTML = exercises.map(ex => `
-            <button class="exercise-card" onclick="app.startExercise('${ex.id}')">
-                <div class="card-icon">${ex.icon}</div>
-                <div class="card-title">${ex.title}</div>
-                <div class="card-description">${ex.description}</div>
-            </button>
-        `).join('');
+        grid.innerHTML = `
+            <div class="exercise-section">
+                <h4 class="section-title">Core Exercises</h4>
+                <div class="exercise-cards">
+                    ${mainExercises.map(ex => `
+                        <button class="exercise-card" onclick="app.startExercise('${ex.id}')">
+                            <div class="card-icon">${ex.icon}</div>
+                            <div class="card-title">${ex.title}</div>
+                            <div class="card-description">${ex.description}</div>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="exercise-section">
+                <h4 class="section-title">Language Skills</h4>
+                <div class="exercise-cards">
+                    ${languageExercises.map(ex => `
+                        <button class="exercise-card" onclick="app.startExercise('${ex.id}')">
+                            <div class="card-icon">${ex.icon}</div>
+                            <div class="card-title">${ex.title}</div>
+                            <div class="card-description">${ex.description}</div>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
         
         this.renderLastSession();
         this.renderWeekSummary();
-    },
-
-    startExercise(type) {
-        this.viewHistory = ['dashboard'];
-        
-        if (type === 'speak') {
-            SpeakEngine.init();
-            this.showView('speak');
-            SpeakEngine.start();
-        } else if (type === 'typing') {
-            TypingEngine.init(1); // Start at level 1
-            this.showView('typing');
-            TypingEngine.start();
-        } else if (type === 'listening') {
-            ListeningEngine.init();
-            this.showView('listening');
-            ListeningEngine.start();
-        } else {
-            ExerciseEngine.init(type);
-            this.showView('exercise');
-            ExerciseEngine.start();
-        }
-    },
-
-    finishExercise() {
-        let results;
-        
-        switch (this.currentView) {
-            case 'speak':
-                results = SpeakEngine.getResults();
-                break;
-            case 'typing':
-                results = TypingEngine.getResults();
-                TypingEngine.cleanup();
-                break;
-            case 'listening':
-                results = ListeningEngine.getResults();
-                break;
-            default:
-                results = ExerciseEngine.getResults();
-        }
-        
-        this.saveLastSession(results);
-        Progress.recordSession(results);
-        
-        this.viewHistory = [];
-        this.showView('dashboard');
     },
     
     renderLastSession() {
@@ -218,11 +186,118 @@ const app = {
                 `).join('')}
             </div>
             <button class="view-progress-btn" onclick="app.showView('progress')">
-                View Full Progress →
+                View Progress →
             </button>
         `;
-    }
+    },
     
+    startExercise(type) {
+        this.viewHistory = ['dashboard'];
+        
+        switch (type) {
+            case 'speak':
+                SpeakEngine.init();
+                this.showView('speak');
+                SpeakEngine.start();
+                break;
+            case 'typing':
+                TypingEngine.init(1);
+                this.showView('typing');
+                TypingEngine.start();
+                break;
+            case 'listening':
+                ListeningEngine.init();
+                this.showView('listening');
+                ListeningEngine.start();
+                break;
+            case 'sentence-typing':
+                SentenceTypingEngine.init();
+                this.showView('sentence-typing');
+                SentenceTypingEngine.start();
+                break;
+            case 'scramble':
+                ScrambleEngine.init();
+                this.showView('scramble');
+                ScrambleEngine.start();
+                break;
+            case 'rhyming':
+                RhymingEngine.init();
+                this.showView('rhyming');
+                RhymingEngine.start();
+                break;
+            case 'firstsound':
+                FirstSoundEngine.init();
+                this.showView('firstsound');
+                FirstSoundEngine.start();
+                break;
+            case 'association':
+                AssociationEngine.init();
+                this.showView('association');
+                AssociationEngine.start();
+                break;
+            case 'synonym':
+                SynonymAntonymEngine.init();
+                this.showView('synonym');
+                SynonymAntonymEngine.start();
+                break;
+            case 'definition':
+                DefinitionEngine.init();
+                this.showView('definition');
+                DefinitionEngine.start();
+                break;
+            default:
+                ExerciseEngine.init(type);
+                this.showView('exercise');
+                ExerciseEngine.start();
+        }
+    },
+    
+    finishExercise() {
+        let results;
+        
+        switch (this.currentView) {
+            case 'speak':
+                results = SpeakEngine.getResults();
+                break;
+            case 'typing':
+                results = TypingEngine.getResults();
+                TypingEngine.cleanup();
+                break;
+            case 'listening':
+                results = ListeningEngine.getResults();
+                break;
+            case 'sentence-typing':
+                results = SentenceTypingEngine.getResults();
+                SentenceTypingEngine.cleanup();
+                break;
+            case 'scramble':
+                results = ScrambleEngine.getResults();
+                break;
+            case 'rhyming':
+                results = RhymingEngine.getResults();
+                break;
+            case 'firstsound':
+                results = FirstSoundEngine.getResults();
+                break;
+            case 'association':
+                results = AssociationEngine.getResults();
+                break;
+            case 'synonym':
+                results = SynonymAntonymEngine.getResults();
+                break;
+            case 'definition':
+                results = DefinitionEngine.getResults();
+                break;
+            default:
+                results = ExerciseEngine.getResults();
+        }
+        
+        this.saveLastSession(results);
+        Progress.recordSession(results);
+        
+        this.viewHistory = [];
+        this.showView('dashboard');
+    }
 };
 
 document.addEventListener('DOMContentLoaded', () => app.init());

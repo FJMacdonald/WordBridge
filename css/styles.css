@@ -3419,3 +3419,230 @@ html.high-contrast .prompt-text {
     background: #f5f5f5;
     color: #666;
 }
+/* Dashboard exercise sections */
+.exercise-section {
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted, #666);
+    margin-bottom: 0.75rem;
+    padding-left: 0.25rem;
+}
+
+.exercise-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+/* Sentence typing */
+.sentence-with-blank {
+    font-size: 1.3rem;
+    line-height: 2;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.sentence-part {
+    color: var(--text-color, #333);
+}
+
+.typing-blank {
+    display: inline-flex;
+    gap: 2px;
+    margin: 0 0.25rem;
+    vertical-align: middle;
+}
+
+.letter-box.inline {
+    width: 1.75rem;
+    height: 2rem;
+    font-size: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--border-color, #ddd);
+    border-radius: 4px;
+    background: white;
+}
+
+.letter-box.inline.correct {
+    border-color: var(--success, #28a745);
+    background: #e8f5e9;
+    color: var(--success);
+}
+
+.letter-box.inline.hint {
+    border-color: var(--warning, #ff9800);
+    background: #fff3e0;
+    color: var(--warning);
+}
+
+/* Scramble exercise */
+.scramble-instruction {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-muted, #666);
+    margin-bottom: 1.5rem;
+}
+
+.scramble-words {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 60px;
+    padding: 1rem;
+    border: 2px dashed var(--border-color, #ddd);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.scramble-word {
+    padding: 0.75rem 1.25rem;
+    background: var(--primary, #4A90D9);
+    color: white;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.scramble-word:hover {
+    transform: scale(1.05);
+}
+
+.scramble-word.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.scramble-word.selected {
+    box-shadow: 0 0 0 3px var(--warning, #ff9800);
+}
+
+.scramble-word.correct {
+    background: var(--success, #28a745);
+}
+
+.scramble-word.correct-position {
+    background: var(--success, #28a745);
+}
+
+.scramble-word.wrong-position {
+    background: var(--danger, #dc3545);
+    animation: shake 0.3s ease;
+}
+
+.scramble-word.hint-highlight {
+    animation: pulse 0.5s ease 3;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.scramble-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.scramble-feedback {
+    text-align: center;
+    min-height: 50px;
+}
+
+/* Rhyming, First Sound, Association prompts */
+.rhyming-prompt,
+.sound-prompt,
+.association-prompt,
+.synonym-prompt,
+.definition-prompt {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.rhyme-instruction,
+.sound-instruction,
+.association-instruction,
+.synonym-instruction,
+.definition-instruction {
+    font-size: 1rem;
+    color: var(--text-muted, #666);
+    margin-bottom: 0.5rem;
+}
+
+.rhyme-target,
+.sound-target,
+.association-target,
+.synonym-target {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary, #4A90D9);
+    margin: 0.5rem 0;
+}
+
+.definition-text {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--text-color, #333);
+    padding: 1rem;
+    background: var(--bg-secondary, #f5f5f5);
+    border-radius: 8px;
+    margin: 0.5rem 0;
+}
+
+/* Synonym type indicator */
+.synonym-type {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.synonym-type.synonym {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.synonym-type.antonym {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+/* Audio button inline */
+.audio-btn-inline {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    vertical-align: middle;
+}
+
+/* Hint text */
+.hint-text {
+    background: #fff3e0;
+    color: #e65100;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+/* Feedback area consistent styling */
+.feedback-area {
+    text-align: center;
+    min-height: 50px;
+    margin-top: 1rem;
+}

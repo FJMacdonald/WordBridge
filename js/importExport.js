@@ -145,32 +145,43 @@ const ImportExportPage = {
             lists: lists
         };
     },
-    
+        
     downloadTemplate() {
-        // Single template with clear examples and instructions
-        const template = `Type,Answer,Prompt_or_Emoji,Option1,Option2,Option3,Option4,Hint1,Hint2,Hint3
-# ============ INSTRUCTIONS ============
-# 1. Delete all lines starting with # (including this one)
-# 2. Keep the first line (headers) - do not modify it
-# 3. Add your exercises below the headers
-# 4. Save as CSV when done
-#
-# EXERCISE TYPES:
-# - naming: See a picture, pick the word (uses emoji or image URL)
-# - sentences: Fill in the blank in a sentence
-# - categories: Which word fits? (e.g., "Which is a fruit?")
-# - speak: See picture, practice saying the word (needs hints)
-#
-# EXAMPLES (delete these and add your own):
-naming,dog,🐕,dog,cat,bird,fish,,,
-naming,house,🏠,house,car,tree,store,,,
-naming,apple,🍎,apple,banana,orange,grape,,,
-sentences,water,I drink ______ when I am thirsty,water,chair,happy,blue,,,
-sentences,bed,I sleep in my ______ at night,bed,car,book,cup,,,
-categories,apple,Which one is a fruit?,apple,bread,cheese,chicken,,,
-categories,chair,Which one is furniture?,chair,apple,dog,rain,,,
-speak,hello,👋,,,,,A greeting when you meet someone,You say this when you arrive,
-speak,thank you,🙏,,,,,You say this to show gratitude,A polite response when someone helps,`;
+        const template = `Type,Answer,Prompt_or_Emoji,Option1,Option2,Option3,Option4,Option5,Option6,Hint1,Hint2,Hint3
+    # ============ WORDBRIDGE EXERCISE TEMPLATE ============
+    # Delete all lines starting with # before importing
+    #
+    # CORE EXERCISES:
+    # naming: See picture, pick word (can have 4-8 options)
+    # sentences: Fill in the blank
+    # categories: Which word fits?
+    # speak: See picture, say the word
+    #
+    # LANGUAGE EXERCISES:
+    # rhyming: Format - word, rhymingWord, wrong1, wrong2, wrong3
+    # association: Format - word, relatedWord, unrelated1, unrelated2, unrelated3
+    # synonym: Format - word, synonymOrAntonym, wrong1, wrong2, wrong3
+    # definition: Format - word, "definition in quotes", wrong1, wrong2, wrong3
+    # scramble: Format - id, word1, word2, word3, word4 (correct order)
+    #
+    # MORE OPTIONS: You can add more than 4 options by adding more columns!
+    #
+    # EXAMPLES:
+    naming,dog,🐕,dog,cat,bird,fish,horse,cow,,,
+    naming,house,🏠,house,car,tree,store,building,tent,,,
+    sentences,water,I drink ______ when I am thirsty,water,chair,happy,blue,table,,,,
+    categories,apple,Which one is a fruit?,apple,bread,cheese,chicken,milk,,,,
+    speak,hello,👋,,,,,,,A greeting when you meet someone,You say this when you arrive,A friendly word
+    rhyming,cat,hat,dog,cup,bed,sun,,,,,
+    rhyming,day,play,night,week,time,year,,,,,
+    association,bread,butter,car,phone,tree,,,,,,
+    association,doctor,hospital,garden,music,sports,,,,,,
+    synonym,happy,glad,angry,quiet,slow,,,,,,
+    synonym,big,small,glad,quick,warm,,,,,
+    definition,chair,"A piece of furniture for sitting",table,window,cup,,,,,,
+    definition,apple,"A round red or green fruit",bread,water,chair,,,,,,
+    scramble,sent1,The,cat,is,sleeping,,,,,,
+    scramble,sent2,I,like,to,eat,apples,,,,,`;
 
         this.downloadFile(template, 'wordbridge-exercise-template.csv', 'text/csv');
     },
@@ -246,7 +257,10 @@ speak,thank you,🙏,,,,,You say this to show gratitude,A polite response when s
     
     parseCSV(text) {
         const lines = text.split('\n');
-        const exercises = { naming: [], sentences: [], categories: [], speak: [] };
+        const exercises = { 
+            naming: [], sentences: [], categories: [], speak: [],
+            rhyming: [], association: [], synonym: [], definition: [], scramble: []
+        };
         const errors = [];
         const warnings = [];
         
@@ -255,27 +269,26 @@ speak,thank you,🙏,,,,,You say this to show gratitude,A polite response when s
             lineNum++;
             const trimmed = line.trim();
             
-            // Skip empty lines and comments
             if (!trimmed || trimmed.startsWith('#')) continue;
-            
-            // Skip header line
             if (trimmed.toLowerCase().startsWith('type,')) continue;
             
             const fields = this.parseCSVLine(trimmed);
-            const [type, answer, promptOrEmoji, opt1, opt2, opt3, opt4, hint1, hint2, hint3, id] = fields;
             
-            // Validate type
-            const validTypes = ['naming', 'sentences', 'categories', 'speak'];
+            // Support variable number of options
+            const [type, answer, promptOrEmoji, ...rest] = fields;
+            
+            const validTypes = ['naming', 'sentences', 'categories', 'speak', 
+                            'rhyming', 'association', 'synonym', 'definition', 'scramble'];
+            
             if (!validTypes.includes(type?.toLowerCase())) {
                 if (type) {
-                    errors.push(`Line ${lineNum}: Unknown type "${type}". Use: naming, sentences, categories, or speak`);
+                    errors.push(`Line ${lineNum}: Unknown type "${type}"`);
                 }
                 continue;
             }
             
             const exerciseType = type.toLowerCase();
             
-            // Validate answer
             if (!answer || answer.trim() === '') {
                 errors.push(`Line ${lineNum}: Missing answer word`);
                 continue;
@@ -284,68 +297,115 @@ speak,thank you,🙏,,,,,You say this to show gratitude,A polite response when s
             const exercise = {
                 answer: answer.trim().toLowerCase(),
                 isCustom: true,
-                id: id || ('import_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6))
+                id: 'import_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6)
             };
             
-            // Type-specific parsing
+            // Parse based on type
             if (exerciseType === 'naming' || exerciseType === 'speak') {
                 if (!promptOrEmoji) {
-                    errors.push(`Line ${lineNum}: Missing emoji or image URL for "${answer}"`);
+                    errors.push(`Line ${lineNum}: Missing emoji or image URL`);
                     continue;
                 }
-                
                 if (promptOrEmoji.startsWith('http')) {
                     exercise.imageUrl = promptOrEmoji;
                 } else {
                     exercise.emoji = promptOrEmoji;
                 }
-            } else {
+                
+                // For naming, collect all options (can be more than 4)
+                if (exerciseType === 'naming') {
+                    const options = rest.filter(o => o && o.trim() && !o.startsWith('Hint'));
+                    if (options.length < 3) {
+                        errors.push(`Line ${lineNum}: Need at least 4 options total`);
+                        continue;
+                    }
+                    exercise.options = [exercise.answer, ...options.slice(0, options.length)].map(o => o.trim().toLowerCase());
+                }
+                
+                // For speak, get hints
+                if (exerciseType === 'speak') {
+                    const hints = rest.filter(h => h && h.trim());
+                    if (hints.length < 2) {
+                        errors.push(`Line ${lineNum}: Need at least 2 hints for speak`);
+                        continue;
+                    }
+                    exercise.phrases = hints;
+                }
+                
+            } else if (exerciseType === 'sentences' || exerciseType === 'categories') {
                 if (!promptOrEmoji) {
-                    errors.push(`Line ${lineNum}: Missing sentence/question for "${answer}"`);
+                    errors.push(`Line ${lineNum}: Missing prompt`);
                     continue;
                 }
                 exercise.prompt = promptOrEmoji;
-            }
-            
-            // Options (not needed for speak)
-            if (exerciseType !== 'speak') {
-                const options = [opt1, opt2, opt3, opt4].map(o => o?.trim().toLowerCase()).filter(o => o);
                 
-                if (options.length < 4) {
-                    errors.push(`Line ${lineNum}: Need 4 options for "${answer}", only found ${options.length}`);
+                // Collect all options
+                const options = rest.filter(o => o && o.trim());
+                if (options.length < 3) {
+                    errors.push(`Line ${lineNum}: Need at least 4 options total`);
                     continue;
                 }
+                exercise.options = [exercise.answer, ...options].map(o => o.trim().toLowerCase());
                 
-                exercise.options = options;
+            } else if (exerciseType === 'rhyming') {
+                // Format: type, word, rhyme1, rhyme2, ..., |, nonrhyme1, nonrhyme2, ...
+                // Or simpler: type, word, correctRhyme, wrong1, wrong2, wrong3
+                const rhymes = [];
+                const nonRhymes = [];
+                let inNonRhymes = false;
                 
-                // Ensure answer is in options
-                if (!exercise.options.includes(exercise.answer)) {
-                    warnings.push(`Line ${lineNum}: Added "${answer}" to options`);
-                    exercise.options[0] = exercise.answer;
+                [promptOrEmoji, ...rest].forEach(item => {
+                    if (!item) return;
+                    if (item.trim() === '|') {
+                        inNonRhymes = true;
+                        return;
+                    }
+                    if (inNonRhymes) {
+                        nonRhymes.push(item.trim().toLowerCase());
+                    } else {
+                        rhymes.push(item.trim().toLowerCase());
+                    }
+                });
+                
+                // If no separator, assume first is rhyme, rest are non-rhymes
+                if (nonRhymes.length === 0 && rhymes.length > 1) {
+                    const [first, ...rest] = rhymes;
+                    exercise.rhymes = [first];
+                    exercise.nonRhymes = rest;
+                } else {
+                    exercise.rhymes = rhymes;
+                    exercise.nonRhymes = nonRhymes;
                 }
-            }
-            
-            // Hints for speak
-            if (exerciseType === 'speak') {
-                const hints = [hint1, hint2, hint3].filter(h => h && h.trim());
-                if (hints.length < 2) {
-                    errors.push(`Line ${lineNum}: Need at least 2 hints for speak exercise "${answer}"`);
+                
+                exercise.word = answer.trim().toLowerCase();
+                delete exercise.answer;
+                
+            } else if (exerciseType === 'scramble') {
+                // Format: type, id, word1, word2, word3, ...
+                const words = [promptOrEmoji, ...rest].filter(w => w && w.trim());
+                if (words.length < 3) {
+                    errors.push(`Line ${lineNum}: Need at least 3 words for scramble`);
                     continue;
                 }
-                exercise.phrases = hints;
+                exercise.words = words.map(w => w.trim());
+                exercise.id = answer; // Use answer field as ID
+                delete exercise.answer;
             }
             
+            if (!exercises[exerciseType]) {
+                exercises[exerciseType] = [];
+            }
             exercises[exerciseType].push(exercise);
         }
         
         const totalCount = Object.values(exercises).flat().length;
         if (totalCount === 0 && errors.length === 0) {
-            errors.push('No exercises found. Make sure your file matches the template format.');
+            errors.push('No exercises found.');
         }
         
         return { exercises, errors, warnings };
     },
-    
+        
     parseCSVLine(line) {
         const fields = [];
         let current = '';
