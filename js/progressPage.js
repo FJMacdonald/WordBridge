@@ -21,13 +21,13 @@ const ProgressPage = {
                         <div class="overview-value">${stats.totalSessions}</div>
                         <div class="overview-label">Sessions</div>
                     </div>
-                    <div class="overview-card streak">
-                        <div class="overview-value">${stats.currentStreak} 🔥</div>
-                        <div class="overview-label">Day Streak</div>
-                    </div>
                     <div class="overview-card">
                         <div class="overview-value">${wordSummary.masteredWordCount}</div>
                         <div class="overview-label">Mastered</div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-value">${stats.averageAccuracy}%</div>
+                        <div class="overview-label">Accuracy</div>
                     </div>
                 </div>
                 
@@ -39,23 +39,25 @@ const ProgressPage = {
                     </div>
                 </div>
                 
-                <!-- Words to Practice -->
-                <div class="progress-section ${wordSummary.problemWordCount > 0 ? 'has-items' : ''}">
-                    <div class="section-header-row">
-                        <h3>⚠️ Words to Practice (${wordSummary.problemWordCount})</h3>
-                    </div>
+                <!-- Words to Practice - Collapsible -->
+                <details class="progress-section collapsible ${wordSummary.problemWordCount > 0 ? 'has-items' : ''}">
+                    <summary class="section-toggle">
+                        <span>⚠️ Words to Practice (${wordSummary.problemWordCount})</span>
+                        <span class="toggle-arrow">▼</span>
+                    </summary>
                     <p class="section-hint">Get 3 correct in a row to clear these</p>
                     ${this.renderWordList(wordSummary.problemWords, 'problem')}
-                </div>
+                </details>
                 
-                <!-- Mastered Words -->
-                <div class="progress-section">
-                    <div class="section-header-row">
-                        <h3>⭐ Mastered Words (${wordSummary.masteredWordCount})</h3>
-                    </div>
+                <!-- Mastered Words - Collapsible -->
+                <details class="progress-section collapsible">
+                    <summary class="section-toggle">
+                        <span>⭐ Mastered Words (${wordSummary.masteredWordCount})</span>
+                        <span class="toggle-arrow">▼</span>
+                    </summary>
                     <p class="section-hint">These appear less often now</p>
                     ${this.renderWordList(wordSummary.masteredWords, 'mastered')}
-                </div>
+                </details>
                 
                 <!-- Share with Therapist -->
                 <div class="progress-section">

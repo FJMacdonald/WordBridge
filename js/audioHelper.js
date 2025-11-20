@@ -1,6 +1,7 @@
 // js/audioHelper.js 
 const AudioHelper = {
     speaking: false,
+    queue: [],
     
     speak(text, options = {}) {
         if (!('speechSynthesis' in window)) {
@@ -36,18 +37,27 @@ const AudioHelper = {
     },
     
     speakSentence(sentence) {
-        // Replace blank indicator with "blank"
         const text = sentence.replace(/_{2,}/g, 'blank');
         return this.speak(text, { rate: 0.8 });
     },
     
-    speakOptions(options) {
-        const text = options.join(', ');
-        return this.speak(text, { rate: 0.75 });
+    // Speak options in the order they appear on screen
+    async speakOptionsInOrder(optionElements) {
+        const options = [];
+        optionElements.forEach(el => {
+            options.push(el.textContent.trim());
+        });
+        
+        await this.speak('The choices are:', { rate: 0.9 });
+        await new Promise(r => setTimeout(r, 200));
+        
+        for (const option of options) {
+            await this.speak(option, { rate: 0.75 });
+            await new Promise(r => setTimeout(r, 150));
+        }
     },
     
-    async speakExercise(type, question, options) {
-        // Speak the prompt
+    async speakExercise(type, question) {
         let promptText = '';
         
         switch (type) {
@@ -63,22 +73,22 @@ const AudioHelper = {
             case 'speak':
                 promptText = 'What is this?';
                 break;
+            case 'typing':
+                promptText = 'Type the word you see';
+                break;
+            case 'listening':
+                promptText = question.answer;
+                break;
         }
         
         await this.speak(promptText, { rate: 0.8 });
         
-        // Small pause
         await new Promise(r => setTimeout(r, 300));
         
-        // Speak options if provided
-        if (options && options.length > 0 && type !== 'speak') {
-            await this.speak('The choices are:', { rate: 0.9 });
-            await new Promise(r => setTimeout(r, 200));
-            
-            for (let i = 0; i < options.length; i++) {
-                await this.speak(options[i], { rate: 0.75 });
-                await new Promise(r => setTimeout(r, 150));
-            }
+        // Get options from the DOM in visual order
+        const optionButtons = document.querySelectorAll('.answer-btn:not(.eliminated)');
+        if (optionButtons.length > 0 && type !== 'speak' && type !== 'typing') {
+            await this.speakOptionsInOrder(optionButtons);
         }
     },
     
@@ -89,3 +99,4 @@ const AudioHelper = {
         this.speaking = false;
     }
 };
+    

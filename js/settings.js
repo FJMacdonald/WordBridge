@@ -5,13 +5,19 @@ const Settings = {
         soundEffects: true,
         customFrequency: 0.4,
         autoPlayAudio: false,
-        fontSize: 'normal'
+        fontSize: 'normal',
+        highContrast: false
     },
     
     init() {
         const current = Storage.get('settings', {});
         const merged = { ...this.defaults, ...current };
         Storage.set('settings', merged);
+        
+        // Apply settings on load
+        this.applyFontSize(merged.fontSize);
+        this.applyHighContrast(merged.highContrast);
+        
         WordTracking.init();
         CustomExercises.init();
     },
@@ -25,6 +31,25 @@ const Settings = {
         const settings = Storage.get('settings', this.defaults);
         settings[key] = value;
         Storage.set('settings', settings);
+        
+        // Apply immediately if it's a display setting
+        if (key === 'fontSize') this.applyFontSize(value);
+        if (key === 'highContrast') this.applyHighContrast(value);
+    },
+    
+    applyFontSize(size) {
+        const html = document.documentElement;
+        html.classList.remove('font-small', 'font-normal', 'font-large', 'font-xlarge');
+        html.classList.add(`font-${size}`);
+    },
+    
+    applyHighContrast(enabled) {
+        const html = document.documentElement;
+        if (enabled) {
+            html.classList.add('high-contrast');
+        } else {
+            html.classList.remove('high-contrast');
+        }
     },
     
     clearData() {
@@ -46,27 +71,33 @@ const Settings = {
                 <h2>Settings</h2>
                 
                 <div class="settings-group">
-                    <h3>🎯 Practice Preferences</h3>
+                    <h3>👁️ Display</h3>
                     
                     <div class="setting-item">
-                        <label for="custom-frequency">Custom exercise frequency</label>
-                        <p class="setting-description">How often your custom words appear during practice</p>
-                        <select id="custom-frequency" onchange="Settings.set('customFrequency', parseFloat(this.value))">
-                            <option value="0.2" ${settings.customFrequency === 0.2 ? 'selected' : ''}>Sometimes (20%)</option>
-                            <option value="0.4" ${settings.customFrequency === 0.4 ? 'selected' : ''}>Often (40%)</option>
-                            <option value="0.6" ${settings.customFrequency === 0.6 ? 'selected' : ''}>Very Often (60%)</option>
-                            <option value="0.8" ${settings.customFrequency === 0.8 ? 'selected' : ''}>Almost Always (80%)</option>
-                        </select>
+                        <label>Text Size</label>
+                        <div class="font-size-slider">
+                            <span class="size-label small">A</span>
+                            <input type="range" min="0" max="3" 
+                                   value="${['small', 'normal', 'large', 'xlarge'].indexOf(settings.fontSize)}"
+                                   oninput="Settings.set('fontSize', ['small', 'normal', 'large', 'xlarge'][this.value])"
+                                   class="slider">
+                            <span class="size-label large">A</span>
+                        </div>
+                        <div class="font-preview">
+                            Preview: The quick brown fox
+                        </div>
                     </div>
                     
-                    <div class="setting-item">
-                        <label for="mastery-threshold">Mastery requirement</label>
-                        <p class="setting-description">Correct answers in a row needed to master a word</p>
-                        <select id="mastery-threshold" onchange="Settings.set('masteryThreshold', parseInt(this.value))">
-                            <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>3 in a row</option>
-                            <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>5 in a row</option>
-                            <option value="7" ${settings.masteryThreshold === 7 ? 'selected' : ''}>7 in a row</option>
-                        </select>
+                    <div class="setting-item toggle-item">
+                        <div>
+                            <label>High Contrast Mode</label>
+                            <p class="setting-description">Stronger colors and borders for easier reading</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" ${settings.highContrast ? 'checked' : ''} 
+                                   onchange="Settings.set('highContrast', this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
                     </div>
                 </div>
                 
@@ -75,7 +106,7 @@ const Settings = {
                     
                     <div class="setting-item toggle-item">
                         <div>
-                            <label>Auto-play audio prompts</label>
+                            <label>Auto-play Audio</label>
                             <p class="setting-description">Automatically read questions aloud</p>
                         </div>
                         <label class="toggle-switch">
@@ -87,6 +118,31 @@ const Settings = {
                 </div>
                 
                 <div class="settings-group">
+                    <h3>🎯 Practice</h3>
+                    
+                    <div class="setting-item">
+                        <label>Custom Exercise Frequency</label>
+                        <p class="setting-description">How often your custom words appear</p>
+                        <select onchange="Settings.set('customFrequency', parseFloat(this.value))">
+                            <option value="0.2" ${settings.customFrequency === 0.2 ? 'selected' : ''}>Sometimes (20%)</option>
+                            <option value="0.4" ${settings.customFrequency === 0.4 ? 'selected' : ''}>Often (40%)</option>
+                            <option value="0.6" ${settings.customFrequency === 0.6 ? 'selected' : ''}>Very Often (60%)</option>
+                            <option value="0.8" ${settings.customFrequency === 0.8 ? 'selected' : ''}>Almost Always (80%)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <label>Mastery Requirement</label>
+                        <p class="setting-description">Correct in a row to master a word</p>
+                        <select onchange="Settings.set('masteryThreshold', parseInt(this.value))">
+                            <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>3 in a row</option>
+                            <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>5 in a row</option>
+                            <option value="7" ${settings.masteryThreshold === 7 ? 'selected' : ''}>7 in a row</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
                     <h3>📊 Your Data</h3>
                     
                     <div class="data-summary">
@@ -94,20 +150,14 @@ const Settings = {
                             <span class="data-label">Custom exercises</span>
                             <span class="data-value">${customCount.total}</span>
                         </div>
-                        <div class="data-breakdown">
-                            ${customCount.naming > 0 ? `<span>🖼️ ${customCount.naming}</span>` : ''}
-                            ${customCount.sentences > 0 ? `<span>📝 ${customCount.sentences}</span>` : ''}
-                            ${customCount.categories > 0 ? `<span>🏷️ ${customCount.categories}</span>` : ''}
-                            ${customCount.speak > 0 ? `<span>🗣️ ${customCount.speak}</span>` : ''}
-                        </div>
                     </div>
                     
                     <button class="btn-outline" onclick="app.showView('progress')">
-                        📈 View Progress & Word Stats
+                        📈 View Progress
                     </button>
                     
                     <button class="btn-outline" onclick="app.showView('import-export')">
-                        📁 Import / Export Data
+                        📁 Import / Export
                     </button>
                 </div>
                 
@@ -116,7 +166,7 @@ const Settings = {
                     <button class="btn-danger" onclick="Settings.clearData()">
                         🗑️ Delete All Data
                     </button>
-                    <p class="setting-description">This will permanently delete all your progress, custom exercises, and settings.</p>
+                    <p class="setting-description">Permanently delete all progress and settings.</p>
                 </div>
             </div>
         `;

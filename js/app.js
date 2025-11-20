@@ -89,6 +89,18 @@ const app = {
                 description: 'See a picture, pick the word'
             },
             {
+                id: 'listening',
+                icon: '👂',
+                title: 'Listening',
+                description: 'Hear a word, pick the picture'
+            },
+            {
+                id: 'typing',
+                icon: '⌨️',
+                title: 'Typing Practice',
+                description: 'See a picture, type the word'
+            },
+            {
                 id: 'categories',
                 icon: '🏷️',
                 title: 'Word Categories',
@@ -119,6 +131,53 @@ const app = {
         
         this.renderLastSession();
         this.renderWeekSummary();
+    },
+
+    startExercise(type) {
+        this.viewHistory = ['dashboard'];
+        
+        if (type === 'speak') {
+            SpeakEngine.init();
+            this.showView('speak');
+            SpeakEngine.start();
+        } else if (type === 'typing') {
+            TypingEngine.init(1); // Start at level 1
+            this.showView('typing');
+            TypingEngine.start();
+        } else if (type === 'listening') {
+            ListeningEngine.init();
+            this.showView('listening');
+            ListeningEngine.start();
+        } else {
+            ExerciseEngine.init(type);
+            this.showView('exercise');
+            ExerciseEngine.start();
+        }
+    },
+
+    finishExercise() {
+        let results;
+        
+        switch (this.currentView) {
+            case 'speak':
+                results = SpeakEngine.getResults();
+                break;
+            case 'typing':
+                results = TypingEngine.getResults();
+                TypingEngine.cleanup();
+                break;
+            case 'listening':
+                results = ListeningEngine.getResults();
+                break;
+            default:
+                results = ExerciseEngine.getResults();
+        }
+        
+        this.saveLastSession(results);
+        Progress.recordSession(results);
+        
+        this.viewHistory = [];
+        this.showView('dashboard');
     },
     
     renderLastSession() {
@@ -162,38 +221,8 @@ const app = {
                 View Full Progress →
             </button>
         `;
-    },
-    
-    startExercise(type) {
-        // Clear history when starting exercise - back should finish
-        this.viewHistory = ['dashboard'];
-        
-        if (type === 'speak') {
-            SpeakEngine.init();
-            this.showView('speak');
-            SpeakEngine.start();
-        } else {
-            ExerciseEngine.init(type);
-            this.showView('exercise');
-            ExerciseEngine.start();
-        }
-    },
-    
-    finishExercise() {
-        let results;
-        if (this.currentView === 'speak') {
-            results = SpeakEngine.getResults();
-        } else {
-            results = ExerciseEngine.getResults();
-        }
-        
-        this.saveLastSession(results);
-        Progress.recordSession(results);
-        
-        // Clear history and go to dashboard
-        this.viewHistory = [];
-        this.showView('dashboard');
     }
+    
 };
 
 document.addEventListener('DOMContentLoaded', () => app.init());

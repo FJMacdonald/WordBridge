@@ -193,27 +193,23 @@ const WordManager = {
         }
         
         if (isBuiltin) {
-            // Hide built-in exercise
             const hidden = Storage.get('hiddenExercises', []);
             if (!hidden.includes(id)) {
                 hidden.push(id);
                 Storage.set('hiddenExercises', hidden);
             }
             
-            // Also remove any edits
             const edits = Storage.get('exerciseEdits', {});
             if (edits[id]) {
                 delete edits[id];
                 Storage.set('exerciseEdits', edits);
             }
         } else {
-            // Delete custom exercise
             const custom = Storage.get('customExercises', {
                 naming: [], sentences: [], categories: [], speak: []
             });
             
             if (custom[type]) {
-                // Find exercise to delete its image if needed
                 const exercise = custom[type].find(e => e.id === id);
                 if (exercise && exercise.localImageId) {
                     ImageStorage.deleteImage(exercise.localImageId);
@@ -224,7 +220,20 @@ const WordManager = {
             }
         }
         
-        this.render();
+        // Immediately refresh the list
+        this.loadAllExercises();
+        this.filter();
+        
+        // Show confirmation
+        const toast = document.createElement('div');
+        toast.className = 'toast success';
+        toast.textContent = 'Exercise deleted';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 1500);
     },
     
     restoreExercise(id) {

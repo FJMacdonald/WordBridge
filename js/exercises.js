@@ -10,6 +10,7 @@ const ExerciseEngine = {
     turnCount: 0,
     justShowedCustom: false,
     skipped: 0,
+    hintsUsed: 0,
     
     init(type) {
         this.type = type;
@@ -18,6 +19,7 @@ const ExerciseEngine = {
         this.correct = 0;
         this.total = 0;
         this.skipped = 0;
+        this.hintsUsed = 0;
         this.startTime = Date.now();
         this.currentQuestion = null;
         this.currentOptions = null;
@@ -26,6 +28,80 @@ const ExerciseEngine = {
         WordTracking.init();
     },
     
+    eliminateOption() {
+        // Find wrong options that aren't eliminated
+        const wrongOptions = document.querySelectorAll('.answer-btn:not(.eliminated):not(.correct)');
+        const wrongAnswers = Array.from(wrongOptions).filter(btn => 
+            btn.textContent.trim().toLowerCase() !== this.currentQuestion.answer.toLowerCase()
+        );
+        
+        if (wrongAnswers.length > 0) {
+            this.hintsUsed++;
+            const randomWrong = wrongAnswers[Math.floor(Math.random() * wrongAnswers.length)];
+            randomWrong.classList.add('eliminated');
+            randomWrong.disabled = true;
+            
+            // Track hint usage for this word
+            WordTracking.trackHintUsed(this.currentQuestion.answer, this.type);
+        }
+    },
+    
+    async showNextQuestion() {
+        this.currentQuestion = this.getRandomQuestion();
+        
+        document.getElementById('exercise-progress').textContent = 
+            `${this.correct} correct`;
+        
+        const promptArea = document.getElementById('prompt-area');
+        promptArea.innerHTML = await this.renderPrompt(this.currentQuestion);
+        
+        this.currentOptions = this.shuffle([...this.currentQuestion.options]);
+        
+        const answerArea = document.getElementById('answer-area');
+        answerArea.innerHTML = `
+            <div class="answer-grid">
+                ${this.currentOptions.map(opt => `
+                    <button class="answer-btn" onclick="ExerciseEngine.checkAnswer('${this.escapeQuotes(opt)}', this)">
+                        ${opt}
+                    </button>
+                `).join('')}
+            </div>
+        `;
+        
+        // Updated hint area with eliminate button
+        document.getElementById('hint-area').innerHTML = `
+            <div class="hint-buttons">
+                <button class="audio-help-btn" onclick="ExerciseEngine.playAudio()">
+                    🔊 Hear It
+                </button>
+                <button class="eliminate-btn" onclick="ExerciseEngine.eliminateOption()">
+                    ❌ Remove One
+                </button>
+            </div>
+        `;
+        
+        if (Settings.get('autoPlayAudio')) {
+            setTimeout(() => this.playAudio(), 300);
+        }
+    },
+    
+    getResults() {
+        const elapsed = (Date.now() - this.startTime) / 1000;
+        const mins = Math.floor(elapsed / 60);
+        const secs = Math.round(elapsed % 60);
+        
+        return {
+            correct: this.correct,
+            total: this.total,
+            skipped: this.skipped,
+            hintsUsed: this.hintsUsed,
+            time: `${mins}:${secs.toString().padStart(2, '0')}`,
+            accuracy: this.total > 0 ? Math.round((this.correct / this.total) * 100) : 0,
+            type: this.type,
+            duration: elapsed
+        };
+    },
+   
     skip() {
         this.skipped++;
         WordTracking.trackSkip(this.currentQuestion.answer, this.type);
@@ -92,45 +168,7 @@ const ExerciseEngine = {
         this.usedIndices.add(this.questions.indexOf(question));
         return question;
     },
-    
-    async showNextQuestion() {
-        this.currentQuestion = this.getRandomQuestion();
         
-        document.getElementById('exercise-progress').textContent = 
-            `${this.correct} correct`;
-        
-        // Render prompt
-        const promptArea = document.getElementById('prompt-area');
-        promptArea.innerHTML = await this.renderPrompt(this.currentQuestion);
-        
-        // Shuffle and store options
-        this.currentOptions = this.shuffle([...this.currentQuestion.options]);
-        
-        // Render answers
-        const answerArea = document.getElementById('answer-area');
-        answerArea.innerHTML = `
-            <div class="answer-grid">
-                ${this.currentOptions.map(opt => `
-                    <button class="answer-btn" onclick="ExerciseEngine.checkAnswer('${this.escapeQuotes(opt)}', this)">
-                        ${opt}
-                    </button>
-                `).join('')}
-            </div>
-        `;
-        
-        // Clear hint area and add audio button
-        document.getElementById('hint-area').innerHTML = `
-            <button class="audio-help-btn" onclick="ExerciseEngine.playAudio()">
-                🔊 Hear It
-            </button>
-        `;
-        
-        // Auto-play audio if enabled
-        if (Settings.get('autoPlayAudio')) {
-            setTimeout(() => this.playAudio(), 300);
-        }
-    },
-    
     async playAudio() {
         await AudioHelper.speakExercise(this.type, this.currentQuestion, this.currentOptions);
     },
@@ -230,27 +268,15 @@ const ExerciseEngine = {
         }
     },
     
-    getResults() {
-        const elapsed = (Date.now() - this.startTime) / 1000;
-        const mins = Math.floor(elapsed / 60);
-        const secs = Math.round(elapsed % 60);
-        
-        return {
-            correct: this.correct,
-            total: this.total,
-            skipped: this.skipped,
-            time: `${mins}:${secs.toString().padStart(2, '0')}`,
-            accuracy: this.total > 0 ? Math.round((this.correct / this.total) * 100) : 0,
-            type: this.type,
-            duration: elapsed
-        };
-    },    
-
     shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
-    }
+    },
+
+    async playAudio() {
+        await AudioHelper.speakExercise(this.type, this.currentQuestion);
+    },
 };

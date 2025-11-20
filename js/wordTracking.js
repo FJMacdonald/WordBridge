@@ -123,7 +123,67 @@ const WordTracking = {
         Storage.set('wordStats', stats);
     },
 
+        trackHintUsed(word, exerciseType) {
+        const stats = Storage.get('wordStats', {});
+        
+        if (!stats[word]) {
+            stats[word] = {
+                totalAttempts: 0,
+                correctAttempts: 0,
+                incorrectAttempts: 0,
+                hintsUsed: 0,
+                consecutiveCorrect: 0,
+                lastSeen: Date.now(),
+                exercises: {}
+            };
+        }
+        
+        stats[word].hintsUsed = (stats[word].hintsUsed || 0) + 1;
+        
+        if (!stats[word].exercises[exerciseType]) {
+            stats[word].exercises[exerciseType] = {
+                attempts: 0,
+                correct: 0,
+                hintsUsed: 0
+            };
+        }
+        stats[word].exercises[exerciseType].hintsUsed = 
+            (stats[word].exercises[exerciseType].hintsUsed || 0) + 1;
+        
+        Storage.set('wordStats', stats);
+    },
     
+    getStatsSummary() {
+        const problemWords = this.getProblemWords();
+        const masteredWords = this.getMasteredWords();
+        const stats = Storage.get('wordStats', {});
+        
+        // Calculate total hints used
+        let totalHints = 0;
+        Object.values(stats).forEach(s => {
+            totalHints += s.hintsUsed || 0;
+        });
+        
+        return {
+            totalWordsAttempted: Object.keys(stats).length,
+            problemWordCount: Object.keys(problemWords).length,
+            masteredWordCount: Object.keys(masteredWords).length,
+            totalHintsUsed: totalHints,
+            problemWords: Object.entries(problemWords).map(([word, data]) => ({
+                word,
+                ratio: `${data.incorrect}/${data.attempts}`,
+                accuracy: data.attempts > 0 ? 
+                    Math.round(((data.attempts - data.incorrect) / data.attempts) * 100) : 0
+            })),
+            masteredWords: Object.entries(masteredWords).map(([word, data]) => ({
+                word,
+                masteredAt: new Date(data.masteredAt).toLocaleDateString(),
+                accuracy: data.accuracy
+            }))
+        };
+    },
+
+
     getProblemWords() {
         return Storage.get('problemWords', {});
     },
@@ -153,28 +213,5 @@ const WordTracking = {
         const masteredWords = Storage.get('masteredWords', {});
         delete masteredWords[word];
         Storage.set('masteredWords', masteredWords);
-    },
-    
-    getStatsSummary() {
-        const problemWords = this.getProblemWords();
-        const masteredWords = this.getMasteredWords();
-        const stats = Storage.get('wordStats', {});
-        
-        return {
-            totalWordsAttempted: Object.keys(stats).length,
-            problemWordCount: Object.keys(problemWords).length,
-            masteredWordCount: Object.keys(masteredWords).length,
-            problemWords: Object.entries(problemWords).map(([word, data]) => ({
-                word,
-                ratio: `${data.incorrect}/${data.attempts}`,
-                accuracy: data.attempts > 0 ? 
-                    Math.round(((data.attempts - data.incorrect) / data.attempts) * 100) : 0
-            })),
-            masteredWords: Object.entries(masteredWords).map(([word, data]) => ({
-                word,
-                masteredAt: new Date(data.masteredAt).toLocaleDateString(),
-                accuracy: data.accuracy
-            }))
-        };
     }
 };
