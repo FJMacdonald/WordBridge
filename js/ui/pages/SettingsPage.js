@@ -1,6 +1,7 @@
 import Config from '../../core/Config.js';
 import storageService from '../../services/StorageService.js';
 import importExportService from '../../services/ImportExportService.js';
+import pdfService from '../../services/PDFService.js';
 import { i18n, t } from '../../core/i18n.js';
 
 /**
@@ -9,14 +10,21 @@ import { i18n, t } from '../../core/i18n.js';
 class SettingsPage {
     constructor(container) {
         this.container = container;
+        this.availableVoices = [];
     }
     
-    render() {
+    async render() {
+        // Get available voices
+        await this.loadVoices();
+        
         const settings = {
             textSize: Config.get('ui.textSize') || 'medium',
             highContrast: Config.get('ui.highContrast') || false,
+            language: Config.get('ui.language') || 'en',
+            voiceIndex: Config.get('audio.voiceIndex') || 0,
             autoPlay: Config.get('audio.autoPlay') !== false,
             speechRate: Config.get('audio.speechRate') || 0.85,
+            customFrequency: Config.get('exercises.customFrequency') || 'mixed',
             problemWordFrequency: Config.get('exercises.problemWordFrequency') || 0.3,
             masteryThreshold: Config.get('tracking.masteryThreshold') || 3,
             removeAfterMastery: Config.get('exercises.removeAfterMastery') || false
@@ -52,11 +60,34 @@ class SettingsPage {
                             </label>
                         </div>
                     </div>
+                    
+                    <div class="setting-item">
+                        <label class="setting-label">Language</label>
+                        <div class="setting-control">
+                            <select id="language-select" class="setting-select">
+                                <option value="en" ${settings.language === 'en' ? 'selected' : ''}>English</option>
+                                <!-- More languages will appear when translation files are available -->
+                            </select>
+                        </div>
+                    </div>
                 </section>
                 
                 <!-- Audio Settings -->
                 <section class="settings-section">
                     <h3>🔊 Audio</h3>
+                    
+                    <div class="setting-item">
+                        <label class="setting-label">Voice Selection</label>
+                        <div class="setting-control">
+                            <select id="voice-select" class="setting-select voice-select">
+                                ${this.availableVoices.map((voice, index) => `
+                                    <option value="${index}" ${settings.voiceIndex === index ? 'selected' : ''}>
+                                        ${voice.name} (${voice.lang})
+                                    </option>
+                                `).join('')}
+                            </select>
+                        </div>
+                    </div>
                     
                     <div class="setting-item">
                         <label class="setting-label">Auto-play Questions</label>
@@ -74,7 +105,7 @@ class SettingsPage {
                             <input type="range" id="speech-rate" 
                                    min="0.5" max="1.2" step="0.05" 
                                    value="${settings.speechRate}">
-                            <span class="range-value" id="speech-rate-value">${settings.speechRate}</span>
+                            <span class="range-value" id="speech-rate-value">${settings.speechRate.toFixed(2)}</span>
                         </div>
                     </div>
                     
@@ -88,6 +119,24 @@ class SettingsPage {
                 <!-- Practice Settings -->
                 <section class="settings-section">
                     <h3>📚 Practice</h3>
+                    
+                    <div class="setting-item">
+                        <label class="setting-label">Custom Exercise Frequency</label>
+                        <p class="setting-description">How often to use your custom exercises</p>
+                        <div class="setting-control">
+                            <select id="custom-frequency" class="setting-select">
+                                <option value="mixed" ${settings.customFrequency === 'mixed' ? 'selected' : ''}>
+                                    Mixed with default
+                                </option>
+                                <option value="high" ${settings.customFrequency === 'high' ? 'selected' : ''}>
+                                    Mostly custom (70%)
+                                </option>
+                                <option value="only" ${settings.customFrequency === 'only' ? 'selected' : ''}>
+                                    Only custom
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                     
                     <div class="setting-item">
                         <label class="setting-label">Problem Word Frequency</label>
@@ -127,33 +176,43 @@ class SettingsPage {
                     </div>
                 </section>
                 
-                <!-- Data Management -->
+                <!-- Translation Tools -->
                 <section class="settings-section">
-                    <h3>💾 Data</h3>
+                    <h3>🌐 Translation</h3>
                     
                     <div class="setting-item">
-                        <button class="btn btn--secondary full-width" id="export-progress-btn">
-                            📤 Export Progress
+                        <button class="btn btn--secondary full-width" id="export-translation-btn">
+                            📤 Export for Translation (CSV)
                         </button>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <button class="btn btn--secondary full-width" id="export-backup-btn">
-                            💾 Full Backup
-                        </button>
+                        <small>Download all text as CSV for translation</small>
                     </div>
                     
                     <div class="setting-item">
                         <label class="btn btn--secondary full-width file-label">
-                            📥 Import Data
-                            <input type="file" id="import-file" accept=".json" hidden>
+                            📥 Import Translation (CSV)
+                            <input type="file" id="import-translation-file" accept=".csv" hidden>
                         </label>
+                        <small>Upload translated CSV to add new language</small>
+                    </div>
+                </section>
+                
+                <!-- Data Management -->
+                <section class="settings-section">
+                    <h3>💾 Data Management</h3>
+                    
+                    <div class="setting-item">
+                        <button class="btn btn--secondary full-width" id="export-backup-btn">
+                            💾 Create Full Backup
+                        </button>
+                        <small>Download all your data and settings</small>
                     </div>
                     
                     <div class="setting-item">
-                        <button class="btn btn--secondary full-width" id="export-translation-btn">
-                            🌐 Export for Translation
-                        </button>
+                        <label class="btn btn--secondary full-width file-label">
+                            📥 Restore from Backup
+                            <input type="file" id="import-backup-file" accept=".json" hidden>
+                        </label>
+                        <small>Import a previously saved backup</small>
                     </div>
                 </section>
                 
@@ -165,12 +224,16 @@ class SettingsPage {
                         <button class="btn btn--error full-width" id="reset-progress-btn">
                             🗑️ Reset All Progress
                         </button>
+                        <small>This will delete all progress but keep custom exercises</small>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <button class="btn btn--error full-width" id="reset-all-btn">
+                            ⚠️ Reset Everything
+                        </button>
+                        <small>Delete ALL data including custom exercises</small>
                     </div>
                 </section>
-                
-                <button class="btn btn--ghost back-btn" id="back-btn">
-                    ← Back to Home
-                </button>
             </div>
             
             <!-- Confirmation Modal -->
@@ -185,30 +248,54 @@ class SettingsPage {
                 </div>
             </div>
         `;
-
+        
         this.attachListeners();
         this.applySettings();
     }
     
+    async loadVoices() {
+        return new Promise((resolve) => {
+            const voices = speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                this.availableVoices = voices;
+                resolve();
+            } else {
+                speechSynthesis.addEventListener('voiceschanged', () => {
+                    this.availableVoices = speechSynthesis.getVoices();
+                    resolve();
+                });
+            }
+        });
+    }
+    
     attachListeners() {
-        // Text size
+        // Display settings
         this.container.querySelector('#text-size')?.addEventListener('change', (e) => {
             Config.set('ui.textSize', e.target.value);
             this.applySettings();
         });
         
-        // High contrast
         this.container.querySelector('#high-contrast')?.addEventListener('change', (e) => {
             Config.set('ui.highContrast', e.target.checked);
             this.applySettings();
         });
         
-        // Auto-play
+        this.container.querySelector('#language-select')?.addEventListener('change', async (e) => {
+            const lang = e.target.value;
+            Config.set('ui.language', lang);
+            await i18n.setLanguage(lang);
+            window.location.reload(); // Reload to apply new language
+        });
+        
+        // Audio settings
+        this.container.querySelector('#voice-select')?.addEventListener('change', (e) => {
+            Config.set('audio.voiceIndex', parseInt(e.target.value));
+        });
+        
         this.container.querySelector('#auto-play')?.addEventListener('change', (e) => {
             Config.set('audio.autoPlay', e.target.checked);
         });
         
-        // Speech rate
         const speechRateInput = this.container.querySelector('#speech-rate');
         speechRateInput?.addEventListener('input', (e) => {
             const value = parseFloat(e.target.value);
@@ -216,15 +303,22 @@ class SettingsPage {
             Config.set('audio.speechRate', value);
         });
         
-        // Test voice
         this.container.querySelector('#test-voice-btn')?.addEventListener('click', () => {
             const rate = Config.get('audio.speechRate');
+            const voiceIndex = Config.get('audio.voiceIndex');
             const utterance = new SpeechSynthesisUtterance('Hello! This is how the voice sounds.');
             utterance.rate = rate;
+            if (this.availableVoices[voiceIndex]) {
+                utterance.voice = this.availableVoices[voiceIndex];
+            }
             speechSynthesis.speak(utterance);
         });
         
-        // Problem frequency
+        // Practice settings
+        this.container.querySelector('#custom-frequency')?.addEventListener('change', (e) => {
+            Config.set('exercises.customFrequency', e.target.value);
+        });
+        
         const problemFreqInput = this.container.querySelector('#problem-frequency');
         problemFreqInput?.addEventListener('input', (e) => {
             const value = parseFloat(e.target.value);
@@ -233,60 +327,76 @@ class SettingsPage {
             Config.set('exercises.problemWordFrequency', value);
         });
         
-        // Mastery threshold
         this.container.querySelector('#mastery-threshold')?.addEventListener('change', (e) => {
             Config.set('tracking.masteryThreshold', parseInt(e.target.value));
         });
         
-        // Remove after mastery
         this.container.querySelector('#remove-mastery')?.addEventListener('change', (e) => {
             Config.set('exercises.removeAfterMastery', e.target.checked);
         });
         
-        // Export progress
-        this.container.querySelector('#export-progress-btn')?.addEventListener('click', () => {
-            importExportService.exportProgressData();
+        // Translation
+        this.container.querySelector('#export-translation-btn')?.addEventListener('click', () => {
+            importExportService.exportTranslationCSV();
         });
         
-        // Full backup
-        this.container.querySelector('#export-backup-btn')?.addEventListener('click', async () => {
-            await importExportService.exportFullBackup();
-        });
-        
-        // Import file
-        this.container.querySelector('#import-file')?.addEventListener('change', async (e) => {
+        this.container.querySelector('#import-translation-file')?.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
                 try {
-                    const result = await importExportService.importFromFile(file);
-                    alert(result.message);
+                    await importExportService.importTranslationCSV(file);
+                    alert('Translation imported successfully! Please reload the app.');
                 } catch (err) {
                     alert('Import failed: ' + err.message);
                 }
             }
         });
         
-        // Export translation
-        this.container.querySelector('#export-translation-btn')?.addEventListener('click', async () => {
-            await importExportService.exportTranslationTemplate();
+        // Backup
+        this.container.querySelector('#export-backup-btn')?.addEventListener('click', async () => {
+            await importExportService.exportFullBackup();
         });
         
-        // Reset progress
+        this.container.querySelector('#import-backup-file')?.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                try {
+                    const result = await importExportService.importFromFile(file);
+                    alert(result.message);
+                    window.location.reload();
+                } catch (err) {
+                    alert('Import failed: ' + err.message);
+                }
+            }
+        });
+        
+        // Reset
         this.container.querySelector('#reset-progress-btn')?.addEventListener('click', () => {
             this.showConfirmModal(
-                'Reset All Progress',
-                'This will permanently delete all your progress, statistics, and custom exercises. This cannot be undone.',
+                'Reset Progress',
+                'This will delete all your progress and statistics, but keep your custom exercises.',
                 () => {
+                    const customExercises = storageService.get('customExercises');
                     storageService.clear();
-                    alert('All progress has been reset.');
+                    if (customExercises) {
+                        storageService.set('customExercises', customExercises);
+                    }
+                    alert('Progress has been reset.');
                     window.location.reload();
                 }
             );
         });
         
-        // Back button
-        this.container.querySelector('#back-btn')?.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
+        this.container.querySelector('#reset-all-btn')?.addEventListener('click', () => {
+            this.showConfirmModal(
+                'Reset Everything',
+                'This will permanently delete ALL data including custom exercises. This cannot be undone.',
+                () => {
+                    storageService.clear();
+                    alert('All data has been deleted.');
+                    window.location.reload();
+                }
+            );
         });
         
         // Modal
@@ -325,7 +435,6 @@ class SettingsPage {
         
         document.body.classList.toggle('high-contrast', highContrast);
     }
-    
 }
 
 export default SettingsPage;

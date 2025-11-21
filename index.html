@@ -2,28 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Aphasia Recovery Tool - Practice language skills at your own pace">
-    <title>Aphasia Recovery Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aphasia Recovery</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <div id="app">
-        <header class="app-header">
-            <h1 class="app-title">Aphasia Recovery Tool</h1>
-            <nav class="app-nav">
-                <button class="nav-btn" data-page="home" aria-label="Home">🏠</button>
-                <button class="nav-btn" data-page="progress" aria-label="Progress">📊</button>
-                <button class="nav-btn" data-page="settings" aria-label="Settings">⚙️</button>
-            </nav>
-        </header>
-        
-        <main id="main-content" class="main-content">
-            <!-- Content loaded dynamically -->
-        </main>
-    </div>
+    <header class="app-header">
+        <h1 class="app-title">Aphasia Recovery Tool</h1>
+        <nav class="app-nav">
+            <button class="nav-btn" data-page="home" aria-label="Home">🏠</button>
+            <button class="nav-btn" data-page="progress" aria-label="Progress">📊</button>
+            <button class="nav-btn" data-page="customize" aria-label="Settings">➕</button>
+            <button class="nav-btn" data-page="settings" aria-label="Settings">⚙️</button>
+        </nav>
+    </header>    
+    <div id="main-content"></div>
     
-    <!-- Load scripts as modules -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

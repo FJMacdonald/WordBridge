@@ -3,6 +3,7 @@ import Config from '../core/Config.js';
 import exerciseFactory from '../exercises/ExerciseFactory.js';
 import imageStorage from '../services/ImageStorageService.js';
 import storageService from '../services/StorageService.js';
+import trackingService from '../services/TrackingService.js';
 import ProgressPage from './pages/ProgressPage.js';
 import SettingsPage from './pages/SettingsPage.js';
 import CustomizePage from './pages/CustomizePage.js';
@@ -65,6 +66,7 @@ class App {
         });
     }
     
+    
     setupGlobalListeners() {
         window.addEventListener('navigate', (e) => {
             this.navigate(e.detail);
@@ -80,6 +82,11 @@ class App {
             this.currentExercise.destroy();
             this.currentExercise = null;
         }
+        
+        // Update nav buttons
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.page === page);
+        });
         
         switch (page) {
             case 'home':
@@ -101,32 +108,41 @@ class App {
     
     showHome() {
         const categories = exerciseFactory.getExercisesByCategory();
-        const categoryNames = {
-            vocabulary: '📚 Vocabulary',
-            comprehension: '👂 Comprehension',
-            production: '🎤 Production',
-            spelling: '✏️ Spelling',
-            sentences: '📝 Sentences',
-            phonology: '🔤 Sounds',
-            semantics: '🔗 Meaning'
+        const categoryInfo = {
+            meaning: {
+                name: 'Meaning',
+                icon: '💡',
+                description: 'Understanding word meanings'
+            },
+            phonetics: {
+                name: 'Phonetics',
+                icon: '🔊',
+                description: 'Sounds and pronunciation'
+            },
+            words: {
+                name: 'Words',
+                icon: '📚',
+                description: 'Recognition and spelling'
+            }
         };
         
         this.container.innerHTML = `
             <div class="home-page">
-                <h2>${t('home.title')}</h2>
-                <p class="home-subtitle">${t('home.subtitle')}</p>
-                
-                <div class="home-actions">
-                    <button class="btn btn--secondary" id="customize-btn">
-                        ✏️ Customize
-                    </button>
+                <div class="home-header">
+                    <h1 class="home-title">Speech Therapy</h1>
+                    <p class="home-subtitle">Choose an exercise to practice</p>
                 </div>
                 
-                <div class="exercise-categories">
-                    ${Object.entries(categories).map(([cat, exercises]) => `
-                        <div class="category-section">
-                            <h3 class="category-title">${categoryNames[cat] || cat}</h3>
-                            <div class="exercise-list">
+                <div class="category-grid">
+                    ${Object.entries(categories).map(([category, exercises]) => `
+                        <div class="category-card">
+                            <div class="category-header">
+                                <h3 class="category-title">
+                                    <span class="category-icon">${categoryInfo[category].icon}</span>
+                                    ${categoryInfo[category].name}
+                                </h3>
+                            </div>
+                            <div class="exercise-grid">
                                 ${exercises.map(ex => `
                                     <button class="exercise-card" data-type="${ex.type}">
                                         <span class="exercise-icon">${ex.icon}</span>
@@ -143,12 +159,9 @@ class App {
         // Attach listeners
         this.container.querySelectorAll('.exercise-card').forEach(card => {
             card.addEventListener('click', () => {
+                trackingService.startSession(card.dataset.type);
                 this.startExercise(card.dataset.type);
             });
-        });
-        
-        this.container.querySelector('#customize-btn')?.addEventListener('click', () => {
-            this.navigate('customize');
         });
     }
     
@@ -160,8 +173,28 @@ class App {
         const customExercises = storageService.get('customExercises', {});
         const customData = customExercises[type] || [];
         
-        // Merge default and custom
-        return [...defaultData, ...customData];
+        // Get custom exercise frequency setting
+        const customFrequency = Config.get('exercises.customFrequency') || 'mixed';
+        
+        if (customFrequency === 'only' && customData.length > 0) {
+            // Use only custom exercises
+            return customData;
+        } else if (customFrequency === 'high' && customData.length > 0) {
+            // 70% custom, 30% default
+            const combined = [];
+            const targetSize = Math.max(customData.length * 2, 20);
+            while (combined.length < targetSize) {
+                if (Math.random() < 0.7 && customData.length > 0) {
+                    combined.push(customData[Math.floor(Math.random() * customData.length)]);
+                } else if (defaultData.length > 0) {
+                    combined.push(defaultData[Math.floor(Math.random() * defaultData.length)]);
+                }
+            }
+            return combined;
+        } else {
+            // Mixed: merge default and custom
+            return [...defaultData, ...customData];
+        }
     }
     
     async startExercise(type) {
@@ -199,8 +232,6 @@ class App {
         document.body.classList.add(`${textSize}-text`);
         document.body.classList.toggle('high-contrast', highContrast);
     }
-    
-
 }
 
 export const app = new App();

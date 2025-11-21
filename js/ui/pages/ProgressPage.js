@@ -17,8 +17,8 @@ class ProgressPage {
             <div class="progress-page">
                 <header class="page-header">
                     <h2>Your Progress</h2>
-                    <button class="btn btn--secondary" id="export-pdf-btn">
-                        📄 Export Report
+                    <button class="btn btn--primary" id="export-pdf-btn">
+                        📊 View Report
                     </button>
                 </header>
                 
@@ -200,3 +200,5 @@ class ProgressPage {
 }
 
 export default ProgressPage;
+
+    

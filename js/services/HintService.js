@@ -1,119 +1,105 @@
-import audioService from './AudioService.js';
-import { t } from '../core/i18n.js';
-
 /**
- * Unified hint service
+ * Hint service with progressive hints
  */
 class HintService {
     constructor() {
-        this.sequences = {
-            naming: ['eliminate', 'audio', 'eliminate', 'firstLetter'],
-            sentenceTyping: ['revealLetter', 'revealLetter', 'audio', 'revealLetter'],
-            typing: ['revealLetter', 'audio', 'revealLetter', 'revealLetter'],
-            category: ['eliminate', 'eliminate', 'audio'],
-            rhyming: ['audio', 'eliminate', 'eliminate'],
-            firstSound: ['audio', 'eliminate', 'eliminate'],
-            association: ['eliminate', 'audio', 'eliminate'],
-            synonyms: ['eliminate', 'audio', 'eliminate'],
-            definitions: ['audio', 'eliminate', 'eliminate'],
-            listening: ['audio', 'eliminate', 'eliminate'],
-            speaking: ['firstLetter', 'audio', 'audio', 'audio'],
-            scramble: ['highlight', 'audio', 'highlight', 'highlight']
+        this.hintStrategies = {
+            selection: [
+                { type: 'remove_one', description: 'Remove one wrong option' },
+                { type: 'first_letter', description: 'Show first letter' },
+                { type: 'remove_second', description: 'Remove another wrong option' },
+                { type: 'reveal', description: 'Show the answer' }
+            ],
+            typing: [
+                { type: 'first_letters', description: 'Show first two letters' },
+                { type: 'speak', description: 'Say the word' },
+                { type: 'next_letter', description: 'Show next letter' },
+                { type: 'reveal', description: 'Show the answer' }
+            ]
         };
     }
     
-    getSequence(exerciseType) {
-        return this.sequences[exerciseType] || ['eliminate', 'audio'];
-    }
-    
-    hasMoreHints(exerciseType, hintsUsed) {
-        return hintsUsed < this.getSequence(exerciseType).length;
-    }
-    
-    getNextHintType(exerciseType, hintsUsed) {
-        const seq = this.getSequence(exerciseType);
-        return seq[Math.min(hintsUsed, seq.length - 1)];
-    }
-    
     /**
-     * Apply eliminate hint - removes one wrong option
+     * Get next hint for selection exercises (4 options)
      */
-    applyEliminate(context) {
-        const { options, correctAnswer, eliminatedIndices, container } = context;
+    getSelectionHint(currentHintLevel, options, correctAnswer) {
+        const wrongOptions = options.filter(opt => opt !== correctAnswer);
         
-        // Find wrong options not yet eliminated
-        const wrongIndices = [];
-        options.forEach((opt, idx) => {
-            const val = typeof opt === 'object' ? opt.answer || opt.value : opt;
-            if (val !== correctAnswer && !eliminatedIndices.has(idx)) {
-                wrongIndices.push(idx);
-            }
-        });
-        
-        if (wrongIndices.length === 0) return false;
-        
-        // Pick random wrong option
-        const idx = wrongIndices[Math.floor(Math.random() * wrongIndices.length)];
-        eliminatedIndices.add(idx);
-        
-        // Update UI
-        const buttons = container.querySelectorAll('.option-btn');
-        if (buttons[idx]) {
-            buttons[idx].classList.add('eliminated');
-            buttons[idx].disabled = true;
+        switch (currentHintLevel) {
+            case 0: // Remove one wrong option
+                return {
+                    type: 'remove_option',
+                    optionToRemove: wrongOptions[0],
+                    message: 'Removed one wrong option'
+                };
+                
+            case 1: // Show first letter
+                return {
+                    type: 'first_letter',
+                    letter: correctAnswer[0].toUpperCase(),
+                    message: `Starts with "${correctAnswer[0].toUpperCase()}"`
+                };
+                
+            case 2: // Remove second wrong option
+                return {
+                    type: 'remove_option',
+                    optionToRemove: wrongOptions[1],
+                    message: 'Removed another wrong option'
+                };
+                
+            case 3: // Reveal answer
+                return {
+                    type: 'reveal',
+                    answer: correctAnswer,
+                    message: `The answer is: ${correctAnswer}`
+                };
+                
+            default:
+                return null;
         }
-        
-        return true;
     }
     
     /**
-     * Apply audio hint - speaks the answer
+     * Get next hint for typing exercises
      */
-    async applyAudio(context) {
-        const { correctAnswer } = context;
-        await audioService.speakWord(correctAnswer);
-        return true;
-    }
-    
-    /**
-     * Apply first letter hint
-     */
-    applyFirstLetter(context) {
-        const { correctAnswer, container } = context;
-        const firstLetter = correctAnswer[0].toUpperCase();
-        
-        let hintEl = container.querySelector('.hint-display');
-        if (!hintEl) {
-            hintEl = document.createElement('div');
-            hintEl.className = 'hint-display';
-            container.querySelector('.exercise__prompt').appendChild(hintEl);
+    getTypingHint(currentHintLevel, correctAnswer, currentInput = '') {
+        switch (currentHintLevel) {
+            case 0: // Show first two letters
+                return {
+                    type: 'letters',
+                    letters: correctAnswer.substring(0, 2),
+                    message: `Starts with: ${correctAnswer.substring(0, 2)}`
+                };
+                
+            case 1: // Speak the word
+                return {
+                    type: 'speak',
+                    word: correctAnswer,
+                    message: 'Listen to the word'
+                };
+                
+            case 2: // Show next letter
+                const nextIndex = currentInput.length;
+                if (nextIndex < correctAnswer.length) {
+                    return {
+                        type: 'next_letter',
+                        letter: correctAnswer[nextIndex],
+                        position: nextIndex,
+                        message: `Next letter: ${correctAnswer[nextIndex]}`
+                    };
+                }
+                // Fall through to reveal if at end
+                
+            case 3: // Reveal answer
+                return {
+                    type: 'reveal',
+                    answer: correctAnswer,
+                    message: `The answer is: ${correctAnswer}`
+                };
+                
+            default:
+                return null;
         }
-        hintEl.textContent = `Starts with: ${firstLetter}`;
-        
-        return true;
-    }
-    
-    /**
-     * Apply reveal letter hint
-     */
-    applyRevealLetter(context) {
-        const { targetWord, revealedCount, container, onReveal } = context;
-        
-        if (revealedCount >= targetWord.length) return false;
-        
-        const letter = targetWord[revealedCount];
-        
-        // Update letter box
-        const boxes = container.querySelectorAll('.letter-box');
-        if (boxes[revealedCount]) {
-            boxes[revealedCount].textContent = letter.toUpperCase();
-            boxes[revealedCount].classList.add('filled', 'hint');
-        }
-        
-        // Call callback to update state
-        if (onReveal) onReveal(revealedCount + 1);
-        
-        return true;
     }
 }
 

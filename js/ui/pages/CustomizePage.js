@@ -1,6 +1,7 @@
 import storageService from '../../services/StorageService.js';
 import imageStorage from '../../services/ImageStorageService.js';
-import importExportService from '../../services/ImportExportService.js';
+import csvService from '../../services/CSVService.js';
+import Config from '../../core/Config.js';
 
 /**
  * Customize exercises page
@@ -8,7 +9,7 @@ import importExportService from '../../services/ImportExportService.js';
 class CustomizePage {
     constructor(container) {
         this.container = container;
-        this.currentTab = 'naming';
+        this.currentMode = 'individual'; // 'individual' or 'bulk'
     }
     
     async render() {
@@ -17,66 +18,140 @@ class CustomizePage {
         this.container.innerHTML = `
             <div class="customize-page">
                 <header class="page-header">
-                    <h2>Customize Exercises</h2>
+                    <h2>Add Custom Exercises</h2>
+                    <button class="btn btn--ghost" id="back-btn">
+                        ← Back
+                    </button>
                 </header>
                 
-                <!-- Tabs -->
-                <div class="tabs">
-                    <button class="tab active" data-tab="naming">🖼️ Pictures</button>
-                    <button class="tab" data-tab="sentences">📝 Sentences</button>
-                    <button class="tab" data-tab="words">📚 Words</button>
+                <!-- Mode Toggle -->
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="individual">
+                        ➕ Individual
+                    </button>
+                    <button class="mode-btn" data-mode="bulk">
+                        📋 Bulk Upload
+                    </button>
                 </div>
                 
-                <!-- Add New Form -->
-                <div class="add-form-container" id="add-form-container">
-                    ${this.renderAddForm('naming')}
+                <!-- Individual Mode -->
+                <div class="mode-content" id="individual-mode">
+                    <div class="exercise-type-selector">
+                        <h3>Choose Exercise Type:</h3>
+                        <div class="type-grid">
+                            <button class="type-btn" data-type="naming">
+                                <span class="type-icon">🖼️</span>
+                                <span class="type-name">Picture</span>
+                            </button>
+                            <button class="type-btn" data-type="sentenceTyping">
+                                <span class="type-icon">📝</span>
+                                <span class="type-name">Sentence</span>
+                            </button>
+                            <button class="type-btn" data-type="words">
+                                <span class="type-icon">📚</span>
+                                <span class="type-name">Words</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="add-form-container"></div>
                 </div>
                 
-                <!-- Existing Items -->
-                <div class="existing-items" id="existing-items">
-                    ${await this.renderExistingItems('naming', customExercises.naming || [])}
+                <!-- Bulk Mode -->
+                <div class="mode-content" id="bulk-mode" hidden>
+                    <div class="bulk-upload-section">
+                        <h3>Bulk Upload from CSV</h3>
+                        
+                        <!-- Collapsible Instructions -->
+                        <details class="instructions-panel">
+                            <summary class="instructions-header">
+                                📖 Instructions (click to expand)
+                            </summary>
+                            <div class="instructions-content">
+                                <h4>How to upload custom exercises:</h4>
+                                <ol>
+                                    <li>Download the template CSV file for the exercise type you want</li>
+                                    <li>Open it in Excel, Google Sheets, or any spreadsheet app</li>
+                                    <li>Fill in your custom exercises following the format</li>
+                                    <li>Save as CSV file</li>
+                                    <li>Upload the file here</li>
+                                </ol>
+                                
+                                <h4>CSV Format Guidelines:</h4>
+                                <div class="format-guide">
+                                    <div class="format-item">
+                                        <strong>Picture Naming:</strong>
+                                        <code>word, image_url, option1, option2, option3</code>
+                                        <p>Example: apple, https://example.com/apple.jpg, banana, orange, pear</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>Sentences:</strong>
+                                        <code>sentence_with_blank, answer</code>
+                                        <p>Example: I drink __ every morning, coffee</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>Words:</strong>
+                                        <code>type, word, related_words</code>
+                                        <p>Example: rhyming, cat, hat|bat|mat</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+                        
+                        <!-- Template Downloads -->
+                        <div class="template-section">
+                            <h4>Download Templates:</h4>
+                            <div class="template-buttons">
+                                <button class="btn btn--secondary" data-template="naming">
+                                    📥 Picture Template
+                                </button>
+                                <button class="btn btn--secondary" data-template="sentences">
+                                    📥 Sentence Template
+                                </button>
+                                <button class="btn btn--secondary" data-template="words">
+                                    📥 Words Template
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Upload Section -->
+                        <div class="upload-section">
+                            <h4>Upload Your CSV:</h4>
+                            <div class="upload-zone" id="upload-zone">
+                                <input type="file" id="csv-file" accept=".csv" hidden>
+                                <label for="csv-file" class="upload-label">
+                                    <span class="upload-icon">📁</span>
+                                    <span class="upload-text">Click to select CSV file or drag & drop here</span>
+                                </label>
+                            </div>
+                            
+                            <!-- Error Display -->
+                            <div id="upload-errors" class="error-panel" hidden></div>
+                            
+                            <!-- Preview -->
+                            <div id="upload-preview" class="preview-panel" hidden></div>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- Bulk Actions -->
-                <section class="bulk-actions">
-                    <h3>Import/Export</h3>
-                    <div class="action-buttons">
-                        <button class="btn btn--secondary" id="export-custom-btn">
-                            📤 Export Custom Exercises
-                        </button>
-                        <label class="btn btn--secondary file-label">
-                            📥 Import Exercises
-                            <input type="file" id="import-exercises-file" accept=".json" hidden>
-                        </label>
+                <!-- Existing Custom Exercises -->
+                <section class="existing-section">
+                    <h3>Your Custom Exercises</h3>
+                    <div id="existing-items">
+                        ${await this.renderExistingItems(customExercises)}
                     </div>
                 </section>
-                
-                <button class="btn btn--ghost back-btn" id="back-btn">
-                    ← Back to Home
-                </button>
-            </div>
-            
-            <!-- Confirmation Modal -->
-            <div class="modal-overlay" id="confirm-modal" hidden>
-                <div class="modal">
-                    <h3 id="modal-title">Confirm</h3>
-                    <p id="modal-message">Are you sure?</p>
-                    <div class="modal-actions">
-                        <button class="btn btn--ghost" id="modal-cancel">Cancel</button>
-                        <button class="btn btn--error" id="modal-confirm">Confirm</button>
-                    </div>
-                </div>
             </div>
         `;
         
         this.attachListeners();
     }
-      
-    renderAddForm(type) {
+    
+    renderIndividualForm(type) {
         switch (type) {
             case 'naming':
                 return this.renderNamingForm();
-            case 'sentences':
+            case 'sentenceTyping':
                 return this.renderSentenceForm();
             case 'words':
                 return this.renderWordsForm();
@@ -91,51 +166,210 @@ class CustomizePage {
                 <h3>Add Picture Exercise</h3>
                 
                 <div class="form-group">
-                    <label>Image</label>
-                    <div class="image-options">
-                        <button type="button" class="image-option-btn active" data-type="emoji">
-                            😀 Emoji
-                        </button>
-                        <button type="button" class="image-option-btn" data-type="upload">
-                            📷 Upload
-                        </button>
-                        <button type="button" class="image-option-btn" data-type="url">
-                            🔗 URL
-                        </button>
-                    </div>
-                    
-                    <div class="image-input-container">
-                        <div class="image-input active" data-for="emoji">
-                            <input type="text" id="emoji-input" placeholder="Enter or paste emoji" 
-                                   class="emoji-input" maxlength="4">
-                            <div class="emoji-preview" id="emoji-preview"></div>
-                        </div>
-                        <div class="image-input" data-for="upload">
-                            <input type="file" id="image-upload" accept="image/*">
-                            <div class="upload-preview" id="upload-preview"></div>
-                        </div>
-                        <div class="image-input" data-for="url">
-                            <input type="url" id="image-url" placeholder="https://example.com/image.jpg">
-                            <div class="url-preview" id="url-preview"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="word-input">Word (Answer)</label>
+                    <label>Word (Answer)</label>
                     <input type="text" id="word-input" placeholder="e.g., apple" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="options-input">Wrong Options (comma separated)</label>
+                    <label>Image</label>
+                    <div class="image-upload-area">
+                        <input type="file" id="image-upload" accept="image/*" required>
+                        <div class="image-preview" id="image-preview"></div>
+                    </div>
+                    <small>Upload a picture for this word</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Wrong Options (optional)</label>
                     <input type="text" id="options-input" placeholder="e.g., orange, banana, pear">
                     <small>Leave empty to auto-generate from other words</small>
                 </div>
                 
-                <button type="submit" class="btn btn--primary">Add Exercise</button>
+                <div class="form-actions">
+                    <button type="button" class="btn btn--ghost" id="cancel-form">Cancel</button>
+                    <button type="submit" class="btn btn--primary">Add Exercise</button>
+                </div>
             </form>
         `;
     }
+    
+    attachListeners() {
+        // Mode toggle
+        this.container.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.switchMode(btn.dataset.mode));
+        });
+        
+        // Exercise type selection
+        this.container.querySelectorAll('.type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.container.querySelector('#add-form-container').innerHTML = 
+                    this.renderIndividualForm(btn.dataset.type);
+                this.attachFormListeners(btn.dataset.type);
+            });
+        });
+        
+        // Template downloads
+        this.container.querySelectorAll('[data-template]').forEach(btn => {
+            btn.addEventListener('click', () => this.downloadTemplate(btn.dataset.template));
+        });
+        
+        // CSV upload
+        const csvInput = this.container.querySelector('#csv-file');
+        const uploadZone = this.container.querySelector('#upload-zone');
+        
+        if (csvInput) {
+            csvInput.addEventListener('change', (e) => this.handleCSVUpload(e.target.files[0]));
+        }
+        
+        // Drag and drop
+        if (uploadZone) {
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file && file.type === 'text/csv') {
+                    this.handleCSVUpload(file);
+                }
+            });
+        }
+        
+        // Back button
+        this.container.querySelector('#back-btn')?.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
+        });
+    }
+    
+    async handleCSVUpload(file) {
+        const errorPanel = this.container.querySelector('#upload-errors');
+        const previewPanel = this.container.querySelector('#upload-preview');
+        
+        try {
+            const result = await csvService.parseCSV(file);
+            
+            if (result.errors.length > 0) {
+                // Show errors
+                errorPanel.innerHTML = `
+                    <h4>⚠️ Issues found:</h4>
+                    <ul class="error-list">
+                        ${result.errors.map(err => `
+                            <li class="error-item">
+                                <strong>Row ${err.row}:</strong> ${err.message}
+                                ${err.suggestion ? `<br><em>Suggestion: ${err.suggestion}</em>` : ''}
+                            </li>
+                        `).join('')}
+                    </ul>
+                    ${result.data.length > 0 ? `
+                        <p class="error-note">✓ ${result.data.length} valid exercises can still be imported</p>
+                    ` : ''}
+                `;
+                errorPanel.hidden = false;
+            } else {
+                errorPanel.hidden = true;
+            }
+            
+            // Show preview
+            if (result.data.length > 0) {
+                previewPanel.innerHTML = `
+                    <h4>✓ Ready to import ${result.data.length} exercises</h4>
+                    <div class="preview-list">
+                        ${result.data.slice(0, 5).map(item => `
+                            <div class="preview-item">
+                                ${this.renderPreviewItem(result.type, item)}
+                            </div>
+                        `).join('')}
+                        ${result.data.length > 5 ? `<p>... and ${result.data.length - 5} more</p>` : ''}
+                    </div>
+                    <div class="preview-actions">
+                        <button class="btn btn--ghost" id="cancel-import">Cancel</button>
+                        <button class="btn btn--primary" id="confirm-import">Import All Valid</button>
+                    </div>
+                `;
+                previewPanel.hidden = false;
+                
+                // Attach import handlers
+                this.container.querySelector('#cancel-import')?.addEventListener('click', () => {
+                    previewPanel.hidden = true;
+                    errorPanel.hidden = true;
+                });
+                
+                this.container.querySelector('#confirm-import')?.addEventListener('click', () => {
+                    this.importCSVData(result.type, result.data);
+                });
+            }
+            
+        } catch (error) {
+            errorPanel.innerHTML = `
+                <h4>❌ Upload Failed</h4>
+                <p>${error.message}</p>
+                <div class="error-help">
+                    <h5>Common issues:</h5>
+                    <ul>
+                        <li>Make sure the file is a valid CSV</li>
+                        <li>Check that columns are separated by commas</li>
+                        <li>Ensure the first row contains headers</li>
+                        <li>Download and use our template for the correct format</li>
+                    </ul>
+                </div>
+            `;
+            errorPanel.hidden = false;
+        }
+    }
+    
+    downloadTemplate(type) {
+        const templates = {
+            naming: {
+                headers: ['word', 'image_url', 'option1', 'option2', 'option3'],
+                rows: [
+                    ['apple', 'https://example.com/apple.jpg', 'banana', 'orange', 'pear'],
+                    ['car', 'https://example.com/car.jpg', 'bus', 'train', 'bike']
+                ]
+            },
+            sentences: {
+                headers: ['sentence', 'answer'],
+                rows: [
+                    ['I drink __ every morning', 'coffee'],
+                    ['The cat sat on the __', 'mat']
+                ]
+            },
+            words: {
+                headers: ['type', 'word', 'related_words'],
+                rows: [
+                    ['rhyming', 'cat', 'hat|bat|mat'],
+                    ['synonym', 'happy', 'joyful|glad|cheerful'],
+                    ['association', 'bread', 'butter|toast|sandwich']
+                ]
+            }
+        };
+        
+        const template = templates[type];
+        if (!template) return;
+        
+        csvService.downloadCSV(template, `${type}_template.csv`);
+    }
+    
+      
+    renderAddForm(type) {
+        switch (type) {
+            case 'naming':
+                return this.renderNamingForm();
+            case 'sentences':
+                return this.renderSentenceForm();
+            case 'words':
+                return this.renderWordsForm();
+            default:
+                return '';
+        }
+    }
+    
     
     renderSentenceForm() {
         return `
@@ -254,96 +488,7 @@ class CustomizePage {
             </div>
         `;
     }
-    
-    attachListeners() {
-        // Tabs
-        this.container.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', (e) => this.switchTab(e.target.dataset.tab));
-        });
-        
-        // Image type selection
-        this.container.querySelectorAll('.image-option-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => this.switchImageType(e.target.dataset.type));
-        });
-        
-        // Emoji preview
-        this.container.querySelector('#emoji-input')?.addEventListener('input', (e) => {
-            this.container.querySelector('#emoji-preview').textContent = e.target.value;
-        });
-        
-        // Image upload preview
-        this.container.querySelector('#image-upload')?.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const resized = await imageStorage.resizeImage(file);
-                this.container.querySelector('#upload-preview').innerHTML = 
-                    `<img src="${resized}" alt="Preview">`;
-                this.pendingImage = resized;
-            }
-        });
-        
-        // URL preview
-        this.container.querySelector('#image-url')?.addEventListener('blur', (e) => {
-            const url = e.target.value;
-            if (url) {
-                this.container.querySelector('#url-preview').innerHTML = 
-                    `<img src="${url}" alt="Preview" onerror="this.style.display='none'">`;
-            }
-        });
-        
-        // Word type fields
-        this.container.querySelector('#word-type')?.addEventListener('change', (e) => {
-            this.showWordTypeFields(e.target.value);
-        });
-        
-        // Forms
-        this.container.querySelector('#add-naming-form')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleAddNaming();
-        });
-        
-        this.container.querySelector('#add-sentence-form')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleAddSentence();
-        });
-        
-        this.container.querySelector('#add-words-form')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleAddWords();
-        });
-        
-        // Delete buttons
-        this.container.addEventListener('click', async (e) => {
-            if (e.target.classList.contains('item-delete-btn')) {
-                const type = e.target.dataset.type;
-                const index = parseInt(e.target.dataset.index);
-                await this.deleteItem(type, index);
-            }
-        });
-        
-        // Export/Import
-        this.container.querySelector('#export-custom-btn')?.addEventListener('click', () => {
-            importExportService.exportExerciseData(true);
-        });
-        
-        this.container.querySelector('#import-exercises-file')?.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                try {
-                    const result = await importExportService.importFromFile(file);
-                    alert(result.message);
-                    this.render();
-                } catch (err) {
-                    alert('Import failed: ' + err.message);
-                }
-            }
-        });
-        
-        // Back button
-        this.container.querySelector('#back-btn')?.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
-        });
-    }
+
     
     async switchTab(tab) {
         this.currentTab = tab;
