@@ -104,10 +104,21 @@ class BaseExercise {
     }
     
     /**
-     * Render common footer
+     * Get context for hint availability check - override in subclass
+     */
+    getHintContext() {
+        return {};
+    }
+
+    /**
+     * Render common footer (UPDATED)
      */
     renderFooter() {
-        const hasMore = hintService.hasMoreHints(this.type, this.state.hintsUsed);
+        const hasMore = hintService.hasMoreHints(
+            this.type, 
+            this.state.hintsUsed, 
+            this.getHintContext()
+        );
         
         return `
             <footer class="exercise__footer">

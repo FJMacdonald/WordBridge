@@ -1,42 +1,37 @@
+// services/HintService.js
+
+import audioService from './AudioService.js';
+
 /**
  * Hint service with progressive hints
  */
 class HintService {
     constructor() {
-        this.hintStrategies = {
+        this.strategies = {
             selection: [
-                { type: 'remove_one', description: 'Remove one wrong option' },
-                { type: 'first_letter', description: 'Show first letter' },
-                { type: 'remove_second', description: 'Remove another wrong option' },
-                { type: 'reveal', description: 'Show the answer' }
+                { type: 'eliminate' },
+                { type: 'firstLetter' },
+                { type: 'eliminate' },
+                { type: 'sayAnswer' }
             ],
             typing: [
-                { type: 'first_letters', description: 'Show first two letters' },
-                { type: 'speak', description: 'Say the word' },
-                { type: 'next_letter', description: 'Show next letter' },
-                { type: 'reveal', description: 'Show the answer' }
+                { type: 'revealLetter' }
+                // Repeats indefinitely until word is complete
             ],
-            default: [
-                { type: 'hint', description: 'Get a hint' },
-                { type: 'reveal', description: 'Show the answer' }
+            speaking: [
+                { type: 'firstLetter' },
+                { type: 'sentence', index: 0 },
+                { type: 'sentence', index: 1 },
+                { type: 'spellAndSay' }
             ]
         };
     }
-    
+
     /**
-     * Check if more hints are available
+     * Get strategy for exercise type
      */
-    hasMoreHints(exerciseType, currentHintLevel) {
-        const strategy = this.getStrategyForType(exerciseType);
-        return currentHintLevel < strategy.length;
-    }
-    
-    /**
-     * Get hint strategy for exercise type
-     */
-    getStrategyForType(exerciseType) {
-        // Map exercise types to hint strategies
-        const typeMapping = {
+    getStrategy(exerciseType) {
+        const mapping = {
             'naming': 'selection',
             'listening': 'selection',
             'category': 'selection',
@@ -47,133 +42,269 @@ class HintService {
             'firstSound': 'selection',
             'typing': 'typing',
             'sentenceTyping': 'typing',
-            'speaking': 'default',
-            'scramble': 'default'
+            'spelling': 'typing',
+            'speaking': 'speaking'
         };
         
-        const strategyType = typeMapping[exerciseType] || 'default';
-        return this.hintStrategies[strategyType];
+        return this.strategies[mapping[exerciseType]] || this.strategies.selection;
+    }
+
+    /**
+     * Check if more hints available
+     */
+    hasMoreHints(exerciseType, hintsUsed, context = {}) {
+        const strategy = this.getStrategy(exerciseType);
+        
+        // Typing can always hint if there are unrevealed letters
+        if (exerciseType === 'typing' || exerciseType === 'sentenceTyping' || exerciseType === 'spelling') {
+            const word = context.targetWord || '';
+            const revealed = context.revealedLetters || 0;
+            return revealed < word.length;
+        }
+        
+        return hintsUsed < strategy.length;
+    }
+
+    /**
+     * Apply hint for typing exercises - reveal one letter
+     */
+    applyTypingHint(context) {
+        const {
+            targetWord,
+            currentLetterIndex,
+            container
+        } = context;
+        
+        if (currentLetterIndex >= targetWord.length) {
+            return { success: false };
+        }
+        
+        // Reveal the next letter
+        const letterBox = container.querySelector(`.letter-box[data-index="${currentLetterIndex}"]`);
+        if (letterBox) {
+            letterBox.textContent = targetWord[currentLetterIndex].toUpperCase();
+            letterBox.classList.add('filled', 'hint-revealed');
+        }
+        
+        return {
+            success: true,
+            type: 'revealLetter',
+            letter: targetWord[currentLetterIndex],
+            newIndex: currentLetterIndex + 1
+        };
     }
     
+ 
+
     /**
-     * Get next hint based on exercise type
+     * Get next hint type
      */
-    getNextHint(exerciseType, currentHintLevel, context = {}) {
-        const strategy = this.getStrategyForType(exerciseType);
+    getNextHintType(exerciseType, hintsUsed) {
+        const strategy = this.getStrategy(exerciseType);
         
-        if (currentHintLevel >= strategy.length) {
+        // Typing always returns revealLetter
+        if (exerciseType === 'typing' || exerciseType === 'sentenceTyping' || exerciseType === 'spelling') {
+            return 'revealLetter';
+        }
+        
+        if (hintsUsed >= strategy.length) {
             return null;
         }
         
-        const hintType = strategy[currentHintLevel].type;
-        
-        // For selection exercises (4 options)
-        if (exerciseType in ['naming', 'listening', 'category', 'association', 'synonyms', 'definitions', 'rhyming', 'firstSound']) {
-            return this.getSelectionHint(currentHintLevel, context.options, context.correctAnswer);
-        }
-        
-        // For typing exercises
-        if (exerciseType in ['typing', 'sentenceTyping']) {
-            return this.getTypingHint(currentHintLevel, context.correctAnswer, context.currentInput);
-        }
-        
-        // Default hint
-        return {
-            type: hintType,
-            message: strategy[currentHintLevel].description
-        };
+        return strategy[hintsUsed].type;
     }
-    
+
     /**
-     * Get next hint for selection exercises (4 options)
+     * Get sentence index for speaking hints
      */
-    getSelectionHint(currentHintLevel, options = [], correctAnswer = '') {
-        const wrongOptions = options.filter(opt => opt !== correctAnswer);
-        
-        switch (currentHintLevel) {
-            case 0: // Remove one wrong option
-                return {
-                    type: 'remove_option',
-                    optionToRemove: wrongOptions[0],
-                    message: 'Removed one wrong option'
-                };
-                
-            case 1: // Show first letter
-                return {
-                    type: 'first_letter',
-                    letter: correctAnswer[0].toUpperCase(),
-                    message: `The answer starts with "${correctAnswer[0].toUpperCase()}"`
-                };
-                
-            case 2: // Remove second wrong option
-                return {
-                    type: 'remove_option',
-                    optionToRemove: wrongOptions[1],
-                    message: 'Removed another wrong option'
-                };
-                
-            case 3: // Reveal answer
-                return {
-                    type: 'reveal',
-                    answer: correctAnswer,
-                    message: `The answer is: ${correctAnswer}`
-                };
-                
-            default:
-                return null;
+    getSentenceIndex(hintsUsed) {
+        const strategy = this.strategies.speaking;
+        if (hintsUsed < strategy.length && strategy[hintsUsed].index !== undefined) {
+            return strategy[hintsUsed].index;
         }
+        return null;
     }
-    
+
+    // ============ Selection Exercise Hints ============
+
     /**
-     * Get next hint for typing exercises
+     * Eliminate one wrong option
      */
-    getTypingHint(currentHintLevel, correctAnswer = '', currentInput = '') {
-        switch (currentHintLevel) {
-            case 0: // Show first two letters
-                const firstTwo = correctAnswer.substring(0, 2);
-                return {
-                    type: 'letters',
-                    letters: firstTwo,
-                    message: `The word starts with: ${firstTwo}`
-                };
+    applyEliminate(context) {
+        const { options, correctAnswer, eliminatedIndices, container } = context;
+        
+        // Find a wrong option that hasn't been eliminated
+        for (let i = 0; i < options.length; i++) {
+            if (eliminatedIndices.has(i)) continue;
+            
+            const optionValue = typeof options[i] === 'object' 
+                ? (options[i].answer || options[i].value) 
+                : options[i];
+            
+            if (optionValue !== correctAnswer) {
+                // Mark as eliminated
+                eliminatedIndices.add(i);
                 
-            case 1: // Speak the word
-                return {
-                    type: 'speak',
-                    word: correctAnswer,
-                    message: 'Listen to the word'
-                };
-                
-            case 2: // Show next letter progressively
-                let nextIndex = currentInput.length;
-                if (nextIndex >= correctAnswer.length) {
-                    nextIndex = 2; // If they've typed too much, show third letter
+                // Update DOM
+                const btn = container.querySelector(`.option-btn[data-index="${i}"]`);
+                if (btn) {
+                    btn.classList.add('eliminated');
+                    btn.disabled = true;
                 }
-                const nextLetter = correctAnswer[nextIndex];
-                return {
-                    type: 'next_letter',
-                    letter: nextLetter,
-                    position: nextIndex,
-                    partial: correctAnswer.substring(0, nextIndex + 1),
-                    message: `Next letter is: ${nextLetter}`
-                };
                 
-            case 3: // Reveal answer
-                return {
-                    type: 'reveal',
-                    answer: correctAnswer,
-                    message: `The answer is: ${correctAnswer}`
-                };
-                
-            default:
-                // Keep showing more letters
-                const moreIndex = Math.min(4 + (currentHintLevel - 4), correctAnswer.length - 1);
-                return {
-                    type: 'next_letter',
-                    partial: correctAnswer.substring(0, moreIndex + 1),
-                    message: `Continue with: ${correctAnswer.substring(0, moreIndex + 1)}`
-                };
+                return true;
+            }
         }
+        
+        return false;
+    }
+
+    /**
+     * Show first letter hint
+     */
+    applyFirstLetter(context) {
+        const { correctAnswer, container } = context;
+        
+        if (!correctAnswer) return;
+        
+        const firstLetter = correctAnswer[0].toUpperCase();
+        
+        // Find or create hint area
+        let hintArea = container.querySelector('.hint-area');
+        if (!hintArea) {
+            const content = container.querySelector('.exercise__content');
+            if (content) {
+                hintArea = document.createElement('div');
+                hintArea.className = 'hint-area';
+                content.appendChild(hintArea);
+            }
+        }
+        
+        if (hintArea) {
+            const hintItem = document.createElement('div');
+            hintItem.className = 'hint-item hint-letter';
+            hintItem.innerHTML = `Starts with: <strong>${firstLetter}</strong>`;
+            hintArea.appendChild(hintItem);
+        }
+        
+        // Also speak it
+        audioService.speak(`Starts with ${firstLetter}`);
+    }
+
+    /**
+     * Say the correct answer
+     */
+    async applySayAnswer(context) {
+        const { correctAnswer, container } = context;
+        
+        if (!correctAnswer) return;
+        
+        // Find or create hint area
+        let hintArea = container.querySelector('.hint-area');
+        if (!hintArea) {
+            const content = container.querySelector('.exercise__content');
+            if (content) {
+                hintArea = document.createElement('div');
+                hintArea.className = 'hint-area';
+                content.appendChild(hintArea);
+            }
+        }
+        
+        if (hintArea) {
+            const hintItem = document.createElement('div');
+            hintItem.className = 'hint-item hint-audio';
+            hintItem.innerHTML = `🔊 Listen carefully...`;
+            hintArea.appendChild(hintItem);
+        }
+        
+        await audioService.speakWord(correctAnswer);
+    }
+
+    // ============ Speaking Exercise Hints ============
+
+    /**
+     * Show first letter for speaking exercise
+     */
+    applySpeakingFirstLetter(context) {
+        const { correctAnswer, container } = context;
+        
+        if (!correctAnswer) return;
+        
+        const firstLetter = correctAnswer[0].toUpperCase();
+        const blanks = '_ '.repeat(correctAnswer.length - 1).trim();
+        
+        const hintArea = container.querySelector('#hint-area');
+        if (hintArea) {
+            const hintItem = document.createElement('div');
+            hintItem.className = 'hint-item hint-letters';
+            hintItem.innerHTML = `<span class="letter-hint">${firstLetter} ${blanks}</span>`;
+            hintArea.appendChild(hintItem);
+        }
+    }
+
+    /**
+     * Show sentence/idiom hint
+     */
+    applySentenceHint(context, sentenceIndex) {
+        const { sentences, correctAnswer, container } = context;
+        
+        const hintArea = container.querySelector('#hint-area');
+        if (!hintArea) return;
+        
+        const sentence = sentences && sentences[sentenceIndex];
+        if (!sentence) {
+            // Fallback if no sentence available
+            const hintItem = document.createElement('div');
+            hintItem.className = 'hint-item hint-phrase';
+            hintItem.textContent = sentenceIndex === 0 
+                ? 'Think about how you would use this word...' 
+                : 'Try to picture what it represents...';
+            hintArea.appendChild(hintItem);
+            return;
+        }
+        
+        // Replace the word with blanks in the sentence
+        const displaySentence = sentence.replace(
+            new RegExp(correctAnswer, 'gi'), 
+            '_'.repeat(correctAnswer.length)
+        );
+        
+        const hintItem = document.createElement('div');
+        hintItem.className = 'hint-item hint-phrase';
+        hintItem.innerHTML = `"${displaySentence}"`;
+        hintArea.appendChild(hintItem);
+    }
+
+    /**
+     * Spell out and say the word
+     */
+    async applySpellAndSay(context) {
+        const { correctAnswer, container } = context;
+        
+        if (!correctAnswer) return;
+        
+        const hintArea = container.querySelector('#hint-area');
+        if (!hintArea) return;
+        
+        // Clear previous hints and show spelled word
+        const spelled = correctAnswer.toUpperCase().split('').join(' - ');
+        
+        const hintItem = document.createElement('div');
+        hintItem.className = 'hint-item hint-answer revealed';
+        hintItem.innerHTML = `
+            <span class="spelled-word">${spelled}</span>
+            <button class="btn btn--icon hint-audio-btn" aria-label="Play audio">🔊</button>
+        `;
+        hintArea.appendChild(hintItem);
+        
+        // Add click handler for audio button
+        const audioBtn = hintItem.querySelector('.hint-audio-btn');
+        if (audioBtn) {
+            audioBtn.addEventListener('click', () => audioService.speakWord(correctAnswer));
+        }
+        
+        // Speak the word
+        await audioService.speakWord(correctAnswer);
     }
 }
 

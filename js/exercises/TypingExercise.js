@@ -1,3 +1,5 @@
+// exercises/TypingExercise.js
+
 import BaseExercise from './BaseExercise.js';
 import { t } from '../core/i18n.js';
 import audioService from '../services/AudioService.js';
@@ -62,7 +64,6 @@ class TypingExercise extends BaseExercise {
             </div>
         `;
         
-        // Focus the hidden input
         setTimeout(() => {
             const input = this.container.querySelector('#typing-input');
             input?.focus();
@@ -90,10 +91,12 @@ class TypingExercise extends BaseExercise {
         return this.targetWord.split('').map((letter, i) => {
             const filled = i < this.currentLetterIndex;
             const current = i === this.currentLetterIndex;
-            const classes = ['letter-box'];
+            const isHintRevealed = filled && i < this.state.revealedLetters;
             
+            const classes = ['letter-box'];
             if (filled) classes.push('filled');
             if (current) classes.push('current');
+            if (isHintRevealed) classes.push('hint-revealed');
             
             return `
                 <span class="${classes.join(' ')}" data-index="${i}">
@@ -114,11 +117,9 @@ class TypingExercise extends BaseExercise {
     }
     
     attachExerciseListeners() {
-        // Hidden input for keyboard
         const hiddenInput = this.container.querySelector('#typing-input');
         const visibleInput = this.container.querySelector('#typing-input-visible');
         
-        // Handle keyboard input
         this.boundKeyHandler = (e) => {
             const key = e.key.toLowerCase();
             if (key.length === 1 && /[a-z]/.test(key)) {
@@ -128,7 +129,6 @@ class TypingExercise extends BaseExercise {
         
         document.addEventListener('keydown', this.boundKeyHandler);
         
-        // Handle visible input (mobile)
         if (visibleInput) {
             visibleInput.addEventListener('input', (e) => {
                 const val = e.target.value;
@@ -141,11 +141,9 @@ class TypingExercise extends BaseExercise {
                 }
             });
             
-            // Focus on click
             visibleInput.addEventListener('click', () => visibleInput.focus());
         }
         
-        // Click letter boxes to focus
         const letterBoxes = this.container.querySelector('#letter-boxes');
         if (letterBoxes) {
             letterBoxes.addEventListener('click', () => {
@@ -164,17 +162,13 @@ class TypingExercise extends BaseExercise {
         const box = this.container.querySelector(`.letter-box[data-index="${this.currentLetterIndex}"]`);
         
         if (key === expected) {
-            // Correct letter
             this.currentLetterIndex++;
-            this.state.revealedLetters = this.currentLetterIndex;
             this.updateLetterBoxes();
             
-            // Check if complete
             if (this.currentLetterIndex >= this.targetWord.length) {
                 this.handleWordComplete();
             }
         } else {
-            // Wrong letter - shake
             if (box) {
                 box.classList.add('shake');
                 setTimeout(() => box.classList.remove('shake'), 300);
@@ -209,48 +203,71 @@ class TypingExercise extends BaseExercise {
      * Play prompt audio - override in subclass
      */
     async playPromptAudio() {
-        // Default: speak the target word
         await audioService.speakWord(this.targetWord);
     }
     
     /**
-     * Apply hint
+     * Handle hint - reveal one letter at a time
      */
-    async applyHint(hintType) {
-        switch (hintType) {
-            case 'revealLetter':
-                this.revealNextLetter();
-                break;
-            case 'audio':
-                await audioService.spe(this.targetWord);
-                break;
+    async handleHint() {
+        const context = {
+            targetWord: this.targetWord,
+            currentLetterIndex: this.currentLetterIndex,
+            revealedLetters: this.state.revealedLetters,
+            wordLength: this.targetWord.length,
+            container: this.container
+        };
+        
+        if (!hintService.hasMoreHints(this.type, this.state.hintsUsed, context)) return;
+        const result = hintService.applyTypingHint({
+            targetWord: this.targetWord,
+            currentLetterIndex: this.currentLetterIndex,
+            container: this.container
+        });
+        
+        if (result.success) {
+            this.currentLetterIndex = result.newIndex;
+            this.state.revealedLetters = result.newIndex;
+            this.state.hintsUsed++;
+            trackingService.recordHint();
+            this.updateLetterBoxes();
+            this.updateHintButton();
+            
+            // Check if word is complete after hint
+            if (this.currentLetterIndex >= this.targetWord.length) {
+                this.handleWordComplete();
+            }
         }
     }
     
-    /**
-     * Reveal next letter as hint
-     */
-    revealNextLetter() {
-        if (this.currentLetterIndex >= this.targetWord.length) return;
+    updateHintButton() {
+        const btn = this.container.querySelector('#hint-btn');
+        if (!btn) return;
         
-        const box = this.container.querySelector(`.letter-box[data-index="${this.currentLetterIndex}"]`);
-        if (box) {
-            box.textContent = this.targetWord[this.currentLetterIndex].toUpperCase();
-            box.classList.add('filled', 'hint');
-        }
+        const context = {
+            wordLength: this.targetWord.length,
+            revealedLetters: this.state.revealedLetters
+        };
         
-        this.currentLetterIndex++;
-        this.state.revealedLetters = this.currentLetterIndex;
-        this.updateLetterBoxes();
-        
-        // Check if complete
-        if (this.currentLetterIndex >= this.targetWord.length) {
-            this.handleWordComplete();
-        }
+        const hasMore = hintService.hasMoreHints(this.type, this.state.hintsUsed, context);
+        btn.disabled = !hasMore;
+        btn.textContent = hasMore 
+            ? `💡 ${t('common.hint')}` 
+            : t('hints.noMoreHints');
     }
     
     getCorrectAnswer() {
         return this.targetWord;
+    }
+
+    /**
+     * Provide context for hint availability check
+     */
+    getHintContext() {
+        return {
+            targetWord: this.targetWord,
+            revealedLetters: this.currentLetterIndex
+        };
     }
     
     destroy() {

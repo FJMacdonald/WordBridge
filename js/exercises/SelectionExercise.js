@@ -1,3 +1,5 @@
+// exercises/SelectionExercise.js
+
 import BaseExercise from './BaseExercise.js';
 import { t } from '../core/i18n.js';
 import audioService from '../services/AudioService.js';
@@ -18,7 +20,6 @@ class SelectionExercise extends BaseExercise {
      * Prepare options for current item
      */
     prepareOptions() {
-        // Default: use item's options, shuffled
         return this.shuffleArray([...this.currentItem.options]);
     }
     
@@ -37,6 +38,8 @@ class SelectionExercise extends BaseExercise {
                     <div class="options-grid">
                         ${this.currentOptions.map((opt, i) => this.renderOption(opt, i)).join('')}
                     </div>
+                    
+                    <div class="hint-area"></div>
                 </div>
                 
                 ${this.renderFooter()}
@@ -82,14 +85,12 @@ class SelectionExercise extends BaseExercise {
         const value = btn.dataset.value;
         const correct = this.checkAnswer(value);
         
-        // Record attempt
         trackingService.recordAttempt({
             word: this.getCorrectAnswer(),
             correct,
             hintsUsed: this.state.hintsUsed
         });
         
-        // Visual feedback
         btn.classList.add(correct ? 'correct' : 'incorrect');
         
         if (correct) {
@@ -98,13 +99,13 @@ class SelectionExercise extends BaseExercise {
         } else {
             btn.classList.add('eliminated');
             btn.disabled = true;
+            this.state.eliminatedIndices.add(parseInt(btn.dataset.index));
             
             // Check if only one option left
             const remaining = this.container.querySelectorAll('.option-btn:not(.eliminated)');
             if (remaining.length <= 1) {
                 this.showFeedback(false, t('feedback.theAnswerWas', { answer: this.getCorrectAnswer() }));
                 
-                // Highlight correct answer
                 remaining.forEach(b => {
                     if (b.dataset.value === this.getCorrectAnswer()) {
                         b.classList.add('correct');
@@ -127,16 +128,13 @@ class SelectionExercise extends BaseExercise {
      * Play all audio
      */
     async handlePlayAll() {
-        // Get instruction
         const instruction = t(`exercises.${this.type}.instruction`);
         await audioService.speak(instruction);
         await this.delay(200);
         
-        // Speak the prompt (e.g., target word for rhyming)
         await this.playPromptAudio();
         await this.delay(300);
         
-        // Speak each non-eliminated option
         const activeOptions = this.getActiveOptions();
         await audioService.speakSequence(activeOptions);
     }
@@ -152,11 +150,13 @@ class SelectionExercise extends BaseExercise {
      * Get non-eliminated options
      */
     getActiveOptions() {
-        return this.currentOptions.filter((_, i) => !this.state.eliminatedIndices.has(i));
+        return this.currentOptions
+            .filter((_, i) => !this.state.eliminatedIndices.has(i))
+            .map(opt => typeof opt === 'object' ? opt.answer || opt.value : opt);
     }
     
     /**
-     * Apply hint
+     * Apply hint based on type
      */
     async applyHint(hintType) {
         const context = {
@@ -170,13 +170,29 @@ class SelectionExercise extends BaseExercise {
             case 'eliminate':
                 hintService.applyEliminate(context);
                 break;
-            case 'audio':
-                await hintService.applyAudio(context);
-                break;
+                
             case 'firstLetter':
                 hintService.applyFirstLetter(context);
                 break;
+                
+            case 'sayAnswer':
+                await hintService.applySayAnswer(context);
+                break;
         }
+    }
+    
+    /**
+     * Override to check hints with context
+     */
+    updateHintButton() {
+        const btn = this.container.querySelector('#hint-btn');
+        if (!btn) return;
+        
+        const hasMore = hintService.hasMoreHints(this.type, this.state.hintsUsed);
+        btn.disabled = !hasMore;
+        btn.textContent = hasMore 
+            ? `💡 ${t('common.hint')}` 
+            : t('hints.noMoreHints');
     }
 }
 

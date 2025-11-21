@@ -242,6 +242,12 @@ class TrackingService {
         streak.lastDate = today;
         this.storage.set('streak', streak);
     }
+    recordHint() {
+        if (this.session) this.session.hintsUsed++;
+    }
+    recordSkip() {
+        if (this.session) this.session.skipsUsed++;
+    }
 }
 
 export const trackingService = new TrackingService();
