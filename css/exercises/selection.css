@@ -1,0 +1,8 @@
+.exercise--selection .prompt-visual {
+    font-size: 8rem;
+}
+
+.exercise--selection .options-grid {
+    flex: 1;
+    align-content: center;
+}

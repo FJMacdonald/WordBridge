@@ -1,0 +1,29 @@
+.exercise--typing .prompt-sentence {
+    position: relative;
+}
+
+.exercise--typing .letter-boxes-container {
+    flex: 1;
+    justify-content: center;
+}
+
+.typing-help-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-top: var(--space-md);
+}
+
+/* Keyboard hint for desktop */
+@media (hover: hover) {
+    .typing-help-text::before {
+        content: "Type on your keyboard or ";
+    }
+}
+
+/* Touch hint for mobile */
+@media (hover: none) {
+    .typing-help-text::before {
+        content: "";
+    }
+}

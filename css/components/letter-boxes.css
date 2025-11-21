@@ -1,0 +1,77 @@
+.letter-boxes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+}
+
+.letter-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.letter-box {
+    width: 50px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    font-family: monospace;
+    background: var(--color-surface);
+    border: 3px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    text-transform: uppercase;
+}
+
+.letter-box.filled {
+    border-color: var(--color-success);
+    background: var(--color-success-light);
+    color: var(--color-success);
+}
+
+.letter-box.hint {
+    border-color: var(--color-warning);
+    background: #FFF8E7;
+    color: var(--color-warning);
+}
+
+.letter-box.shake {
+    animation: shake 0.3s ease;
+    border-color: var(--color-error);
+}
+
+.letter-box.current {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Hidden input for mobile keyboards */
+.typing-input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+/* Visible input fallback */
+.typing-input-visible {
+    width: 100%;
+    max-width: 300px;
+    padding: var(--space-md);
+    font-size: var(--font-size-xl);
+    text-align: center;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-md);
+}
+
+.typing-input-visible:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}

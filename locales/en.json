@@ -1,0 +1,91 @@
+{
+    "common": {
+        "correct": "Correct",
+        "incorrect": "Try again",
+        "skip": "Skip",
+        "hint": "Hint",
+        "playAll": "Play All",
+        "next": "Next",
+        "back": "Back"
+    },
+    "audio": {
+        "playAll": "Hear all options",
+        "playWord": "Play word"
+    },
+    "hints": {
+        "removeOne": "Remove one",
+        "showLetter": "Show letter",
+        "noMoreHints": "No more hints",
+        "remaining": "{count} left"
+    },
+    "feedback": {
+        "correct": "✓ Correct!",
+        "incorrect": "✗ Not quite",
+        "perfect": "✓ Perfect!",
+        "theAnswerWas": "The answer was: {answer}",
+        "withHints": "✓ Got it with help!"
+    },
+    "exercises": {
+        "naming": {
+            "name": "Picture Naming",
+            "instruction": "What is this?"
+        },
+        "listening": {
+            "name": "Listening",
+            "instruction": "Listen and tap the picture"
+        },
+        "speaking": {
+            "name": "Speaking",
+            "instruction": "Say this word"
+        },
+        "typing": {
+            "name": "Word Typing",
+            "instruction": "Type what you see"
+        },
+        "sentenceTyping": {
+            "name": "Sentence Completion",
+            "instruction": "Type the missing word"
+        },
+        "category": {
+            "name": "Categories",
+            "instruction": "Which word is a {category}?"
+        },
+        "rhyming": {
+            "name": "Rhyming Words",
+            "instruction": "Which word rhymes with:"
+        },
+        "firstSound": {
+            "name": "First Sounds",
+            "instruction": "Which word starts with the same sound as:"
+        },
+        "association": {
+            "name": "Word Association",
+            "instruction": "Which word goes with:"
+        },
+        "synonyms": {
+            "name": "Synonyms & Antonyms",
+            "synonymInstruction": "Which word means the same as:",
+            "antonymInstruction": "Which word means the opposite of:"
+        },
+        "definitions": {
+            "name": "Definitions",
+            "instruction": "Which word matches this definition?"
+        },
+        "scramble": {
+            "name": "Sentence Scramble",
+            "instruction": "Put these words in the correct order"
+        }
+    },
+    "results": {
+        "title": "Session Complete!",
+        "score": "{correct} out of {total}",
+        "accuracy": "{percent}% accuracy",
+        "time": "Time: {time}",
+        "playAgain": "Practice Again",
+        "backToMenu": "Back to Menu"
+    },
+    "home": {
+        "title": "Choose an Exercise",
+        "subtitle": "Practice at your own pace"
+    }
+}
