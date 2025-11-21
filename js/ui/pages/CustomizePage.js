@@ -55,12 +55,23 @@ class CustomizePage {
                     ← Back to Home
                 </button>
             </div>
+            
+            <!-- Confirmation Modal -->
+            <div class="modal-overlay" id="confirm-modal" hidden>
+                <div class="modal">
+                    <h3 id="modal-title">Confirm</h3>
+                    <p id="modal-message">Are you sure?</p>
+                    <div class="modal-actions">
+                        <button class="btn btn--ghost" id="modal-cancel">Cancel</button>
+                        <button class="btn btn--error" id="modal-confirm">Confirm</button>
+                    </div>
+                </div>
+            </div>
         `;
         
-        this.addStyles();
         this.attachListeners();
     }
-    
+      
     renderAddForm(type) {
         switch (type) {
             case 'naming':
@@ -551,201 +562,7 @@ class CustomizePage {
         
         await this.switchTab(this.currentTab);
     }
-    
-    addStyles() {
-        if (document.getElementById('customize-styles')) return;
-        
-        const style = document.createElement('style');
-        style.id = 'customize-styles';
-        style.textContent = `
-            .customize-page {
-                padding-bottom: var(--space-2xl);
-            }
-            .tabs {
-                display: flex;
-                gap: var(--space-sm);
-                margin-bottom: var(--space-lg);
-            }
-            .tab {
-                flex: 1;
-                padding: var(--space-md);
-                background: var(--color-surface);
-                border: 2px solid var(--color-border);
-                border-radius: var(--radius-md);
-                font-weight: 500;
-                cursor: pointer;
-                transition: all var(--transition-fast);
-            }
-            .tab:hover {
-                border-color: var(--color-primary);
-            }
-            .tab.active {
-                background: var(--color-primary);
-                border-color: var(--color-primary);
-                color: white;
-            }
-            .add-form {
-                background: var(--color-surface);
-                border-radius: var(--radius-lg);
-                padding: var(--space-lg);
-                margin-bottom: var(--space-xl);
-                border: 1px solid var(--color-border);
-            }
-            .add-form h3 {
-                margin-bottom: var(--space-lg);
-            }
-            .form-group {
-                margin-bottom: var(--space-lg);
-            }
-            .form-group label {
-                display: block;
-                font-weight: 500;
-                margin-bottom: var(--space-sm);
-            }
-            .form-group input,
-            .form-group select {
-                width: 100%;
-                padding: var(--space-md);
-                border: 2px solid var(--color-border);
-                border-radius: var(--radius-md);
-                font-size: var(--font-size-base);
-            }
-            .form-group input:focus,
-            .form-group select:focus {
-                border-color: var(--color-primary);
-                outline: none;
-            }
-            .form-group small {
-                display: block;
-                margin-top: var(--space-xs);
-                color: var(--color-text-muted);
-                font-size: var(--font-size-sm);
-            }
-            .image-options {
-                display: flex;
-                gap: var(--space-sm);
-                margin-bottom: var(--space-md);
-            }
-            .image-option-btn {
-                flex: 1;
-                padding: var(--space-sm);
-                background: var(--color-background);
-                border: 2px solid var(--color-border);
-                border-radius: var(--radius-md);
-                cursor: pointer;
-            }
-            .image-option-btn.active {
-                border-color: var(--color-primary);
-                background: var(--color-primary-light);
-            }
-            .image-input-container {
-                position: relative;
-            }
-            .image-input {
-                display: none;
-            }
-            .image-input.active {
-                display: block;
-            }
-            .emoji-input {
-                font-size: var(--font-size-2xl);
-                text-align: center;
-            }
-            #emoji-preview,
-            #upload-preview,
-            #url-preview {
-                margin-top: var(--space-md);
-                text-align: center;
-            }
-            #emoji-preview {
-                font-size: 4rem;
-            }
-            #upload-preview img,
-            #url-preview img {
-                max-width: 150px;
-                max-height: 150px;
-                border-radius: var(--radius-md);
-            }
-            .empty-state {
-                text-align: center;
-                color: var(--color-text-muted);
-                padding: var(--space-xl);
-            }
-            .items-list {
-                display: grid;
-                gap: var(--space-md);
-            }
-            .item-card {
-                display: flex;
-                align-items: center;
-                gap: var(--space-md);
-                padding: var(--space-md);
-                background: var(--color-surface);
-                border: 1px solid var(--color-border);
-                border-radius: var(--radius-md);
-            }
-            .item-preview {
-                flex: 0 0 60px;
-                height: 60px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .item-emoji {
-                font-size: 2.5rem;
-            }
-            .item-image {
-                max-width: 60px;
-                max-height: 60px;
-                border-radius: var(--radius-sm);
-            }
-            .item-details {
-                flex: 1;
-            }
-            .sentence-preview {
-                font-size: var(--font-size-sm);
-                color: var(--color-text-muted);
-            }
-            .item-delete-btn {
-                padding: var(--space-sm);
-                background: none;
-                border: none;
-                font-size: var(--font-size-lg);
-                cursor: pointer;
-                opacity: 0.5;
-            }
-            .item-delete-btn:hover {
-                opacity: 1;
-            }
-            .bulk-actions {
-                background: var(--color-surface);
-                border-radius: var(--radius-lg);
-                padding: var(--space-lg);
-                margin-top: var(--space-xl);
-                border: 1px solid var(--color-border);
-            }
-            .bulk-actions h3 {
-                margin-bottom: var(--space-md);
-            }
-            .action-buttons {
-                display: flex;
-                gap: var(--space-md);
-                flex-wrap: wrap;
-            }
-            .action-buttons .btn {
-                flex: 1;
-                min-width: 150px;
-            }
-            .file-label {
-                cursor: pointer;
-                text-align: center;
-            }
-            .back-btn {
-                margin-top: var(--space-xl);
-            }
-        `;
-        document.head.appendChild(style);
-    }
+
 }
 
 export default CustomizePage;

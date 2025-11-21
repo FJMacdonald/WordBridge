@@ -62,7 +62,6 @@ class ScrambleExercise extends BaseExercise {
             </div>
         `;
         
-        this.addScrambleStyles();
     }
     
     renderWords() {
@@ -73,64 +72,6 @@ class ScrambleExercise extends BaseExercise {
         `).join('');
     }
     
-    addScrambleStyles() {
-        if (document.getElementById('scramble-styles')) return;
-        
-        const style = document.createElement('style');
-        style.id = 'scramble-styles';
-        style.textContent = `
-            .scramble-container {
-                text-align: center;
-                padding: var(--space-xl) 0;
-            }
-            .scramble-words {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: var(--space-md);
-                margin-bottom: var(--space-lg);
-            }
-            .scramble-word {
-                padding: var(--space-md) var(--space-lg);
-                font-size: var(--font-size-lg);
-                font-weight: 500;
-                background: var(--color-surface);
-                border: 3px solid var(--color-border);
-                border-radius: var(--radius-lg);
-                cursor: pointer;
-                transition: all var(--transition-fast);
-                min-width: 60px;
-            }
-            .scramble-word:hover {
-                border-color: var(--color-primary);
-            }
-            .scramble-word.selected {
-                border-color: var(--color-primary);
-                background: var(--color-primary-light);
-                transform: scale(1.05);
-            }
-            .scramble-word.correct-position {
-                border-color: var(--color-success);
-                background: var(--color-success-light);
-            }
-            .scramble-word.wrong-position {
-                border-color: var(--color-error);
-                background: var(--color-error-light);
-            }
-            .scramble-word.hint-highlight {
-                border-color: var(--color-warning);
-                box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.3);
-            }
-            .scramble-help {
-                font-size: var(--font-size-sm);
-                color: var(--color-text-muted);
-            }
-            .scramble-actions {
-                margin-top: var(--space-xl);
-            }
-        `;
-        document.head.appendChild(style);
-    }
     
     attachExerciseListeners() {
         // Word tap to select/swap

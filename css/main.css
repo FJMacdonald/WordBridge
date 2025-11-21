@@ -1,4 +1,4 @@
-/* Main CSS - imports all partials */
+/* Main CSS - imports all partials
 @import 'base/variables.css';
 @import 'base/reset.css';
 @import 'base/typography.css';
@@ -9,4 +9,31 @@
 @import 'components/letter-boxes.css';
 @import 'exercises/exercise-common.css';
 @import 'exercises/selection.css';
-@import 'exercises/typing.css';
+@import 'exercises/typing.css'; */
+
+
+/* Base styles */
+@import url('./base/variables.css');
+@import url('./base/reset.css');
+@import url('./base/typography.css');
+
+/* Components */
+@import url('./components/buttons.css');
+@import url('./components/modal.css');
+@import url('./components/feedback.css');
+@import url('./components/letter-boxes.css');
+@import url('./components/options.css');
+@import url('./components/progress.css');
+@import url('./components/charts.css');
+
+/* Exercise styles */
+@import url('./exercises/exercise-common.css');
+@import url('./exercises/selection.css');
+@import url('./exercises/typing.css');
+@import url('./exercises/scramble.css');
+
+/* Page styles */
+@import url('./pages/home.css');
+@import url('./pages/customize.css');
+@import url('./pages/progress.css');
+@import url('./pages/settings.css');
