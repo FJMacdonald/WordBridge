@@ -255,15 +255,51 @@ class SettingsPage {
     
     async loadVoices() {
         return new Promise((resolve) => {
-            const voices = speechSynthesis.getVoices();
-            if (voices.length > 0) {
-                this.availableVoices = voices;
+            const loadVoiceList = () => {
+                const allVoices = speechSynthesis.getVoices();
+                
+                // Filter for quality English voices only
+                const preferredVoices = [
+                    'Google US English',
+                    'Google UK English Female',
+                    'Google UK English Male',
+                    'Microsoft David',
+                    'Microsoft Zira',
+                    'Microsoft Mark',
+                    'Samantha', // macOS
+                    'Alex',     // macOS
+                    'Daniel',   // iOS
+                    'Karen'     // iOS
+                ];
+                
+                // Get English voices and sort preferred ones first
+                this.availableVoices = allVoices
+                    .filter(voice => voice.lang.startsWith('en'))
+                    .sort((a, b) => {
+                        const aPreferred = preferredVoices.some(name => a.name.includes(name));
+                        const bPreferred = preferredVoices.some(name => b.name.includes(name));
+                        if (aPreferred && !bPreferred) return -1;
+                        if (!aPreferred && bPreferred) return 1;
+                        return a.name.localeCompare(b.name);
+                    })
+                    .slice(0, 5); // Only show top 5 voices
+                
+                // If no voices found, add a default
+                if (this.availableVoices.length === 0) {
+                    this.availableVoices = [{
+                        name: 'Default',
+                        lang: 'en-US',
+                        default: true
+                    }];
+                }
+                
                 resolve();
+            };
+            
+            if (speechSynthesis.getVoices().length > 0) {
+                loadVoiceList();
             } else {
-                speechSynthesis.addEventListener('voiceschanged', () => {
-                    this.availableVoices = speechSynthesis.getVoices();
-                    resolve();
-                });
+                speechSynthesis.addEventListener('voiceschanged', loadVoiceList);
             }
         });
     }
