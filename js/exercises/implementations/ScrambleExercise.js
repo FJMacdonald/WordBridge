@@ -165,6 +165,7 @@ class ScrambleExercise extends BaseExercise {
     async applyHint(hintType) {
         // For scramble, hints show the next correct word
         const words = this.container.querySelectorAll('.scramble-word');
+        const hintArea = this.container.querySelector('#hint-area');
         
         // Find first incorrect position
         for (let i = 0; i < this.correctOrder.length; i++) {
@@ -177,7 +178,13 @@ class ScrambleExercise extends BaseExercise {
                     }
                 });
                 
-                this.showFeedback(false, `Word ${i + 1} should be "${correctWord}"`);
+                // Show hint in hint area
+                if (hintArea) {
+                    const hintItem = document.createElement('div');
+                    hintItem.className = 'hint-item hint-phrase';
+                    hintItem.textContent = `Word ${i + 1} should be "${correctWord}"`;
+                    hintArea.appendChild(hintItem);
+                }
                 
                 // Remove highlight after delay
                 setTimeout(() => {

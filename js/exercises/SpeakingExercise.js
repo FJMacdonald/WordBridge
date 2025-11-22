@@ -28,8 +28,6 @@ class SpeakingExercise extends BaseExercise {
                         <div class="prompt-visual">${item.emoji}</div>
                     </div>
                     
-                    <div class="hint-area" id="hint-area"></div>
-                    
                     <div class="speaking-actions">
                         <button class="btn btn--success btn--large" id="correct-btn">
                             ✓ I said it

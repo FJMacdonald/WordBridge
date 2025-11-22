@@ -38,8 +38,6 @@ class SelectionExercise extends BaseExercise {
                     <div class="options-grid">
                         ${this.currentOptions.map((opt, i) => this.renderOption(opt, i)).join('')}
                     </div>
-                    
-                    <div class="hint-area"></div>
                 </div>
                 
                 ${this.renderFooter()}

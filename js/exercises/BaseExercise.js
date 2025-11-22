@@ -119,7 +119,6 @@ class BaseExercise {
             this.state.hintsUsed, 
             this.getHintContext()
         );
-        
         return `
             <footer class="exercise__footer">
                 <button class="btn btn--secondary" id="hint-btn" ${!hasMore ? 'disabled' : ''}>
@@ -129,6 +128,7 @@ class BaseExercise {
                     ${t('common.skip')} →
                 </button>
             </footer>
+            <div class="hint-area" id="hint-area"></div>
             <div class="exercise__feedback" id="feedback-area"></div>
         `;
     }

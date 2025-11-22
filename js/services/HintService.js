@@ -169,16 +169,8 @@ class HintService {
         
         const firstLetter = correctAnswer[0].toUpperCase();
         
-        // Find or create hint area
-        let hintArea = container.querySelector('.hint-area');
-        if (!hintArea) {
-            const content = container.querySelector('.exercise__content');
-            if (content) {
-                hintArea = document.createElement('div');
-                hintArea.className = 'hint-area';
-                content.appendChild(hintArea);
-            }
-        }
+        // Find hint area (should be in footer now)
+        const hintArea = container.querySelector('#hint-area');
         
         if (hintArea) {
             const hintItem = document.createElement('div');
@@ -199,16 +191,8 @@ class HintService {
         
         if (!correctAnswer) return;
         
-        // Find or create hint area
-        let hintArea = container.querySelector('.hint-area');
-        if (!hintArea) {
-            const content = container.querySelector('.exercise__content');
-            if (content) {
-                hintArea = document.createElement('div');
-                hintArea.className = 'hint-area';
-                content.appendChild(hintArea);
-            }
-        }
+        // Find hint area (should be in footer now)
+        const hintArea = container.querySelector('#hint-area');
         
         if (hintArea) {
             const hintItem = document.createElement('div');

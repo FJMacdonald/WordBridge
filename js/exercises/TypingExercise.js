@@ -245,7 +245,7 @@ class TypingExercise extends BaseExercise {
         if (!btn) return;
         
         const context = {
-            wordLength: this.targetWord.length,
+            targetWord: this.targetWord,
             revealedLetters: this.state.revealedLetters
         };
         
@@ -266,7 +266,7 @@ class TypingExercise extends BaseExercise {
     getHintContext() {
         return {
             targetWord: this.targetWord,
-            revealedLetters: this.currentLetterIndex
+            revealedLetters: this.state.revealedLetters
         };
     }
     
