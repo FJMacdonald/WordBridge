@@ -15,7 +15,11 @@ const Config = {
         },
         tracking: {
             masteryThreshold: 3,
-            problemThreshold: 0.5
+            problemThreshold: 0.,
+            inactivityThreshold: 60000,      // 1 minute
+            sessionAutoEndThreshold: 300000, // 5 minutes
+            enableDetailedTiming: true,
+            enableExampleData: true   
         }
     },
     

@@ -11,7 +11,7 @@
 @import url('./components/letter-boxes.css');
 @import url('./components/options.css');
 @import url('./components/progress.css');
-@import url('./components/charts.css');
+@import url('./components/progress-charts.css');
 @import url('./components/hints.css');
 
 /* Exercise styles */
@@ -25,3 +25,4 @@
 @import url('./pages/customize.css');
 @import url('./pages/progress.css');
 @import url('./pages/settings.css');
+

@@ -6,7 +6,10 @@
         "hint": "Hint",
         "playAll": "Play All",
         "next": "Next",
-        "back": "Back"
+        "back": "Back",
+        "close": "Close",
+        "continue": "Continue",
+        "cancel": "Cancel"
     },
     "audio": {
         "playAll": "Hear all options",
@@ -87,5 +90,95 @@
     "home": {
         "title": "Choose an Exercise",
         "subtitle": "Practice at your own pace"
+    },
+    "progress": {
+        "title": "Your Progress",
+        "viewReport": "View Report",
+        "takeAssessment": "Take Assessment",
+        "backToHome": "Back to Home",
+        "qualityScore": "Practice Quality",
+        "accuracyTrend": "Accuracy Over Time",
+        "exerciseDistribution": "Time by Exercise",
+        "performanceHeatmap": "Performance by Exercise",
+        "assessmentComparison": "Assessment Progress",
+        "timeRanges": {
+            "today": "Today",
+            "week": "Week",
+            "month": "Month",
+            "all": "All Time"
+        },
+        "quality": {
+            "consistency": "Consistency",
+            "duration": "Session Length",
+            "variety": "Exercise Variety",
+            "accuracy": "Accuracy"
+        },
+        "info": {
+            "qualityScore": "Quality Score combines consistency (practice frequency), duration (session length), variety (different exercises), and accuracy into a single metric.",
+            "accuracyTrend": "Shows your daily accuracy percentage over time. The dotted line is a 7-day moving average to show overall trends.",
+            "heatmap": "Darker colors indicate better performance. Each cell shows accuracy for a specific exercise on a specific day.",
+            "assessmentComparison": "Compares your performance between standardized assessments to measure objective progress."
+        },
+        "recommendations": {
+            "title": "Focus Areas",
+            "consistency": "Try to practice more consistently - aim for 5 days per week",
+            "duration": "Increase session length - aim for 15-20 minutes per session",
+            "variety": "Try more exercise types - variety helps overall improvement",
+            "goodJob": "Great job! Keep up the consistent practice."
+        }
+    },
+    "assessment": {
+        "title": "Progress Assessment",
+        "subtitle": "Standardized test to measure your progress",
+        "types": {
+            "baseline": {
+                "name": "Full Baseline",
+                "description": "Complete assessment across all exercise types",
+                "duration": "20-30 minutes"
+            },
+            "quick": {
+                "name": "Quick Check",
+                "description": "Short assessment of key areas",
+                "duration": "5-10 minutes"
+            },
+            "focused": {
+                "name": "Focused",
+                "description": "Test specific exercise types",
+                "duration": "10-15 minutes"
+            }
+        },
+        "start": "Start Assessment",
+        "resume": "Resume Assessment",
+        "instructions": {
+            "title": "Assessment Instructions",
+            "intro": "This is a standardized test to measure your progress over time.",
+            "rules": [
+                "Complete all questions - no skipping",
+                "Use hints sparingly (they affect your score)",
+                "Take your time - accuracy matters more than speed",
+                "Find a quiet environment",
+                "Complete in one sitting if possible"
+            ],
+            "ready": "I'm Ready"
+        },
+        "progress": {
+            "section": "Section {current} of {total}",
+            "overall": "Overall Progress"
+        },
+        "results": {
+            "title": "Assessment Complete",
+            "overallScore": "Overall Score",
+            "breakdown": "Performance Breakdown",
+            "comparison": "Comparison to Previous",
+            "recommendations": "Recommendations",
+            "viewDetails": "View Detailed Report",
+            "done": "Done"
+        },
+        "difficulty": {
+            "easy": "Easy",
+            "medium": "Medium",
+            "hard": "Hard",
+            "mixed": "Mixed"
+        }
     }
 }

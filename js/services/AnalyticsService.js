@@ -57,6 +57,7 @@ class AnalyticsService {
         const dailyStats = storageService.get('dailyStats', {});
         const days = [];
         let totals = this.createEmptyDayStats();
+        const dailyActivity = []; // Add this
         
         for (let i = 6; i >= 0; i--) {
             const date = new Date();
@@ -70,6 +71,16 @@ class AnalyticsService {
                 ...dayData
             });
             
+            // Add to daily activity for chart
+            dailyActivity.push({
+                label: date.toLocaleDateString('en', { weekday: 'short' }),
+                value: dayData.totalAttempts || 0,
+                time: dayData.totalTime || 0,
+                accuracy: dayData.totalAttempts > 0 
+                    ? Math.round((dayData.totalCorrect / dayData.totalAttempts) * 100)
+                    : 0
+            });
+            
             totals.totalTime += dayData.totalTime || 0;
             totals.sessionsCount += dayData.sessionsCount || 0;
             totals.totalAttempts += dayData.totalAttempts || 0;
@@ -79,13 +90,15 @@ class AnalyticsService {
         
         return {
             days,
+            dailyActivity, // Add this
             totals: {
                 ...totals,
                 practiceTimeFormatted: this.formatDuration(totals.totalTime),
                 accuracy: this.calculateAccuracy(totals.totalCorrect, totals.totalAttempts)
             }
         };
-    }
+
+        }
     
     /**
      * Get monthly statistics
@@ -429,6 +442,43 @@ class AnalyticsService {
         
         dailyStats[today].hintsUsed = (dailyStats[today].hintsUsed || 0) + 1;
         storageService.set('dailyStats', dailyStats);
+    }
+    
+    getStatsForTimeRange(timeRange) {
+        switch(timeRange) {
+            case 'today':
+                return this.getTodayStats();
+            case '7days':
+                return this.getWeeklyStats();
+            case '30days':
+                return this.getMonthlyStats();
+            case 'all':
+                return this.getAllTimeStats();
+            default:
+                return this.getWeeklyStats();
+        }
+    }
+
+    // Add to getDashboardData return:
+    getDashboardData() {
+        const data = {
+            today: this.getTodayStats(),
+            week: this.getWeeklyStats(),
+            month: this.getMonthlyStats(),
+            allTime: this.getAllTimeStats(),
+            streak: this.getStreakData(),
+            problemWords: this.getProblemWords(10),
+            masteredWords: this.getMasteredWords(10),
+            exerciseBreakdown: this.getExerciseBreakdown(),
+            recentSessions: this.getRecentSessions(5),
+            progressTrend: this.getProgressTrend(30)
+        };
+        
+        // Add derived stats for visualization
+        data.today.practiceTimeFormatted = this.formatDuration(data.today.practiceTime);
+        data.week.totals.practiceTimeFormatted = this.formatDuration(data.week.totals.totalTime);
+        
+        return data;
     }
 }
 

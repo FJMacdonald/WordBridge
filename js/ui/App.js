@@ -7,6 +7,8 @@ import trackingService from '../services/TrackingService.js';
 import ProgressPage from './pages/ProgressPage.js';
 import SettingsPage from './pages/SettingsPage.js';
 import CustomizePage from './pages/CustomizePage.js';
+import AssessmentPage from './pages/AssessmentPage.js';
+import ExampleDataGenerator from '../services/ExampleDataGenerator.js';
 
 // Import all default data
 import { namingData } from '../../data/default/naming.js';
@@ -53,6 +55,15 @@ class App {
         this.setupNavigation();
         this.setupGlobalListeners();
         this.applySettings();
+
+        // Generate 6 months of example data
+        const generator = new ExampleDataGenerator();
+        const exampleData = generator.generateHistoricalData(6);
+
+        // Load into storage for testing
+        Object.entries(exampleData).forEach(([key, value]) => {
+            storageService.set(key, value);
+        });
         
         this.showHome();
     }
@@ -100,6 +111,9 @@ class App {
                 break;
             case 'customize':
                 this.showCustomize();
+                break;
+            case 'assessment':
+                this.showAssessment();
                 break;
             default:
                 this.showHome();
@@ -163,6 +177,9 @@ class App {
                 this.startExercise(card.dataset.type);
             });
         });
+        console.log(storageService.get('dailyStats'));
+        console.log(storageService.get('exerciseTypeStats'));
+        console.log(storageService.get('wordStats'));
     }
     
     /**
@@ -223,7 +240,10 @@ class App {
         const page = new CustomizePage(this.container);
         page.render();
     }
-    
+    showAssessment() {
+        const page = new AssessmentPage(this.container);
+        page.render();
+    }
     applySettings() {
         const textSize = Config.get('ui.textSize') || 'medium';
         const highContrast = Config.get('ui.highContrast') || false;

@@ -1,0 +1,165 @@
+/* assessment.css */
+.assessment-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.assessment-subtitle {
+    text-align: center;
+    color: #666;
+    margin: 20px 0 40px;
+}
+
+.assessment-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.assessment-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.assessment-card h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.assessment-card .description {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.assessment-card .duration {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.assessment-instructions {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.rules-list {
+    margin: 30px 0;
+    padding-left: 20px;
+}
+
+.rules-list li {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.instructions-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.assessment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+}
+
+.assessment-progress {
+    flex: 1;
+}
+
+.progress-bar {
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #4CAF50, #8BC34A);
+    transition: width 0.3s;
+}
+
+.assessment-results {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.overall-score {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.score-value {
+    font-size: 72px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.score-label {
+    font-size: 18px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.breakdown-grid {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.section-result {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.section-metrics {
+    display: flex;
+    gap: 20px;
+}
+
+.recommendations {
+    margin-top: 40px;
+}
+
+.recommendation {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.recommendation.high {
+    background: #FFF3E0;
+    border-color: #FF9800;
+}
+
+.recommendation.medium {
+    background: #E3F2FD;
+    border-color: #2196F3;
+}
+
+.recommendation.positive {
+    background: #E8F5E9;
+    border-color: #4CAF50;
+}
