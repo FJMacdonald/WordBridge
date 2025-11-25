@@ -21,6 +21,9 @@ class AssessmentPage {
     }
     
     renderStart() {
+        const userLevel = assessmentService.getBaselineDifficulty();
+        const hasAllMastered = assessmentService.hasUserMasteredAllExercises(userLevel);
+        
         this.container.innerHTML = `
             <div class="assessment-page">
                 <header class="page-header">
@@ -30,15 +33,49 @@ class AssessmentPage {
                 
                 <p class="assessment-subtitle">${t('assessment.subtitle')}</p>
                 
+                ${hasAllMastered && userLevel !== 'hard' ? `
+                    <div class="level-up-banner">
+                        🎉 ${t('assessment.levelUpMessage', { level: userLevel === 'easy' ? t('assessment.difficulty.medium') : t('assessment.difficulty.hard') })}
+                    </div>
+                ` : ''}
+                
+                <div class="current-level">
+                    ${t('assessment.currentLevel')}: <strong>${t('assessment.difficulty.' + userLevel)}</strong>
+                </div>
+                
                 <div class="assessment-types">
                     ${this.renderAssessmentType('baseline')}
-                    ${this.renderAssessmentType('quick')}
-                    ${this.renderAssessmentType('focused')}
+                    ${this.renderQuickCheckOptions()}
                 </div>
             </div>
         `;
         
         this.attachStartListeners();
+    }
+    
+    renderQuickCheckOptions() {
+        const exerciseTypes = assessmentService.allExerciseTypes;
+        
+        return `
+            <div class="assessment-card quick-check-card">
+                <h3>${t('assessment.types.quick.name')}</h3>
+                <p class="description">${t('assessment.types.quick.description')}</p>
+                <p class="duration">${t('assessment.types.quick.duration')}</p>
+                
+                <div class="exercise-type-selector">
+                    <label for="quick-exercise-select">${t('assessment.selectExerciseType')}:</label>
+                    <select id="quick-exercise-select" class="exercise-select">
+                        ${exerciseTypes.map(type => `
+                            <option value="${type}">${t('exercises.' + type + '.name')}</option>
+                        `).join('')}
+                    </select>
+                </div>
+                
+                <button class="btn btn--primary" data-type="quick">
+                    ${t('assessment.start')}
+                </button>
+            </div>
+        `;
     }
     
     renderAssessmentType(type) {
@@ -138,12 +175,19 @@ class AssessmentPage {
     }
     
     handleSectionComplete() {
+        // Destroy current exercise
+        if (this.currentExercise && this.currentExercise.destroy) {
+            this.currentExercise.destroy();
+        }
+        this.currentExercise = null;
+        
         // Move to next section
         const nextSection = assessmentService.nextSection();
         
         if (nextSection) {
-            // Load next section
-            this.loadCurrentSection();
+            // Re-render the whole in-progress view with updated progress
+            const assessment = assessmentService.getCurrentAssessment();
+            this.renderInProgress(assessment);
         } else {
             // Assessment complete
             const results = assessmentService.completeAssessment();
@@ -208,8 +252,16 @@ class AssessmentPage {
         this.container.querySelectorAll('[data-type]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const type = btn.dataset.type;
+                let exerciseType = null;
+                
+                // For quick check, get selected exercise type
+                if (type === 'quick') {
+                    const selectEl = document.getElementById('quick-exercise-select');
+                    exerciseType = selectEl ? selectEl.value : null;
+                }
+                
                 this.renderInstructions(() => {
-                    const assessment = assessmentService.startAssessment(type);
+                    const assessment = assessmentService.startAssessment(type, exerciseType);
                     this.renderInProgress(assessment);
                 });
             });
@@ -217,13 +269,13 @@ class AssessmentPage {
         
         // Back button
         document.getElementById('back-btn')?.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: 'progress' }));
+            window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
         });
     }
     
     attachInProgressListeners() {
         document.getElementById('pause-btn')?.addEventListener('click', () => {
-            if (confirm('Pause assessment? You can resume later.')) {
+            if (confirm(t('assessment.pauseConfirm'))) {
                 window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
             }
         });

@@ -48,14 +48,10 @@ class ScrambleExercise extends BaseExercise {
                         <div class="scramble-words" id="scramble-words">
                             ${this.renderWords()}
                         </div>
-                        <p class="scramble-help">Tap two words to swap them</p>
+                        <p class="scramble-help" id="scramble-help">${t('exercises.scramble.tapToSwap')}</p>
                     </div>
                     
-                    <div class="scramble-actions">
-                        <button class="btn btn--primary btn--large" id="check-btn">
-                            ✓ Check Order
-                        </button>
-                    </div>
+
                 </div>
                 
                 ${this.renderFooter()}
@@ -80,11 +76,7 @@ class ScrambleExercise extends BaseExercise {
             word.addEventListener('click', (e) => this.handleWordTap(e));
         });
         
-        // Check button
-        const checkBtn = this.container.querySelector('#check-btn');
-        if (checkBtn) {
-            checkBtn.addEventListener('click', () => this.checkOrder());
-        }
+
     }
     
     handleWordTap(e) {
@@ -121,6 +113,11 @@ class ScrambleExercise extends BaseExercise {
         words.forEach(word => {
             word.addEventListener('click', (e) => this.handleWordTap(e));
         });
+        
+        // Auto-check if correct order achieved
+        if (this.arraysEqual(this.currentOrder, this.correctOrder)) {
+            setTimeout(() => this.checkOrder(), 500); // Small delay for visual feedback
+        }
     }
     
     async checkOrder() {
@@ -157,9 +154,24 @@ class ScrambleExercise extends BaseExercise {
     }
     
     async handlePlayAll() {
-        // Speak the correct sentence
-        const sentence = this.correctOrder.join(' ');
-        await audioService.speak(sentence);
+        // First speak both instructions
+        await audioService.speak(t('exercises.scramble.instruction'));
+        await new Promise(resolve => setTimeout(resolve, 300));
+        await audioService.speak(t('exercises.scramble.tapToSwap'));
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Then speak the scrambled words in their current order
+        const scrambledWords = this.currentOrder;
+        await audioService.speakSequence(scrambledWords);
+    }
+    
+    async playPromptAudio() {
+        // Say both instructions
+        await audioService.speak(t('exercises.scramble.instruction'));
+        await new Promise(resolve => setTimeout(resolve, 300));
+        await audioService.speak(t('exercises.scramble.tapToSwap'));
+        await new Promise(resolve => setTimeout(resolve, 300));
+        await audioService.speakSequence(this.currentOrder);
     }
     
     async applyHint(hintType) {
@@ -182,8 +194,19 @@ class ScrambleExercise extends BaseExercise {
                 if (hintArea) {
                     const hintItem = document.createElement('div');
                     hintItem.className = 'hint-item hint-phrase';
-                    hintItem.textContent = `Word ${i + 1} should be "${correctWord}"`;
+                    const wordPositions = [
+                        t('exercises.scramble.theFirstWord'),
+                        t('exercises.scramble.theSecondWord'),
+                        t('exercises.scramble.theThirdWord'),
+                        t('exercises.scramble.theFourthWord'),
+                        t('exercises.scramble.theFifthWord')
+                    ];
+                    const wordPosition = i < wordPositions.length ? wordPositions[i] : `Word ${i + 1}`;
+                    hintItem.textContent = `${wordPosition} ${t('exercises.scramble.shouldBe')} "${correctWord}"`;
                     hintArea.appendChild(hintItem);
+                    
+                    // Play audio for the hint
+                    setTimeout(() => audioService.speak(`${wordPosition} ${t('exercises.scramble.shouldBe')} ${correctWord}`), 100);
                 }
                 
                 // Remove highlight after delay

@@ -1,0 +1,377 @@
+{
+    "app": {
+        "title": "Wort-Brücke"
+    },
+    "common": {
+        "correct": "Richtig",
+        "incorrect": "Versuche es nochmal",
+        "skip": "Überspringen ->",
+        "hint": "Hinweis",
+        "playAll": "Alle abspielen",
+        "next": "Weiter",
+        "back": "Zurück",
+        "close": "Schließen",
+        "continue": "Fortsetzen",
+        "cancel": "Abbrechen"
+    },
+    "audio": {
+        "playAll": "Alle Optionen anhören",
+        "playWord": "Wort abspielen"
+    },
+    "hints": {
+        "removeOne": "Eine entfernen",
+        "showLetter": "Buchstaben zeigen",
+        "noMoreHints": "Keine weiteren Hinweise",
+        "remaining": "{count} übrig"
+    },
+    "feedback": {
+        "correct": "✓ Richtig!",
+        "incorrect": "✗ Nicht ganz",
+        "perfect": "✓ Perfekt!",
+        "theAnswerWas": "Die Antwort war: {answer}",
+        "withHints": "✓ Mit Hilfe geschafft!"
+    },
+    "exercises": {
+        "naming": {
+            "name": "Bilder Benennen",
+            "instruction": "Was ist das?"
+        },
+        "listening": {
+            "name": "Hören",
+            "instruction": "Höre das Wort und tippe auf das entsprechende Bild"
+        },
+        "speaking": {
+            "name": "Sprechen",
+            "instruction": "Sag dieses Wort",
+            "iSaidIt": "Ich habe es gesagt",
+            "iCouldnt": "Ich konnte es nicht"
+        },
+        "typing": {
+            "name": "Wort Tippen",
+            "instruction": "Tippe was du siehst"
+        },
+        "sentenceTyping": {
+            "name": "Satz Vervollständigen",
+            "instruction": "Tippe das fehlende Wort"
+        },
+        "category": {
+            "name": "Kategorien",
+            "instruction": "Welches Wort ist ein {category}?"
+        },
+        "rhyming": {
+            "name": "Reimende Wörter",
+            "instruction": "Welches Wort reimt sich mit:",
+            "rhymesWith": "reimt sich mit"
+        },
+        "firstSound": {
+            "name": "Erste Laute",
+            "instruction": "Welches Wort beginnt mit demselben Laut wie:",
+            "bothStartWith": "Beide beginnen mit"
+        },
+        "association": {
+            "name": "Wort-Assoziation",
+            "instruction": "Welches Wort passt zu:",
+            "goesWithPhrase": "passt zu"
+        },
+        "synonyms": {
+            "name": "Synonyme & Antonyme",
+            "synonymInstruction": "Welches Wort bedeutet dasselbe wie:",
+            "antonymInstruction": "Welches Wort bedeutet das Gegenteil von:",
+            "isOppositeOf": "ist das Gegenteil von",
+            "meansSameAs": "bedeutet dasselbe wie"
+        },
+        "definitions": {
+            "name": "Definitionen",
+            "instruction": "Welches Wort passt zu dieser Definition?"
+        },
+        "scramble": {
+            "name": "Satz Durcheinander",
+            "instruction": "Bringe diese Wörter in die richtige Reihenfolge",
+            "checkOrder": "Reihenfolge prüfen",
+            "tapToSwap": "Tippe zwei Wörter an, um sie zu vertauschen",
+            "theFirstWord": "Das erste Wort",
+            "theSecondWord": "Das zweite Wort",
+            "theThirdWord": "Das dritte Wort",
+            "theFourthWord": "Das vierte Wort",
+            "theFifthWord": "Das fünfte Wort",
+            "shouldBe": "sollte sein"
+        },
+        "listening": {
+            "name": "Hören",
+            "instruction": "Höre das Wort und tippe auf das entsprechende Bild",
+            "tapPictureFor": "Tippe auf das Bild für"
+        },
+        "typing": {
+            "name": "Wort Tippen",
+            "instruction": "Tippe was du siehst",
+            "typeWord": "Tippe das Wort",
+            "tapHereToType": "Hier tippen zum Schreiben",
+            "typeKeyboardOrTap": "Tippe auf der Tastatur oder tippe auf das Feld oben",
+            "startsWith": "Beginnt mit:",
+            "listenCarefully": "Höre genau zu"
+        }
+    },
+    "results": {
+        "title": "Sitzung Abgeschlossen!",
+        "score": "{correct} von {total}",
+        "accuracy": "{percent}% Genauigkeit",
+        "time": "Zeit: {time}",
+        "playAgain": "Nochmal Üben",
+        "backToMenu": "Zurück zum Menü"
+    },
+    "home": {
+        "title": "Wähle eine Übung",
+        "subtitle": "Übe in deinem eigenen Tempo",
+        "speechTherapy": "Sprachtherapie",
+        "chooseExercise": "Wähle eine Übung zum Üben",
+        "categories": {
+            "meaning": "Bedeutung",
+            "phonetics": "Phonetik",
+            "words": "Wörter"
+        }
+    },
+    "progress": {
+        "title": "Dein Fortschritt",
+        "viewReport": "Bericht Ansehen",
+        "takeAssessment": "Test Machen",
+        "backToHome": "Zurück zur Startseite",
+        "qualityScore": "Übungsqualität",
+        "accuracyTrend": "Genauigkeit im Zeitverlauf",
+        "exerciseDistribution": "Zeit nach Übung",
+        "performanceHeatmap": "Leistung nach Übung",
+        "assessmentComparison": "Test-Fortschritt",
+        "timeRanges": {
+            "today": "Heute",
+            "week": "Woche",
+            "month": "Monat",
+            "all": "Gesamt"
+        },
+        "chart": {
+            "daily": "Täglich",
+            "average": "7-Tage-Durchschnitt"
+        },
+        "quality": {
+            "consistency": "Beständigkeit",
+            "duration": "Sitzungslänge",
+            "variety": "Übungsvielfalt",
+            "accuracy": "Genauigkeit"
+        },
+        "info": {
+            "qualityScore": "Der Qualitätswert kombiniert Beständigkeit (Übungshäufigkeit), Dauer (Sitzungslänge), Vielfalt (verschiedene Übungen) und Genauigkeit in einer einzigen Metrik.",
+            "accuracyTrend": "Zeigt Ihre tägliche Genauigkeit im Zeitverlauf. Die gepunktete Linie ist ein gleitender 7-Tage-Durchschnitt, um allgemeine Trends aufzuzeigen.",
+            "accuracyCalculation": "Die Genauigkeit für einen Tag wird berechnet als: (Korrekte Versuche / Gesamtversuche) × 100%. Nur Tage mit Übungsaktivität werden angezeigt.",
+            "heatmap": "Dunklere Farben zeigen bessere Leistung an. Jede Zelle zeigt die Genauigkeit für eine bestimmte Übung an einem bestimmten Tag.",
+            "assessmentComparison": "Vergleicht Ihre Leistung zwischen standardisierten Tests, um objektiven Fortschritt zu messen."
+        },
+        "recommendations": {
+            "title": "Schwerpunktbereiche",
+            "consistency": "Versuche regelmäßiger zu üben - ziele auf 5 Tage pro Woche ab",
+            "duration": "Erhöhe die Sitzungslänge - ziele auf 15-20 Minuten pro Sitzung ab",
+            "variety": "Probiere mehr Übungstypen aus - Vielfalt hilft bei der Gesamtverbesserung",
+            "goodJob": "Großartige Arbeit! Mach weiter so mit dem beständigen Üben."
+        },
+        "performanceLegend": {
+            "title": "Leistungsebenen",
+            "excellent": "Ausgezeichnet (≥85%)",
+            "good": "Gut (70-84%)",
+            "needsPractice": "Braucht Übung (50-69%)",
+            "challenging": "Herausfordernd (<50%)",
+            "noData": "Keine Daten"
+        }
+    },
+    "assessment": {
+        "title": "Fortschrittstest",
+        "subtitle": "Standardisierter Test zur Messung deines Fortschritts",
+        "currentLevel": "Dein Aktuelles Niveau",
+        "selectExerciseType": "Übungstyp Auswählen",
+        "levelUpMessage": "Glückwunsch! Du hast alle Übungen gemeistert. Bereit für {level}?",
+        "types": {
+            "baseline": {
+                "name": "Vollständige Grundlinie",
+                "description": "Umfassender Test über alle Übungstypen. Meistere alle 12 Übungstypen auf einfachem Niveau, um schwierigere Stufen freizuschalten.",
+                "duration": "20-30 Minuten"
+            },
+            "quick": {
+                "name": "Schnelltest",
+                "description": "Kurze Bewertung einzelner Übungstypen auf deinem aktuellen Niveau",
+                "duration": "5-10 Minuten"
+            }
+        },
+        "start": "Test Starten",
+        "resume": "Test Fortsetzen",
+        "instructions": {
+            "title": "Test-Anweisungen",
+            "intro": "Dies ist ein standardisierter Test, um deinen Fortschritt im Zeitverlauf zu messen.",
+            "rules": [
+                "Beantworte alle Fragen - kein Überspringen",
+                "Verwende Hinweise sparsam (sie beeinflussen deine Punktzahl)",
+                "Nimm dir Zeit - Genauigkeit ist wichtiger als Geschwindigkeit",
+                "Suche eine ruhige Umgebung",
+                "Schließe nach Möglichkeit in einer Sitzung ab"
+            ],
+            "ready": "Ich bin bereit"
+        },
+        "progress": {
+            "section": "Abschnitt {current} von {total}",
+            "overall": "Gesamtfortschritt"
+        },
+        "results": {
+            "title": "Test Abgeschlossen",
+            "overallScore": "Gesamtpunktzahl",
+            "breakdown": "Leistungsaufschlüsselung",
+            "comparison": "Vergleich zum Vorherigen",
+            "recommendations": "Empfehlungen",
+            "viewDetails": "Detaillierten Bericht Ansehen",
+            "done": "Fertig"
+        },
+        "difficulty": {
+            "easy": "Einfach",
+            "medium": "Mittel",
+            "hard": "Schwer",
+            "mixed": "Gemischt"
+        },
+        "needsAssessment": "Du brauchst mindestens 2 Bewertungen zum Vergleichen.",
+        "takeFirstAssessment": "Mache einen Test, um Fortschritte zu verfolgen.",
+        "assessmentButton": "Test Machen",
+        "pauseConfirm": "Test pausieren? Du kannst später fortfahren."
+    },
+    "navigation": {
+        "home": "Startseite",
+        "progress": "Fortschritt",
+        "assessment": "Test",
+        "customize": "Anpassen",
+        "settings": "Einstellungen"
+    },
+    "settings": {
+        "title": "Einstellungen",
+        "language": "Sprache", 
+        "textSize": "Textgröße",
+        "highContrast": "Hoher Kontrast Modus",
+        "sections": {
+            "display": "Anzeige",
+            "audio": "Audio",
+            "practice": "Übung",
+            "translation": "Übersetzung",
+            "dataManagement": "Datenverwaltung",
+            "dangerZone": "Gefahrenbereich"
+        },
+        "options": {
+            "small": "Klein",
+            "medium": "Mittel",
+            "large": "Groß",
+            "voiceSelection": "Stimme auswählen",
+            "autoPlayQuestions": "Fragen automatisch abspielen",
+            "speechSpeed": "Sprechgeschwindigkeit",
+            "testVoice": "Stimme testen",
+            "voiceTestPhrase": "Hallo! So klingt die Stimme.",
+            "customExerciseFrequency": "Häufigkeit benutzerdefinierter Übungen",
+            "customFrequencyDesc": "Wie oft deine benutzerdefinierten Übungen verwendet werden sollen",
+            "problemWordFrequency": "Häufigkeit schwieriger Wörter",
+            "problemFrequencyDesc": "Wie oft schwierige Wörter angezeigt werden sollen",
+            "masteryStreak": "Beherrschungssträhne",
+            "masteryStreakDesc": "Richtige Antworten hintereinander, um ein Wort zu beherrschen",
+            "hideMasteredWords": "Beherrschte Wörter ausblenden", 
+            "hideMasteredDesc": "Beherrschte Wörter aus der Übung entfernen",
+            "exportTranslation": "Für Übersetzung exportieren (CSV)",
+            "exportTranslationDesc": "Alle Texte als CSV zum Übersetzen herunterladen",
+            "importTranslation": "Übersetzung importieren (CSV)",
+            "importTranslationDesc": "Übersetzte CSV hochladen, um neue Sprache hinzuzufügen",
+            "createBackup": "Vollständige Sicherung erstellen",
+            "createBackupDesc": "Alle deine Daten und Einstellungen herunterladen",
+            "restoreBackup": "Aus Sicherung wiederherstellen",
+            "restoreBackupDesc": "Eine zuvor gespeicherte Sicherung importieren",
+            "resetProgress": "Gesamten Fortschritt zurücksetzen",
+            "resetProgressDesc": "Dies löscht allen Fortschritt, behält aber benutzerdefinierte Übungen",
+            "resetEverything": "Alles zurücksetzen", 
+            "resetEverythingDesc": "ALLE Daten einschließlich benutzerdefinierter Übungen löschen"
+        },
+        "frequencies": {
+            "mixed": "Gemischt mit Standard",
+            "high": "Hauptsächlich benutzerdefiniert (70%)",
+            "only": "Nur benutzerdefiniert"
+        },
+        "times": {
+            "2times": "2 mal",
+            "3times": "3 mal",
+            "4times": "4 mal", 
+            "5times": "5 mal"
+        },
+        "modal": {
+            "confirm": "Bestätigen",
+            "cancel": "Abbrechen",
+            "areYouSure": "Bist du sicher?"
+        }
+    },
+    "customize": {
+        "title": "Benutzerdefinierte Übungen hinzufügen",
+        "modes": {
+            "individual": "Einzeln",
+            "bulkUpload": "Massenupload"
+        },
+        "chooseType": "Übungstyp wählen:",
+        "types": {
+            "picture": "Bild",
+            "sentence": "Satz",
+            "words": "Wörter"
+        },
+        "bulkUpload": {
+            "title": "Massenupload aus CSV",
+            "instructions": "Anweisungen (zum Aufklappen klicken)",
+            "howTo": "So lädst du benutzerdefinierte Übungen hoch:",
+            "step1": "Lade die CSV-Vorlage für den gewünschten Übungstyp herunter",
+            "step2": "Öffne sie in Excel, Google Sheets oder einer anderen Tabellenkalkulation",
+            "step3": "Fülle deine benutzerdefinierten Übungen nach dem Format aus",
+            "step4": "Speichere als CSV-Datei",
+            "step5": "Lade die Datei hier hoch",
+            "formatGuidelines": "CSV-Format-Richtlinien:",
+            "pictureFormat": "Bilder Benennen:",
+            "sentenceFormat": "Satz Vervollständigen:",
+            "wordFormat": "Wortlisten:",
+            "pictureExample": "Beispiel: Apfel, https://example.com/apfel.jpg, Banane, Orange, Birne",
+            "sentenceExample": "Beispiel: Ich trinke jeden Morgen __, Kaffee",
+            "wordExample": "Beispiel: reimend, Katze, Tatze|Tatze|Matze",
+            "downloadTemplate": "Vorlage herunterladen", 
+            "uploadFile": "CSV-Datei hochladen",
+            "selectFile": "Datei auswählen...",
+            "processing": "Wird verarbeitet...",
+            "success": "{count} Übungen erfolgreich importiert!",
+            "error": "Fehler beim Importieren der Datei: {message}"
+        },
+        "existing": "Deine benutzerdefinierten Übungen",
+        "noCustom": "Noch keine benutzerdefinierten Übungen.",
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "confirmDelete": "Diese Übung löschen?",
+        "forms": {
+            "addWordExercise": "Wortübung hinzufügen",
+            "addPictureExercise": "Bildübung hinzufügen",
+            "addSentenceExercise": "Satzübung hinzufügen",
+            "exerciseType": "Übungstyp",
+            "rhymingWords": "Reimwörter",
+            "wordAssociation": "Wort-Assoziation",
+            "synonyms": "Synonyme",
+            "mainWord": "Hauptwort",
+            "mainWordPlaceholder": "z.B. Katze",
+            "relatedWords": "Verwandte Wörter (kommagetrennt)",
+            "relatedWordsPlaceholder": "z.B. Tatze, Matze, Platze",
+            "targetWord": "Zielwort",
+            "targetWordPlaceholder": "z.B. Apfel",
+            "wrongOptions": "Falsche Optionen",
+            "wrongOptionsOptional": "Falsche Optionen (optional)",
+            "wrongOptionsPlaceholder": "z.B. Banane, Orange, Traube",
+            "sentence": "Satz",
+            "sentenceWithBlank": "Satz (verwende __ für Lücke)",
+            "sentencePlaceholder": "z.B. Ich trinke jeden Morgen __",
+            "answer": "Antwort",
+            "answerPlaceholder": "z.B. Kaffee",
+            "addExercise": "Übung hinzufügen",
+            "imageFile": "Bilddatei (optional)",
+            "chooseFile": "Datei wählen...",
+            "noFileSelected": "keine Datei ausgewählt",
+            "uploadPictureHelp": "Lade ein Bild für dieses Wort hoch",
+            "autoGenerateHelp": "Leer lassen für automatische Generierung aus anderen Wörtern",
+            "imageUrl": "Oder Bild-URL",
+            "imageUrlPlaceholder": "https://example.com/bild.jpg"
+        }
+    }
+}

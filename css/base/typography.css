@@ -41,7 +41,7 @@ h3 { font-size: var(--font-size-lg); }
     background: var(--color-primary-light);
 }
 
-.main-content {
+#main-content {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: var(--space-lg);

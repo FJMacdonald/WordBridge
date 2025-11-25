@@ -280,11 +280,17 @@ class AnalyticsService {
     /**
      * Get exercise type breakdown
      */
-    getExerciseBreakdown() {
+    getExerciseBreakdown(days = null) {
         const sessionHistory = storageService.get('sessionHistory', []);
         const breakdown = {};
         
-        sessionHistory.forEach(session => {
+        // Filter by date if days specified
+        const cutoffTime = days ? Date.now() - (days * 24 * 60 * 60 * 1000) : 0;
+        const filteredSessions = days 
+            ? sessionHistory.filter(s => s.date >= cutoffTime)
+            : sessionHistory;
+        
+        filteredSessions.forEach(session => {
             const type = session.exerciseType;
             if (!breakdown[type]) {
                 breakdown[type] = {

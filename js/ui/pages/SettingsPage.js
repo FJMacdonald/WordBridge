@@ -33,26 +33,26 @@ class SettingsPage {
         this.container.innerHTML = `
             <div class="settings-page">
                 <header class="page-header">
-                    <h2>Settings</h2>
+                    <h2>${t('settings.title')}</h2>
                 </header>
                 
                 <!-- Display Settings -->
                 <section class="settings-section">
-                    <h3>📱 Display</h3>
+                    <h3>📱 ${t('settings.sections.display')}</h3>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Text Size</label>
+                        <label class="setting-label">${t('settings.textSize')}</label>
                         <div class="setting-control">
                             <select id="text-size" class="setting-select">
-                                <option value="small" ${settings.textSize === 'small' ? 'selected' : ''}>Small</option>
-                                <option value="medium" ${settings.textSize === 'medium' ? 'selected' : ''}>Medium</option>
-                                <option value="large" ${settings.textSize === 'large' ? 'selected' : ''}>Large</option>
+                                <option value="small" ${settings.textSize === 'small' ? 'selected' : ''}>${t('settings.options.small')}</option>
+                                <option value="medium" ${settings.textSize === 'medium' ? 'selected' : ''}>${t('settings.options.medium')}</option>
+                                <option value="large" ${settings.textSize === 'large' ? 'selected' : ''}>${t('settings.options.large')}</option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="setting-item">
-                        <label class="setting-label">High Contrast Mode</label>
+                        <label class="setting-label">${t('settings.highContrast')}</label>
                         <div class="setting-control">
                             <label class="toggle">
                                 <input type="checkbox" id="high-contrast" ${settings.highContrast ? 'checked' : ''}>
@@ -62,11 +62,11 @@ class SettingsPage {
                     </div>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Language</label>
+                        <label class="setting-label">${t('settings.language')}</label>
                         <div class="setting-control">
                             <select id="language-select" class="setting-select">
-                                <option value="en" ${settings.language === 'en' ? 'selected' : ''}>English</option>
-                                <!-- More languages will appear when translation files are available -->
+                                <option value="en" ${i18n.getCurrentLocale() === 'en' ? 'selected' : ''}>English</option>
+                                <option value="de" ${i18n.getCurrentLocale() === 'de' ? 'selected' : ''}>Deutsch</option>
                             </select>
                         </div>
                     </div>
@@ -74,10 +74,10 @@ class SettingsPage {
                 
                 <!-- Audio Settings -->
                 <section class="settings-section">
-                    <h3>🔊 Audio</h3>
+                    <h3>🔊 ${t('settings.sections.audio')}</h3>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Voice Selection</label>
+                        <label class="setting-label">${t('settings.options.voiceSelection')}</label>
                         <div class="setting-control">
                             <select id="voice-select" class="setting-select voice-select">
                                 ${this.availableVoices.map((voice, index) => `
@@ -90,7 +90,7 @@ class SettingsPage {
                     </div>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Auto-play Questions</label>
+                        <label class="setting-label">${t('settings.options.autoPlayQuestions')}</label>
                         <div class="setting-control">
                             <label class="toggle">
                                 <input type="checkbox" id="auto-play" ${settings.autoPlay ? 'checked' : ''}>
@@ -100,7 +100,7 @@ class SettingsPage {
                     </div>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Speech Speed</label>
+                        <label class="setting-label">${t('settings.options.speechSpeed')}</label>
                         <div class="setting-control range-control">
                             <input type="range" id="speech-rate" 
                                    min="0.5" max="1.2" step="0.05" 
@@ -111,36 +111,36 @@ class SettingsPage {
                     
                     <div class="setting-item">
                         <button class="btn btn--secondary" id="test-voice-btn">
-                            🔊 Test Voice
+                            🔊 ${t('settings.options.testVoice')}
                         </button>
                     </div>
                 </section>
                 
                 <!-- Practice Settings -->
                 <section class="settings-section">
-                    <h3>📚 Practice</h3>
+                    <h3>📚 ${t('settings.sections.practice')}</h3>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Custom Exercise Frequency</label>
-                        <p class="setting-description">How often to use your custom exercises</p>
+                        <label class="setting-label">${t('settings.options.customExerciseFrequency')}</label>
+                        <p class="setting-description">${t('settings.options.customFrequencyDesc')}</p>
                         <div class="setting-control">
                             <select id="custom-frequency" class="setting-select">
                                 <option value="mixed" ${settings.customFrequency === 'mixed' ? 'selected' : ''}>
-                                    Mixed with default
+                                    ${t('settings.frequencies.mixed')}
                                 </option>
                                 <option value="high" ${settings.customFrequency === 'high' ? 'selected' : ''}>
-                                    Mostly custom (70%)
+                                    ${t('settings.frequencies.high')}
                                 </option>
                                 <option value="only" ${settings.customFrequency === 'only' ? 'selected' : ''}>
-                                    Only custom
+                                    ${t('settings.frequencies.only')}
                                 </option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Problem Word Frequency</label>
-                        <p class="setting-description">How often to show difficult words</p>
+                        <label class="setting-label">${t('settings.options.problemWordFrequency')}</label>
+                        <p class="setting-description">${t('settings.options.problemFrequencyDesc')}</p>
                         <div class="setting-control range-control">
                             <input type="range" id="problem-frequency" 
                                    min="0.1" max="0.5" step="0.1" 
@@ -152,21 +152,21 @@ class SettingsPage {
                     </div>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Mastery Streak</label>
-                        <p class="setting-description">Correct answers in a row to master a word</p>
+                        <label class="setting-label">${t('settings.options.masteryStreak')}</label>
+                        <p class="setting-description">${t('settings.options.masteryStreakDesc')}</p>
                         <div class="setting-control">
                             <select id="mastery-threshold" class="setting-select">
-                                <option value="2" ${settings.masteryThreshold === 2 ? 'selected' : ''}>2 times</option>
-                                <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>3 times</option>
-                                <option value="4" ${settings.masteryThreshold === 4 ? 'selected' : ''}>4 times</option>
-                                <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>5 times</option>
+                                <option value="2" ${settings.masteryThreshold === 2 ? 'selected' : ''}>${t('settings.times.2times')}</option>
+                                <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>${t('settings.times.3times')}</option>
+                                <option value="4" ${settings.masteryThreshold === 4 ? 'selected' : ''}>${t('settings.times.4times')}</option>
+                                <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>${t('settings.times.5times')}</option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="setting-item">
-                        <label class="setting-label">Hide Mastered Words</label>
-                        <p class="setting-description">Remove mastered words from practice</p>
+                        <label class="setting-label">${t('settings.options.hideMasteredWords')}</label>
+                        <p class="setting-description">${t('settings.options.hideMasteredDesc')}</p>
                         <div class="setting-control">
                             <label class="toggle">
                                 <input type="checkbox" id="remove-mastery" ${settings.removeAfterMastery ? 'checked' : ''}>
@@ -178,60 +178,60 @@ class SettingsPage {
                 
                 <!-- Translation Tools -->
                 <section class="settings-section">
-                    <h3>🌐 Translation</h3>
+                    <h3>🌐 ${t('settings.sections.translation')}</h3>
                     
                     <div class="setting-item">
                         <button class="btn btn--secondary full-width" id="export-translation-btn">
-                            📤 Export for Translation (CSV)
+                            📤 ${t('settings.options.exportTranslation')}
                         </button>
-                        <small>Download all text as CSV for translation</small>
+                        <small>${t('settings.options.exportTranslationDesc')}</small>
                     </div>
                     
                     <div class="setting-item">
                         <label class="btn btn--secondary full-width file-label">
-                            📥 Import Translation (CSV)
+                            📥 ${t('settings.options.importTranslation')}
                             <input type="file" id="import-translation-file" accept=".csv" hidden>
                         </label>
-                        <small>Upload translated CSV to add new language</small>
+                        <small>${t('settings.options.importTranslationDesc')}</small>
                     </div>
                 </section>
                 
                 <!-- Data Management -->
                 <section class="settings-section">
-                    <h3>💾 Data Management</h3>
+                    <h3>💾 ${t('settings.sections.dataManagement')}</h3>
                     
                     <div class="setting-item">
                         <button class="btn btn--secondary full-width" id="export-backup-btn">
-                            💾 Create Full Backup
+                            💾 ${t('settings.options.createBackup')}
                         </button>
-                        <small>Download all your data and settings</small>
+                        <small>${t('settings.options.createBackupDesc')}</small>
                     </div>
                     
                     <div class="setting-item">
                         <label class="btn btn--secondary full-width file-label">
-                            📥 Restore from Backup
+                            📥 ${t('settings.options.restoreBackup')}
                             <input type="file" id="import-backup-file" accept=".json" hidden>
                         </label>
-                        <small>Import a previously saved backup</small>
+                        <small>${t('settings.options.restoreBackupDesc')}</small>
                     </div>
                 </section>
                 
                 <!-- Danger Zone -->
                 <section class="settings-section danger-zone">
-                    <h3>⚠️ Danger Zone</h3>
+                    <h3>⚠️ ${t('settings.sections.dangerZone')}</h3>
                     
                     <div class="setting-item">
                         <button class="btn btn--error full-width" id="reset-progress-btn">
-                            🗑️ Reset All Progress
+                            🗑️ ${t('settings.options.resetProgress')}
                         </button>
-                        <small>This will delete all progress but keep custom exercises</small>
+                        <small>${t('settings.options.resetProgressDesc')}</small>
                     </div>
                     
                     <div class="setting-item">
                         <button class="btn btn--error full-width" id="reset-all-btn">
-                            ⚠️ Reset Everything
+                            ⚠️ ${t('settings.options.resetEverything')}
                         </button>
-                        <small>Delete ALL data including custom exercises</small>
+                        <small>${t('settings.options.resetEverythingDesc')}</small>
                     </div>
                 </section>
             </div>
@@ -239,11 +239,11 @@ class SettingsPage {
             <!-- Confirmation Modal -->
             <div class="modal-overlay" id="confirm-modal" hidden>
                 <div class="modal">
-                    <h3 id="modal-title">Confirm</h3>
-                    <p id="modal-message">Are you sure?</p>
+                    <h3 id="modal-title">${t('settings.modal.confirm')}</h3>
+                    <p id="modal-message">${t('settings.modal.areYouSure')}</p>
                     <div class="modal-actions">
-                        <button class="btn btn--ghost" id="modal-cancel">Cancel</button>
-                        <button class="btn btn--error" id="modal-confirm">Confirm</button>
+                        <button class="btn btn--ghost" id="modal-cancel">${t('settings.modal.cancel')}</button>
+                        <button class="btn btn--error" id="modal-confirm">${t('settings.modal.confirm')}</button>
                     </div>
                 </div>
             </div>
@@ -257,27 +257,43 @@ class SettingsPage {
         return new Promise((resolve) => {
             const loadVoiceList = () => {
                 const allVoices = speechSynthesis.getVoices();
+                const currentLocale = i18n.getCurrentLocale();
                 
-                // Filter for quality English voices only
-                const preferredVoices = [
-                    'Google US English',
-                    'Google UK English Female',
-                    'Google UK English Male',
-                    'Microsoft David',
-                    'Microsoft Zira',
-                    'Microsoft Mark',
-                    'Samantha', // macOS
-                    'Alex',     // macOS
-                    'Daniel',   // iOS
-                    'Karen'     // iOS
-                ];
+                // Define preferred voices for each language
+                const preferredVoices = {
+                    'en': [
+                        'Google US English',
+                        'Google UK English Female', 
+                        'Google UK English Male',
+                        'Microsoft David',
+                        'Microsoft Zira',
+                        'Microsoft Mark',
+                        'Samantha', // macOS
+                        'Alex',     // macOS
+                        'Daniel',   // iOS
+                        'Karen'     // iOS
+                    ],
+                    'de': [
+                        'Google Deutsch',
+                        'Google German',
+                        'Microsoft Stefan',
+                        'Microsoft Hedda',
+                        'Anna',     // macOS
+                        'Petra',    // macOS
+                        'Yannick'   // iOS
+                    ]
+                };
                 
-                // Get English voices and sort preferred ones first
+                // Filter for voices based on current language
+                const langPrefix = currentLocale === 'de' ? 'de' : 'en';
+                const voiceList = preferredVoices[currentLocale] || preferredVoices['en'];
+                
+                // Get voices for the current language and sort preferred ones first
                 this.availableVoices = allVoices
-                    .filter(voice => voice.lang.startsWith('en'))
+                    .filter(voice => voice.lang.startsWith(langPrefix))
                     .sort((a, b) => {
-                        const aPreferred = preferredVoices.some(name => a.name.includes(name));
-                        const bPreferred = preferredVoices.some(name => b.name.includes(name));
+                        const aPreferred = voiceList.some(name => a.name.includes(name));
+                        const bPreferred = voiceList.some(name => b.name.includes(name));
                         if (aPreferred && !bPreferred) return -1;
                         if (!aPreferred && bPreferred) return 1;
                         return a.name.localeCompare(b.name);
@@ -288,7 +304,7 @@ class SettingsPage {
                 if (this.availableVoices.length === 0) {
                     this.availableVoices = [{
                         name: 'Default',
-                        lang: 'en-US',
+                        lang: currentLocale === 'de' ? 'de-DE' : 'en-US',
                         default: true
                     }];
                 }
@@ -319,7 +335,7 @@ class SettingsPage {
         this.container.querySelector('#language-select')?.addEventListener('change', async (e) => {
             const lang = e.target.value;
             Config.set('ui.language', lang);
-            await i18n.setLanguage(lang);
+            await i18n.setLocale(lang);
             window.location.reload(); // Reload to apply new language
         });
         
@@ -342,7 +358,7 @@ class SettingsPage {
         this.container.querySelector('#test-voice-btn')?.addEventListener('click', () => {
             const rate = Config.get('audio.speechRate');
             const voiceIndex = Config.get('audio.voiceIndex');
-            const utterance = new SpeechSynthesisUtterance('Hello! This is how the voice sounds.');
+            const utterance = new SpeechSynthesisUtterance(t('settings.options.voiceTestPhrase'));
             utterance.rate = rate;
             if (this.availableVoices[voiceIndex]) {
                 utterance.voice = this.availableVoices[voiceIndex];
@@ -463,13 +479,18 @@ class SettingsPage {
     }
     
     applySettings() {
-        const textSize = Config.get('ui.textSize');
-        const highContrast = Config.get('ui.highContrast');
-        
-        document.body.classList.remove('small-text', 'medium-text', 'large-text');
-        document.body.classList.add(`${textSize}-text`);
-        
-        document.body.classList.toggle('high-contrast', highContrast);
+        // Delegate to the main app's applySettings method
+        if (window.app && window.app.applySettings) {
+            window.app.applySettings();
+        } else {
+            // Fallback implementation
+            const textSize = Config.get('ui.textSize') || 'medium';
+            const highContrast = Config.get('ui.highContrast') || false;
+            
+            document.body.classList.remove('small-text', 'medium-text', 'large-text');
+            document.body.classList.add(`${textSize}-text`);
+            document.body.classList.toggle('high-contrast', highContrast);
+        }
     }
 }
 

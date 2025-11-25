@@ -81,3 +81,40 @@
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); }
 }
+
+/* High contrast mode improvements */
+.high-contrast .btn {
+    border-width: 3px;
+    font-weight: 700;
+}
+
+.high-contrast .btn--primary {
+    border-color: var(--color-primary-dark);
+}
+
+.high-contrast .btn--secondary {
+    border-color: var(--color-border);
+    background: var(--color-surface);
+}
+
+.high-contrast .btn--ghost {
+    border: 3px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
+.high-contrast .btn--ghost:hover:not(:disabled) {
+    background: var(--color-text);
+    color: var(--color-surface);
+}
+
+/* Skip button styling */
+.skip-btn,
+.btn[data-action="skip"] {
+    border: 2px solid var(--color-border);
+}
+
+.high-contrast .skip-btn,
+.high-contrast .btn[data-action="skip"] {
+    border: 3px solid var(--color-border);
+}

@@ -60,13 +60,16 @@ class ListeningExercise extends SelectionExercise {
     }
     
     async playPromptAudio() {
-        // For listening, we speak the target word
-        await this.playTargetWord();
+        // Say instruction first, then the target word
+        await audioService.speak(t('exercises.listening.instruction'));
+        await new Promise(resolve => setTimeout(resolve, 300));
+        await audioService.speak(this.currentItem.answer);
     }
     
     async handlePlayAll() {
-        // Only play the target word for listening exercises
-        // Don't read the options (that would give away answers)
+        // Say instruction first, then play the target word
+        await audioService.speak(t('exercises.listening.instruction'));
+        await new Promise(resolve => setTimeout(resolve, 300));
         await this.playTargetWord();
     }
     

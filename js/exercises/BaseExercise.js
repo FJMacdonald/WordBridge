@@ -27,6 +27,7 @@ class BaseExercise {
         this.activityTimer = null;
         this.inactivityThreshold = Config.get('tracking.inactivityThreshold', 60000);
         this.sessionAutoEnd = Config.get('tracking.sessionAutoEndThreshold', 300000);
+        this.inactivityDialogShown = false;
         
         // Bind methods
         this.handleHint = this.handleHint.bind(this);
@@ -142,6 +143,9 @@ class BaseExercise {
     }
     
     handleInactiveTimeout() {
+        // Prevent multiple dialogs from showing
+        if (this.inactivityDialogShown) return;
+        
         // Session ended due to inactivity
         trackingService.pauseSession('inactivity');
         
@@ -150,6 +154,10 @@ class BaseExercise {
     }
     
     showInactivityDialog() {
+        // Prevent multiple dialogs
+        if (this.inactivityDialogShown) return;
+        this.inactivityDialogShown = true;
+        
         const dialog = document.createElement('div');
         dialog.className = 'inactivity-dialog';
         dialog.innerHTML = `
@@ -165,11 +173,14 @@ class BaseExercise {
         
         dialog.querySelector('#resume-btn').addEventListener('click', () => {
             dialog.remove();
+            this.inactivityDialogShown = false;
             trackingService.resumeSession();
             this.recordActivity('resumed');
         });
         
         dialog.querySelector('#end-btn').addEventListener('click', () => {
+            dialog.remove();
+            this.inactivityDialogShown = false;
             this.complete();
         });
     }
@@ -302,9 +313,6 @@ class BaseExercise {
                     <button class="btn btn--primary btn--large" id="restart-btn">
                         ${t('results.playAgain')}
                     </button>
-                    <button class="btn btn--secondary" id="home-btn">
-                        ${t('results.backToMenu')}
-                    </button>
                 </div>
             </div>
         `;
@@ -366,10 +374,6 @@ class BaseExercise {
         this.container.querySelector('#restart-btn')?.addEventListener('click', () => {
             window.dispatchEvent(new CustomEvent('exercise:restart', { detail: this.type }));
         });
-        
-        this.container.querySelector('#home-btn')?.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
-        });
     }
     
     renderHeader() {
@@ -403,8 +407,8 @@ class BaseExercise {
                 <button class="btn btn--secondary" id="hint-btn" ${!hasMore ? 'disabled' : ''}>
                     💡 ${t('common.hint')}
                 </button>
-                <button class="btn btn--ghost" id="skip-btn">
-                    ${t('common.skip')} →
+                <button class="btn btn--secondary" id="skip-btn">
+                    ${t('common.skip')}
                 </button>
             </footer>
             <div class="hint-area" id="hint-area"></div>

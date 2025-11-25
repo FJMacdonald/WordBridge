@@ -59,19 +59,27 @@
     height: 1px;
 }
 
-/* Visible input fallback */
+/* Visible input fallback - hidden by default */
 .typing-input-visible {
-    width: 100%;
-    max-width: 300px;
-    padding: var(--space-md);
-    font-size: var(--font-size-xl);
-    text-align: center;
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-md);
-    margin-top: var(--space-md);
+    display: none;
 }
 
-.typing-input-visible:focus {
-    border-color: var(--color-primary);
-    outline: none;
+/* Show only on touch devices */
+@media (pointer: coarse) {
+    .typing-input-visible {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        padding: var(--space-md);
+        font-size: var(--font-size-xl);
+        text-align: center;
+        border: 2px solid var(--color-border);
+        border-radius: var(--radius-md);
+        margin-top: var(--space-md);
+    }
+
+    .typing-input-visible:focus {
+        border-color: var(--color-primary);
+        outline: none;
+    }
 }

@@ -14,14 +14,20 @@ class CategoryExercise extends SelectionExercise {
     renderPrompt() {
         const category = this.currentItem.category;
         return `
-            <p class="prompt-instruction">${t('exercises.category.instruction', { category })}</p>
             <div class="prompt-category">${category.toUpperCase()}</div>
         `;
     }
     
     async playPromptAudio() {
-        const category = this.currentItem.category;
-        await audioService.speak(`Which word is a ${category}?`);
+        // No audio instruction for category exercise
+    }
+    
+    async handlePlayAll() {
+        // Just read the options, no instruction
+        const activeOptions = this.currentOptions
+            .filter((_, i) => !this.state.eliminatedIndices.has(i))
+            .map(opt => typeof opt === 'object' ? opt.answer || opt.value : opt);
+        await audioService.speakSequence(activeOptions);
     }
     
     getCorrectAnswer() {

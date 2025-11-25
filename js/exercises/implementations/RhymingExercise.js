@@ -38,7 +38,7 @@ class RhymingExercise extends SelectionExercise {
     
     showFeedback(correct, message = null) {
         if (correct && !message) {
-            message = `✓ "${this.currentItem.word}" rhymes with "${this.correctAnswer}"`;
+            message = `✓ "${this.currentItem.word}" ${t('exercises.rhyming.rhymesWith')} "${this.correctAnswer}"`;
         }
         super.showFeedback(correct, message);
     }

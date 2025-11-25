@@ -1,4 +1,5 @@
 import Config from '../core/Config.js';
+import { i18n } from '../core/i18n.js';
 
 /**
  * Centralized audio/speech service
@@ -11,6 +12,22 @@ class AudioService {
     }
     
     /**
+     * Get appropriate voice for current language
+     */
+    getVoiceForLanguage() {
+        const voices = this.synth.getVoices();
+        const currentLocale = i18n.getCurrentLocale();
+        const voiceIndex = Config.get('audio.voiceIndex') || 0;
+        
+        // Filter voices based on current language
+        const langPrefix = currentLocale === 'de' ? 'de' : 'en';
+        const languageVoices = voices.filter(voice => voice.lang.startsWith(langPrefix));
+        
+        // Return selected voice if available, otherwise first available voice for language
+        return languageVoices[voiceIndex] || languageVoices[0] || voices[0];
+    }
+
+    /**
      * Speak text
      */
     async speak(text, options = {}) {
@@ -18,9 +35,16 @@ class AudioService {
             this.stop();
             
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.rate = options.rate ?? Config.get('audio.speechRate');
-            utterance.pitch = options.pitch ?? Config.get('audio.speechPitch');
+            utterance.rate = options.rate ?? Config.get('audio.speechRate') ?? 0.85;
+            utterance.pitch = options.pitch ?? Config.get('audio.speechPitch') ?? 1.0;
             utterance.volume = options.volume ?? 1.0;
+            
+            // Set appropriate voice for current language
+            const voice = this.getVoiceForLanguage();
+            if (voice) {
+                utterance.voice = voice;
+                utterance.lang = voice.lang;
+            }
             
             utterance.onend = () => {
                 this.speaking = false;

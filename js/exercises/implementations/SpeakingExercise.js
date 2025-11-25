@@ -33,19 +33,18 @@ class SpeakingExercise extends BaseExercise {
                         <div class="prompt-visual">${item.emoji}</div>
                     </div>
                     
-                    <div class="hint-area" id="hint-area"></div>
-                    
                     <div class="speaking-actions">
-                        <button class="btn btn--success btn--large" id="correct-btn">
-                            ✓ I said it
+                        <button class="btn btn--success" id="correct-btn">
+                            ✓ ${t('exercises.speaking.iSaidIt')}
                         </button>
-                        <button class="btn btn--error btn--large" id="incorrect-btn">
-                            ✗ I couldn't
+                        <button class="btn btn--error" id="incorrect-btn">
+                            ✗ ${t('exercises.speaking.iCouldnt')}
                         </button>
                     </div>
                 </div>
                 
                 ${this.renderFooter()}
+                <div class="hint-area" id="hint-area"></div>
             </div>
         `;
     }
@@ -63,8 +62,13 @@ class SpeakingExercise extends BaseExercise {
     }
     
     async handlePlayAll() {
-        // Don't speak the word automatically - that defeats the purpose
-        // User needs to recall it themselves
+        // Say the instruction only
+        await audioService.speak(t('exercises.speaking.instruction'));
+    }
+    
+    async playPromptAudio() {
+        // Say the instruction for speaking exercise
+        await audioService.speak(t('exercises.speaking.instruction'));
     }
     
     getHints() {
@@ -96,10 +100,14 @@ class SpeakingExercise extends BaseExercise {
         switch (hint.type) {
             case 'letters':
                 hintHTML = `<div class="hint-item hint-letters">${hint.text}</div>`;
+                // Speak "starts with" for the first hint
+                setTimeout(() => audioService.speak(t('exercises.typing.startsWith')), 100);
                 break;
             case 'phrase':
                 const displayPhrase = hint.text.replace(new RegExp(word, 'gi'), '______');
                 hintHTML = `<div class="hint-item hint-phrase">"${displayPhrase}"</div>`;
+                // Speak the full sentence with the word
+                setTimeout(() => audioService.speak(hint.text), 100);
                 break;
             case 'word':
                 hintHTML = `

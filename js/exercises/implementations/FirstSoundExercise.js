@@ -67,7 +67,7 @@ class FirstSoundExercise extends SelectionExercise {
     
     showFeedback(correct, message = null) {
         if (correct && !message) {
-            message = `✓ Both start with "${this.targetSound}"`;
+            message = `✓ ${t('exercises.firstSound.bothStartWith')} "${this.targetSound}"`;
         }
         super.showFeedback(correct, message);
     }

@@ -1,12 +1,14 @@
 /* Settings Page Styles */
 
-/* Text size classes */
-.small-text { font-size: 14px; }
-.medium-text { font-size: 16px; }
-.large-text { font-size: 20px; }
-
 .settings-page {
-    padding-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    /* Ensure body background is preserved */
+    background: transparent;
+}
+
+/* Ensure consistent background styling */
+body {
+    background-color: var(--color-background) !important;
 }
 
 .settings-section {

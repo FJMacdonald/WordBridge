@@ -47,7 +47,14 @@ class App {
     
     async init() {
         Config.init();
-        await i18n.init('en');
+        
+        // Make app instance globally available for settings updates
+        window.app = this;
+        
+        // Load saved locale or default to 'en'
+        const savedLocale = localStorage.getItem('locale') || Config.get('ui.language') || 'en';
+        await i18n.init(savedLocale);
+        
         await imageStorage.init();
         
         this.container = document.getElementById('main-content');
@@ -55,6 +62,7 @@ class App {
         this.setupNavigation();
         this.setupGlobalListeners();
         this.applySettings();
+        this.updateNavigationLabels();
 
         // Generate 6 months of example data
         const generator = new ExampleDataGenerator();
@@ -74,6 +82,23 @@ class App {
                 const page = btn.dataset.page;
                 this.navigate(page);
             });
+        });
+        
+        // Update navigation with current locale
+        this.updateNavigationLabels();
+    }
+    
+    updateNavigationLabels() {
+        // Update app title
+        const appTitle = document.querySelector('.app-title');
+        if (appTitle) {
+            appTitle.textContent = t('app.title');
+        }
+        
+        // Update navigation aria labels  
+        document.querySelectorAll('.nav-btn[data-i18n-aria]').forEach(btn => {
+            const key = btn.getAttribute('data-i18n-aria');
+            btn.setAttribute('aria-label', t(key));
         });
     }
     
@@ -124,17 +149,17 @@ class App {
         const categories = exerciseFactory.getExercisesByCategory();
         const categoryInfo = {
             meaning: {
-                name: 'Meaning',
+                name: t('home.categories.meaning'),
                 icon: '💡',
                 description: 'Understanding word meanings'
             },
             phonetics: {
-                name: 'Phonetics',
+                name: t('home.categories.phonetics'),
                 icon: '🔊',
                 description: 'Sounds and pronunciation'
             },
             words: {
-                name: 'Words',
+                name: t('home.categories.words'),
                 icon: '📚',
                 description: 'Recognition and spelling'
             }
@@ -143,8 +168,8 @@ class App {
         this.container.innerHTML = `
             <div class="home-page">
                 <div class="home-header">
-                    <h1 class="home-title">Speech Therapy</h1>
-                    <p class="home-subtitle">Choose an exercise to practice</p>
+                    <h1 class="home-title">${t('home.speechTherapy')}</h1>
+                    <p class="home-subtitle">${t('home.chooseExercise')}</p>
                 </div>
                 
                 <div class="category-grid">
@@ -160,7 +185,7 @@ class App {
                                 ${exercises.map(ex => `
                                     <button class="exercise-card" data-type="${ex.type}">
                                         <span class="exercise-icon">${ex.icon}</span>
-                                        <span class="exercise-name">${ex.name}</span>
+                                        <span class="exercise-name">${t('exercises.' + ex.type + '.name')}</span>
                                     </button>
                                 `).join('')}
                             </div>
@@ -177,16 +202,106 @@ class App {
                 this.startExercise(card.dataset.type);
             });
         });
-        console.log(storageService.get('dailyStats'));
-        console.log(storageService.get('exerciseTypeStats'));
-        console.log(storageService.get('wordStats'));
     }
     
     /**
      * Get exercise data (default + custom)
      */
-    getExerciseData(type) {
-        const defaultData = this.defaultData[type] || [];
+    async getExerciseData(type) {
+        // Try to load locale-specific data
+        const locale = i18n.getCurrentLocale();
+        let defaultData = this.defaultData[type] || [];
+        
+        // If German, try to load German version for specific exercises
+        if (locale === 'de') {
+            try {
+                let germanData;
+                switch (type) {
+                    case 'naming':
+                    case 'listening':
+                    case 'typing':
+                        germanData = await import(`../../data/de/naming.js`);
+                        defaultData = germanData.namingData || defaultData;
+                        break;
+                    case 'sentenceTyping':
+                        // Try to load German sentence data
+                        try {
+                            germanData = await import(`../../data/de/sentences.js`);
+                            defaultData = germanData.sentenceData || defaultData;
+                        } catch (e) {
+                            console.warn('German sentence data not available, using English');
+                        }
+                        break;
+                    case 'category':
+                        try {
+                            germanData = await import(`../../data/de/categories.js`);
+                            defaultData = germanData.categoryData || defaultData;
+                        } catch (e) {
+                            console.warn('German category data not available, using English');
+                        }
+                        break;
+                    case 'rhyming':
+                        try {
+                            germanData = await import(`../../data/de/rhyming.js`);
+                            defaultData = germanData.rhymingData || defaultData;
+                        } catch (e) {
+                            console.warn('German rhyming data not available, using English');
+                        }
+                        break;
+                    case 'firstSound':
+                        try {
+                            germanData = await import(`../../data/de/firstSounds.js`);
+                            defaultData = germanData.firstSoundData || defaultData;
+                        } catch (e) {
+                            console.warn('German first sound data not available, using English');
+                        }
+                        break;
+                    case 'association':
+                        try {
+                            germanData = await import(`../../data/de/associations.js`);
+                            defaultData = germanData.associationData || defaultData;
+                        } catch (e) {
+                            console.warn('German association data not available, using English');
+                        }
+                        break;
+                    case 'synonyms':
+                        try {
+                            germanData = await import(`../../data/de/synonyms.js`);
+                            defaultData = germanData.synonymData || defaultData;
+                        } catch (e) {
+                            console.warn('German synonym data not available, using English');
+                        }
+                        break;
+                    case 'definitions':
+                        try {
+                            germanData = await import(`../../data/de/definitions.js`);
+                            defaultData = germanData.definitionData || defaultData;
+                        } catch (e) {
+                            console.warn('German definition data not available, using English');
+                        }
+                        break;
+                    case 'scramble':
+                        try {
+                            germanData = await import(`../../data/de/scramble.js`);
+                            defaultData = germanData.scrambleData || defaultData;
+                        } catch (e) {
+                            console.warn('German scramble data not available, using English');
+                        }
+                        break;
+                    case 'speaking':
+                        try {
+                            germanData = await import(`../../data/de/speaking.js`);
+                            defaultData = germanData.speakingData || defaultData;
+                        } catch (e) {
+                            console.warn('German speaking data not available, using English');
+                        }
+                        break;
+                }
+            } catch (e) {
+                console.warn('German data not available for ' + type + ', using English');
+            }
+        }
+        
         const customExercises = storageService.get('customExercises', {});
         const customData = customExercises[type] || [];
         
@@ -215,7 +330,7 @@ class App {
     }
     
     async startExercise(type) {
-        const data = this.getExerciseData(type);
+        const data = await this.getExerciseData(type);
         
         if (!data || data.length === 0) {
             alert(`No data available for ${type} exercise`);

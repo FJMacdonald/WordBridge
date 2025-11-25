@@ -1,6 +1,7 @@
 // services/HintService.js
 
 import audioService from './AudioService.js';
+import { t } from '../core/i18n.js';
 
 /**
  * Hint service with progressive hints
@@ -175,12 +176,12 @@ class HintService {
         if (hintArea) {
             const hintItem = document.createElement('div');
             hintItem.className = 'hint-item hint-letter';
-            hintItem.innerHTML = `Starts with: <strong>${firstLetter}</strong>`;
+            hintItem.innerHTML = `${t('exercises.typing.startsWith')} <strong>${firstLetter}</strong>`;
             hintArea.appendChild(hintItem);
         }
         
         // Also speak it
-        audioService.speak(`Starts with ${firstLetter}`);
+        audioService.speak(`${t('exercises.typing.startsWith')} ${firstLetter}`);
     }
 
     /**
@@ -197,7 +198,7 @@ class HintService {
         if (hintArea) {
             const hintItem = document.createElement('div');
             hintItem.className = 'hint-item hint-audio';
-            hintItem.innerHTML = `🔊 Listen carefully...`;
+            hintItem.innerHTML = `🔊 ${t('exercises.typing.listenCarefully')}...`;
             hintArea.appendChild(hintItem);
         }
         

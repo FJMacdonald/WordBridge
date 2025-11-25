@@ -2,6 +2,7 @@ import storageService from '../../services/StorageService.js';
 import imageStorage from '../../services/ImageStorageService.js';
 import csvService from '../../services/CSVService.js';
 import Config from '../../core/Config.js';
+import { t, i18n } from '../../core/i18n.js';
 
 /**
  * Customize exercises page
@@ -14,40 +15,41 @@ class CustomizePage {
     }
     
     async render() {
-        const customExercises = storageService.get('customExercises', {});
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
         
         this.container.innerHTML = `
             <div class="customize-page">
                 <header class="page-header">
-                    <h2>Add Custom Exercises</h2>
+                    <h2>${t('customize.title')}</h2>
                 </header>
                 
                 <!-- Mode Toggle -->
                 <div class="mode-toggle">
                     <button class="mode-btn active" data-mode="individual">
-                        ➕ Individual
+                        ➕ ${t('customize.modes.individual')}
                     </button>
                     <button class="mode-btn" data-mode="bulk">
-                        📋 Bulk Upload
+                        📋 ${t('customize.modes.bulkUpload')}
                     </button>
                 </div>
                 
                 <!-- Individual Mode -->
                 <div class="mode-content" id="individual-mode">
                     <div class="exercise-type-selector">
-                        <h3>Choose Exercise Type:</h3>
+                        <h3>${t('customize.chooseType')}</h3>
                         <div class="type-grid">
                             <button class="type-btn" data-type="naming">
                                 <span class="type-icon">🖼️</span>
-                                <span class="type-name">Picture</span>
+                                <span class="type-name">${t('customize.types.picture')}</span>
                             </button>
                             <button class="type-btn" data-type="sentenceTyping">
                                 <span class="type-icon">📝</span>
-                                <span class="type-name">Sentence</span>
+                                <span class="type-name">${t('customize.types.sentence')}</span>
                             </button>
                             <button class="type-btn" data-type="words">
                                 <span class="type-icon">📚</span>
-                                <span class="type-name">Words</span>
+                                <span class="type-name">${t('customize.types.words')}</span>
                             </button>
                         </div>
                     </div>
@@ -62,7 +64,7 @@ class CustomizePage {
                 
                 <!-- Existing Custom Exercises -->
                 <section class="existing-section">
-                    <h3>Your Custom Exercises</h3>
+                    <h3>${t('customize.existing')}</h3>
                     <div id="existing-items">
                         ${await this.renderExistingItems(customExercises)}
                     </div>
@@ -76,39 +78,39 @@ class CustomizePage {
     renderBulkUploadSection() {
         return `
             <div class="bulk-upload-section">
-                <h3>Bulk Upload from CSV</h3>
+                <h3>${t('customize.bulkUpload.title')}</h3>
                 
                 <!-- Collapsible Instructions -->
                 <details class="instructions-panel">
                     <summary class="instructions-header">
-                        📖 Instructions (click to expand)
+                        📖 ${t('customize.bulkUpload.instructions')}
                     </summary>
                     <div class="instructions-content">
-                        <h4>How to upload custom exercises:</h4>
+                        <h4>${t('customize.bulkUpload.howTo')}</h4>
                         <ol>
-                            <li>Download the template CSV file for the exercise type you want</li>
-                            <li>Open it in Excel, Google Sheets, or any spreadsheet app</li>
-                            <li>Fill in your custom exercises following the format</li>
-                            <li>Save as CSV file</li>
-                            <li>Upload the file here</li>
+                            <li>${t('customize.bulkUpload.step1')}</li>
+                            <li>${t('customize.bulkUpload.step2')}</li>
+                            <li>${t('customize.bulkUpload.step3')}</li>
+                            <li>${t('customize.bulkUpload.step4')}</li>
+                            <li>${t('customize.bulkUpload.step5')}</li>
                         </ol>
                         
-                        <h4>CSV Format Guidelines:</h4>
+                        <h4>${t('customize.bulkUpload.formatGuidelines')}</h4>
                         <div class="format-guide">
                             <div class="format-item">
-                                <strong>Picture Naming:</strong>
+                                <strong>${t('customize.bulkUpload.pictureFormat')}</strong>
                                 <code>word, image_url, option1, option2, option3</code>
-                                <p>Example: apple, https://example.com/apple.jpg, banana, orange, pear</p>
+                                <p>${t('customize.bulkUpload.pictureExample')}</p>
                             </div>
                             <div class="format-item">
-                                <strong>Sentences:</strong>
+                                <strong>${t('customize.bulkUpload.sentenceFormat')}</strong>
                                 <code>sentence_with_blank, answer</code>
-                                <p>Example: I drink __ every morning, coffee</p>
+                                <p>${t('customize.bulkUpload.sentenceExample')}</p>
                             </div>
                             <div class="format-item">
-                                <strong>Words:</strong>
+                                <strong>${t('customize.bulkUpload.wordFormat')}</strong>
                                 <code>type, word, related_words</code>
-                                <p>Example: rhyming, cat, hat|bat|mat</p>
+                                <p>${t('customize.bulkUpload.wordExample')}</p>
                             </div>
                         </div>
                     </div>
@@ -116,28 +118,28 @@ class CustomizePage {
                 
                 <!-- Template Downloads -->
                 <div class="template-section">
-                    <h4>Download Templates:</h4>
+                    <h4>${t('customize.bulkUpload.downloadTemplate')}:</h4>
                     <div class="template-buttons">
                         <button class="btn btn--secondary" data-template="naming">
-                            📥 Picture Template
+                            📥 ${t('customize.types.picture')} Template
                         </button>
                         <button class="btn btn--secondary" data-template="sentences">
-                            📥 Sentence Template
+                            📥 ${t('customize.types.sentence')} Template
                         </button>
                         <button class="btn btn--secondary" data-template="words">
-                            📥 Words Template
+                            📥 ${t('customize.types.words')} Template
                         </button>
                     </div>
                 </div>
                 
                 <!-- Upload Section -->
                 <div class="upload-section">
-                    <h4>Upload Your CSV:</h4>
+                    <h4>${t('customize.bulkUpload.uploadFile')}:</h4>
                     <div class="upload-zone" id="upload-zone">
                         <input type="file" id="csv-file" accept=".csv" hidden>
                         <label for="csv-file" class="upload-label">
                             <span class="upload-icon">📁</span>
-                            <span class="upload-text">Click to select CSV file or drag & drop here</span>
+                            <span class="upload-text">${t('customize.bulkUpload.selectFile')}</span>
                         </label>
                     </div>
                     
@@ -167,31 +169,35 @@ class CustomizePage {
     renderNamingForm() {
         return `
             <form class="add-form" id="add-naming-form">
-                <h3>Add Picture Exercise</h3>
+                <h3>${t('customize.forms.addPictureExercise')}</h3>
                 
                 <div class="form-group">
-                    <label>Word (Answer)</label>
-                    <input type="text" id="word-input" placeholder="e.g., apple" required>
+                    <label>${t('customize.forms.targetWord')}</label>
+                    <input type="text" id="word-input" placeholder="${t('customize.forms.targetWordPlaceholder')}" required>
                 </div>
                 
                 <div class="form-group">
-                    <label>Image</label>
+                    <label>${t('customize.forms.imageFile')}</label>
                     <div class="image-upload-area">
-                        <input type="file" id="image-upload" accept="image/*" required>
+                        <input type="file" id="image-upload" accept="image/*" required style="display: none;">
+                        <button type="button" class="file-select-btn" id="file-select-btn">
+                            ${t('customize.forms.chooseFile')}
+                        </button>
+                        <span class="file-status" id="file-status">${t('customize.forms.noFileSelected')}</span>
                         <div class="image-preview" id="image-preview"></div>
                     </div>
-                    <small>Upload a picture for this word</small>
+                    <small>${t('customize.forms.uploadPictureHelp')}</small>
                 </div>
                 
                 <div class="form-group">
-                    <label>Wrong Options (optional)</label>
-                    <input type="text" id="options-input" placeholder="e.g., orange, banana, pear">
-                    <small>Leave empty to auto-generate from other words</small>
+                    <label>${t('customize.forms.wrongOptionsOptional')}</label>
+                    <input type="text" id="options-input" placeholder="${t('customize.forms.wrongOptionsPlaceholder')}">
+                    <small>${t('customize.forms.autoGenerateHelp')}</small>
                 </div>
                 
                 <div class="form-actions">
-                    <button type="button" class="btn btn--ghost" id="cancel-form">Cancel</button>
-                    <button type="submit" class="btn btn--primary">Add Exercise</button>
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -200,22 +206,22 @@ class CustomizePage {
     renderSentenceForm() {
         return `
             <form class="add-form" id="add-sentence-form">
-                <h3>Add Sentence Exercise</h3>
+                <h3>${t('customize.forms.addSentenceExercise')}</h3>
                 
                 <div class="form-group">
-                    <label>Sentence (use __ for blank)</label>
+                    <label>${t('customize.forms.sentenceWithBlank')}</label>
                     <input type="text" id="sentence-input" 
-                           placeholder="e.g., I drink __ every morning" required>
+                           placeholder="${t('customize.forms.sentencePlaceholder')}" required>
                 </div>
                 
                 <div class="form-group">
-                    <label>Answer</label>
-                    <input type="text" id="sentence-answer" placeholder="e.g., coffee" required>
+                    <label>${t('customize.forms.answer')}</label>
+                    <input type="text" id="sentence-answer" placeholder="${t('customize.forms.answerPlaceholder')}" required>
                 </div>
                 
                 <div class="form-actions">
-                    <button type="button" class="btn btn--ghost" id="cancel-form">Cancel</button>
-                    <button type="submit" class="btn btn--primary">Add Sentence</button>
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -224,31 +230,31 @@ class CustomizePage {
     renderWordsForm() {
         return `
             <form class="add-form" id="add-words-form">
-                <h3>Add Word Exercise</h3>
+                <h3>${t('customize.forms.addWordExercise')}</h3>
                 
                 <div class="form-group">
-                    <label>Exercise Type</label>
+                    <label>${t('customize.forms.exerciseType')}</label>
                     <select id="word-type">
-                        <option value="rhyming">Rhyming Words</option>
-                        <option value="association">Word Association</option>
-                        <option value="synonyms">Synonyms</option>
+                        <option value="rhyming">${t('customize.forms.rhymingWords')}</option>
+                        <option value="association">${t('customize.forms.wordAssociation')}</option>
+                        <option value="synonyms">${t('customize.forms.synonyms')}</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label>Main Word</label>
-                    <input type="text" id="main-word" placeholder="e.g., cat" required>
+                    <label>${t('customize.forms.mainWord')}</label>
+                    <input type="text" id="main-word" placeholder="${t('customize.forms.mainWordPlaceholder')}" required>
                 </div>
                 
                 <div class="form-group">
-                    <label>Related Words (comma separated)</label>
+                    <label>${t('customize.forms.relatedWords')}</label>
                     <input type="text" id="related-words" 
-                           placeholder="e.g., hat, bat, mat" required>
+                           placeholder="${t('customize.forms.relatedWordsPlaceholder')}" required>
                 </div>
                 
                 <div class="form-actions">
-                    <button type="button" class="btn btn--ghost" id="cancel-form">Cancel</button>
-                    <button type="submit" class="btn btn--primary">Add Word</button>
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -266,7 +272,7 @@ class CustomizePage {
         }
         
         if (items.length === 0) {
-            return '<p class="empty-state">No custom exercises yet. Add some above!</p>';
+            return `<p class="empty-state">${t('customize.noCustom')}</p>`;
         }
         
         return `
@@ -299,7 +305,7 @@ class CustomizePage {
                 <div class="item-preview">${preview}</div>
                 <div class="item-details">${details}</div>
                 <button class="item-delete-btn" data-type="${type}" data-index="${index}">
-                    Delete
+                    ${t('customize.delete')}
                 </button>
             </div>
         `;
@@ -314,6 +320,11 @@ class CustomizePage {
         // Exercise type selection
         this.container.querySelectorAll('.type-btn').forEach(btn => {
             btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                this.container.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
                 this.container.querySelector('#add-form-container').innerHTML = 
                     this.renderIndividualForm(btn.dataset.type);
                 this.attachFormListeners(btn.dataset.type);
@@ -373,16 +384,28 @@ class CustomizePage {
             this.container.querySelector('#add-form-container').innerHTML = '';
         });
         
-        // Image upload preview
+        // Custom file button and image upload preview
         const imageInput = form.querySelector('#image-upload');
-        if (imageInput) {
+        const fileSelectBtn = form.querySelector('#file-select-btn');
+        const fileStatus = form.querySelector('#file-status');
+        
+        if (imageInput && fileSelectBtn) {
+            // Custom file button click
+            fileSelectBtn.addEventListener('click', () => {
+                imageInput.click();
+            });
+            
+            // Handle file selection
             imageInput.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (file) {
+                    fileStatus.textContent = file.name;
                     const resized = await imageStorage.resizeImage(file);
                     this.container.querySelector('#image-preview').innerHTML = 
                         `<img src="${resized}" alt="Preview">`;
                     this.pendingImage = resized;
+                } else {
+                    fileStatus.textContent = t('customize.forms.noFileSelected');
                 }
             });
         }
@@ -423,10 +446,11 @@ class CustomizePage {
             exercise.options = [word, ...options];
         }
         
-        const customExercises = storageService.get('customExercises', {});
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
         if (!customExercises.naming) customExercises.naming = [];
         customExercises.naming.push(exercise);
-        storageService.set('customExercises', customExercises);
+        storageService.set(`customExercises_${locale}`, customExercises);
         
         this.pendingImage = null;
         await this.render();
@@ -444,10 +468,11 @@ class CustomizePage {
             isCustom: true
         };
         
-        const customExercises = storageService.get('customExercises', {});
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
         if (!customExercises.sentenceTyping) customExercises.sentenceTyping = [];
         customExercises.sentenceTyping.push(exercise);
-        storageService.set('customExercises', customExercises);
+        storageService.set(`customExercises_${locale}`, customExercises);
         
         await this.render();
     }
@@ -466,10 +491,11 @@ class CustomizePage {
             isCustom: true
         };
         
-        const customExercises = storageService.get('customExercises', {});
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
         if (!customExercises[type]) customExercises[type] = [];
         customExercises[type].push(exercise);
-        storageService.set('customExercises', customExercises);
+        storageService.set(`customExercises_${locale}`, customExercises);
         
         await this.render();
     }
@@ -531,34 +557,49 @@ class CustomizePage {
     }
     
     importCSVData(type, data) {
-        const customExercises = storageService.get('customExercises', {});
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
         if (!customExercises[type]) customExercises[type] = [];
         customExercises[type].push(...data);
-        storageService.set('customExercises', customExercises);
+        storageService.set(`customExercises_${locale}`, customExercises);
         
         alert(`Successfully imported ${data.length} exercises!`);
         this.render();
     }
     
     downloadTemplate(type) {
+        // Get localized template examples
+        const locale = i18n.getCurrentLocale();
+        const isGerman = locale === 'de';
+        
         const templates = {
             naming: {
                 headers: ['word', 'image_url', 'option1', 'option2', 'option3'],
-                rows: [
+                rows: isGerman ? [
+                    ['Apfel', 'https://example.com/apfel.jpg', 'Banane', 'Orange', 'Birne'],
+                    ['Auto', 'https://example.com/auto.jpg', 'Bus', 'Zug', 'Fahrrad']
+                ] : [
                     ['apple', 'https://example.com/apple.jpg', 'banana', 'orange', 'pear'],
                     ['car', 'https://example.com/car.jpg', 'bus', 'train', 'bike']
                 ]
             },
             sentences: {
                 headers: ['sentence', 'answer'],
-                rows: [
+                rows: isGerman ? [
+                    ['Ich trinke jeden Morgen __', 'Kaffee'],
+                    ['Die Katze saß auf der __', 'Matte']
+                ] : [
                     ['I drink __ every morning', 'coffee'],
                     ['The cat sat on the __', 'mat']
                 ]
             },
             words: {
                 headers: ['type', 'word', 'related_words'],
-                rows: [
+                rows: isGerman ? [
+                    ['rhyming', 'Katze', 'Tatze|Matze|Platze'],
+                    ['synonyms', 'glücklich', 'froh|fröhlich|zufrieden'],
+                    ['association', 'Brot', 'Butter|Toast|Sandwich']
+                ] : [
                     ['rhyming', 'cat', 'hat|bat|mat'],
                     ['synonyms', 'happy', 'joyful|glad|cheerful'],
                     ['association', 'bread', 'butter|toast|sandwich']
@@ -584,9 +625,10 @@ class CustomizePage {
     }
     
     async deleteItem(type, index) {
-        if (!confirm('Delete this exercise?')) return;
+        if (!confirm(t('customize.confirmDelete'))) return;
         
-        const customExercises = storageService.get('customExercises', {});
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
         
         if (customExercises[type] && customExercises[type][index]) {
             const item = customExercises[type][index];
@@ -595,7 +637,7 @@ class CustomizePage {
             }
             
             customExercises[type].splice(index, 1);
-            storageService.set('customExercises', customExercises);
+            storageService.set(`customExercises_${locale}`, customExercises);
         }
         
         await this.render();

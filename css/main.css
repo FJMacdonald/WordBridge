@@ -3,6 +3,7 @@
 @import url('./base/variables.css');
 @import url('./base/reset.css');
 @import url('./base/typography.css');
+@import url('./base/common.css');
 
 /* Components */
 @import url('./components/buttons.css');
@@ -25,4 +26,4 @@
 @import url('./pages/customize.css');
 @import url('./pages/progress.css');
 @import url('./pages/settings.css');
-
+@import url('./pages/assessment.css');

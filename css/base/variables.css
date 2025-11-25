@@ -55,19 +55,46 @@
     --header-height: 60px;
 }
 
-/* Large text mode */
-.large-text {
+/* Small text mode - what was previously the default */
+.small-text {
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 3rem;
+}
+
+/* Medium text mode - larger than previous default */
+.medium-text {
+    --font-size-sm: 1rem;
     --font-size-base: 1.25rem;
     --font-size-lg: 1.5rem;
     --font-size-xl: 1.875rem;
     --font-size-2xl: 2.5rem;
+    --font-size-3xl: 3.5rem;
 }
 
-/* High contrast mode */
+/* Large text mode - significantly larger */
+.large-text {
+    --font-size-sm: 1.125rem;
+    --font-size-base: 1.5rem;
+    --font-size-lg: 1.875rem;
+    --font-size-xl: 2.25rem;
+    --font-size-2xl: 3rem;
+    --font-size-3xl: 4rem;
+}
+
+/* High contrast mode - keep background but improve contrast */
 .high-contrast {
     --color-text: #000000;
-    --color-background: #FFFFFF;
+    /* Keep the light blue background */
+    --color-background: #F5F7FA;
     --color-border: #000000;
+    --color-surface: #FFFFFF;
+    /* Make buttons more defined */
+    --color-primary: #2B5AA0;
+    --color-primary-dark: #1E4080;
 }
 
 /* Reduced motion */

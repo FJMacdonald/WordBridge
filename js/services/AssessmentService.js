@@ -4,71 +4,111 @@ import { t } from '../core/i18n.js';
 
 class AssessmentService {
     constructor() {
+        // All exercise types in the app
+        this.allExerciseTypes = [
+            'naming', 'listening', 'speaking', 'typing', 
+            'sentenceTyping', 'category', 'rhyming', 'firstSound', 
+            'association', 'synonyms', 'definitions', 'scramble'
+        ];
+        
         // Define assessment templates
         this.assessmentTemplates = {
             baseline: {
                 id: 'baseline',
-                sections: [
-                    { type: 'naming', difficulty: 'easy', items: 5 },
-                    { type: 'naming', difficulty: 'medium', items: 5 },
-                    { type: 'naming', difficulty: 'hard', items: 5 },
-                    { type: 'listening', difficulty: 'medium', items: 5 },
-                    { type: 'category', difficulty: 'medium', items: 5 },
-                    { type: 'synonyms', difficulty: 'medium', items: 5 },
-                    { type: 'rhyming', difficulty: 'medium', items: 5 },
-                    { type: 'definitions', difficulty: 'medium', items: 5 },
-                    { type: 'scramble', difficulty: 'medium', items: 5 },
-                    { type: 'typing', difficulty: 'medium', items: 5 },
-                    { type: 'speaking', difficulty: 'medium', items: 5 }
-                ]
+                // Will be dynamically generated based on user level
+                sections: []
             },
             quick: {
                 id: 'quick',
-                sections: [
-                    { type: 'naming', difficulty: 'mixed', items: 10 },
-                    { type: 'category', difficulty: 'mixed', items: 5 },
-                    { type: 'synonyms', difficulty: 'mixed', items: 5 }
-                ]
-            },
-            focused: {
-                id: 'focused',
-                sections: [] // Will be populated dynamically
+                // Will be dynamically generated based on selected exercise type
+                sections: []
             }
         };
     }
     
     /**
-     * Create a custom focused assessment
+     * Get the current difficulty level for baseline assessments
+     * Users start at 'easy' and progress to 'medium' and 'hard'
      */
-    createFocusedAssessment(exerciseTypes, difficulty = 'mixed', itemsPerType = 10) {
-        return {
-            id: 'focused',
-            sections: exerciseTypes.map(type => ({
-                type,
-                difficulty,
-                items: itemsPerType
-            }))
-        };
+    getBaselineDifficulty() {
+        const userLevel = storageService.get('userLevel', {
+            baselineDifficulty: 'easy',
+            masteredExercises: {}
+        });
+        return userLevel.baselineDifficulty || 'easy';
+    }
+    
+    /**
+     * Check if user has mastered all exercise types at current difficulty
+     */
+    hasUserMasteredAllExercises(difficulty = 'easy') {
+        const userLevel = storageService.get('userLevel', {
+            baselineDifficulty: 'easy',
+            masteredExercises: {}
+        });
+        
+        const masteredCount = this.allExerciseTypes.filter(type => {
+            return userLevel.masteredExercises[type] === difficulty;
+        }).length;
+        
+        return masteredCount === this.allExerciseTypes.length;
+    }
+    
+    /**
+     * Generate baseline assessment sections based on user's current level
+     */
+    generateBaselineSections() {
+        const difficulty = this.getBaselineDifficulty();
+        
+        return this.allExerciseTypes.map(type => ({
+            type,
+            difficulty,
+            items: 10
+        }));
+    }
+    
+    /**
+     * Generate quick check sections for a specific exercise type
+     */
+    generateQuickCheckSections(exerciseType) {
+        const userLevel = storageService.get('userLevel', {
+            baselineDifficulty: 'easy',
+            masteredExercises: {}
+        });
+        
+        const difficulty = userLevel.masteredExercises[exerciseType] || 'easy';
+        
+        return [{
+            type: exerciseType,
+            difficulty,
+            items: 20
+        }];
     }
     
     /**
      * Start a new assessment
      */
-    startAssessment(templateId = 'quick', customSections = null) {
-        const template = customSections 
-            ? { id: templateId, sections: customSections }
-            : this.assessmentTemplates[templateId];
+    startAssessment(templateId = 'baseline', exerciseType = null) {
+        let sections;
         
-        if (!template) {
+        if (templateId === 'baseline') {
+            sections = this.generateBaselineSections();
+        } else if (templateId === 'quick') {
+            if (!exerciseType) {
+                throw new Error('Quick check requires an exercise type');
+            }
+            sections = this.generateQuickCheckSections(exerciseType);
+        } else {
             throw new Error(`Unknown assessment template: ${templateId}`);
         }
         
         const assessment = {
             id: Date.now(),
-            templateId: template.id,
+            templateId,
+            exerciseType: exerciseType || null,
             startTime: Date.now(),
             endTime: null,
-            sections: template.sections.map(section => ({
+            sections: sections.map(section => ({
                 ...section,
                 completed: false,
                 results: []
@@ -77,7 +117,8 @@ class AssessmentService {
             metadata: {
                 timeOfDay: new Date().getHours(),
                 dayOfWeek: new Date().getDay(),
-                daysSinceLastAssessment: this.getDaysSinceLastAssessment()
+                daysSinceLastAssessment: this.getDaysSinceLastAssessment(),
+                difficulty: templateId === 'baseline' ? this.getBaselineDifficulty() : 'user-level'
             }
         };
         
@@ -170,10 +211,50 @@ class AssessmentService {
         // Save to history
         this.saveAssessmentToHistory(assessment);
         
+        // Update user level if baseline assessment
+        if (assessment.templateId === 'baseline') {
+            this.updateUserLevelFromBaseline(assessment);
+        }
+        
         // Clear current
         storageService.remove('currentAssessment');
         
         return assessment;
+    }
+    
+    /**
+     * Update user level based on baseline assessment results
+     */
+    updateUserLevelFromBaseline(assessment) {
+        const userLevel = storageService.get('userLevel', {
+            baselineDifficulty: 'easy',
+            masteredExercises: {}
+        });
+        
+        const currentDifficulty = assessment.metadata.difficulty;
+        
+        // Check each exercise type - mastery threshold is 85%
+        assessment.results.sectionBreakdown.forEach(section => {
+            if (section.firstTryAccuracy >= 85) {
+                userLevel.masteredExercises[section.type] = currentDifficulty;
+            }
+        });
+        
+        // If all exercises mastered at current level, advance difficulty
+        const allMastered = this.allExerciseTypes.every(type => 
+            userLevel.masteredExercises[type] === currentDifficulty
+        );
+        
+        if (allMastered) {
+            if (currentDifficulty === 'easy') {
+                userLevel.baselineDifficulty = 'medium';
+            } else if (currentDifficulty === 'medium') {
+                userLevel.baselineDifficulty = 'hard';
+            }
+            // If already at hard, stay there
+        }
+        
+        storageService.set('userLevel', userLevel);
     }
     
     /**

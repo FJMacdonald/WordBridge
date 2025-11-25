@@ -32,8 +32,8 @@ class TypingWordExercise extends TypingExercise {
     }
     
     async playPromptAudio() {
-        // For word typing, speak the word slowly
-        await audioService.speakWord(this.targetWord);
+        // Say instruction with the target word
+        await audioService.speak(`${t('exercises.typing.typeWord')} ${this.targetWord}`);
     }
 }
 

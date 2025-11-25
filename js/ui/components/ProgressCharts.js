@@ -16,9 +16,10 @@ class ProgressCharts {
                 <div class="charts-header">
                     <h2>${t('progress.title')}</h2>
                     <div class="time-selector">
+                        <button class="time-btn" data-range="1">${t('progress.timeRanges.today')}</button>
                         <button class="time-btn active" data-range="7">${t('progress.timeRanges.week')}</button>
                         <button class="time-btn" data-range="30">${t('progress.timeRanges.month')}</button>
-                        <button class="time-btn" data-range="90">3 ${t('progress.timeRanges.month')}</button>
+                        <button class="time-btn" data-range="all">${t('progress.timeRanges.all')}</button>
                     </div>
                 </div>
                 
@@ -35,9 +36,9 @@ class ProgressCharts {
                 <div class="chart-section">
                     <h3>
                         ${t('progress.accuracyTrend')}
-                        <span class="info-icon" data-info="${t('progress.info.accuracyTrend')}">?</span>
+                        <span class="info-icon" data-info="${t('progress.info.accuracyTrend')} ${t('progress.info.accuracyCalculation')}">?</span>
                     </h3>
-                    <div id="accuracy-trend"></div>
+                    <div id="accuracy-trend" class="scrollable-chart"></div>
                 </div>
                 
                 <!-- Practice Distribution -->
@@ -53,6 +54,31 @@ class ProgressCharts {
                         <span class="info-icon" data-info="${t('progress.info.heatmap')}">?</span>
                     </h3>
                     <div id="performance-heatmap"></div>
+                    <div class="performance-legend">
+                        <div class="legend-title">${t('progress.performanceLegend.title')}</div>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #4CAF50"></span>
+                                <span>${t('progress.performanceLegend.excellent')}</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #8BC34A"></span>
+                                <span>${t('progress.performanceLegend.good')}</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #FFC107"></span>
+                                <span>${t('progress.performanceLegend.needsPractice')}</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #F44336"></span>
+                                <span>${t('progress.performanceLegend.challenging')}</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #f0f0f0"></span>
+                                <span>${t('progress.performanceLegend.noData')}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Assessment Comparison -->
@@ -71,16 +97,29 @@ class ProgressCharts {
     }
 
     renderCharts(days = 7) {
-        this.renderQualityGauge();
+        const actualDays = days === 'all' ? this.getAllDaysCount() : days;
+        this.renderQualityGauge(actualDays);
         this.renderAccuracyTrend(days);
-        this.renderExerciseDistribution(days);
-        this.renderPerformanceHeatmap(days);
+        this.renderExerciseDistribution(actualDays);
+        this.renderPerformanceHeatmap(actualDays);
         this.renderAssessmentComparison();
     }
     
+    getAllDaysCount() {
+        const dailyStats = storageService.get('dailyStats', {});
+        const dates = Object.keys(dailyStats).sort();
+        if (dates.length === 0) return 30;
+        
+        const firstDate = new Date(dates[0]);
+        const today = new Date();
+        const diffTime = Math.abs(today - firstDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return Math.max(diffDays + 1, 30);
+    }
+    
     // Update the quality gauge breakdown labels:
-    renderQualityGauge() {
-        const quality = assessmentService.calculatePracticeQuality(7);
+    renderQualityGauge(days = 7) {
+        const quality = assessmentService.calculatePracticeQuality(days);
         if (!quality) return;
         
         const container = d3.select('#quality-gauge');
@@ -137,7 +176,7 @@ class ProgressCharts {
             .attr('dy', '1.5em')
             .style('font-size', '14px')
             .style('fill', '#666')
-            .text('Quality Score');
+            .text(t('progress.qualityScore'));
         
         // Breakdown below gauge
         const breakdown = container.append('div')
@@ -157,7 +196,9 @@ class ProgressCharts {
     // Line chart showing accuracy trend
      
     renderAccuracyTrend(days) {
-        const data = analyticsService.getProgressTrend(days);
+        // Handle "all time" option
+        const actualDays = days === 'all' ? this.getAllDaysCount() : days;
+        const data = analyticsService.getProgressTrend(actualDays);
         const validData = data.filter(d => d.accuracy !== null);
         
         if (validData.length === 0) return;
@@ -166,8 +207,23 @@ class ProgressCharts {
         container.html('');
         
         const margin = { top: 20, right: 30, bottom: 40, left: 50 };
-        const width = container.node().offsetWidth - margin.left - margin.right;
+        const containerWidth = container.node().offsetWidth;
+        const isAllTime = days === 'all';
+        
+        // Make width dynamic for "all time" to enable scrolling
+        const minWidth = containerWidth - margin.left - margin.right;
+        const width = isAllTime ? Math.max(minWidth, data.length * 20) : minWidth;
         const height = 300 - margin.top - margin.bottom;
+        
+        // Create scrollable wrapper for all time
+        if (isAllTime && data.length * 20 > minWidth) {
+            container.classed('scrollable-chart', true);
+            container.style('overflow-x', 'auto');
+            container.style('overflow-y', 'hidden');
+        } else {
+            container.classed('scrollable-chart', false);
+            container.style('overflow-x', 'visible');
+        }
         
         const svg = container.append('svg')
             .attr('width', width + margin.left + margin.right)
@@ -255,7 +311,7 @@ class ProgressCharts {
             .attr('stroke-width', 3);
         legend.append('text')
             .attr('x', 35).attr('y', 5)
-            .text('Daily')
+            .text(t('progress.chart.daily'))
             .style('font-size', '12px');
         
         legend.append('line')
@@ -266,7 +322,7 @@ class ProgressCharts {
             .attr('stroke-dasharray', '5,5');
         legend.append('text')
             .attr('x', 35).attr('y', 25)
-            .text('7-day avg')
+            .text(t('progress.chart.average'))
             .style('font-size', '12px');
     }
     
@@ -274,10 +330,20 @@ class ProgressCharts {
      // Pie/Donut chart showing time distribution
 
     renderExerciseDistribution(days) {
-        const breakdown = analyticsService.getExerciseBreakdown();
-        const data = Object.entries(breakdown).map(([type, stats]) => ({
-            type,
-            value: stats.totalTime
+        const breakdown = analyticsService.getExerciseBreakdown(days);
+        
+        // All exercise types in order
+        const allExerciseTypes = [
+            'naming', 'listening', 'speaking', 'typing', 
+            'sentenceTyping', 'category', 'rhyming', 'firstSound', 
+            'association', 'synonyms', 'definitions', 'scramble'
+        ];
+        
+        // Create data array with translated names
+        const data = allExerciseTypes.map(type => ({
+            type: type,
+            displayName: t(`exercises.${type}.name`),
+            value: breakdown[type]?.totalTime || 0
         })).filter(d => d.value > 0);
         
         if (data.length === 0) return;
@@ -285,26 +351,52 @@ class ProgressCharts {
         const container = d3.select('#exercise-distribution');
         container.html('');
         
-        const width = 400;
-        const height = 400;
-        const radius = Math.min(width, height) / 2 - 40;
+        // Use lighter, more vibrant colors (12 distinct colors)
+        const exerciseColors = [
+            '#66BB6A', // Naming - Light Green
+            '#42A5F5', // Listening - Light Blue  
+            '#AB47BC', // Speaking - Purple
+            '#26C6DA', // Typing - Cyan
+            '#FFA726', // Sentence Typing - Orange
+            '#EF5350', // Category - Red
+            '#EC407A', // Rhyming - Pink
+            '#5C6BC0', // First Sound - Indigo
+            '#FFCA28', // Association - Amber
+            '#26A69A', // Synonyms - Teal
+            '#66BB6A', // Definitions - Green
+            '#78909C'  // Scramble - Blue Grey
+        ];
         
-        const svg = container.append('svg')
+        const color = d3.scaleOrdinal()
+            .domain(allExerciseTypes)
+            .range(exerciseColors);
+        
+        // Container for donut and legend
+        const containerDiv = container.append('div')
+            .style('display', 'flex')
+            .style('align-items', 'center')
+            .style('justify-content', 'center')
+            .style('gap', '40px')
+            .style('flex-wrap', 'wrap');
+        
+        // Donut chart
+        const svgContainer = containerDiv.append('div');
+        const width = 300;
+        const height = 300;
+        const radius = Math.min(width, height) / 2 - 20;
+        
+        const svg = svgContainer.append('svg')
             .attr('width', width)
             .attr('height', height)
             .append('g')
             .attr('transform', `translate(${width/2},${height/2})`);
-        
-        const color = d3.scaleOrdinal()
-            .domain(data.map(d => d.type))
-            .range(d3.schemeSet3);
         
         const pie = d3.pie()
             .value(d => d.value)
             .sort(null);
         
         const arc = d3.arc()
-            .innerRadius(radius * 0.6)
+            .innerRadius(radius * 0.5)
             .outerRadius(radius);
         
         const arcs = svg.selectAll('.arc')
@@ -316,15 +408,16 @@ class ProgressCharts {
             .attr('d', arc)
             .attr('fill', d => color(d.data.type))
             .attr('stroke', 'white')
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 3)
+            .style('cursor', 'pointer')
             .on('mouseover', function(event, d) {
                 d3.select(this).transition()
                     .duration(200)
                     .attr('d', d3.arc()
-                        .innerRadius(radius * 0.6)
+                        .innerRadius(radius * 0.5)
                         .outerRadius(radius + 10)
                     );
-                showTooltip(event, `${d.data.type}: ${formatDuration(d.data.value)}`);
+                showTooltip(event, `${d.data.displayName}: ${formatDuration(d.data.value)}`);
             })
             .on('mouseout', function() {
                 d3.select(this).transition()
@@ -333,14 +426,48 @@ class ProgressCharts {
                 hideTooltip();
             });
         
-        // Labels
-        arcs.append('text')
-            .attr('transform', d => `translate(${arc.centroid(d)})`)
-            .attr('text-anchor', 'middle')
-            .style('font-size', '12px')
-            .style('font-weight', 'bold')
-            .style('fill', 'white')
-            .text(d => d.data.type);
+        // Legend
+        const legendContainer = containerDiv.append('div')
+            .attr('class', 'donut-legend');
+        
+        data.forEach(d => {
+            const legendItem = legendContainer.append('div')
+                .attr('class', 'donut-legend-item')
+                .style('display', 'flex')
+                .style('align-items', 'center')
+                .style('margin-bottom', '8px')
+                .style('cursor', 'pointer')
+                .on('mouseover', function() {
+                    // Highlight corresponding arc
+                    svg.selectAll('.arc path')
+                        .filter(arcData => arcData.data.type === d.type)
+                        .transition()
+                        .duration(200)
+                        .attr('d', d3.arc()
+                            .innerRadius(radius * 0.5)
+                            .outerRadius(radius + 10)
+                        );
+                })
+                .on('mouseout', function() {
+                    svg.selectAll('.arc path')
+                        .transition()
+                        .duration(200)
+                        .attr('d', arc);
+                });
+            
+            legendItem.append('div')
+                .style('width', '20px')
+                .style('height', '20px')
+                .style('background-color', color(d.type))
+                .style('margin-right', '10px')
+                .style('border-radius', '3px')
+                .style('border', '2px solid white')
+                .style('box-shadow', '0 1px 3px rgba(0,0,0,0.2)');
+            
+            legendItem.append('span')
+                .style('font-size', '14px')
+                .text(d.displayName);
+        });
     }
     
 
@@ -348,6 +475,12 @@ class ProgressCharts {
 
     renderPerformanceHeatmap(days) {
         const stats = storageService.get('exerciseTypeStats', {});
+        
+        // Helper function to format exercise names using localization
+        const formatExerciseName = (type) => {
+            return t(`exercises.${type}.name`);
+        };
+        
         const exercises = Object.keys(stats);
         
         if (exercises.length === 0) return;
@@ -383,9 +516,14 @@ class ProgressCharts {
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
         
-        const colorScale = d3.scaleSequential()
-            .domain([0, 100])
-            .interpolator(d3.interpolateRdYlGn);
+        // Custom color scale with better gradations
+        const colorScale = (accuracy) => {
+            if (accuracy === null) return '#f0f0f0';
+            if (accuracy >= 85) return '#4CAF50';
+            if (accuracy >= 70) return '#8BC34A';
+            if (accuracy >= 50) return '#FFC107';
+            return '#F44336';
+        };
         
         // Draw cells
         svg.selectAll('.cell')
@@ -396,7 +534,7 @@ class ProgressCharts {
             .attr('y', d => exercises.indexOf(d.exercise) * cellSize)
             .attr('width', cellSize - 2)
             .attr('height', cellSize - 2)
-            .attr('fill', d => d.accuracy !== null ? colorScale(d.accuracy) : '#f0f0f0')
+            .attr('fill', d => colorScale(d.accuracy))
             .attr('stroke', '#fff')
             .attr('stroke-width', 2)
             .on('mouseover', function(event, d) {
@@ -428,7 +566,7 @@ class ProgressCharts {
             .attr('text-anchor', 'end')
             .attr('alignment-baseline', 'middle')
             .style('font-size', '12px')
-            .text(d => d);
+            .text(d => formatExerciseName(d));
     }
     
 
@@ -439,7 +577,15 @@ class ProgressCharts {
         
         if (assessments.length < 2) {
             d3.select('#assessment-comparison')
-                .html('<p class="no-data">Need at least 2 assessments to compare. <button class="btn">Take Assessment</button></p>');
+                .html(`
+                    <div class="no-data">
+                        <p>${t('assessment.needsAssessment')}</p>
+                        <p>${t('assessment.takeFirstAssessment')}</p>
+                        <button class="btn btn--primary assessment-btn" onclick="window.dispatchEvent(new CustomEvent('navigate', { detail: 'assessment' }))">
+                            ${t('assessment.assessmentButton')}
+                        </button>
+                    </div>
+                `);
             return;
         }
         
@@ -533,8 +679,16 @@ class ProgressCharts {
             btn.addEventListener('click', (e) => {
                 this.container.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
-                const days = parseInt(e.target.dataset.range);
+                const range = e.target.dataset.range;
+                const days = range === 'all' ? 'all' : parseInt(range);
                 this.renderCharts(days);
+            });
+        });
+        
+        // Info icon tooltips
+        this.container.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                alert(e.target.dataset.info);
             });
         });
     }

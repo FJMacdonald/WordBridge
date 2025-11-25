@@ -1,7 +1,7 @@
 // exercises/TypingExercise.js
 
 import BaseExercise from './BaseExercise.js';
-import { t } from '../core/i18n.js';
+import { t, i18n } from '../core/i18n.js';
 import audioService from '../services/AudioService.js';
 import hintService from '../services/HintService.js';
 import trackingService from '../services/TrackingService.js';
@@ -51,12 +51,11 @@ class TypingExercise extends BaseExercise {
                         <input type="text"
                                class="typing-input-visible"
                                id="typing-input-visible"
-                               placeholder="Tap here to type"
+                               placeholder=""
                                autocomplete="off"
                                autocapitalize="none"
                                autocorrect="off">
-                        
-                        <p class="typing-help-text">tap the box above to type</p>
+                        ${this.renderGermanKeyboard()}
                     </div>
                 </div>
                 
@@ -122,7 +121,8 @@ class TypingExercise extends BaseExercise {
         
         this.boundKeyHandler = (e) => {
             const key = e.key.toLowerCase();
-            if (key.length === 1 && /[a-z]/.test(key)) {
+            // Support German characters: a-z, ä, ö, ü, ß
+            if (key.length === 1 && /[a-zäöüß]/.test(key)) {
                 this.handleKeyPress(key);
             }
         };
@@ -134,7 +134,8 @@ class TypingExercise extends BaseExercise {
                 const val = e.target.value;
                 if (val.length > 0) {
                     const lastChar = val.slice(-1).toLowerCase();
-                    if (/[a-z]/.test(lastChar)) {
+                    // Support German characters: a-z, ä, ö, ü, ß
+                    if (/[a-zäöüß]/.test(lastChar)) {
                         this.handleKeyPress(lastChar);
                     }
                     e.target.value = '';
@@ -150,6 +151,16 @@ class TypingExercise extends BaseExercise {
                 visibleInput?.focus();
             });
         }
+        
+        // Add listeners for German character buttons
+        this.container.querySelectorAll('.german-char-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const char = btn.getAttribute('data-char');
+                this.handleKeyPress(char);
+                visibleInput?.focus();
+            });
+        });
     }
     
     /**
@@ -233,6 +244,12 @@ class TypingExercise extends BaseExercise {
             this.updateLetterBoxes();
             this.updateHintButton();
             
+            // Play the letter sound if autoplay is enabled
+            if (Config.get('audio.autoPlay')) {
+                const revealedLetter = this.targetWord[result.newIndex - 1];
+                setTimeout(() => audioService.speak(revealedLetter.toUpperCase()), 100);
+            }
+            
             // Check if word is complete after hint
             if (this.currentLetterIndex >= this.targetWord.length) {
                 this.handleWordComplete();
@@ -268,6 +285,30 @@ class TypingExercise extends BaseExercise {
             targetWord: this.targetWord,
             revealedLetters: this.state.revealedLetters
         };
+    }
+    
+    /**
+     * Render German character helper keyboard
+     */
+    renderGermanKeyboard() {
+        const currentLocale = i18n.getCurrentLocale();
+        if (currentLocale !== 'de') return '';
+        
+        // Only show if the target word contains German characters
+        const hasGermanChars = /[äöüß]/.test(this.targetWord);
+        if (!hasGermanChars) return '';
+        
+        return `
+            <div class="german-keyboard">
+                <div class="german-keyboard-label">German characters:</div>
+                <div class="german-keyboard-chars">
+                    <button type="button" class="german-char-btn" data-char="ä">ä</button>
+                    <button type="button" class="german-char-btn" data-char="ö">ö</button>
+                    <button type="button" class="german-char-btn" data-char="ü">ü</button>
+                    <button type="button" class="german-char-btn" data-char="ß">ß</button>
+                </div>
+            </div>
+        `;
     }
     
     destroy() {

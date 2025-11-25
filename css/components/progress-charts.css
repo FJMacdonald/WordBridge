@@ -18,36 +18,38 @@
 }
 
 .time-btn {
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    background: white;
-    border-radius: 20px;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    border-radius: var(--radius-full);
     cursor: pointer;
-    transition: all 0.3s;
-    font-size: 14px;
+    transition: all var(--transition-base);
+    font-size: var(--font-size-sm);
 }
 
 .time-btn:hover {
-    background: #f5f5f5;
+    background: var(--color-background);
 }
 
 .time-btn.active {
-    background: #2196F3;
+    background: var(--color-primary);
     color: white;
-    border-color: #2196F3;
+    border-color: var(--color-primary);
 }
 
 .chart-section {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: var(--color-surface);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-md);
     position: relative;
 }
 
 .chart-section h3 {
-    margin-bottom: 20px;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
     color: #333;
     display: flex;
     align-items: center;
@@ -245,14 +247,85 @@
     top: -25px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 11px;
+    font-size: var(--font-size-sm);
     font-weight: bold;
     white-space: nowrap;
 }
 
 .bar-label {
-    margin-top: 8px;
-    font-size: 11px;
-    color: #666;
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
     text-align: center;
+}
+
+/* D3 text elements scaling */
+.chart-section svg text {
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    fill: var(--color-text);
+}
+
+.chart-section svg .axis text {
+    font-size: var(--font-size-sm);
+    fill: var(--color-text-muted);
+}
+
+.chart-section svg .axis-label {
+    font-size: var(--font-size-base);
+    fill: var(--color-text);
+    font-weight: 500;
+}
+
+/* Ensure enough left margin for exercise type names in Performance by Exercise chart */
+#performance-heatmap svg {
+    margin-left: 20px; /* Extra space for German exercise names */
+}
+
+#performance-heatmap svg .exercise-label {
+    text-anchor: end;
+    font-size: var(--font-size-sm);
+    fill: var(--color-text);
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #performance-heatmap svg {
+        margin-left: 10px;
+    }
+    
+    #performance-heatmap svg .exercise-label {
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Large text mode specific adjustments */
+.large-text .chart-section svg text {
+    font-size: var(--font-size-base);
+}
+
+.large-text .chart-section svg .axis text {
+    font-size: var(--font-size-sm);
+}
+
+.large-text .chart-section svg .axis-label {
+    font-size: var(--font-size-lg);
+}
+
+.large-text #performance-heatmap svg {
+    margin-left: 30px;
+}
+
+.large-text #performance-heatmap svg .exercise-label {
+    font-size: var(--font-size-base);
+}
+
+/* Medium text mode specific adjustments */
+.medium-text #performance-heatmap svg {
+    margin-left: 25px;
+}
+
+.medium-text #performance-heatmap svg .exercise-label {
+    font-size: var(--font-size-sm);
 }

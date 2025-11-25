@@ -63,9 +63,27 @@ class SynonymExercise extends SelectionExercise {
         `;
     }
     
+    async handlePlayAll() {
+        // Override to use the correct instruction based on question type
+        const instruction = this.questionType === 'synonym' 
+            ? t('exercises.synonyms.synonymInstruction')
+            : t('exercises.synonyms.antonymInstruction');
+        await audioService.speak(`${instruction} ${this.currentItem.word}?`);
+        await this.delay(300);
+        
+        // Get active options (non-eliminated)
+        const activeOptions = this.currentOptions
+            .filter((_, i) => !this.state.eliminatedIndices.has(i))
+            .map(opt => typeof opt === 'object' ? opt.answer || opt.value : opt);
+        await audioService.speakSequence(activeOptions);
+    }
+
     async playPromptAudio() {
-        const typeWord = this.questionType === 'synonym' ? 'same as' : 'opposite of';
-        await audioService.speak(`Which word means the ${typeWord} ${this.currentItem.word}?`);
+        // For manual prompt audio, also use the correct instruction
+        const instruction = this.questionType === 'synonym' 
+            ? t('exercises.synonyms.synonymInstruction')
+            : t('exercises.synonyms.antonymInstruction');
+        await audioService.speak(`${instruction} ${this.currentItem.word}?`);
     }
     
     getCorrectAnswer() {
@@ -74,7 +92,9 @@ class SynonymExercise extends SelectionExercise {
     
     showFeedback(correct, message = null) {
         if (correct && !message) {
-            const relation = this.questionType === 'synonym' ? 'means the same as' : 'is the opposite of';
+            const relation = this.questionType === 'synonym' 
+                ? t('exercises.synonyms.meansSameAs')
+                : t('exercises.synonyms.isOppositeOf');
             message = `✓ "${this.correctAnswer}" ${relation} "${this.currentItem.word}"`;
         }
         super.showFeedback(correct, message);

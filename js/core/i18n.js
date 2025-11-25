@@ -35,8 +35,28 @@ class I18n {
             return key;
         }
         
+        // If value is an array, return it as-is
+        if (Array.isArray(value)) {
+            return value;
+        }
+        
+        // If value is not a string, return it as-is
+        if (typeof value !== 'string') {
+            return value;
+        }
+        
         // Interpolate {params}
         return value.replace(/\{(\w+)\}/g, (_, k) => params[k] ?? `{${k}}`);
+    }
+    
+    getCurrentLocale() {
+        return this.locale;
+    }
+    
+    async setLocale(locale) {
+        await this.init(locale);
+        // Save to localStorage
+        localStorage.setItem('locale', locale);
     }
     
     getFallback() {

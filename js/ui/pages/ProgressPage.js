@@ -1,4 +1,5 @@
 // ui/pages/ProgressPage.js
+import { t } from '../../core/i18n.js';
 import ProgressCharts from '../components/ProgressCharts.js';
 import assessmentService from '../../services/AssessmentService.js';
 import pdfService from '../../services/PDFService.js';
@@ -12,13 +13,10 @@ class ProgressPage {
         this.container.innerHTML = `
             <div class="progress-page">
                 <header class="page-header">
-                    <h2>Your Progress</h2>
+                    <h2>${t('progress.title')}</h2>
                     <div class="header-actions">
-                        <button class="btn btn--secondary" id="take-assessment-btn">
-                            📋 Take Assessment
-                        </button>
                         <button class="btn btn--primary" id="export-report-btn">
-                            📊 Export Report
+                            📊 ${t('progress.viewReport')}
                         </button>
                     </div>
                 </header>
@@ -26,13 +24,11 @@ class ProgressPage {
                 <div id="charts-container"></div>
                 
                 <div class="recommendations-section">
-                    <h3>Focus Areas</h3>
+                    <h3>${t('progress.recommendations.title')}</h3>
                     <div id="recommendations"></div>
                 </div>
                 
-                <button class="btn btn--ghost back-btn" id="back-btn">
-                    ← Back to Home
-                </button>
+
             </div>
         `;
         
@@ -60,7 +56,7 @@ class ProgressPage {
         if (quality.breakdown.consistency < 70) {
             recommendations.push({
                 icon: '📅',
-                text: 'Try to practice more consistently - aim for 5 days per week',
+                text: t('progress.recommendations.consistency'),
                 priority: 'high'
             });
         }
@@ -68,7 +64,7 @@ class ProgressPage {
         if (quality.breakdown.duration < 50) {
             recommendations.push({
                 icon: '⏱️',
-                text: 'Increase session length - aim for 15-20 minutes per session',
+                text: t('progress.recommendations.duration'),
                 priority: 'medium'
             });
         }
@@ -76,7 +72,7 @@ class ProgressPage {
         if (quality.breakdown.variety < 40) {
             recommendations.push({
                 icon: '🎯',
-                text: 'Try more exercise types - variety helps overall improvement',
+                text: t('progress.recommendations.variety'),
                 priority: 'medium'
             });
         }
@@ -88,21 +84,15 @@ class ProgressPage {
                     <span class="rec-text">${r.text}</span>
                 </div>
             `).join('')
-            : '<p class="success">Great job! Keep up the consistent practice.</p>';
+            : `<p class="success">${t('progress.recommendations.goodJob')}</p>`;
     }
     
     attachListeners() {
-        document.getElementById('take-assessment-btn')?.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: 'assessment' }));
-        });
-        
         document.getElementById('export-report-btn')?.addEventListener('click', () => {
             pdfService.generateProgressReport();
         });
         
-        document.getElementById('back-btn')?.addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
-        });
+
     }
 }
 

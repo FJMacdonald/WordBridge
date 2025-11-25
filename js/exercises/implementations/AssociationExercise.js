@@ -29,7 +29,8 @@ class AssociationExercise extends SelectionExercise {
     }
     
     async playPromptAudio() {
-        await audioService.speak(`${this.currentItem.word}. Which word goes with ${this.currentItem.word}?`);
+        // Just speak the target word since the instruction is already spoken by handlePlayAll
+        await audioService.speak(this.currentItem.word);
     }
     
     getCorrectAnswer() {
@@ -38,7 +39,7 @@ class AssociationExercise extends SelectionExercise {
     
     showFeedback(correct, message = null) {
         if (correct && !message) {
-            message = `✓ "${this.currentItem.word}" goes with "${this.correctAnswer}"`;
+            message = `✓ "${this.currentItem.word}" ${t('exercises.association.goesWithPhrase')} "${this.correctAnswer}"`;
         }
         super.showFeedback(correct, message);
     }

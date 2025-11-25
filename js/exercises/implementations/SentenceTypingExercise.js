@@ -31,7 +31,11 @@ class SentenceTypingExercise extends TypingExercise {
     }
     
     async playPromptAudio() {
-        // Speak the sentence with "blank" where the missing word is
+        // Say instruction first
+        await audioService.speak(t('exercises.sentenceTyping.instruction'));
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Then speak the sentence with "blank" where the missing word is
         const sentence = this.currentItem.sentence.replace(
             /_{2,}|\[blank\]|\{\}/g,
             'blank'
