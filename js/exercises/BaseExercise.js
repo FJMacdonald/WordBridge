@@ -12,6 +12,7 @@ class BaseExercise {
         this.items = [];
         this.currentItem = null;
         this.currentIndex = 0;
+        this.mode = 'practice'; // 'practice' or 'test'
         
         this.state = {
             hintsUsed: 0,
@@ -379,11 +380,26 @@ class BaseExercise {
     renderHeader() {
         const progress = Math.round((this.currentIndex / this.items.length) * 100);
         
+        // In practice mode, don't show progress bar (infinite randomized)
+        // In test mode, show progress
+        if (this.mode === 'practice') {
+            return `
+                <header class="exercise__header exercise__header--practice">
+                    <div class="exercise__mode-badge">
+                        ${t('modes.practice')}
+                    </div>
+                    <button class="btn--icon audio-btn-inline" id="play-all-btn" title="${t('audio.playAll')}">
+                        🔊
+                    </button>
+                </header>
+            `;
+        }
+        
         return `
             <header class="exercise__header">
                 <div class="exercise__progress">
                     <span class="exercise__progress-text">
-                        ${this.currentIndex + 1} / ${this.items.length}
+                        ${t('modes.question')} ${this.currentIndex + 1} / ${this.items.length}
                     </span>
                     <div class="exercise__progress-bar">
                         <div class="exercise__progress-fill" style="width: ${progress}%"></div>

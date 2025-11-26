@@ -4,10 +4,12 @@ import exerciseFactory from '../exercises/ExerciseFactory.js';
 import imageStorage from '../services/ImageStorageService.js';
 import storageService from '../services/StorageService.js';
 import trackingService from '../services/TrackingService.js';
+import modeService from '../services/ModeService.js';
 import ProgressPage from './pages/ProgressPage.js';
 import SettingsPage from './pages/SettingsPage.js';
 import CustomizePage from './pages/CustomizePage.js';
 import AssessmentPage from './pages/AssessmentPage.js';
+import TestModePage from './pages/TestModePage.js';
 import ExampleDataGenerator from '../services/ExampleDataGenerator.js';
 
 // Import all default data
@@ -118,6 +120,10 @@ class App {
         window.addEventListener('exercise:restart', (e) => {
             this.startExercise(e.detail);
         });
+        
+        window.addEventListener('startTest', (e) => {
+            this.startTestExercise(e.detail);
+        });
     }
     
     navigate(page) {
@@ -145,7 +151,7 @@ class App {
                 this.showCustomize();
                 break;
             case 'assessment':
-                this.showAssessment();
+                this.showTestMode();
                 break;
             default:
                 this.showHome();
@@ -215,11 +221,14 @@ class App {
             </div>
         `;
         
-        // Attach listeners
+        // Attach listeners - homepage starts practice mode
         this.container.querySelectorAll('.exercise-card').forEach(card => {
             card.addEventListener('click', () => {
-                trackingService.startSession(card.dataset.type);
-                this.startExercise(card.dataset.type);
+                const exerciseType = card.dataset.type;
+                // Start practice mode
+                modeService.startPracticeMode(exerciseType);
+                trackingService.startSession(exerciseType);
+                this.startExercise(exerciseType, 'practice');
             });
         });
     }
@@ -381,7 +390,7 @@ class App {
         }
     }
     
-    async startExercise(type) {
+    async startExercise(type, mode = 'practice') {
         const data = await this.getExerciseData(type);
         
         if (!data || data.length === 0) {
@@ -389,8 +398,55 @@ class App {
             return;
         }
         
+        // Filter by difficulty if in practice mode
+        let exerciseData = data;
+        if (mode === 'practice') {
+            const practiceDifficulty = this.getPracticeDifficulty(type);
+            exerciseData = data.filter(item => !item.difficulty || item.difficulty === practiceDifficulty);
+            if (exerciseData.length === 0) {
+                exerciseData = data; // Fallback to all data
+            }
+        }
+        
         this.currentExercise = exerciseFactory.create(type);
-        await this.currentExercise.init(data, this.container);
+        this.currentExercise.mode = mode;
+        await this.currentExercise.init(exerciseData, this.container);
+    }
+    
+    async startTestExercise({ exerciseType, difficulty, questions }) {
+        const data = await this.getExerciseData(exerciseType);
+        
+        if (!data || data.length === 0) {
+            alert(`No data available for ${exerciseType} exercise`);
+            return;
+        }
+        
+        // Filter by difficulty
+        let testData = data.filter(item => !item.difficulty || item.difficulty === difficulty);
+        if (testData.length === 0) {
+            testData = data; // Fallback
+        }
+        
+        // Randomize and limit to question count
+        testData = this.shuffleArray(testData).slice(0, questions);
+        
+        this.currentExercise = exerciseFactory.create(exerciseType);
+        this.currentExercise.mode = 'test';
+        await this.currentExercise.init(testData, this.container);
+    }
+    
+    getPracticeDifficulty(type) {
+        const settings = storageService.get('practiceSettings', {});
+        return settings[type] || storageService.get('defaultDifficulty', 'easy');
+    }
+    
+    shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
     }
     
     showProgress() {
@@ -407,6 +463,11 @@ class App {
         const page = new CustomizePage(this.container);
         page.render();
     }
+    showTestMode() {
+        const page = new TestModePage(this.container);
+        page.render();
+    }
+    
     showAssessment() {
         const page = new AssessmentPage(this.container);
         page.render();
