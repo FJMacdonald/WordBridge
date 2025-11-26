@@ -118,50 +118,41 @@ class ClockMatchingExercise extends SelectionExercise {
     
     /**
      * Custom hints for clock matching
+     * Hint 1: Eliminate 1 option
+     * Hint 2: Where hour hand is
+     * Hint 3: Eliminate another option
+     * Hint 4: Where both hands are
      */
     async applyHint(hintType) {
-        const context = {
-            options: this.currentOptions,
-            correctAnswer: this.getCorrectAnswer(),
-            eliminatedIndices: this.state.eliminatedIndices,
-            container: this.container
-        };
-        
         const hintArea = this.container.querySelector('#hint-area');
         const currentItem = this.currentItem;
+        const hintNumber = this.state.hintsUsed + 1;
         
-        switch (hintType) {
-            case 'eliminate':
-                // Use standard elimination hint
-                return super.applyHint(hintType);
-                
-            case 'hourHand':
-                // Describe hour hand position
-                const hourHint = this.getHourHandHint(currentItem);
-                if (hintArea) {
-                    const hintItem = document.createElement('div');
-                    hintItem.className = 'hint-item hint-phrase';
-                    hintItem.textContent = hourHint;
-                    hintArea.appendChild(hintItem);
-                }
-                setTimeout(() => audioService.speak(hourHint), 100);
-                break;
-                
-            case 'bothHands':
-                // Describe both hands
-                const bothHandsHint = this.getBothHandsHint(currentItem);
-                if (hintArea) {
-                    const hintItem = document.createElement('div');
-                    hintItem.className = 'hint-item hint-phrase';
-                    hintItem.textContent = bothHandsHint;
-                    hintArea.appendChild(hintItem);
-                }
-                setTimeout(() => audioService.speak(bothHandsHint), 100);
-                break;
-                
-            case 'sayAnswer':
-                // Use standard say answer hint
-                return super.applyHint(hintType);
+        console.log('ClockMatching hint requested:', hintNumber);
+        
+        if (hintNumber === 1 || hintNumber === 3) {
+            // Eliminate 1 option
+            return super.applyHint('eliminate');
+        } else if (hintNumber === 2) {
+            // Describe hour hand position
+            const hourHint = this.getHourHandHint(currentItem);
+            if (hintArea) {
+                const hintItem = document.createElement('div');
+                hintItem.className = 'hint-item hint-phrase';
+                hintItem.textContent = hourHint;
+                hintArea.appendChild(hintItem);
+            }
+            setTimeout(() => audioService.speak(hourHint), 100);
+        } else if (hintNumber === 4) {
+            // Describe both hands
+            const bothHandsHint = this.getBothHandsHint(currentItem);
+            if (hintArea) {
+                const hintItem = document.createElement('div');
+                hintItem.className = 'hint-item hint-phrase';
+                hintItem.textContent = bothHandsHint;
+                hintArea.appendChild(hintItem);
+            }
+            setTimeout(() => audioService.speak(bothHandsHint), 100);
         }
     }
     
