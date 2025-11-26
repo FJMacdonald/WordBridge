@@ -345,17 +345,22 @@ class ImportExportService {
      * Get exercise data formatted for translation
      */
     async getExerciseDataForTranslation() {
-        // Import default data
+        // Import default data - all 16 exercise types
         const modules = await Promise.all([
             import('../../data/default/naming.js'),
             import('../../data/default/sentences.js'),
             import('../../data/default/categories.js'),
             import('../../data/default/rhyming.js'),
+            import('../../data/default/firstSounds.js'),
             import('../../data/default/associations.js'),
             import('../../data/default/synonyms.js'),
             import('../../data/default/definitions.js'),
             import('../../data/default/scramble.js'),
-            import('../../data/default/speaking.js')
+            import('../../data/default/speaking.js'),
+            import('../../data/default/timeSequencing.js'),
+            import('../../data/default/clockMatching.js'),
+            import('../../data/default/timeOrdering.js'),
+            import('../../data/default/workingMemory.js')
         ]);
         
         return {
@@ -363,11 +368,16 @@ class ImportExportService {
             sentences: modules[1].sentenceData.map(i => ({ sentence: i.sentence, answer: i.answer })),
             categories: modules[2].categoryData.map(i => ({ category: i.category, word: i.word, options: i.options })),
             rhyming: modules[3].rhymingData.map(i => ({ word: i.word, rhymes: i.rhymes, nonRhymes: i.nonRhymes })),
-            associations: modules[4].associationData.map(i => ({ word: i.word, associated: i.associated, unrelated: i.unrelated })),
-            synonyms: modules[5].synonymData.map(i => ({ word: i.word, synonyms: i.synonyms, antonyms: i.antonyms })),
-            definitions: modules[6].definitionData.map(i => ({ word: i.word, definition: i.definition })),
-            scramble: modules[7].scrambleData.map(i => ({ words: i.words })),
-            speaking: modules[8].speakingData.map(i => ({ answer: i.answer, phrases: i.phrases }))
+            firstSounds: modules[4].firstSoundData.map(i => ({ sound: i.sound, words: i.words })),
+            associations: modules[5].associationData.map(i => ({ word: i.word, associated: i.associated, unrelated: i.unrelated })),
+            synonyms: modules[6].synonymData.map(i => ({ word: i.word, synonyms: i.synonyms, antonyms: i.antonyms })),
+            definitions: modules[7].definitionData.map(i => ({ word: i.word, definition: i.definition })),
+            scramble: modules[8].scrambleData.map(i => ({ words: i.words })),
+            speaking: modules[9].speakingData.map(i => ({ answer: i.answer, phrases: i.phrases })),
+            timeSequencing: modules[10].timeSequencingData.map(i => ({ question: i.question, answer: i.answer, options: i.options })),
+            clockMatching: modules[11].clockMatchingData.map(i => ({ time: i.time, digitalDisplay: i.digitalDisplay, timeWords: i.timeWords })),
+            timeOrdering: modules[12].timeOrderingData.map(i => ({ scenario: i.scenario, description: i.description, items: i.items, correctOrder: i.correctOrder })),
+            workingMemory: modules[13].workingMemoryData.map(i => ({ sequence: i.sequence, options: i.options }))
         };
     }
     
