@@ -87,7 +87,7 @@ class SequenceOrderingExercise extends BaseExercise {
         
         if (isCorrect) {
             trackingService.recordAttempt({
-                word: this.currentItem.id,
+                word: this.getItemIdentifier(),
                 correct: true,
                 hintsUsed: this.state.hintsUsed
             });
@@ -171,7 +171,12 @@ class SequenceOrderingExercise extends BaseExercise {
     }
     
     getCorrectAnswer() {
-        return this.currentItem.id;
+        return this.correctOrder.join(' ');
+    }
+    
+    getItemIdentifier() {
+        // Generate identifier from correct order for tracking
+        return `${this.type}_${this.correctOrder.slice(0, 2).join('_')}`;
     }
 }
 
