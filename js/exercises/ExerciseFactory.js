@@ -20,83 +20,96 @@ import WorkingMemoryExercise from './implementations/WorkingMemoryExercise.js';
  */
 class ExerciseFactory {
     constructor() {
+        // Ordered by: Words, Phonetics, Meaning, Time
         this.exercises = {
-            // Meaning
-            definitions: {
-                class: DefinitionExercise,
-                name: 'Definitions',
-                icon: '📖',
-                category: 'meaning'
-            },
-            association: {
-                class: AssociationExercise,
-                name: 'Association',
-                icon: '🔗',
-                category: 'meaning'
-            },
-            synonyms: {
-                class: SynonymExercise,
-                name: 'Synonyms',
-                icon: '≈',
-                category: 'meaning'
-            },
-            scramble: {
-                class: ScrambleExercise,
-                name: 'Unscramble',
-                icon: '🔀',
-                category: 'meaning'
-            },
-            
-            // Phonetics
-            firstSound: {
-                class: FirstSoundExercise,
-                name: 'First Sounds',
-                icon: '🔤',
-                category: 'phonetics'
-            },
-            rhyming: {
-                class: RhymingExercise,
-                name: 'Rhyming',
-                icon: '🎵',
-                category: 'phonetics'
-            },
-            speaking: {
-                class: SpeakingExercise,
-                name: 'Speaking',
-                icon: '🎤',
-                category: 'phonetics'
-            },
-            listening: {
-                class: ListeningExercise,
-                name: 'Listening',
-                icon: '👂',
-                category: 'phonetics'
-            },
-            
             // Words
             naming: {
                 class: NamingExercise,
                 name: 'Picture Naming',
                 icon: '🖼️',
-                category: 'words'
+                category: 'words',
+                order: 1
             },
             typing: {
                 class: TypingWordExercise,
                 name: 'Spelling',
                 icon: '⌨️',
-                category: 'words'
+                category: 'words',
+                order: 2
             },
             sentenceTyping: {
                 class: SentenceTypingExercise,
                 name: 'Fill Blank',
                 icon: '📝',
-                category: 'words'
+                category: 'words',
+                order: 3
             },
             category: {
                 class: CategoryExercise,
                 name: 'Categories',
                 icon: '📁',
-                category: 'words'
+                category: 'words',
+                order: 4
+            },
+            
+            // Phonetics
+            listening: {
+                class: ListeningExercise,
+                name: 'Listening',
+                icon: '👂',
+                category: 'phonetics',
+                order: 5
+            },
+            speaking: {
+                class: SpeakingExercise,
+                name: 'Speaking',
+                icon: '🎤',
+                category: 'phonetics',
+                order: 6
+            },
+            firstSound: {
+                class: FirstSoundExercise,
+                name: 'First Sounds',
+                icon: '🔤',
+                category: 'phonetics',
+                order: 7
+            },
+            rhyming: {
+                class: RhymingExercise,
+                name: 'Rhyming',
+                icon: '🎵',
+                category: 'phonetics',
+                order: 8
+            },
+            
+            // Meaning
+            definitions: {
+                class: DefinitionExercise,
+                name: 'Definitions',
+                icon: '📖',
+                category: 'meaning',
+                order: 9
+            },
+            association: {
+                class: AssociationExercise,
+                name: 'Association',
+                icon: '🔗',
+                category: 'meaning',
+                order: 10
+            },
+            synonyms: {
+                class: SynonymExercise,
+                name: 'Synonyms',
+                icon: '≈',
+                category: 'meaning',
+                order: 11
+            },
+            scramble: {
+                class: ScrambleExercise,
+                name: 'Unscramble',
+                icon: '🔀',
+                category: 'meaning',
+                order: 12
             },
             
             // Time
@@ -104,25 +117,29 @@ class ExerciseFactory {
                 class: TimeSequencingExercise,
                 name: 'Time Sequencing',
                 icon: '📅',
-                category: 'time'
+                category: 'time',
+                order: 13
             },
             clockMatching: {
                 class: ClockMatchingExercise,
                 name: 'Clock Matching',
                 icon: '🕐',
-                category: 'time'
+                category: 'time',
+                order: 14
             },
             timeOrdering: {
                 class: TimeOrderingExercise,
                 name: 'Time Ordering',
                 icon: '⏰',
-                category: 'time'
+                category: 'time',
+                order: 15
             },
             workingMemory: {
                 class: WorkingMemoryExercise,
                 name: 'Working Memory',
                 icon: '🧠',
-                category: 'time'
+                category: 'time',
+                order: 16
             }
         };
     }
@@ -139,13 +156,13 @@ class ExerciseFactory {
     }
     
     /**
-     * Get exercises grouped by category
+     * Get exercises grouped by category (in order: words, phonetics, meaning, time)
      */
     getExercisesByCategory() {
         const categories = {
-            meaning: [],
-            phonetics: [],
             words: [],
+            phonetics: [],
+            meaning: [],
             time: []
         };
         
@@ -156,7 +173,21 @@ class ExerciseFactory {
             });
         });
         
+        // Sort each category by order
+        Object.keys(categories).forEach(cat => {
+            categories[cat].sort((a, b) => (a.order || 0) - (b.order || 0));
+        });
+        
         return categories;
+    }
+    
+    /**
+     * Get all exercise types in order
+     */
+    getAllExerciseTypes() {
+        return Object.entries(this.exercises)
+            .sort((a, b) => (a[1].order || 0) - (b[1].order || 0))
+            .map(([type]) => type);
     }
 }
 

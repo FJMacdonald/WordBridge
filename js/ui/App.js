@@ -154,25 +154,29 @@ class App {
     
     showHome() {
         const categories = exerciseFactory.getExercisesByCategory();
+        
+        // Category order: words, phonetics, meaning, time
+        const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
+        
         const categoryInfo = {
-            meaning: {
-                name: t('home.categories.meaning'),
-                icon: '💡',
-                description: 'Understanding word meanings'
+            words: {
+                name: t('home.categories.words'),
+                icon: '📚',
+                description: 'Recognition and spelling'
             },
             phonetics: {
                 name: t('home.categories.phonetics'),
                 icon: '🔊',
                 description: 'Sounds and pronunciation'
             },
-            words: {
-                name: t('home.categories.words'),
-                icon: '📚',
-                description: 'Recognition and spelling'
+            meaning: {
+                name: t('home.categories.meaning'),
+                icon: '💡',
+                description: 'Understanding word meanings'
             },
             time: {
                 name: t('home.categories.time'),
-                icon: '📚',
+                icon: '⏰',
                 description: 'Temporal concepts'
             }
         };
@@ -185,7 +189,10 @@ class App {
                 </div>
                 
                 <div class="category-grid">
-                    ${Object.entries(categories).map(([category, exercises]) => `
+                    ${categoryOrder.map(category => {
+                        const exercises = categories[category];
+                        if (!exercises || exercises.length === 0) return '';
+                        return `
                         <div class="category-card">
                             <div class="category-header">
                                 <h3 class="category-title">
@@ -202,7 +209,8 @@ class App {
                                 `).join('')}
                             </div>
                         </div>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </div>
             </div>
         `;
