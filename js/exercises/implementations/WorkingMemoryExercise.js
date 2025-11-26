@@ -110,7 +110,6 @@ class WorkingMemoryExercise extends BaseExercise {
                 
                 <div class="memory-actions">
                     <button class="btn btn--secondary" id="clear-selection">${t('exercises.workingMemory.clear')}</button>
-                    <button class="btn btn--secondary" id="replay-sequence">${t('exercises.workingMemory.replay')}</button>
                 </div>
             </div>
         `;
@@ -158,12 +157,6 @@ class WorkingMemoryExercise extends BaseExercise {
         const clearBtn = this.container.querySelector('#clear-selection');
         if (clearBtn) {
             clearBtn.addEventListener('click', () => this.clearSelection());
-        }
-        
-        // Replay button listener
-        const replayBtn = this.container.querySelector('#replay-sequence');
-        if (replayBtn) {
-            replayBtn.addEventListener('click', () => this.replaySequence());
         }
         
         // Selected slot listeners for removal
@@ -260,15 +253,13 @@ class WorkingMemoryExercise extends BaseExercise {
     async checkSequence() {
         const isCorrect = this.arraysEqual(this.selectedSequence, this.targetSequence);
         
-        // Visual feedback on slots
+        // Visual feedback on slots - only color borders for CORRECT sequence
         const slots = this.container.querySelectorAll('.selected-slot');
-        slots.forEach((slot, index) => {
-            if (this.selectedSequence[index] === this.targetSequence[index]) {
+        if (isCorrect) {
+            slots.forEach((slot) => {
                 slot.classList.add('correct');
-            } else {
-                slot.classList.add('incorrect');
-            }
-        });
+            });
+        }
         
         if (isCorrect) {
             trackingService.recordAttempt({
@@ -321,31 +312,35 @@ class WorkingMemoryExercise extends BaseExercise {
     async applyHint(hintType) {
         if (!this.isSelectionPhase) return;
         
-        switch (hintType) {
-            case 'eliminate':
-                this.eliminateWrongOptions(2);
-                break;
-            case 'firstItem':
-                this.highlightFirstItem();
-                break;
-            case 'eliminateMore':
-                this.eliminateWrongOptions(3);
-                break;
-            case 'showSequence':
-                this.showSequenceHint();
-                break;
+        const hintNumber = this.state.hintsUsed + 1;
+        console.log('WorkingMemory hint requested:', hintNumber);
+        
+        // Hint 1: Remove 1 wrong option
+        // Hint 2: Replay sequence
+        // Hint 3: Remove another wrong option  
+        // Hint 4: Replay sequence again
+        if (hintNumber === 1 || hintNumber === 3) {
+            this.eliminateWrongOptions(1);
+        } else if (hintNumber === 2 || hintNumber === 4) {
+            await this.replaySequence();
         }
     }
     
-    eliminateWrongOptions(maxToRemove) {
-        const optionBtns = this.container.querySelectorAll('.memory-option:not(:disabled)');
+    eliminateWrongOptions(numToRemove) {
+        const optionBtns = this.container.querySelectorAll('.memory-option:not(:disabled):not(.eliminated)');
         const wrongOptions = Array.from(optionBtns).filter(btn => 
             !this.targetSequence.includes(btn.dataset.emoji)
         );
         
-        // Only eliminate as many as exist, up to the max
-        const numToRemove = Math.min(maxToRemove, wrongOptions.length);
-        const toEliminate = this.shuffleArray(wrongOptions).slice(0, numToRemove);
+        console.log('Eliminating options:', {
+            requested: numToRemove,
+            wrongOptionsAvailable: wrongOptions.length,
+            totalOptions: optionBtns.length
+        });
+        
+        // Only eliminate as many as exist, up to the requested number
+        const actualNumToRemove = Math.min(numToRemove, wrongOptions.length);
+        const toEliminate = this.shuffleArray(wrongOptions).slice(0, actualNumToRemove);
         
         toEliminate.forEach(btn => {
             btn.disabled = true;
@@ -354,7 +349,7 @@ class WorkingMemoryExercise extends BaseExercise {
         
         const hintArea = this.container.querySelector('#hint-area');
         if (hintArea) {
-            const hintText = `${numToRemove} incorrect options removed`;
+            const hintText = `${actualNumToRemove} incorrect ${actualNumToRemove === 1 ? 'option' : 'options'} removed`;
             const hintItem = document.createElement('div');
             hintItem.className = 'hint-item hint-phrase';
             hintItem.textContent = hintText;
@@ -389,12 +384,16 @@ class WorkingMemoryExercise extends BaseExercise {
     }
     
     async replaySequence() {
-        // Track replay for performance analysis
-        trackingService.recordEvent({
-            type: 'replay_sequence',
-            exerciseType: this.type,
-            itemId: this.currentItem.id
-        });
+        console.log('Replaying sequence as hint');
+        
+        const hintArea = this.container.querySelector('#hint-area');
+        if (hintArea) {
+            const hintText = `Replaying sequence: ${this.targetSequence.join(' ')}`;
+            const hintItem = document.createElement('div');
+            hintItem.className = 'hint-item hint-phrase';
+            hintItem.textContent = hintText;
+            hintArea.appendChild(hintItem);
+        }
         
         // Show the sequence again
         const displayArea = this.container.querySelector('#memory-display');
