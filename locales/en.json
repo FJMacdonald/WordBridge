@@ -1,466 +1,464 @@
 {
-    "app": {
-        "title": "Word Bridge"
+  "app": {
+    "title": "Word Bridge"
+  },
+  "common": {
+    "correct": "Correct",
+    "incorrect": "Try again",
+    "skip": "Skip ->",
+    "hint": "Hint",
+    "playAll": "Play All",
+    "next": "Next",
+    "back": "Back",
+    "close": "Close",
+    "continue": "Continue",
+    "cancel": "Cancel"
+  },
+  "audio": {
+    "playAll": "Hear all options",
+    "playWord": "Play word"
+  },
+  "hints": {
+    "removeOne": "Remove one",
+    "showLetter": "Show letter",
+    "noMoreHints": "No more hints",
+    "remaining": "{count} left"
+  },
+  "feedback": {
+    "correct": "✓ Correct!",
+    "incorrect": "✗ Not quite",
+    "perfect": "✓ Perfect!",
+    "theAnswerWas": "The answer was: {answer}",
+    "withHints": "✓ Got it with help!"
+  },
+  "exercises": {
+    "naming": {
+      "name": "Picture Naming",
+      "instruction": "What is this?"
     },
-    "common": {
-        "correct": "Correct",
-        "incorrect": "Try again",
-        "skip": "Skip ->",
-        "hint": "Hint",
-        "playAll": "Play All",
-        "next": "Next",
-        "back": "Back",
-        "close": "Close",
-        "continue": "Continue",
-        "cancel": "Cancel"
+    "listening": {
+      "name": "Listening",
+      "instruction": "Listen to the word and tap the corresponding picture",
+      "tapPictureFor": "Tap the picture for"
     },
-    "audio": {
-        "playAll": "Hear all options",
-        "playWord": "Play word"
+    "speaking": {
+      "name": "Speaking",
+      "instruction": "Say this word",
+      "iSaidIt": "I said it",
+      "iCouldnt": "I couldn't"
     },
-    "hints": {
-        "removeOne": "Remove one",
-        "showLetter": "Show letter",
-        "noMoreHints": "No more hints",
-        "remaining": "{count} left"
+    "typing": {
+      "name": "Word Typing",
+      "instruction": "Type what you see",
+      "typeWord": "Type the word",
+      "tapHereToType": "Tap here to type",
+      "typeKeyboardOrTap": "Type on your keyboard or tap the box above to type",
+      "startsWith": "Starts with:",
+      "listenCarefully": "Listen carefully"
     },
-    "feedback": {
-        "correct": "✓ Correct!",
-        "incorrect": "✗ Not quite",
-        "perfect": "✓ Perfect!",
-        "theAnswerWas": "The answer was: {answer}",
-        "withHints": "✓ Got it with help!"
+    "sentenceTyping": {
+      "name": "Sentence Completion",
+      "instruction": "Type the missing word"
     },
-    "exercises": {
-        "naming": {
-            "name": "Picture Naming",
-            "instruction": "What is this?"
-        },
-        "listening": {
-            "name": "Listening",
-            "instruction": "Listen and tap the picture"
-        },
-        "speaking": {
-            "name": "Speaking",
-            "instruction": "Say this word",
-            "iSaidIt": "I said it",
-            "iCouldnt": "I couldn't"
-        },
-        "typing": {
-            "name": "Word Typing",
-            "instruction": "Type what you see"
-        },
-        "sentenceTyping": {
-            "name": "Sentence Completion",
-            "instruction": "Type the missing word"
-        },
-        "category": {
-            "name": "Categories",
-            "instruction": "Which word is a {category}?"
-        },
-        "rhyming": {
-            "name": "Rhyming Words",
-            "instruction": "Which word rhymes with:",
-            "rhymesWith": "rhymes with"
-        },
-        "firstSound": {
-            "name": "First Sounds",
-            "instruction": "Which word starts with the same sound as:",
-            "bothStartWith": "Both start with"
-        },
-        "association": {
-            "name": "Word Association",
-            "instruction": "Which word goes with:",
-            "goesWithPhrase": "goes with"
-        },
-        "synonyms": {
-            "name": "Synonyms & Antonyms",
-            "synonymInstruction": "Which word means the same as:",
-            "antonymInstruction": "Which word means the opposite of:",
-            "isOppositeOf": "is the opposite of",
-            "meansSameAs": "means the same as"
-        },
-        "definitions": {
-            "name": "Definitions",
-            "instruction": "Which word matches this definition?"
-        },
-        "scramble": {
-            "name": "Sentence Scramble",
-            "instruction": "Put these words in the correct order",
-            "checkOrder": "Check Order",
-            "tapToSwap": "Tap two words to swap them",
-            "theFirstWord": "The first word",
-            "theSecondWord": "The second word",
-            "theThirdWord": "The third word",
-            "theFourthWord": "The fourth word",
-            "theFifthWord": "The fifth word",
-            "shouldBe": "should be"
-        },
-        "listening": {
-            "name": "Listening",
-            "instruction": "Listen to the word and tap the corresponding picture",
-            "tapPictureFor": "Tap the picture for"
-        },
-        "typing": {
-            "name": "Word Typing",
-            "instruction": "Type what you see",
-            "typeWord": "Type the word",
-            "tapHereToType": "Tap here to type",
-            "typeKeyboardOrTap": "Type on your keyboard or tap the box above to type",
-            "startsWith": "Starts with:",
-            "listenCarefully": "Listen carefully"
-        },
-        "timeSequencing": {
-            "name": "Time Sequencing",
-            "instruction": "Choose the correct answer",
-            "daysBefore": "What day comes before",
-            "daysAfter": "What day comes after",
-            "monthsBefore": "What month comes before",
-            "monthsAfter": "What month comes after"
-        },
-        "clockMatching": {
-            "name": "Clock Matching",
-            "instruction": "Match the digital time with the analog clock",
-            "whatTimeIs": "What time is shown?",
-            "selectClock": "Select the clock that shows"
-        },
-        "timeOrdering": {
-            "name": "Time Ordering",
-            "instruction": "Put these activities in the correct time order",
-            "dragToReorder": "Drag items to reorder them",
-            "correctOrder": "Correct Order",
-            "scenario": "Scenario",
-            "tapToSwap": "Tap two buttons to swap them"
-        },
-        "workingMemory": {
-            "name": "Working Memory",
-            "instruction": "Watch the sequence, then select the items in the same order",
-            "watchSequence": "Watch the sequence carefully",
-            "memorize": "Memorize the sequence",
-            "yourSelection": "Your selection",
-            "clear": "Clear",
-            "alreadySelected": "You already selected that emoji",
-            "sequenceFull": "Sequence is full - clear to change",
-            "perfectMemory": "Perfect! You remembered the sequence correctly",
-            "correctSequence": "The correct sequence was:",
-            "hintSequence": "Here's the sequence:",
-            "sequenceIs": "The sequence is:",
-            "firstPosition": "The first emoji",
-            "shouldBe": "should be",
-            "replay": "Replay Sequence",
-            "tryAgain": "Try again! Clear your selection and try once more"
-        }
+    "category": {
+      "name": "Categories",
+      "instruction": "Which word is a {category}?"
+    },
+    "rhyming": {
+      "name": "Rhyming Words",
+      "instruction": "Which word rhymes with:",
+      "rhymesWith": "rhymes with"
+    },
+    "firstSound": {
+      "name": "First Sounds",
+      "instruction": "Which word starts with the same sound as:",
+      "bothStartWith": "Both start with"
+    },
+    "association": {
+      "name": "Word Association",
+      "instruction": "Which word goes with:",
+      "goesWithPhrase": "goes with"
+    },
+    "synonyms": {
+      "name": "Synonyms & Antonyms",
+      "synonymInstruction": "Which word means the same as:",
+      "antonymInstruction": "Which word means the opposite of:",
+      "isOppositeOf": "is the opposite of",
+      "meansSameAs": "means the same as"
+    },
+    "definitions": {
+      "name": "Definitions",
+      "instruction": "Which word matches this definition?"
+    },
+    "scramble": {
+      "name": "Sentence Scramble",
+      "instruction": "Put these words in the correct order",
+      "checkOrder": "Check Order",
+      "tapToSwap": "Tap two words to swap them",
+      "theFirstWord": "The first word",
+      "theSecondWord": "The second word",
+      "theThirdWord": "The third word",
+      "theFourthWord": "The fourth word",
+      "theFifthWord": "The fifth word",
+      "shouldBe": "should be"
+    },
+    "timeSequencing": {
+      "name": "Time Sequencing",
+      "instruction": "Choose the correct answer",
+      "daysBefore": "What day comes before",
+      "daysAfter": "What day comes after",
+      "monthsBefore": "What month comes before",
+      "monthsAfter": "What month comes after"
+    },
+    "clockMatching": {
+      "name": "Clock Matching",
+      "instruction": "Match the digital time with the analog clock",
+      "whatTimeIs": "What time is shown?",
+      "selectClock": "Select the clock that shows"
+    },
+    "timeOrdering": {
+      "name": "Time Ordering",
+      "instruction": "Put these activities in the correct time order",
+      "dragToReorder": "Drag items to reorder them",
+      "correctOrder": "Correct Order",
+      "scenario": "Scenario",
+      "tapToSwap": "Tap two buttons to swap them"
+    },
+    "workingMemory": {
+      "name": "Working Memory",
+      "instruction": "Watch the sequence, then select the items in the same order",
+      "watchSequence": "Watch the sequence carefully",
+      "memorize": "Memorize the sequence",
+      "yourSelection": "Your selection",
+      "clear": "Clear",
+      "alreadySelected": "You already selected that emoji",
+      "sequenceFull": "Sequence is full - clear to change",
+      "perfectMemory": "Perfect! You remembered the sequence correctly",
+      "correctSequence": "The correct sequence was:",
+      "hintSequence": "Here's the sequence:",
+      "sequenceIs": "The sequence is:",
+      "firstPosition": "The first emoji",
+      "shouldBe": "should be",
+      "replay": "Replay Sequence",
+      "tryAgain": "Try again! Clear your selection and try once more"
+    }
+  },
+  "results": {
+    "title": "Session Complete!",
+    "score": "{correct} out of {total}",
+    "accuracy": "{percent}% accuracy",
+    "time": "Time: {time}",
+    "playAgain": "Practice Again",
+    "backToMenu": "Back to Menu"
+  },
+  "home": {
+    "title": "Choose an Exercise",
+    "subtitle": "Practice at your own pace",
+    "speechTherapy": "Speech Therapy",
+    "chooseExercise": "Choose an exercise to practice",
+    "categories": {
+      "meaning": "Meaning",
+      "phonetics": "Phonetics",
+      "words": "Words",
+      "time": "Time"
+    }
+  },
+  "progress": {
+    "title": "Your Progress",
+    "viewReport": "View Report",
+    "takeAssessment": "Take Assessment",
+    "backToHome": "Back to Home",
+    "qualityScore": "Practice Quality",
+    "accuracyTrend": "Accuracy Over Time",
+    "exerciseDistribution": "Time by Exercise",
+    "performanceHeatmap": "Performance by Exercise",
+    "assessmentComparison": "Assessment Progress",
+    "timeRanges": {
+      "today": "Today",
+      "week": "Week",
+      "month": "Month",
+      "all": "All Time"
+    },
+    "chart": {
+      "daily": "Daily",
+      "average": "7-day avg"
+    },
+    "quality": {
+      "consistency": "Consistency",
+      "duration": "Session Length",
+      "variety": "Exercise Variety",
+      "accuracy": "Accuracy"
+    },
+    "info": {
+      "qualityScore": "Quality Score combines consistency (practice frequency), duration (session length), variety (different exercises), and accuracy into a single metric.",
+      "accuracyTrend": "Shows your daily accuracy percentage over time. The dotted line is a 7-day moving average to show overall trends.",
+      "accuracyCalculation": "Accuracy for a given day is calculated as: (Correct Attempts / Total Attempts) × 100%. Only days with practice activity are shown.",
+      "heatmap": "Darker colors indicate better performance. Each cell shows accuracy for a specific exercise on a specific day.",
+      "assessmentComparison": "Compares your performance between standardized assessments to measure objective progress."
+    },
+    "recommendations": {
+      "title": "Focus Areas",
+      "consistency": "Try to practice more consistently - aim for 5 days per week",
+      "duration": "Increase session length - aim for 15-20 minutes per session",
+      "variety": "Try more exercise types - variety helps overall improvement",
+      "goodJob": "Great job! Keep up the consistent practice."
+    },
+    "performanceLegend": {
+      "title": "Performance Levels",
+      "excellent": "Excellent (≥85%)",
+      "good": "Good (70-84%)",
+      "needsPractice": "Needs Practice (50-69%)",
+      "challenging": "Challenging (<50%)",
+      "noData": "No Data"
+    }
+  },
+  "assessment": {
+    "title": "Progress Assessment",
+    "subtitle": "Standardized test to measure your progress",
+    "currentLevel": "Your Current Level",
+    "selectExerciseType": "Select Exercise Type",
+    "levelUpMessage": "Congratulations! You've mastered all exercises. Ready to try {level}?",
+    "types": {
+      "baseline": {
+        "name": "Full Baseline",
+        "description": "Comprehensive test across all exercise types. Master all 12 exercise types at easy level to unlock harder difficulty levels.",
+        "duration": "20-30 minutes"
+      },
+      "quick": {
+        "name": "Quick Check",
+        "description": "Short assessment of individual exercise types at your current level",
+        "duration": "5-10 minutes"
+      }
+    },
+    "start": "Start Assessment",
+    "resume": "Resume Assessment",
+    "instructions": "How Test Mode Works",
+    "progress": {
+      "section": "Section {current} of {total}",
+      "overall": "Overall Progress"
     },
     "results": {
-        "title": "Session Complete!",
-        "score": "{correct} out of {total}",
-        "accuracy": "{percent}% accuracy",
-        "time": "Time: {time}",
-        "playAgain": "Practice Again",
-        "backToMenu": "Back to Menu"
+      "title": "Assessment Complete",
+      "overallScore": "Overall Score",
+      "breakdown": "Performance Breakdown",
+      "comparison": "Comparison to Previous",
+      "recommendations": "Recommendations",
+      "viewDetails": "View Detailed Report",
+      "done": "Done"
     },
-    "home": {
-        "title": "Choose an Exercise",
-        "subtitle": "Practice at your own pace",
-        "speechTherapy": "Speech Therapy",
-        "chooseExercise": "Choose an exercise to practice",
-        "categories": {
-            "meaning": "Meaning",
-            "phonetics": "Phonetics", 
-            "words": "Words",
-            "time": "Time"
-        }
+    "difficulty": "Difficulty",
+    "needsAssessment": "You need at least 2 assessments to compare.",
+    "takeFirstAssessment": "Take an assessment to track progress.",
+    "assessmentButton": "Take Assessment",
+    "pauseConfirm": "Pause assessment? You can resume later.",
+    "testMode": "Test Mode",
+    "testModeDescription": "Structured assessment to evaluate your skills",
+    "instruction1": "Select an exercise type and difficulty level",
+    "instruction2": "Choose the number of questions (10, 20, or 30)",
+    "instruction3": "Questions are randomized from the selected difficulty",
+    "instruction4": "Your hints, skips, and time are tracked",
+    "instruction5": "Results help recommend appropriate difficulty levels",
+    "selectTest": "Select a Test",
+    "questions": "Questions",
+    "startTest": "Start Test",
+    "testInProgress": "Test in Progress",
+    "question": "Question",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
+  "navigation": {
+    "home": "Home",
+    "progress": "Progress",
+    "assessment": "Assessment",
+    "customize": "Customize",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "textSize": "Text Size",
+    "highContrast": "High Contrast Mode",
+    "sections": {
+      "display": "Display",
+      "audio": "Audio",
+      "practice": "Practice",
+      "translation": "Translation",
+      "dataManagement": "Data Management",
+      "dangerZone": "Danger Zone"
     },
-    "progress": {
-        "title": "Your Progress",
-        "viewReport": "View Report",
-        "takeAssessment": "Take Assessment",
-        "backToHome": "Back to Home",
-        "qualityScore": "Practice Quality",
-        "accuracyTrend": "Accuracy Over Time",
-        "exerciseDistribution": "Time by Exercise",
-        "performanceHeatmap": "Performance by Exercise",
-        "assessmentComparison": "Assessment Progress",
-        "timeRanges": {
-            "today": "Today",
-            "week": "Week",
-            "month": "Month",
-            "all": "All Time"
-        },
-        "chart": {
-            "daily": "Daily",
-            "average": "7-day avg"
-        },
-        "quality": {
-            "consistency": "Consistency",
-            "duration": "Session Length",
-            "variety": "Exercise Variety",
-            "accuracy": "Accuracy"
-        },
-        "info": {
-            "qualityScore": "Quality Score combines consistency (practice frequency), duration (session length), variety (different exercises), and accuracy into a single metric.",
-            "accuracyTrend": "Shows your daily accuracy percentage over time. The dotted line is a 7-day moving average to show overall trends.",
-            "accuracyCalculation": "Accuracy for a given day is calculated as: (Correct Attempts / Total Attempts) × 100%. Only days with practice activity are shown.",
-            "heatmap": "Darker colors indicate better performance. Each cell shows accuracy for a specific exercise on a specific day.",
-            "assessmentComparison": "Compares your performance between standardized assessments to measure objective progress."
-        },
-        "recommendations": {
-            "title": "Focus Areas",
-            "consistency": "Try to practice more consistently - aim for 5 days per week",
-            "duration": "Increase session length - aim for 15-20 minutes per session",
-            "variety": "Try more exercise types - variety helps overall improvement",
-            "goodJob": "Great job! Keep up the consistent practice."
-        },
-        "performanceLegend": {
-            "title": "Performance Levels",
-            "excellent": "Excellent (≥85%)",
-            "good": "Good (70-84%)",
-            "needsPractice": "Needs Practice (50-69%)",
-            "challenging": "Challenging (<50%)",
-            "noData": "No Data"
-        }
+    "options": {
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "voiceSelection": "Voice Selection",
+      "autoPlayQuestions": "Auto-play Questions",
+      "speechSpeed": "Speech Speed",
+      "testVoice": "Test Voice",
+      "voiceTestPhrase": "Hello! This is how the voice sounds.",
+      "customExerciseFrequency": "Custom Exercise Frequency",
+      "customFrequencyDesc": "How often to use your custom exercises",
+      "problemWordFrequency": "Problem Word Frequency",
+      "problemFrequencyDesc": "How often to show difficult words",
+      "masteryStreak": "Mastery Streak",
+      "masteryStreakDesc": "Correct answers in a row to master a word",
+      "hideMasteredWords": "Hide Mastered Words",
+      "hideMasteredDesc": "Remove mastered words from practice",
+      "exportTranslation": "Export for Translation (CSV)",
+      "exportTranslationDesc": "Download all text as CSV for translation",
+      "importTranslation": "Import Translation (CSV)",
+      "importTranslationDesc": "Upload translated CSV to add new language",
+      "createBackup": "Create Full Backup",
+      "createBackupDesc": "Download all your data and settings",
+      "restoreBackup": "Restore from Backup",
+      "restoreBackupDesc": "Import a previously saved backup",
+      "resetProgress": "Reset All Progress",
+      "resetProgressDesc": "This will delete all progress but keep custom exercises",
+      "resetEverything": "Reset Everything",
+      "resetEverythingDesc": "Delete ALL data including custom exercises"
     },
-    "assessment": {
-        "title": "Progress Assessment",
-        "subtitle": "Standardized test to measure your progress",
-        "currentLevel": "Your Current Level",
-        "selectExerciseType": "Select Exercise Type",
-        "levelUpMessage": "Congratulations! You've mastered all exercises. Ready to try {level}?",
-        "types": {
-            "baseline": {
-                "name": "Full Baseline",
-                "description": "Comprehensive test across all exercise types. Master all 12 exercise types at easy level to unlock harder difficulty levels.",
-                "duration": "20-30 minutes"
-            },
-            "quick": {
-                "name": "Quick Check",
-                "description": "Short assessment of individual exercise types at your current level",
-                "duration": "5-10 minutes"
-            }
-        },
-        "start": "Start Assessment",
-        "resume": "Resume Assessment",
-        "instructions": {
-            "title": "Assessment Instructions",
-            "intro": "This is a standardized test to measure your progress over time.",
-            "rules": [
-                "Complete all questions - no skipping",
-                "Use hints sparingly (they affect your score)",
-                "Take your time - accuracy matters more than speed",
-                "Find a quiet environment",
-                "Complete in one sitting if possible"
-            ],
-            "ready": "I'm Ready"
-        },
-        "progress": {
-            "section": "Section {current} of {total}",
-            "overall": "Overall Progress"
-        },
-        "results": {
-            "title": "Assessment Complete",
-            "overallScore": "Overall Score",
-            "breakdown": "Performance Breakdown",
-            "comparison": "Comparison to Previous",
-            "recommendations": "Recommendations",
-            "viewDetails": "View Detailed Report",
-            "done": "Done"
-        },
-        "difficulty": {
-            "easy": "Easy",
-            "medium": "Medium",
-            "hard": "Hard",
-            "mixed": "Mixed"
-        },
-        "needsAssessment": "You need at least 2 assessments to compare.",
-        "takeFirstAssessment": "Take an assessment to track progress.",
-        "assessmentButton": "Take Assessment",
-        "pauseConfirm": "Pause assessment? You can resume later."
+    "frequencies": {
+      "mixed": "Mixed with default",
+      "high": "Mostly custom (70%)",
+      "only": "Only custom"
     },
-    "navigation": {
-        "home": "Home",
-        "progress": "Progress",
-        "assessment": "Assessment",
-        "customize": "Customize",
-        "settings": "Settings"
+    "times": {
+      "2times": "2 times",
+      "3times": "3 times",
+      "4times": "4 times",
+      "5times": "5 times"
     },
-    "settings": {
-        "title": "Settings",
-        "language": "Language",
-        "textSize": "Text Size",
-        "highContrast": "High Contrast Mode",
-        "sections": {
-            "display": "Display",
-            "audio": "Audio",
-            "practice": "Practice",
-            "translation": "Translation",
-            "dataManagement": "Data Management",
-            "dangerZone": "Danger Zone"
-        },
-        "options": {
-            "small": "Small",
-            "medium": "Medium", 
-            "large": "Large",
-            "voiceSelection": "Voice Selection",
-            "autoPlayQuestions": "Auto-play Questions",
-            "speechSpeed": "Speech Speed",
-            "testVoice": "Test Voice",
-            "voiceTestPhrase": "Hello! This is how the voice sounds.",
-            "customExerciseFrequency": "Custom Exercise Frequency",
-            "customFrequencyDesc": "How often to use your custom exercises",
-            "problemWordFrequency": "Problem Word Frequency",
-            "problemFrequencyDesc": "How often to show difficult words",
-            "masteryStreak": "Mastery Streak", 
-            "masteryStreakDesc": "Correct answers in a row to master a word",
-            "hideMasteredWords": "Hide Mastered Words",
-            "hideMasteredDesc": "Remove mastered words from practice",
-            "exportTranslation": "Export for Translation (CSV)",
-            "exportTranslationDesc": "Download all text as CSV for translation",
-            "importTranslation": "Import Translation (CSV)",
-            "importTranslationDesc": "Upload translated CSV to add new language",
-            "createBackup": "Create Full Backup",
-            "createBackupDesc": "Download all your data and settings",
-            "restoreBackup": "Restore from Backup",
-            "restoreBackupDesc": "Import a previously saved backup",
-            "resetProgress": "Reset All Progress",
-            "resetProgressDesc": "This will delete all progress but keep custom exercises",
-            "resetEverything": "Reset Everything",
-            "resetEverythingDesc": "Delete ALL data including custom exercises"
-        },
-        "frequencies": {
-            "mixed": "Mixed with default",
-            "high": "Mostly custom (70%)",
-            "only": "Only custom"
-        },
-        "times": {
-            "2times": "2 times",
-            "3times": "3 times", 
-            "4times": "4 times",
-            "5times": "5 times"
-        },
-        "modal": {
-            "confirm": "Confirm",
-            "cancel": "Cancel",
-            "areYouSure": "Are you sure?"
-        }
+    "modal": {
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "areYouSure": "Are you sure?"
     },
-    "customize": {
-        "title": "Add Custom Exercises",
-        "modes": {
-            "individual": "Individual",
-            "bulkUpload": "Bulk Upload"
-        },
-        "chooseType": "Choose Exercise Type:",
-        "types": {
-            "picture": "Picture",
-            "sentence": "Sentence", 
-            "words": "Words",
-            "timeSequencing": "Time Sequencing",
-            "timeOrdering": "Time Ordering",
-            "clockMatching": "Clock Matching",
-            "workingMemory": "Working Memory"
-        },
-        "bulkUpload": {
-            "title": "Bulk Upload from CSV",
-            "instructions": "Instructions (click to expand)",
-            "howTo": "How to upload custom exercises:",
-            "selectExercises": "Select exercise types to include in template",
-            "step1": "Select which exercise types you want to upload and download the template",
-            "step2": "Open it in Excel, Google Sheets, or any spreadsheet app", 
-            "step3": "Fill in your custom exercises following the format",
-            "step4": "Save as CSV file",
-            "step5": "Upload the file here",
-            "formatGuidelines": "CSV Format Guidelines:",
-            "pictureFormat": "Picture Naming:",
-            "sentenceFormat": "Sentence Completion:",
-            "wordFormat": "Word Lists:",
-            "pictureExample": "Example: apple, https://example.com/apple.jpg, banana, orange, pear, medium",
-            "sentenceExample": "Example: I drink __ every morning, coffee, easy",
-            "wordExample": "Example: rhyming, cat, hat|bat|mat, hard",
-            "timeSequencingExample": "Example: What day comes after Monday?, Tuesday, Wednesday, Sunday, Friday, easy",
-            "timeOrderingExample": "Example: Morning routine, Put these activities in order, Wake up, Brush teeth, Eat breakfast, Leave house, medium",
-            "clockMatchingExample": "Example: 3:00, three o'clock, easy", 
-            "workingMemoryExample": "Example: 🍎, 🍌, 🍊, 🍇, 🍓, 🥝, medium",
-            "downloadTemplate": "Download Template",
-            "uploadFile": "Upload CSV File",
-            "selectFile": "Select File...",
-            "processing": "Processing...",
-            "success": "Successfully imported {count} exercises!",
-            "error": "Error importing file: {message}"
-        },
-        "existing": "Your Custom Exercises",
-        "noCustom": "No custom exercises yet.",
-        "delete": "Delete",
-        "edit": "Edit",
-        "confirmDelete": "Delete this exercise?",
-        "forms": {
-            "addWordExercise": "Add Word Exercise",
-            "addPictureExercise": "Add Picture Exercise",
-            "addSentenceExercise": "Add Sentence Exercise",
-            "exerciseType": "Exercise Type",
-            "rhymingWords": "Rhyming Words",
-            "wordAssociation": "Word Association",
-            "synonyms": "Synonyms",
-            "mainWord": "Main Word",
-            "mainWordPlaceholder": "e.g., cat",
-            "relatedWords": "Related Words (comma separated)",
-            "relatedWordsPlaceholder": "e.g., hat, bat, mat",
-            "targetWord": "Target Word",
-            "targetWordPlaceholder": "e.g., apple",
-            "wrongOptions": "Wrong Options",
-            "wrongOptionsOptional": "Wrong Options (optional)",
-            "wrongOptionsPlaceholder": "e.g., banana, orange, grape",
-            "sentence": "Sentence",
-            "sentenceWithBlank": "Sentence (use __ for blank)",
-            "sentencePlaceholder": "e.g., I drink __ every morning",
-            "answer": "Answer",
-            "answerPlaceholder": "e.g., coffee",
-            "addExercise": "Add Exercise",
-            "imageFile": "Image File (optional)",
-            "chooseFile": "Choose file...",
-            "noFileSelected": "no file selected",
-            "uploadPictureHelp": "Upload a picture for this word",
-            "autoGenerateHelp": "Leave empty to auto-generate from other words",
-            "imageUrl": "Or Image URL",
-            "imageUrlPlaceholder": "https://example.com/image.jpg",
-            "addTimeSequencing": "Add Time Sequencing Exercise",
-            "addTimeOrdering": "Add Time Ordering Exercise", 
-            "addClockMatching": "Add Clock Matching Exercise",
-            "addWorkingMemory": "Add Working Memory Exercise",
-            "question": "Question",
-            "timeQuestionPlaceholder": "e.g., What day comes after Monday?",
-            "correctAnswer": "Correct Answer",
-            "timeAnswerPlaceholder": "e.g., Tuesday",
-            "wrongOptions": "Wrong Options (comma separated)",
-            "timeOptionsPlaceholder": "e.g., Wednesday, Sunday, Friday",
-            "timeOptionsHelp": "Enter 3 wrong answer choices separated by commas",
-            "scenario": "Scenario",
-            "scenarioPlaceholder": "e.g., Daily routine",
-            "description": "Description", 
-            "descriptionPlaceholder": "e.g., Put these daily activities in order",
-            "activities": "Activities (one per line)",
-            "activitiesPlaceholder": "Wake up\nEat breakfast\nGo to work\nEat dinner\nGo to sleep",
-            "activitiesHelp": "Enter activities in the correct order, one per line",
-            "digitalTime": "Digital Time",
-            "timeWords": "Time in Words",
-            "timeWordsPlaceholder": "e.g., three o'clock",
-            "timeWordsHelp": "How the time should be spoken",
-            "emojiSequence": "Emoji Sequence (3 emojis)",
-            "sequencePlaceholder": "🍎🍌🍊",
-            "sequenceHelp": "Enter exactly 3 emojis that will be shown in sequence",
-            "extraOptions": "Extra Options (3+ emojis)",
-            "extraOptionsPlaceholder": "🍇🍓🥝🥭🍉",
-            "extraOptionsHelp": "Enter at least 3 additional emojis as wrong choices",
-            "difficulty": "Difficulty Level",
-            "easy": "Easy",
-            "medium": "Medium", 
-            "hard": "Hard"
-        },
-        "showActive": "Show Active",
-        "showArchived": "Show Archived",
-        "allDifficulties": "All Difficulties",
-        "status": {
-            "active": "Active",
-            "archived": "Archived"
-        }
+    "practiceDifficulty": "Practice Difficulty Per Exercise",
+    "practiceDifficultyDesc": "Set the difficulty level for each exercise type in practice mode"
+  },
+  "customize": {
+    "title": "Add Custom Exercises",
+    "modes": {
+      "individual": "Individual",
+      "bulkUpload": "Bulk Upload"
+    },
+    "chooseType": "Choose Exercise Type:",
+    "types": {
+      "picture": "Picture",
+      "sentence": "Sentence",
+      "words": "Words",
+      "timeSequencing": "Time Sequencing",
+      "timeOrdering": "Time Ordering",
+      "clockMatching": "Clock Matching",
+      "workingMemory": "Working Memory"
+    },
+    "bulkUpload": {
+      "title": "Bulk Upload from CSV",
+      "instructions": "Instructions (click to expand)",
+      "howTo": "How to upload custom exercises:",
+      "selectExercises": "Select exercise types to include in template",
+      "step1": "Select which exercise types you want to upload and download the template",
+      "step2": "Open it in Excel, Google Sheets, or any spreadsheet app",
+      "step3": "Fill in your custom exercises following the format",
+      "step4": "Save as CSV file",
+      "step5": "Upload the file here",
+      "formatGuidelines": "CSV Format Guidelines:",
+      "pictureFormat": "Picture Naming:",
+      "sentenceFormat": "Sentence Completion:",
+      "wordFormat": "Word Lists:",
+      "pictureExample": "Example: apple, https://example.com/apple.jpg, banana, orange, pear, medium",
+      "sentenceExample": "Example: I drink __ every morning, coffee, easy",
+      "wordExample": "Example: rhyming, cat, hat|bat|mat, hard",
+      "timeSequencingExample": "Example: What day comes after Monday?, Tuesday, Wednesday, Sunday, Friday, easy",
+      "timeOrderingExample": "Example: Morning routine, Put these activities in order, Wake up, Brush teeth, Eat breakfast, Leave house, medium",
+      "clockMatchingExample": "Example: 3:00, three o'clock, easy",
+      "workingMemoryExample": "Example: 🍎, 🍌, 🍊, 🍇, 🍓, 🥝, medium",
+      "downloadTemplate": "Download Template",
+      "uploadFile": "Upload CSV File",
+      "selectFile": "Select File...",
+      "processing": "Processing...",
+      "success": "Successfully imported {count} exercises!",
+      "error": "Error importing file: {message}"
+    },
+    "existing": "Your Custom Exercises",
+    "noCustom": "No custom exercises yet.",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirmDelete": "Delete this exercise?",
+    "forms": {
+      "addWordExercise": "Add Word Exercise",
+      "addPictureExercise": "Add Picture Exercise",
+      "addSentenceExercise": "Add Sentence Exercise",
+      "exerciseType": "Exercise Type",
+      "rhymingWords": "Rhyming Words",
+      "wordAssociation": "Word Association",
+      "synonyms": "Synonyms",
+      "mainWord": "Main Word",
+      "mainWordPlaceholder": "e.g., cat",
+      "relatedWords": "Related Words (comma separated)",
+      "relatedWordsPlaceholder": "e.g., hat, bat, mat",
+      "targetWord": "Target Word",
+      "targetWordPlaceholder": "e.g., apple",
+      "wrongOptions": "Wrong Options (comma separated)",
+      "wrongOptionsOptional": "Wrong Options (optional)",
+      "wrongOptionsPlaceholder": "e.g., banana, orange, grape",
+      "sentence": "Sentence",
+      "sentenceWithBlank": "Sentence (use __ for blank)",
+      "sentencePlaceholder": "e.g., I drink __ every morning",
+      "answer": "Answer",
+      "answerPlaceholder": "e.g., coffee",
+      "addExercise": "Add Exercise",
+      "imageFile": "Image File (optional)",
+      "chooseFile": "Choose file...",
+      "noFileSelected": "no file selected",
+      "uploadPictureHelp": "Upload a picture for this word",
+      "autoGenerateHelp": "Leave empty to auto-generate from other words",
+      "imageUrl": "Or Image URL",
+      "imageUrlPlaceholder": "https://example.com/image.jpg",
+      "addTimeSequencing": "Add Time Sequencing Exercise",
+      "addTimeOrdering": "Add Time Ordering Exercise",
+      "addClockMatching": "Add Clock Matching Exercise",
+      "addWorkingMemory": "Add Working Memory Exercise",
+      "question": "Question",
+      "timeQuestionPlaceholder": "e.g., What day comes after Monday?",
+      "correctAnswer": "Correct Answer",
+      "timeAnswerPlaceholder": "e.g., Tuesday",
+      "timeOptionsPlaceholder": "e.g., Wednesday, Sunday, Friday",
+      "timeOptionsHelp": "Enter 3 wrong answer choices separated by commas",
+      "scenario": "Scenario",
+      "scenarioPlaceholder": "e.g., Daily routine",
+      "description": "Description",
+      "descriptionPlaceholder": "e.g., Put these daily activities in order",
+      "activities": "Activities (one per line)",
+      "activitiesPlaceholder": "Wake up\nEat breakfast\nGo to work\nEat dinner\nGo to sleep",
+      "activitiesHelp": "Enter activities in the correct order, one per line",
+      "digitalTime": "Digital Time",
+      "timeWords": "Time in Words",
+      "timeWordsPlaceholder": "e.g., three o'clock",
+      "timeWordsHelp": "How the time should be spoken",
+      "emojiSequence": "Emoji Sequence (3 emojis)",
+      "sequencePlaceholder": "🍎🍌🍊",
+      "sequenceHelp": "Enter exactly 3 emojis that will be shown in sequence",
+      "extraOptions": "Extra Options (3+ emojis)",
+      "extraOptionsPlaceholder": "🍇🍓🥝🥭🍉",
+      "extraOptionsHelp": "Enter at least 3 additional emojis as wrong choices",
+      "difficulty": "Difficulty Level",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "showActive": "Show Active",
+    "showArchived": "Show Archived",
+    "allDifficulties": "All Difficulties",
+    "status": {
+      "active": "Active",
+      "archived": "Archived"
     }
+  },
+  "modes": {
+    "practice": "Practice",
+    "test": "Test",
+    "question": "Question",
+    "of": "of"
+  }
 }
