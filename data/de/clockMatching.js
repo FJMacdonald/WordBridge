@@ -1,24 +1,24 @@
 /**
  * Clock Matching exercise data (German)
- * Format: { id, time, hour, minute, digitalDisplay, analogData, timeWords }
+ * Format: { id, time, hour, minute, digitalDisplay, analogData, timeWords , difficulty: 'easy' }
  */
 export const clockMatchingData = [
-    { id: '3_00', time: '3:00', hour: 3, minute: 0, digitalDisplay: '3:00', analogData: { hourAngle: 90, minuteAngle: 0 }, timeWords: 'drei Uhr' },
-    { id: '6_30', time: '6:30', hour: 6, minute: 30, digitalDisplay: '6:30', analogData: { hourAngle: 195, minuteAngle: 180 }, timeWords: 'sechs Uhr dreißig' },
-    { id: '9_15', time: '9:15', hour: 9, minute: 15, digitalDisplay: '9:15', analogData: { hourAngle: 277.5, minuteAngle: 90 }, timeWords: 'neun Uhr fünfzehn' },
-    { id: '12_45', time: '12:45', hour: 12, minute: 45, digitalDisplay: '12:45', analogData: { hourAngle: 22.5, minuteAngle: 270 }, timeWords: 'zwölf Uhr fünfundvierzig' },
-    { id: '2_20', time: '2:20', hour: 2, minute: 20, digitalDisplay: '2:20', analogData: { hourAngle: 70, minuteAngle: 120 }, timeWords: 'zwei Uhr zwanzig' },
-    { id: '8_10', time: '8:10', hour: 8, minute: 10, digitalDisplay: '8:10', analogData: { hourAngle: 245, minuteAngle: 60 }, timeWords: 'acht Uhr zehn' },
-    { id: '1_30', time: '1:30', hour: 1, minute: 30, digitalDisplay: '1:30', analogData: { hourAngle: 45, minuteAngle: 180 }, timeWords: 'ein Uhr dreißig' },
-    { id: '4_45', time: '4:45', hour: 4, minute: 45, digitalDisplay: '4:45', analogData: { hourAngle: 157.5, minuteAngle: 270 }, timeWords: 'vier Uhr fünfundvierzig' },
-    { id: '7_15', time: '7:15', hour: 7, minute: 15, digitalDisplay: '7:15', analogData: { hourAngle: 217.5, minuteAngle: 90 }, timeWords: 'sieben Uhr fünfzehn' },
-    { id: '10_30', time: '10:30', hour: 10, minute: 30, digitalDisplay: '10:30', analogData: { hourAngle: 315, minuteAngle: 180 }, timeWords: 'zehn Uhr dreißig' },
-    { id: '5_00', time: '5:00', hour: 5, minute: 0, digitalDisplay: '5:00', analogData: { hourAngle: 150, minuteAngle: 0 }, timeWords: 'fünf Uhr' },
-    { id: '11_45', time: '11:45', hour: 11, minute: 45, digitalDisplay: '11:45', analogData: { hourAngle: 352.5, minuteAngle: 270 }, timeWords: 'elf Uhr fünfundvierzig' },
-    { id: '3_25', time: '3:25', hour: 3, minute: 25, digitalDisplay: '3:25', analogData: { hourAngle: 102.5, minuteAngle: 150 }, timeWords: 'drei Uhr fünfundzwanzig' },
-    { id: '8_40', time: '8:40', hour: 8, minute: 40, digitalDisplay: '8:40', analogData: { hourAngle: 260, minuteAngle: 240 }, timeWords: 'acht Uhr vierzig' },
-    { id: '6_05', time: '6:05', hour: 6, minute: 5, digitalDisplay: '6:05', analogData: { hourAngle: 182.5, minuteAngle: 30 }, timeWords: 'sechs Uhr fünf' },
-    { id: '12_00', time: '12:00', hour: 12, minute: 0, digitalDisplay: '12:00', analogData: { hourAngle: 0, minuteAngle: 0 }, timeWords: 'zwölf Uhr' }
+    { id: '3_00', time: '3:00', hour: 3, minute: 0, digitalDisplay: '3:00', analogData: { hourAngle: 90, minuteAngle: 0 , difficulty: 'easy' }, timeWords: 'drei Uhr' },
+    { id: '6_30', time: '6:30', hour: 6, minute: 30, digitalDisplay: '6:30', analogData: { hourAngle: 195, minuteAngle: 180 , difficulty: 'easy' }, timeWords: 'sechs Uhr dreißig' },
+    { id: '9_15', time: '9:15', hour: 9, minute: 15, digitalDisplay: '9:15', analogData: { hourAngle: 277.5, minuteAngle: 90 , difficulty: 'easy' }, timeWords: 'neun Uhr fünfzehn' },
+    { id: '12_45', time: '12:45', hour: 12, minute: 45, digitalDisplay: '12:45', analogData: { hourAngle: 22.5, minuteAngle: 270 , difficulty: 'easy' }, timeWords: 'zwölf Uhr fünfundvierzig' },
+    { id: '2_20', time: '2:20', hour: 2, minute: 20, digitalDisplay: '2:20', analogData: { hourAngle: 70, minuteAngle: 120 , difficulty: 'easy' }, timeWords: 'zwei Uhr zwanzig' },
+    { id: '8_10', time: '8:10', hour: 8, minute: 10, digitalDisplay: '8:10', analogData: { hourAngle: 245, minuteAngle: 60 , difficulty: 'easy' }, timeWords: 'acht Uhr zehn' },
+    { id: '1_30', time: '1:30', hour: 1, minute: 30, digitalDisplay: '1:30', analogData: { hourAngle: 45, minuteAngle: 180 , difficulty: 'easy' }, timeWords: 'ein Uhr dreißig' },
+    { id: '4_45', time: '4:45', hour: 4, minute: 45, digitalDisplay: '4:45', analogData: { hourAngle: 157.5, minuteAngle: 270 , difficulty: 'easy' }, timeWords: 'vier Uhr fünfundvierzig' },
+    { id: '7_15', time: '7:15', hour: 7, minute: 15, digitalDisplay: '7:15', analogData: { hourAngle: 217.5, minuteAngle: 90 , difficulty: 'easy' }, timeWords: 'sieben Uhr fünfzehn' },
+    { id: '10_30', time: '10:30', hour: 10, minute: 30, digitalDisplay: '10:30', analogData: { hourAngle: 315, minuteAngle: 180 , difficulty: 'easy' }, timeWords: 'zehn Uhr dreißig' },
+    { id: '5_00', time: '5:00', hour: 5, minute: 0, digitalDisplay: '5:00', analogData: { hourAngle: 150, minuteAngle: 0 , difficulty: 'easy' }, timeWords: 'fünf Uhr' },
+    { id: '11_45', time: '11:45', hour: 11, minute: 45, digitalDisplay: '11:45', analogData: { hourAngle: 352.5, minuteAngle: 270 , difficulty: 'easy' }, timeWords: 'elf Uhr fünfundvierzig' },
+    { id: '3_25', time: '3:25', hour: 3, minute: 25, digitalDisplay: '3:25', analogData: { hourAngle: 102.5, minuteAngle: 150 , difficulty: 'easy' }, timeWords: 'drei Uhr fünfundzwanzig' },
+    { id: '8_40', time: '8:40', hour: 8, minute: 40, digitalDisplay: '8:40', analogData: { hourAngle: 260, minuteAngle: 240 , difficulty: 'easy' }, timeWords: 'acht Uhr vierzig' },
+    { id: '6_05', time: '6:05', hour: 6, minute: 5, digitalDisplay: '6:05', analogData: { hourAngle: 182.5, minuteAngle: 30 , difficulty: 'easy' }, timeWords: 'sechs Uhr fünf' },
+    { id: '12_00', time: '12:00', hour: 12, minute: 0, digitalDisplay: '12:00', analogData: { hourAngle: 0, minuteAngle: 0 , difficulty: 'easy' }, timeWords: 'zwölf Uhr' }
 ];
 
 export default clockMatchingData;
