@@ -51,35 +51,97 @@ class CustomizePage {
                 <div class="mode-content" id="individual-mode">
                     <div class="exercise-type-selector">
                         <h3>${t('customize.chooseType')}</h3>
-                        <div class="type-grid">
-                            <button class="type-btn" data-type="naming">
-                                <span class="type-icon">🖼️</span>
-                                <span class="type-name">${t('customize.types.picture')}</span>
-                            </button>
-                            <button class="type-btn" data-type="sentenceTyping">
-                                <span class="type-icon">📝</span>
-                                <span class="type-name">${t('customize.types.sentence')}</span>
-                            </button>
-                            <button class="type-btn" data-type="words">
-                                <span class="type-icon">📚</span>
-                                <span class="type-name">${t('customize.types.words')}</span>
-                            </button>
-                            <button class="type-btn" data-type="timeSequencing">
-                                <span class="type-icon">📅</span>
-                                <span class="type-name">${t('customize.types.timeSequencing')}</span>
-                            </button>
-                            <button class="type-btn" data-type="timeOrdering">
-                                <span class="type-icon">⏰</span>
-                                <span class="type-name">${t('customize.types.timeOrdering')}</span>
-                            </button>
-                            <button class="type-btn" data-type="clockMatching">
-                                <span class="type-icon">🕐</span>
-                                <span class="type-name">${t('customize.types.clockMatching')}</span>
-                            </button>
-                            <button class="type-btn" data-type="workingMemory">
-                                <span class="type-icon">🧠</span>
-                                <span class="type-name">${t('customize.types.workingMemory')}</span>
-                            </button>
+                        
+                        <!-- Words Category -->
+                        <div class="type-category">
+                            <h4 class="category-label">📚 Words</h4>
+                            <div class="type-grid">
+                                <button class="type-btn" data-type="naming">
+                                    <span class="type-icon">🖼️</span>
+                                    <span class="type-name">Picture Naming</span>
+                                </button>
+                                <button class="type-btn" data-type="typing">
+                                    <span class="type-icon">⌨️</span>
+                                    <span class="type-name">Spelling</span>
+                                </button>
+                                <button class="type-btn" data-type="sentenceTyping">
+                                    <span class="type-icon">📝</span>
+                                    <span class="type-name">Fill Blank</span>
+                                </button>
+                                <button class="type-btn" data-type="category">
+                                    <span class="type-icon">📁</span>
+                                    <span class="type-name">Categories</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Phonetics Category -->
+                        <div class="type-category">
+                            <h4 class="category-label">🔊 Phonetics</h4>
+                            <div class="type-grid">
+                                <button class="type-btn" data-type="listening">
+                                    <span class="type-icon">👂</span>
+                                    <span class="type-name">Listening</span>
+                                </button>
+                                <button class="type-btn" data-type="speaking">
+                                    <span class="type-icon">🎤</span>
+                                    <span class="type-name">Speaking</span>
+                                </button>
+                                <button class="type-btn" data-type="firstSound">
+                                    <span class="type-icon">🔤</span>
+                                    <span class="type-name">First Sounds</span>
+                                </button>
+                                <button class="type-btn" data-type="rhyming">
+                                    <span class="type-icon">🎵</span>
+                                    <span class="type-name">Rhyming</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Meaning Category -->
+                        <div class="type-category">
+                            <h4 class="category-label">💡 Meaning</h4>
+                            <div class="type-grid">
+                                <button class="type-btn" data-type="definitions">
+                                    <span class="type-icon">📖</span>
+                                    <span class="type-name">Definitions</span>
+                                </button>
+                                <button class="type-btn" data-type="association">
+                                    <span class="type-icon">🔗</span>
+                                    <span class="type-name">Association</span>
+                                </button>
+                                <button class="type-btn" data-type="synonyms">
+                                    <span class="type-icon">≈</span>
+                                    <span class="type-name">Synonyms</span>
+                                </button>
+                                <button class="type-btn" data-type="scramble">
+                                    <span class="type-icon">🔀</span>
+                                    <span class="type-name">Unscramble</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Time Category -->
+                        <div class="type-category">
+                            <h4 class="category-label">⏰ Time</h4>
+                            <div class="type-grid">
+                                <button class="type-btn" data-type="timeSequencing">
+                                    <span class="type-icon">📅</span>
+                                    <span class="type-name">Time Sequencing</span>
+                                </button>
+                                <button class="type-btn" data-type="clockMatching">
+                                    <span class="type-icon">🕐</span>
+                                    <span class="type-name">Clock Matching</span>
+                                </button>
+                                <button class="type-btn" data-type="timeOrdering">
+                                    <span class="type-icon">⏰</span>
+                                    <span class="type-name">Time Ordering</span>
+                                </button>
+                                <button class="type-btn" data-type="workingMemory">
+                                    <span class="type-icon">🧠</span>
+                                    <span class="type-name">Working Memory</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     
@@ -91,27 +153,17 @@ class CustomizePage {
                     ${this.renderBulkUploadSection()}
                 </div>
                 
-                <!-- Existing Custom Exercises -->
+                <!-- Existing Custom Exercises Library -->
                 <section class="existing-section">
                     <div class="existing-header">
-                        <h3>${t('customize.existing')}</h3>
-                        <div class="exercise-filters">
-                            <label>
-                                <input type="checkbox" id="show-active" checked> ${t('customize.showActive')}
-                            </label>
-                            <label>
-                                <input type="checkbox" id="show-archived"> ${t('customize.showArchived')}
-                            </label>
-                            <select id="difficulty-filter">
-                                <option value="all">${t('customize.allDifficulties')}</option>
-                                <option value="easy">${t('customize.forms.easy')}</option>
-                                <option value="medium">${t('customize.forms.medium')}</option>
-                                <option value="hard">${t('customize.forms.hard')}</option>
-                            </select>
+                        <h3>📚 ${t('customize.existing')}</h3>
+                        <div class="library-controls">
+                            <button class="btn btn--secondary" id="expand-all">▼ Expand All</button>
+                            <button class="btn btn--secondary" id="collapse-all">▲ Collapse All</button>
                         </div>
                     </div>
-                    <div id="existing-items">
-                        ${await this.renderExistingItems(customExercises)}
+                    <div id="existing-items" class="spreadsheet-library">
+                        ${await this.renderExistingItemsSpreadsheet(customExercises)}
                     </div>
                 </section>
             </div>
@@ -129,13 +181,41 @@ class CustomizePage {
                 <div class="template-selection">
                     <h4>${t('customize.bulkUpload.selectExercises')}:</h4>
                     <div class="exercise-type-checkboxes">
-                        <label><input type="checkbox" value="naming" checked> 🖼️ ${t('customize.types.picture')}</label>
-                        <label><input type="checkbox" value="sentenceTyping" checked> 📝 ${t('customize.types.sentence')}</label>
-                        <label><input type="checkbox" value="words" checked> 📚 ${t('customize.types.words')}</label>
-                        <label><input type="checkbox" value="timeSequencing" checked> 📅 ${t('customize.types.timeSequencing')}</label>
-                        <label><input type="checkbox" value="timeOrdering" checked> ⏰ ${t('customize.types.timeOrdering')}</label>
-                        <label><input type="checkbox" value="clockMatching" checked> 🕐 ${t('customize.types.clockMatching')}</label>
-                        <label><input type="checkbox" value="workingMemory" checked> 🧠 ${t('customize.types.workingMemory')}</label>
+                        <!-- Words -->
+                        <div class="checkbox-category">
+                            <strong>📚 Words:</strong>
+                            <label><input type="checkbox" value="naming" checked> 🖼️ Picture Naming</label>
+                            <label><input type="checkbox" value="typing" checked> ⌨️ Spelling</label>
+                            <label><input type="checkbox" value="sentenceTyping" checked> 📝 Fill Blank</label>
+                            <label><input type="checkbox" value="category" checked> 📁 Categories</label>
+                        </div>
+                        
+                        <!-- Phonetics -->
+                        <div class="checkbox-category">
+                            <strong>🔊 Phonetics:</strong>
+                            <label><input type="checkbox" value="listening" checked> 👂 Listening</label>
+                            <label><input type="checkbox" value="speaking" checked> 🎤 Speaking</label>
+                            <label><input type="checkbox" value="firstSound" checked> 🔤 First Sounds</label>
+                            <label><input type="checkbox" value="rhyming" checked> 🎵 Rhyming</label>
+                        </div>
+                        
+                        <!-- Meaning -->
+                        <div class="checkbox-category">
+                            <strong>💡 Meaning:</strong>
+                            <label><input type="checkbox" value="definitions" checked> 📖 Definitions</label>
+                            <label><input type="checkbox" value="association" checked> 🔗 Association</label>
+                            <label><input type="checkbox" value="synonyms" checked> ≈ Synonyms</label>
+                            <label><input type="checkbox" value="scramble" checked> 🔀 Unscramble</label>
+                        </div>
+                        
+                        <!-- Time -->
+                        <div class="checkbox-category">
+                            <strong>⏰ Time:</strong>
+                            <label><input type="checkbox" value="timeSequencing" checked> 📅 Time Sequencing</label>
+                            <label><input type="checkbox" value="clockMatching" checked> 🕐 Clock Matching</label>
+                            <label><input type="checkbox" value="timeOrdering" checked> ⏰ Time Ordering</label>
+                            <label><input type="checkbox" value="workingMemory" checked> 🧠 Working Memory</label>
+                        </div>
                     </div>
                     <button class="btn btn--secondary" id="download-template">
                         📥 ${t('customize.bulkUpload.downloadTemplate')}
@@ -446,6 +526,222 @@ class CustomizePage {
         `;
     }
     
+    async renderExistingItemsSpreadsheet(customExercises) {
+        const totalItems = Object.values(customExercises).reduce((sum, arr) => sum + (arr?.length || 0), 0);
+        
+        if (totalItems === 0) {
+            return `<p class="empty-state">${t('customize.noCustom')}</p>`;
+        }
+        
+        // Group exercises by category (words, phonetics, meaning, time)
+        const categories = {
+            words: ['naming', 'typing', 'sentenceTyping', 'category'],
+            phonetics: ['listening', 'speaking', 'firstSound', 'rhyming'],
+            meaning: ['definitions', 'association', 'synonyms', 'scramble'],
+            time: ['timeSequencing', 'clockMatching', 'timeOrdering', 'workingMemory']
+        };
+        
+        const categoryNames = {
+            words: '📚 Words',
+            phonetics: '🔊 Phonetics',
+            meaning: '💡 Meaning',
+            time: '⏰ Time'
+        };
+        
+        const typeIcons = {
+            naming: '🖼️', typing: '⌨️', sentenceTyping: '📝', category: '📁',
+            listening: '👂', speaking: '🎤', firstSound: '🔤', rhyming: '🎵',
+            definitions: '📖', association: '🔗', synonyms: '≈', scramble: '🔀',
+            timeSequencing: '📅', clockMatching: '🕐', timeOrdering: '⏰', workingMemory: '🧠'
+        };
+        
+        let html = '<div class="collapsible-categories">';
+        
+        for (const [category, types] of Object.entries(categories)) {
+            // Count items in this category
+            const categoryCount = types.reduce((sum, type) => 
+                sum + (customExercises[type]?.length || 0), 0);
+            
+            if (categoryCount === 0) continue;
+            
+            html += `
+                <details class="category-section" open>
+                    <summary class="category-header">
+                        <span class="category-name">${categoryNames[category]}</span>
+                        <span class="category-count">(${categoryCount} items)</span>
+                    </summary>
+                    <div class="category-content">
+            `;
+            
+            // Render each type in this category
+            for (const type of types) {
+                const exercises = customExercises[type];
+                if (!exercises || exercises.length === 0) continue;
+                
+                html += this.renderTypeTable(type, exercises, typeIcons[type]);
+            }
+            
+            html += `
+                    </div>
+                </details>
+            `;
+        }
+        
+        html += '</div>';
+        return html;
+    }
+    
+    renderTypeTable(type, exercises, icon) {
+        const activeCount = exercises.filter(e => e.status !== 'archived').length;
+        const archivedCount = exercises.filter(e => e.status === 'archived').length;
+        
+        return `
+            <details class="type-section" open>
+                <summary class="type-header">
+                    <span class="type-info">
+                        <span class="type-icon">${icon}</span>
+                        <span class="type-name">${this.getTypeName(type)}</span>
+                    </span>
+                    <span class="type-counts">
+                        <span class="count-active">${activeCount} active</span>
+                        ${archivedCount > 0 ? `<span class="count-archived">${archivedCount} archived</span>` : ''}
+                    </span>
+                </summary>
+                <div class="type-table-container">
+                    <table class="exercise-table">
+                        <thead>
+                            <tr>
+                                <th class="col-difficulty">Difficulty</th>
+                                <th class="col-content">Content</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${exercises.map((exercise, index) => 
+                                this.renderTableRow(type, exercise, index)
+                            ).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        `;
+    }
+    
+    renderTableRow(type, exercise, index) {
+        const difficulty = exercise.difficulty || 'medium';
+        const status = exercise.status || 'active';
+        const isArchived = status === 'archived';
+        
+        // Get difficulty color class
+        const diffColors = {
+            easy: 'diff-easy',
+            medium: 'diff-medium',
+            hard: 'diff-hard'
+        };
+        
+        // Get content preview
+        const content = this.getContentPreview(type, exercise);
+        
+        return `
+            <tr class="exercise-row ${isArchived ? 'archived-row' : ''}" 
+                data-type="${type}" 
+                data-index="${index}">
+                <td class="col-difficulty">
+                    <span class="difficulty-dot ${diffColors[difficulty]}" 
+                          title="${difficulty}"></span>
+                    <span class="difficulty-text">${difficulty}</span>
+                </td>
+                <td class="col-content">
+                    <div class="content-preview">${content}</div>
+                </td>
+                <td class="col-status">
+                    <span class="status-badge status-${status}">${status}</span>
+                </td>
+                <td class="col-actions">
+                    <button class="action-btn edit-btn" 
+                            data-type="${type}" 
+                            data-index="${index}" 
+                            title="Edit">✏️</button>
+                    ${!isArchived ? `
+                        <button class="action-btn archive-btn" 
+                                data-type="${type}" 
+                                data-index="${index}" 
+                                title="Archive">📦</button>
+                    ` : `
+                        <button class="action-btn unarchive-btn" 
+                                data-type="${type}" 
+                                data-index="${index}" 
+                                title="Unarchive">📂</button>
+                    `}
+                    <button class="action-btn delete-btn" 
+                            data-type="${type}" 
+                            data-index="${index}" 
+                            title="Delete">🗑️</button>
+                </td>
+            </tr>
+        `;
+    }
+    
+    getTypeName(type) {
+        const names = {
+            naming: 'Picture Naming',
+            typing: 'Spelling',
+            sentenceTyping: 'Fill Blank',
+            category: 'Categories',
+            listening: 'Listening',
+            speaking: 'Speaking',
+            firstSound: 'First Sounds',
+            rhyming: 'Rhyming',
+            definitions: 'Definitions',
+            association: 'Association',
+            synonyms: 'Synonyms',
+            scramble: 'Unscramble',
+            timeSequencing: 'Time Sequencing',
+            clockMatching: 'Clock Matching',
+            timeOrdering: 'Time Ordering',
+            workingMemory: 'Working Memory'
+        };
+        return names[type] || type;
+    }
+    
+    getContentPreview(type, exercise) {
+        switch (type) {
+            case 'naming':
+            case 'typing':
+            case 'listening':
+                return `<strong>${exercise.answer}</strong>`;
+            case 'sentenceTyping':
+                return `${exercise.sentence} <span class="answer-preview">→ ${exercise.answer}</span>`;
+            case 'timeSequencing':
+                return `${exercise.question} <span class="answer-preview">→ ${exercise.answer}</span>`;
+            case 'timeOrdering':
+                return `<strong>${exercise.scenario}:</strong> ${exercise.description}`;
+            case 'clockMatching':
+                return `<strong>${exercise.digitalDisplay}</strong> (${exercise.timeWords})`;
+            case 'workingMemory':
+                return `Sequence: ${exercise.sequence.join('')}`;
+            case 'speaking':
+                return `<strong>${exercise.answer}</strong> (${exercise.phrases?.length || 0} phrases)`;
+            case 'firstSound':
+                return `Sound: <strong>${exercise.sound}</strong> (${exercise.words?.length || 0} words)`;
+            case 'rhyming':
+                return `<strong>${exercise.word}</strong> (${exercise.rhymes?.length || 0} rhymes)`;
+            case 'category':
+                return `${exercise.category}: <strong>${exercise.word}</strong>`;
+            case 'definitions':
+                return `<strong>${exercise.word}</strong>: ${exercise.definition}`;
+            case 'association':
+                return `<strong>${exercise.word}</strong> (${exercise.associated?.length || 0} related)`;
+            case 'synonyms':
+                return `<strong>${exercise.word}</strong> (${exercise.synonyms?.length || 0} synonyms)`;
+            case 'scramble':
+                return `${exercise.words?.join(' ') || 'Sentence'}`;
+            default:
+                return JSON.stringify(exercise).substring(0, 50) + '...';
+        }
+    }
+    
     async renderExistingItems(customExercises) {
         const items = [];
         
@@ -598,6 +894,43 @@ class CustomizePage {
                 const type = e.target.dataset.type;
                 const index = parseInt(e.target.dataset.index);
                 await this.deleteItem(type, index);
+            }
+        });
+        
+        // Spreadsheet-style library controls
+        const expandAll = this.container.querySelector('#expand-all');
+        const collapseAll = this.container.querySelector('#collapse-all');
+        
+        if (expandAll) {
+            expandAll.addEventListener('click', () => {
+                this.container.querySelectorAll('details').forEach(d => d.open = true);
+            });
+        }
+        
+        if (collapseAll) {
+            collapseAll.addEventListener('click', () => {
+                this.container.querySelectorAll('details').forEach(d => d.open = false);
+            });
+        }
+        
+        // Edit, Archive, Unarchive, Delete buttons in spreadsheet
+        this.container.addEventListener('click', async (e) => {
+            const btn = e.target.closest('.action-btn');
+            if (!btn) return;
+            
+            const type = btn.dataset.type;
+            const index = parseInt(btn.dataset.index);
+            
+            if (btn.classList.contains('edit-btn')) {
+                await this.editItem(type, index);
+            } else if (btn.classList.contains('archive-btn')) {
+                await this.archiveItem(type, index);
+            } else if (btn.classList.contains('unarchive-btn')) {
+                await this.unarchiveItem(type, index);
+            } else if (btn.classList.contains('delete-btn')) {
+                if (confirm('Are you sure you want to delete this exercise?')) {
+                    await this.deleteItem(type, index);
+                }
             }
         });
     }
@@ -1018,6 +1351,58 @@ class CustomizePage {
         
         this.container.querySelector('#individual-mode').hidden = mode !== 'individual';
         this.container.querySelector('#bulk-mode').hidden = mode !== 'bulk';
+    }
+    
+    async archiveItem(type, index) {
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        
+        if (customExercises[type] && customExercises[type][index]) {
+            customExercises[type][index].status = 'archived';
+            storageService.set(`customExercises_${locale}`, customExercises);
+            console.log('Archived item:', type, index);
+        }
+        
+        await this.render();
+    }
+    
+    async unarchiveItem(type, index) {
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        
+        if (customExercises[type] && customExercises[type][index]) {
+            customExercises[type][index].status = 'active';
+            storageService.set(`customExercises_${locale}`, customExercises);
+            console.log('Unarchived item:', type, index);
+        }
+        
+        await this.render();
+    }
+    
+    async editItem(type, index) {
+        // Switch to individual mode and load the item for editing
+        this.switchMode('individual');
+        
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        const item = customExercises[type]?.[index];
+        
+        if (!item) {
+            console.warn('Item not found for editing:', type, index);
+            return;
+        }
+        
+        console.log('Editing item:', type, index, item);
+        
+        // Render the form with pre-filled data
+        const formContainer = this.container.querySelector('#add-form-container');
+        if (formContainer) {
+            formContainer.innerHTML = this.renderIndividualForm(type, item, index);
+            this.attachFormListeners(type);
+        }
+        
+        // Scroll to form
+        formContainer?.scrollIntoView({ behavior: 'smooth' });
     }
     
     async deleteItem(type, index) {
