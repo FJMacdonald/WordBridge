@@ -269,7 +269,7 @@ class WorkingMemoryExercise extends BaseExercise {
             });
             
             this.showFeedback(true, t('exercises.workingMemory.perfectMemory'));
-            await this.delay(2000);
+            await this.delay(800);
             await this.nextItem();
         } else {
             trackingService.recordAttempt({
