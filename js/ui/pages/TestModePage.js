@@ -72,40 +72,28 @@ class TestModePage {
         
         return `
             <div class="test-option">
-                <div class="test-option-header">
+                <div class="test-option-info">
                     <span class="exercise-icon">${exercise.icon}</span>
                     <span class="exercise-name">${t('exercises.' + exercise.type + '.name')}</span>
                 </div>
-                <div class="test-option-settings">
-                    <div class="difficulty-selector">
-                        <label>${t('assessment.difficulty')}:</label>
-                        <div class="difficulty-buttons">
-                            <button class="difficulty-btn ${recommended === 'easy' ? 'recommended' : ''}" 
-                                    data-difficulty="easy">
-                                ${t('assessment.easy')}
-                                ${recommended === 'easy' ? '⭐' : ''}
-                            </button>
-                            <button class="difficulty-btn ${recommended === 'medium' ? 'recommended' : ''}" 
-                                    data-difficulty="medium">
-                                ${t('assessment.medium')}
-                                ${recommended === 'medium' ? '⭐' : ''}
-                            </button>
-                            <button class="difficulty-btn ${recommended === 'hard' ? 'recommended' : ''}" 
-                                    data-difficulty="hard">
-                                ${t('assessment.hard')}
-                                ${recommended === 'hard' ? '⭐' : ''}
-                            </button>
-                        </div>
-                    </div>
-                    <div class="questions-selector">
-                        <label>${t('assessment.questions')}:</label>
-                        <select class="questions-select">
-                            <option value="10">10 ${t('assessment.questions')}</option>
-                            <option value="20" selected>20 ${t('assessment.questions')}</option>
-                            <option value="30">30 ${t('assessment.questions')}</option>
-                        </select>
-                    </div>
-                    <button class="btn btn--primary start-test-btn" 
+                <div class="test-option-controls">
+                    <select class="difficulty-select" data-recommended="${recommended}">
+                        <option value="easy" ${recommended === 'easy' ? 'selected' : ''}>
+                            ${t('assessment.easy')} ${recommended === 'easy' ? '⭐' : ''}
+                        </option>
+                        <option value="medium" ${recommended === 'medium' ? 'selected' : ''}>
+                            ${t('assessment.medium')} ${recommended === 'medium' ? '⭐' : ''}
+                        </option>
+                        <option value="hard" ${recommended === 'hard' ? 'selected' : ''}>
+                            ${t('assessment.hard')} ${recommended === 'hard' ? '⭐' : ''}
+                        </option>
+                    </select>
+                    <select class="questions-select">
+                        <option value="10">10</option>
+                        <option value="20" selected>20</option>
+                        <option value="30">30</option>
+                    </select>
+                    <button class="btn btn--primary btn--compact start-test-btn" 
                             data-type="${exercise.type}">
                         ${t('assessment.startTest')}
                     </button>
@@ -152,25 +140,12 @@ class TestModePage {
     }
     
     attachListeners() {
-        // Difficulty button selection
-        this.container.addEventListener('click', (e) => {
-            if (e.target.classList.contains('difficulty-btn')) {
-                const option = e.target.closest('.test-option');
-                option.querySelectorAll('.difficulty-btn').forEach(btn => 
-                    btn.classList.remove('selected'));
-                e.target.classList.add('selected');
-            }
-        });
-        
         // Start test buttons
         this.container.querySelectorAll('.start-test-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const exerciseType = btn.dataset.type;
                 const option = btn.closest('.test-option');
-                const selectedDiffBtn = option.querySelector('.difficulty-btn.selected');
-                const difficulty = selectedDiffBtn ? 
-                    selectedDiffBtn.dataset.difficulty : 
-                    option.querySelector('.difficulty-btn.recommended')?.dataset.difficulty || 'easy';
+                const difficulty = option.querySelector('.difficulty-select').value;
                 const questions = parseInt(option.querySelector('.questions-select').value);
                 
                 this.startTest(exerciseType, difficulty, questions);
@@ -179,7 +154,6 @@ class TestModePage {
     }
     
     startTest(exerciseType, difficulty, questions) {
-        console.log('Starting test:', { exerciseType, difficulty, questions });
         
         // Start test mode in ModeService
         modeService.startTestMode(exerciseType, difficulty);
