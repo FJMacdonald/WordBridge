@@ -1,0 +1,570 @@
+/* Customize Page Improvements */
+
+/* Dropdown selectors instead of buttons */
+.dropdown-selectors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--bg-secondary, #f8f9fa);
+    border-radius: 12px;
+}
+
+.category-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.category-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary, #333);
+    margin-bottom: 0.25rem;
+}
+
+.type-dropdown {
+    padding: 0.75rem;
+    border: 2px solid var(--border-color, #e0e0e0);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    transition: border-color 0.2s ease;
+}
+
+.type-dropdown:focus {
+    outline: none;
+    border-color: var(--primary-color, #007bff);
+    box-shadow: 0 0 0 3px var(--primary-color-light, rgba(0, 123, 255, 0.1));
+}
+
+.type-dropdown option {
+    padding: 0.5rem;
+}
+
+/* Bulk upload improvements - better horizontal space usage */
+.exercise-type-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.checkbox-category {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #e0e0e0);
+}
+
+.checkbox-category strong {
+    display: block;
+    margin-bottom: 1rem;
+    color: var(--text-primary, #333);
+    font-size: 1.1rem;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+}
+
+.checkbox-grid label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.checkbox-grid label:hover {
+    background: var(--bg-hover, #f0f0f0);
+}
+
+.checkbox-grid input[type="checkbox"] {
+    margin: 0;
+}
+
+/* Progress Page Improvements */
+.progress-tabs {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0 1rem 0;
+    border-bottom: 2px solid var(--border-color, #e0e0e0);
+}
+
+.tab-btn {
+    padding: 1rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-secondary, #666);
+}
+
+.tab-btn.active {
+    color: var(--primary-color, #007bff);
+    border-bottom-color: var(--primary-color, #007bff);
+}
+
+.tab-btn:hover:not(.active) {
+    color: var(--text-primary, #333);
+    background: var(--bg-hover, #f0f0f0);
+}
+
+.tab-content {
+    padding: 2rem 0;
+}
+
+.time-range-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+    background: var(--bg-secondary, #f8f9fa);
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.time-btn {
+    padding: 0.5rem 1rem;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.time-btn.active {
+    background: var(--primary-color, #007bff);
+    color: white;
+}
+
+.time-btn:hover:not(.active) {
+    background: white;
+}
+
+/* Practice Cards Grid */
+.practice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.practice-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color, #e0e0e0);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.practice-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color, #007bff);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.card-icon {
+    font-size: 1.5rem;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-primary, #333);
+}
+
+.card-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color, #007bff);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary, #666);
+    margin-top: 0.25rem;
+}
+
+.card-accuracy {
+    margin-top: 1rem;
+}
+
+.accuracy-bar {
+    height: 8px;
+    background: var(--bg-secondary, #f8f9fa);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.accuracy-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745 0%, #20c997 50%, #007bff 100%);
+    transition: width 0.3s ease;
+}
+
+.accuracy-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary, #666);
+}
+
+/* Assessment Cards Grid */
+.assessment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.assessment-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid var(--border-color, #e0e0e0);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.assessment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color, #007bff);
+}
+
+.trend-indicator {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.trend-indicator.positive {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.trend-indicator.negative {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.trend-indicator.neutral {
+    background: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.difficulties-section,
+.recommendations-section {
+    margin-top: 1.5rem;
+}
+
+.difficulties-section h5,
+.recommendations-section h5 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+    color: var(--text-primary, #333);
+}
+
+.difficulty-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.difficulty-tag {
+    padding: 0.25rem 0.5rem;
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.recommendation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recommendation-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color, #f0f0f0);
+    font-size: 0.9rem;
+    color: var(--text-secondary, #666);
+}
+
+.recommendation-list li:last-child {
+    border-bottom: none;
+}
+
+.recommendation-list li:before {
+    content: '💡';
+    margin-right: 0.5rem;
+}
+
+/* Empty States */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #e0e0e0);
+}
+
+.empty-state h3 {
+    margin: 0 0 1rem 0;
+    color: var(--text-secondary, #666);
+}
+
+.empty-state p {
+    margin: 0 0 2rem 0;
+    color: var(--text-secondary, #999);
+}
+
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary, #666);
+    font-style: italic;
+}
+
+/* Assessment Detail Modal */
+.assessment-detail-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 800px;
+    max-height: 90vh;
+    width: 90%;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--text-primary, #333);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary, #666);
+    padding: 0.25rem;
+}
+
+.modal-close:hover {
+    color: var(--text-primary, #333);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border-color, #e0e0e0);
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline:before {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-color, #e0e0e0);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: -0.5rem;
+    top: 0.5rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color, #007bff);
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary, #666);
+    margin-bottom: 0.25rem;
+}
+
+.timeline-score {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.timeline-score.excellent {
+    color: #28a745;
+}
+
+.timeline-score.good {
+    color: #007bff;
+}
+
+.timeline-score.needs-work {
+    color: #dc3545;
+}
+
+.timeline-details {
+    font-size: 0.8rem;
+    color: var(--text-secondary, #999);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dropdown-selectors {
+        grid-template-columns: 1fr;
+    }
+    
+    .exercise-type-checkboxes {
+        grid-template-columns: 1fr;
+    }
+    
+    .checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .practice-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .assessment-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-stats {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .stat {
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-color, #f0f0f0);
+    }
+    
+    .stat:last-child {
+        border-bottom: none;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-hover: #3a3a3a;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --border-color: #404040;
+        --primary-color: #0d7bff;
+        --primary-color-light: rgba(13, 123, 255, 0.2);
+    }
+    
+    .practice-card,
+    .assessment-card,
+    .empty-state,
+    .modal-content {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+    }
+    
+    .checkbox-category {
+        background: var(--bg-secondary);
+    }
+    
+    .type-dropdown {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+    }
+    
+    .accuracy-bar {
+        background: var(--border-color);
+    }
+}
