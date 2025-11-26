@@ -100,14 +100,16 @@ class SpeakingExercise extends BaseExercise {
         switch (hint.type) {
             case 'letters':
                 hintHTML = `<div class="hint-item hint-letters">${hint.text}</div>`;
-                // Speak "starts with" for the first hint
-                setTimeout(() => audioService.speak(t('exercises.typing.startsWith')), 100);
+                // Speak "starts with [letter]"
+                const firstLetter = word[0].toUpperCase();
+                setTimeout(() => audioService.speak(`${t('exercises.typing.startsWith')} ${firstLetter}`), 100);
                 break;
             case 'phrase':
                 const displayPhrase = hint.text.replace(new RegExp(word, 'gi'), '______');
                 hintHTML = `<div class="hint-item hint-phrase">"${displayPhrase}"</div>`;
-                // Speak the full sentence with the word
-                setTimeout(() => audioService.speak(hint.text), 100);
+                // Speak the phrase with a pause where the word should be
+                const phraseWithPause = hint.text.replace(new RegExp(word, 'gi'), '... ...');
+                setTimeout(() => audioService.speak(phraseWithPause, { rate: 0.8 }), 100);
                 break;
             case 'word':
                 hintHTML = `

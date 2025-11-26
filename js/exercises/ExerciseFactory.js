@@ -10,6 +10,10 @@ import AssociationExercise from './implementations/AssociationExercise.js';
 import SynonymExercise from './implementations/SynonymExercise.js';
 import DefinitionExercise from './implementations/DefinitionExercise.js';
 import ScrambleExercise from './implementations/ScrambleExercise.js';
+import TimeSequencingExercise from './implementations/TimeSequencingExercise.js';
+import ClockMatchingExercise from './implementations/ClockMatchingExercise.js';
+import TimeOrderingExercise from './implementations/TimeOrderingExercise.js';
+import WorkingMemoryExercise from './implementations/WorkingMemoryExercise.js';
 
 /**
  * Factory for creating exercise instances
@@ -93,6 +97,32 @@ class ExerciseFactory {
                 name: 'Categories',
                 icon: '📁',
                 category: 'words'
+            },
+            
+            // Time
+            timeSequencing: {
+                class: TimeSequencingExercise,
+                name: 'Time Sequencing',
+                icon: '📅',
+                category: 'time'
+            },
+            clockMatching: {
+                class: ClockMatchingExercise,
+                name: 'Clock Matching',
+                icon: '🕐',
+                category: 'time'
+            },
+            timeOrdering: {
+                class: TimeOrderingExercise,
+                name: 'Time Ordering',
+                icon: '⏰',
+                category: 'time'
+            },
+            workingMemory: {
+                class: WorkingMemoryExercise,
+                name: 'Working Memory',
+                icon: '🧠',
+                category: 'time'
             }
         };
     }
@@ -115,7 +145,8 @@ class ExerciseFactory {
         const categories = {
             meaning: [],
             phonetics: [],
-            words: []
+            words: [],
+            time: []
         };
         
         Object.entries(this.exercises).forEach(([type, config]) => {

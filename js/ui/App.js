@@ -21,7 +21,10 @@ import { synonymData } from '../../data/default/synonyms.js';
 import { definitionData } from '../../data/default/definitions.js';
 import { scrambleData } from '../../data/default/scramble.js';
 import { speakingData } from '../../data/default/speaking.js';
-
+import { timeOrderingData } from '../../data/default/timeOrdering.js';
+import { clockMatchingData } from '../../data/default/clockMatching.js';
+import { timeSequencingData } from '../../data/default/timeSequencing.js';
+import { workingMemoryData } from '../../data/default/workingMemory.js';
 /**
  * Main application controller
  */
@@ -41,7 +44,11 @@ class App {
             listening: namingData,
             speaking: speakingData,
             scramble: scrambleData,
-            typing: namingData
+            typing: namingData,
+            clockMatching: clockMatchingData,
+            timeOrdering: timeOrderingData,
+            timeSequencing: timeSequencingData,
+            workingMemory: workingMemoryData
         };
     }
     
@@ -162,6 +169,11 @@ class App {
                 name: t('home.categories.words'),
                 icon: '📚',
                 description: 'Recognition and spelling'
+            },
+            time: {
+                name: t('home.categories.time'),
+                icon: '📚',
+                description: 'Temporal concepts'
             }
         };
         
@@ -296,6 +308,38 @@ class App {
                             console.warn('German speaking data not available, using English');
                         }
                         break;
+                    case 'timeSequencing':
+                        try {
+                            germanData = await import(`../../data/de/timeSequencing.js`);
+                            defaultData = germanData.timeSequencingData || defaultData;
+                        } catch (e) {
+                            console.warn('German time sequencing data not available, using English');
+                        }
+                        break;
+                    case 'clockMatching':
+                        try {
+                            germanData = await import(`../../data/de/clockMatching.js`);
+                            defaultData = germanData.clockMatchingData || defaultData;
+                        } catch (e) {
+                            console.warn('German clock matching data not available, using English');
+                        }
+                        break;
+                    case 'timeOrdering':
+                        try {
+                            germanData = await import(`../../data/de/timeOrdering.js`);
+                            defaultData = germanData.timeOrderingData || defaultData;
+                        } catch (e) {
+                            console.warn('German time ordering data not available, using English');
+                        }
+                        break;
+                    case 'workingMemory':
+                        try {
+                            germanData = await import(`../../data/de/workingMemory.js`);
+                            defaultData = germanData.workingMemoryData || defaultData;
+                        } catch (e) {
+                            console.warn('German working memory data not available, using English');
+                        }
+                        break;
                 }
             } catch (e) {
                 console.warn('German data not available for ' + type + ', using English');
@@ -308,8 +352,8 @@ class App {
         // Get custom exercise frequency setting
         const customFrequency = Config.get('exercises.customFrequency') || 'mixed';
         
-        if (customFrequency === 'only' && customData.length > 0) {
-            // Use only custom exercises
+        if (customFrequency === 'only') {
+            // Use only custom exercises - even if empty, don't fall back to default
             return customData;
         } else if (customFrequency === 'high' && customData.length > 0) {
             // 70% custom, 30% default

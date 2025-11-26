@@ -109,6 +109,46 @@
             "typeKeyboardOrTap": "Tippe auf der Tastatur oder tippe auf das Feld oben",
             "startsWith": "Beginnt mit:",
             "listenCarefully": "Höre genau zu"
+        },
+        "timeSequencing": {
+            "name": "Zeit Reihenfolge",
+            "instruction": "Wähle die richtige Antwort",
+            "daysBefore": "Welcher Tag kommt vor",
+            "daysAfter": "Welcher Tag kommt nach",
+            "monthsBefore": "Welcher Monat kommt vor",
+            "monthsAfter": "Welcher Monat kommt nach"
+        },
+        "clockMatching": {
+            "name": "Uhren Zuordnen",
+            "instruction": "Ordne die digitale Zeit der analogen Uhr zu",
+            "whatTimeIs": "Wie spät ist es?",
+            "selectClock": "Wähle die Uhr aus, die zeigt"
+        },
+        "timeOrdering": {
+            "name": "Zeit Ordnen",
+            "instruction": "Bringe diese Aktivitäten in die richtige zeitliche Reihenfolge",
+            "dragToReorder": "Ziehe Elemente zum Neuordnen",
+            "correctOrder": "Richtige Reihenfolge",
+            "scenario": "Szenario",
+            "tapToSwap": "Tippe auf zwei Schaltflächen um sie zu tauschen"
+        },
+        "workingMemory": {
+            "name": "Arbeitsgedächtnis",
+            "instruction": "Beobachte die Reihenfolge, dann wähle die Elemente in derselben Reihenfolge aus",
+            "watchSequence": "Beobachte die Reihenfolge sorgfältig",
+            "memorize": "Merke dir die Reihenfolge",
+            "yourSelection": "Deine Auswahl",
+            "clear": "Löschen",
+            "alreadySelected": "Du hast dieses Emoji bereits ausgewählt",
+            "sequenceFull": "Reihenfolge ist voll - lösche um zu ändern",
+            "perfectMemory": "Perfekt! Du hast dir die Reihenfolge richtig gemerkt",
+            "correctSequence": "Die richtige Reihenfolge war:",
+            "hintSequence": "Hier ist die Reihenfolge:",
+            "sequenceIs": "Die Reihenfolge ist:",
+            "firstPosition": "Das erste Emoji",
+            "shouldBe": "sollte sein",
+            "replay": "Sequenz Wiederholen",
+            "tryAgain": "Versuche es nochmal! Lösche deine Auswahl und versuche es erneut"
         }
     },
     "results": {
@@ -127,7 +167,8 @@
         "categories": {
             "meaning": "Bedeutung",
             "phonetics": "Phonetik",
-            "words": "Wörter"
+            "words": "Wörter",
+            "time": "Zeit"
         }
     },
     "progress": {
@@ -312,13 +353,18 @@
         "types": {
             "picture": "Bild",
             "sentence": "Satz",
-            "words": "Wörter"
+            "words": "Wörter",
+            "timeSequencing": "Zeit Reihenfolge",
+            "timeOrdering": "Zeit Ordnen",
+            "clockMatching": "Uhren Zuordnen",
+            "workingMemory": "Arbeitsgedächtnis"
         },
         "bulkUpload": {
             "title": "Massenupload aus CSV",
             "instructions": "Anweisungen (zum Aufklappen klicken)",
             "howTo": "So lädst du benutzerdefinierte Übungen hoch:",
-            "step1": "Lade die CSV-Vorlage für den gewünschten Übungstyp herunter",
+            "selectExercises": "Wähle Übungstypen für die Vorlage aus",
+            "step1": "Wähle aus, welche Übungstypen du hochladen möchtest und lade die Vorlage herunter",
             "step2": "Öffne sie in Excel, Google Sheets oder einer anderen Tabellenkalkulation",
             "step3": "Fülle deine benutzerdefinierten Übungen nach dem Format aus",
             "step4": "Speichere als CSV-Datei",
@@ -327,9 +373,13 @@
             "pictureFormat": "Bilder Benennen:",
             "sentenceFormat": "Satz Vervollständigen:",
             "wordFormat": "Wortlisten:",
-            "pictureExample": "Beispiel: Apfel, https://example.com/apfel.jpg, Banane, Orange, Birne",
-            "sentenceExample": "Beispiel: Ich trinke jeden Morgen __, Kaffee",
-            "wordExample": "Beispiel: reimend, Katze, Tatze|Tatze|Matze",
+            "pictureExample": "Beispiel: Apfel, https://example.com/apfel.jpg, Banane, Orange, Birne, mittel",
+            "sentenceExample": "Beispiel: Ich trinke jeden Morgen __, Kaffee, einfach",
+            "wordExample": "Beispiel: reimend, Katze, Tatze|Tatze|Matze, schwer",
+            "timeSequencingExample": "Beispiel: Welcher Tag kommt nach Montag?, Dienstag, Mittwoch, Sonntag, Freitag, einfach",
+            "timeOrderingExample": "Beispiel: Morgenroutine, Bringe diese Aktivitäten in die richtige Reihenfolge, Aufwachen, Zähne putzen, Frühstücken, Haus verlassen, mittel",
+            "clockMatchingExample": "Beispiel: 3:00, drei Uhr, einfach",
+            "workingMemoryExample": "Beispiel: 🍎, 🍌, 🍊, 🍇, 🍓, 🥝, mittel",
             "downloadTemplate": "Vorlage herunterladen", 
             "uploadFile": "CSV-Datei hochladen",
             "selectFile": "Datei auswählen...",
@@ -371,7 +421,46 @@
             "uploadPictureHelp": "Lade ein Bild für dieses Wort hoch",
             "autoGenerateHelp": "Leer lassen für automatische Generierung aus anderen Wörtern",
             "imageUrl": "Oder Bild-URL",
-            "imageUrlPlaceholder": "https://example.com/bild.jpg"
+            "imageUrlPlaceholder": "https://example.com/bild.jpg",
+            "addTimeSequencing": "Zeit Reihenfolge Übung hinzufügen",
+            "addTimeOrdering": "Zeit Ordnen Übung hinzufügen",
+            "addClockMatching": "Uhren Zuordnen Übung hinzufügen", 
+            "addWorkingMemory": "Arbeitsgedächtnis Übung hinzufügen",
+            "question": "Frage",
+            "timeQuestionPlaceholder": "z.B., Welcher Tag kommt nach Montag?",
+            "correctAnswer": "Richtige Antwort",
+            "timeAnswerPlaceholder": "z.B., Dienstag",
+            "wrongOptions": "Falsche Optionen (durch Kommas getrennt)",
+            "timeOptionsPlaceholder": "z.B., Mittwoch, Sonntag, Freitag",
+            "timeOptionsHelp": "Gib 3 falsche Antwortmöglichkeiten durch Kommas getrennt ein",
+            "scenario": "Szenario",
+            "scenarioPlaceholder": "z.B., Tägliche Routine",
+            "description": "Beschreibung",
+            "descriptionPlaceholder": "z.B., Bringe diese täglichen Aktivitäten in die richtige Reihenfolge",
+            "activities": "Aktivitäten (eine pro Zeile)",
+            "activitiesPlaceholder": "Aufwachen\nFrühstücken\nZur Arbeit gehen\nZu Abend essen\nSchlafen gehen",
+            "activitiesHelp": "Gib die Aktivitäten in der richtigen Reihenfolge ein, eine pro Zeile",
+            "digitalTime": "Digitale Zeit",
+            "timeWords": "Zeit in Worten",
+            "timeWordsPlaceholder": "z.B., drei Uhr",
+            "timeWordsHelp": "Wie die Zeit ausgesprochen werden soll",
+            "emojiSequence": "Emoji Reihenfolge (3 Emojis)",
+            "sequencePlaceholder": "🍎🍌🍊",
+            "sequenceHelp": "Gib genau 3 Emojis ein, die nacheinander gezeigt werden",
+            "extraOptions": "Zusätzliche Optionen (3+ Emojis)",
+            "extraOptionsPlaceholder": "🍇🍓🥝🥭🍉",
+            "extraOptionsHelp": "Gib mindestens 3 zusätzliche Emojis als falsche Auswahlmöglichkeiten ein",
+            "difficulty": "Schwierigkeitsgrad",
+            "easy": "Einfach",
+            "medium": "Mittel",
+            "hard": "Schwer"
+        },
+        "showActive": "Aktive Anzeigen",
+        "showArchived": "Archivierte Anzeigen", 
+        "allDifficulties": "Alle Schwierigkeitsgrade",
+        "status": {
+            "active": "Aktiv",
+            "archived": "Archiviert"
         }
     }
 }

@@ -13,17 +13,24 @@ class CategoryExercise extends SelectionExercise {
     
     renderPrompt() {
         const category = this.currentItem.category;
+        const article = /^[aeiou]/i.test(category) ? 'an' : 'a';
         return `
+            <p class="prompt-instruction">Which word is ${article} ${category}?</p>
             <div class="prompt-category">${category.toUpperCase()}</div>
         `;
     }
     
     async playPromptAudio() {
-        // No audio instruction for category exercise
+        const category = this.currentItem.category;
+        const article = /^[aeiou]/i.test(category) ? 'an' : 'a';
+        await audioService.speak(`Which word is ${article} ${category}?`);
     }
     
     async handlePlayAll() {
-        // Just read the options, no instruction
+        // Say the specific category instruction, then read options
+        await this.playPromptAudio();
+        await this.delay(300);
+        
         const activeOptions = this.currentOptions
             .filter((_, i) => !this.state.eliminatedIndices.has(i))
             .map(opt => typeof opt === 'object' ? opt.answer || opt.value : opt);

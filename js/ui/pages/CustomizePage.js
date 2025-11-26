@@ -14,6 +14,19 @@ class CustomizePage {
         this.pendingImage = null;
     }
     
+    renderDifficultyField() {
+        return `
+            <div class="form-group">
+                <label>${t('customize.forms.difficulty')}</label>
+                <select id="exercise-difficulty" required>
+                    <option value="easy">${t('customize.forms.easy')}</option>
+                    <option value="medium" selected>${t('customize.forms.medium')}</option>
+                    <option value="hard">${t('customize.forms.hard')}</option>
+                </select>
+            </div>
+        `;
+    }
+    
     async render() {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
@@ -51,6 +64,22 @@ class CustomizePage {
                                 <span class="type-icon">📚</span>
                                 <span class="type-name">${t('customize.types.words')}</span>
                             </button>
+                            <button class="type-btn" data-type="timeSequencing">
+                                <span class="type-icon">📅</span>
+                                <span class="type-name">${t('customize.types.timeSequencing')}</span>
+                            </button>
+                            <button class="type-btn" data-type="timeOrdering">
+                                <span class="type-icon">⏰</span>
+                                <span class="type-name">${t('customize.types.timeOrdering')}</span>
+                            </button>
+                            <button class="type-btn" data-type="clockMatching">
+                                <span class="type-icon">🕐</span>
+                                <span class="type-name">${t('customize.types.clockMatching')}</span>
+                            </button>
+                            <button class="type-btn" data-type="workingMemory">
+                                <span class="type-icon">🧠</span>
+                                <span class="type-name">${t('customize.types.workingMemory')}</span>
+                            </button>
                         </div>
                     </div>
                     
@@ -64,7 +93,23 @@ class CustomizePage {
                 
                 <!-- Existing Custom Exercises -->
                 <section class="existing-section">
-                    <h3>${t('customize.existing')}</h3>
+                    <div class="existing-header">
+                        <h3>${t('customize.existing')}</h3>
+                        <div class="exercise-filters">
+                            <label>
+                                <input type="checkbox" id="show-active" checked> ${t('customize.showActive')}
+                            </label>
+                            <label>
+                                <input type="checkbox" id="show-archived"> ${t('customize.showArchived')}
+                            </label>
+                            <select id="difficulty-filter">
+                                <option value="all">${t('customize.allDifficulties')}</option>
+                                <option value="easy">${t('customize.forms.easy')}</option>
+                                <option value="medium">${t('customize.forms.medium')}</option>
+                                <option value="hard">${t('customize.forms.hard')}</option>
+                            </select>
+                        </div>
+                    </div>
                     <div id="existing-items">
                         ${await this.renderExistingItems(customExercises)}
                     </div>
@@ -79,6 +124,23 @@ class CustomizePage {
         return `
             <div class="bulk-upload-section">
                 <h3>${t('customize.bulkUpload.title')}</h3>
+                
+                <!-- Exercise Type Selection -->
+                <div class="template-selection">
+                    <h4>${t('customize.bulkUpload.selectExercises')}:</h4>
+                    <div class="exercise-type-checkboxes">
+                        <label><input type="checkbox" value="naming" checked> 🖼️ ${t('customize.types.picture')}</label>
+                        <label><input type="checkbox" value="sentenceTyping" checked> 📝 ${t('customize.types.sentence')}</label>
+                        <label><input type="checkbox" value="words" checked> 📚 ${t('customize.types.words')}</label>
+                        <label><input type="checkbox" value="timeSequencing" checked> 📅 ${t('customize.types.timeSequencing')}</label>
+                        <label><input type="checkbox" value="timeOrdering" checked> ⏰ ${t('customize.types.timeOrdering')}</label>
+                        <label><input type="checkbox" value="clockMatching" checked> 🕐 ${t('customize.types.clockMatching')}</label>
+                        <label><input type="checkbox" value="workingMemory" checked> 🧠 ${t('customize.types.workingMemory')}</label>
+                    </div>
+                    <button class="btn btn--secondary" id="download-template">
+                        📥 ${t('customize.bulkUpload.downloadTemplate')}
+                    </button>
+                </div>
                 
                 <!-- Collapsible Instructions -->
                 <details class="instructions-panel">
@@ -98,39 +160,38 @@ class CustomizePage {
                         <h4>${t('customize.bulkUpload.formatGuidelines')}</h4>
                         <div class="format-guide">
                             <div class="format-item">
-                                <strong>${t('customize.bulkUpload.pictureFormat')}</strong>
-                                <code>word, image_url, option1, option2, option3</code>
+                                <strong>${t('customize.types.picture')}:</strong>
+                                <code>word, image_url, option1, option2, option3, difficulty</code>
                                 <p>${t('customize.bulkUpload.pictureExample')}</p>
                             </div>
                             <div class="format-item">
-                                <strong>${t('customize.bulkUpload.sentenceFormat')}</strong>
-                                <code>sentence_with_blank, answer</code>
+                                <strong>${t('customize.types.sentence')}:</strong>
+                                <code>sentence_with_blank, answer, difficulty</code>
                                 <p>${t('customize.bulkUpload.sentenceExample')}</p>
                             </div>
                             <div class="format-item">
-                                <strong>${t('customize.bulkUpload.wordFormat')}</strong>
-                                <code>type, word, related_words</code>
-                                <p>${t('customize.bulkUpload.wordExample')}</p>
+                                <strong>${t('customize.types.timeSequencing')}:</strong>
+                                <code>question, answer, option1, option2, option3, difficulty</code>
+                                <p>${t('customize.bulkUpload.timeSequencingExample')}</p>
+                            </div>
+                            <div class="format-item">
+                                <strong>${t('customize.types.timeOrdering')}:</strong>
+                                <code>scenario, description, item1, item2, item3, item4, difficulty</code>
+                                <p>${t('customize.bulkUpload.timeOrderingExample')}</p>
+                            </div>
+                            <div class="format-item">
+                                <strong>${t('customize.types.clockMatching')}:</strong>
+                                <code>time(HH:MM), time_words, difficulty</code>
+                                <p>${t('customize.bulkUpload.clockMatchingExample')}</p>
+                            </div>
+                            <div class="format-item">
+                                <strong>${t('customize.types.workingMemory')}:</strong>
+                                <code>emoji1, emoji2, emoji3, extra_emoji1, extra_emoji2, extra_emoji3, difficulty</code>
+                                <p>${t('customize.bulkUpload.workingMemoryExample')}</p>
                             </div>
                         </div>
                     </div>
                 </details>
-                
-                <!-- Template Downloads -->
-                <div class="template-section">
-                    <h4>${t('customize.bulkUpload.downloadTemplate')}:</h4>
-                    <div class="template-buttons">
-                        <button class="btn btn--secondary" data-template="naming">
-                            📥 ${t('customize.types.picture')} Template
-                        </button>
-                        <button class="btn btn--secondary" data-template="sentences">
-                            📥 ${t('customize.types.sentence')} Template
-                        </button>
-                        <button class="btn btn--secondary" data-template="words">
-                            📥 ${t('customize.types.words')} Template
-                        </button>
-                    </div>
-                </div>
                 
                 <!-- Upload Section -->
                 <div class="upload-section">
@@ -161,6 +222,14 @@ class CustomizePage {
                 return this.renderSentenceForm();
             case 'words':
                 return this.renderWordsForm();
+            case 'timeSequencing':
+                return this.renderTimeSequencingForm();
+            case 'timeOrdering':
+                return this.renderTimeOrderingForm();
+            case 'clockMatching':
+                return this.renderClockMatchingForm();
+            case 'workingMemory':
+                return this.renderWorkingMemoryForm();
             default:
                 return '';
         }
@@ -260,6 +329,123 @@ class CustomizePage {
         `;
     }
     
+    renderTimeSequencingForm() {
+        return `
+            <form class="add-form" id="add-timesequencing-form">
+                <h3>${t('customize.forms.addTimeSequencing')}</h3>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.question')}</label>
+                    <input type="text" id="time-question" placeholder="${t('customize.forms.timeQuestionPlaceholder')}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.correctAnswer')}</label>
+                    <input type="text" id="time-answer" placeholder="${t('customize.forms.timeAnswerPlaceholder')}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.wrongOptions')}</label>
+                    <input type="text" id="time-options" 
+                           placeholder="${t('customize.forms.timeOptionsPlaceholder')}" required>
+                    <small>${t('customize.forms.timeOptionsHelp')}</small>
+                </div>
+                
+                ${this.renderDifficultyField()}
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${t('customize.forms.addExercise')}</button>
+                </div>
+            </form>
+        `;
+    }
+    
+    renderTimeOrderingForm() {
+        return `
+            <form class="add-form" id="add-timeordering-form">
+                <h3>${t('customize.forms.addTimeOrdering')}</h3>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.scenario')}</label>
+                    <input type="text" id="ordering-scenario" placeholder="${t('customize.forms.scenarioPlaceholder')}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.description')}</label>
+                    <input type="text" id="ordering-description" placeholder="${t('customize.forms.descriptionPlaceholder')}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.activities')}</label>
+                    <textarea id="ordering-items" rows="4" 
+                              placeholder="${t('customize.forms.activitiesPlaceholder')}" required></textarea>
+                    <small>${t('customize.forms.activitiesHelp')}</small>
+                </div>
+                
+                ${this.renderDifficultyField()}
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${t('customize.forms.addExercise')}</button>
+                </div>
+            </form>
+        `;
+    }
+    
+    renderClockMatchingForm() {
+        return `
+            <form class="add-form" id="add-clockmatching-form">
+                <h3>${t('customize.forms.addClockMatching')}</h3>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.digitalTime')}</label>
+                    <input type="time" id="clock-time" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.timeWords')}</label>
+                    <input type="text" id="clock-words" placeholder="${t('customize.forms.timeWordsPlaceholder')}" required>
+                    <small>${t('customize.forms.timeWordsHelp')}</small>
+                </div>
+                
+                ${this.renderDifficultyField()}
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${t('customize.forms.addExercise')}</button>
+                </div>
+            </form>
+        `;
+    }
+    
+    renderWorkingMemoryForm() {
+        return `
+            <form class="add-form" id="add-workingmemory-form">
+                <h3>${t('customize.forms.addWorkingMemory')}</h3>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.emojiSequence')}</label>
+                    <input type="text" id="memory-sequence" placeholder="${t('customize.forms.sequencePlaceholder')}" required>
+                    <small>${t('customize.forms.sequenceHelp')}</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>${t('customize.forms.extraOptions')}</label>
+                    <input type="text" id="memory-options" placeholder="${t('customize.forms.extraOptionsPlaceholder')}" required>
+                    <small>${t('customize.forms.extraOptionsHelp')}</small>
+                </div>
+                
+                ${this.renderDifficultyField()}
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${t('customize.forms.addExercise')}</button>
+                </div>
+            </form>
+        `;
+    }
+    
     async renderExistingItems(customExercises) {
         const items = [];
         
@@ -288,25 +474,66 @@ class CustomizePage {
         let preview = '';
         let details = '';
         
-        if (type === 'naming') {
-            preview = item.localImageId ? '🖼️' : '📷';
-            details = `<strong>${item.answer}</strong>`;
-        } else if (type === 'sentenceTyping') {
-            preview = '📝';
-            details = `<span class="item-sentence">${item.sentence}</span><br>
-                      <strong>Answer: ${item.answer}</strong>`;
-        } else {
-            preview = '📚';
-            details = `<strong>${item.word || 'Word exercise'}</strong>`;
+        // Determine preview and details based on exercise type
+        switch (type) {
+            case 'naming':
+                preview = item.localImageId ? '🖼️' : '📷';
+                details = `<strong>${item.answer}</strong>`;
+                break;
+            case 'sentenceTyping':
+                preview = '📝';
+                details = `<span class="item-sentence">${item.sentence}</span><br>
+                          <strong>Answer: ${item.answer}</strong>`;
+                break;
+            case 'timeSequencing':
+                preview = '📅';
+                details = `<strong>${item.question}</strong><br>
+                          <span class="answer">→ ${item.answer}</span>`;
+                break;
+            case 'timeOrdering':
+                preview = '⏰';
+                details = `<strong>${item.scenario}</strong><br>
+                          <span class="description">${item.description}</span>`;
+                break;
+            case 'clockMatching':
+                preview = '🕐';
+                details = `<strong>${item.digitalDisplay}</strong><br>
+                          <span class="time-words">${item.timeWords}</span>`;
+                break;
+            case 'workingMemory':
+                preview = '🧠';
+                details = `<strong>Sequence:</strong> ${item.sequence.join('')}<br>
+                          <span class="options-count">${item.options.length} options</span>`;
+                break;
+            default:
+                preview = '📚';
+                details = `<strong>${item.word || 'Word exercise'}</strong>`;
         }
         
+        const difficulty = item.difficulty || 'medium';
+        const status = item.status || 'active';
+        const difficultyClass = `difficulty-${difficulty}`;
+        const statusClass = `status-${status}`;
+        
         return `
-            <div class="item-card" data-type="${type}" data-index="${index}">
+            <div class="item-card ${difficultyClass} ${statusClass}" data-type="${type}" data-index="${index}" data-difficulty="${difficulty}" data-status="${status}">
                 <div class="item-preview">${preview}</div>
-                <div class="item-details">${details}</div>
-                <button class="item-delete-btn" data-type="${type}" data-index="${index}">
-                    ${t('customize.delete')}
-                </button>
+                <div class="item-details">
+                    ${details}
+                    <div class="item-meta">
+                        <span class="difficulty-badge ${difficultyClass}">${t('customize.forms.' + difficulty)}</span>
+                        <span class="status-badge ${statusClass}">${t('customize.status.' + status)}</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <select class="status-select" data-type="${type}" data-index="${index}">
+                        <option value="active" ${status === 'active' ? 'selected' : ''}>${t('customize.status.active')}</option>
+                        <option value="archived" ${status === 'archived' ? 'selected' : ''}>${t('customize.status.archived')}</option>
+                    </select>
+                    <button class="item-delete-btn btn btn--danger btn--small" data-type="${type}" data-index="${index}">
+                        ${t('customize.delete')}
+                    </button>
+                </div>
             </div>
         `;
     }
@@ -420,6 +647,14 @@ class CustomizePage {
                 await this.handleAddSentence();
             } else if (type === 'words') {
                 await this.handleAddWords();
+            } else if (type === 'timeSequencing') {
+                await this.handleAddTimeSequencing();
+            } else if (type === 'timeOrdering') {
+                await this.handleAddTimeOrdering();
+            } else if (type === 'clockMatching') {
+                await this.handleAddClockMatching();
+            } else if (type === 'workingMemory') {
+                await this.handleAddWorkingMemory();
             }
         });
     }
@@ -498,6 +733,167 @@ class CustomizePage {
         storageService.set(`customExercises_${locale}`, customExercises);
         
         await this.render();
+    }
+    
+    async handleAddTimeSequencing() {
+        const question = this.container.querySelector('#time-question').value.trim();
+        const answer = this.container.querySelector('#time-answer').value.trim();
+        const options = this.container.querySelector('#time-options').value
+            .split(',').map(o => o.trim()).filter(o => o);
+        
+        if (!question || !answer || options.length < 3) return;
+        
+        // Ensure answer is included in options
+        const allOptions = [answer, ...options].slice(0, 4);
+        
+        const difficulty = this.container.querySelector('#exercise-difficulty').value;
+        
+        const exercise = {
+            question: question,
+            answer: answer,
+            options: allOptions,
+            direction: question.toLowerCase().includes('before') ? 'before' : 'after',
+            target: this.extractTargetFromQuestion(question),
+            sequence: this.getSequenceFromQuestion(question),
+            difficulty: difficulty,
+            isCustom: true
+        };
+        
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        if (!customExercises.timeSequencing) customExercises.timeSequencing = [];
+        customExercises.timeSequencing.push(exercise);
+        storageService.set(`customExercises_${locale}`, customExercises);
+        
+        await this.render();
+    }
+    
+    async handleAddTimeOrdering() {
+        const scenario = this.container.querySelector('#ordering-scenario').value.trim();
+        const description = this.container.querySelector('#ordering-description').value.trim();
+        const items = this.container.querySelector('#ordering-items').value
+            .split('\n').map(item => item.trim()).filter(item => item);
+        
+        if (!scenario || !description || items.length < 3) return;
+        
+        const difficulty = this.container.querySelector('#exercise-difficulty').value;
+        
+        const exercise = {
+            id: `custom_${Date.now()}`,
+            scenario: scenario,
+            description: description,
+            items: items,
+            correctOrder: [...items], // Assume input is in correct order
+            difficulty: difficulty,
+            isCustom: true
+        };
+        
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        if (!customExercises.timeOrdering) customExercises.timeOrdering = [];
+        customExercises.timeOrdering.push(exercise);
+        storageService.set(`customExercises_${locale}`, customExercises);
+        
+        await this.render();
+    }
+    
+    async handleAddClockMatching() {
+        const timeValue = this.container.querySelector('#clock-time').value;
+        const timeWords = this.container.querySelector('#clock-words').value.trim();
+        
+        if (!timeValue || !timeWords) return;
+        
+        const [hourStr, minuteStr] = timeValue.split(':');
+        const hour = parseInt(hourStr);
+        const minute = parseInt(minuteStr);
+        
+        // Calculate analog data
+        const minuteAngle = minute * 6; // 6 degrees per minute
+        const hourAngle = (hour % 12) * 30 + (minute * 0.5); // 30 degrees per hour + minute adjustment
+        
+        const difficulty = this.container.querySelector('#exercise-difficulty').value;
+        
+        const exercise = {
+            id: `custom_${Date.now()}`,
+            time: timeValue,
+            hour: hour,
+            minute: minute,
+            digitalDisplay: timeValue,
+            analogData: {
+                hourAngle: hourAngle,
+                minuteAngle: minuteAngle
+            },
+            timeWords: timeWords,
+            difficulty: difficulty,
+            isCustom: true
+        };
+        
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        if (!customExercises.clockMatching) customExercises.clockMatching = [];
+        customExercises.clockMatching.push(exercise);
+        storageService.set(`customExercises_${locale}`, customExercises);
+        
+        await this.render();
+    }
+    
+    async handleAddWorkingMemory() {
+        const sequence = this.container.querySelector('#memory-sequence').value.trim();
+        const extraOptions = this.container.querySelector('#memory-options').value.trim();
+        
+        if (!sequence || !extraOptions) return;
+        
+        // Parse emoji sequence (expect 3 emojis)
+        const sequenceArray = Array.from(sequence).filter(char => 
+            /[\u{1F600}-\u{1F6FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/u.test(char)
+        ).slice(0, 3);
+        
+        // Parse extra options
+        const extraOptionsArray = Array.from(extraOptions).filter(char => 
+            /[\u{1F600}-\u{1F6FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/u.test(char)
+        );
+        
+        if (sequenceArray.length !== 3 || extraOptionsArray.length < 3) return;
+        
+        const allOptions = [...sequenceArray, ...extraOptionsArray];
+        
+        const difficulty = this.container.querySelector('#exercise-difficulty').value;
+        
+        const exercise = {
+            id: `custom_${Date.now()}`,
+            sequence: sequenceArray,
+            options: allOptions,
+            difficulty: difficulty,
+            isCustom: true
+        };
+        
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        if (!customExercises.workingMemory) customExercises.workingMemory = [];
+        customExercises.workingMemory.push(exercise);
+        storageService.set(`customExercises_${locale}`, customExercises);
+        
+        await this.render();
+    }
+    
+    extractTargetFromQuestion(question) {
+        // Simple extraction - could be improved
+        const words = question.toLowerCase().split(' ');
+        const targetIndex = words.findIndex(word => 
+            ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
+             'january', 'february', 'march', 'april', 'may', 'june', 
+             'july', 'august', 'september', 'october', 'november', 'december'].includes(word)
+        );
+        return targetIndex !== -1 ? words[targetIndex] : '';
+    }
+    
+    getSequenceFromQuestion(question) {
+        if (question.toLowerCase().includes('day')) {
+            return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        } else {
+            return ['January', 'February', 'March', 'April', 'May', 'June', 
+                   'July', 'August', 'September', 'October', 'November', 'December'];
+        }
     }
     
     async handleCSVUpload(file) {

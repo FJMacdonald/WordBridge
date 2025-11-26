@@ -2,15 +2,14 @@ import BaseExercise from '../BaseExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
 import trackingService from '../../services/TrackingService.js';
-import Config from '../../core/Config.js';
 
 /**
- * Sentence Scramble Exercise
- * Drag/tap words to arrange them in correct order
+ * Time Ordering Exercise
+ * Like sentence scramble but for time-based activities and concepts
  */
-class ScrambleExercise extends BaseExercise {
+class TimeOrderingExercise extends BaseExercise {
     constructor() {
-        super({ type: 'scramble' });
+        super({ type: 'timeOrdering' });
         this.correctOrder = [];
         this.currentOrder = [];
         this.selectedIndex = null;
@@ -23,95 +22,89 @@ class ScrambleExercise extends BaseExercise {
     
     async render() {
         const item = this.currentItem;
-        this.correctOrder = [...item.words];
+        this.correctOrder = [...item.correctOrder];
         
-        // Scramble the words
-        this.currentOrder = this.shuffleArray([...item.words]);
+        // Scramble the items
+        this.currentOrder = this.shuffleArray([...item.items]);
         
         // Make sure it's actually scrambled
         let attempts = 0;
         while (this.arraysEqual(this.currentOrder, this.correctOrder) && attempts < 10) {
-            this.currentOrder = this.shuffleArray([...item.words]);
+            this.currentOrder = this.shuffleArray([...item.items]);
             attempts++;
         }
         
         this.container.innerHTML = `
-            <div class="exercise exercise--scramble">
+            <div class="exercise exercise--time-ordering">
                 ${this.renderHeader()}
                 
                 <div class="exercise__content">
                     <div class="exercise__prompt">
-                        <p class="prompt-instruction">${t('exercises.scramble.instruction')}</p>
+                        <p class="prompt-instruction">${item.description}</p>
                     </div>
                     
-                    <div class="scramble-container">
-                        <div class="scramble-words" id="scramble-words">
-                            ${this.renderWords()}
+                    <div class="time-ordering-container">
+                        <div class="time-ordering-items" id="time-ordering-items">
+                            ${this.renderItems()}
                         </div>
-                        <p class="scramble-help" id="scramble-help">${t('exercises.scramble.tapToSwap')}</p>
+                        <p class="time-ordering-help">${t('exercises.timeOrdering.tapToSwap')}</p>
                     </div>
-                    
-
                 </div>
                 
                 ${this.renderFooter()}
             </div>
         `;
-        
     }
     
-    renderWords() {
-        return this.currentOrder.map((word, index) => `
-            <button class="scramble-word" data-index="${index}" data-word="${word}">
-                ${word}
+    renderItems() {
+        return this.currentOrder.map((item, index) => `
+            <button class="time-ordering-item" data-index="${index}" data-item="${item}">
+                <span class="item-text">${item}</span>
             </button>
         `).join('');
     }
     
-    
     attachExerciseListeners() {
-        // Word tap to select/swap
-        const words = this.container.querySelectorAll('.scramble-word');
-        words.forEach(word => {
-            word.addEventListener('click', (e) => this.handleWordTap(e));
+        // Item tap to select/swap
+        const items = this.container.querySelectorAll('.time-ordering-item');
+        items.forEach(item => {
+            item.addEventListener('click', (e) => this.handleItemTap(e));
         });
-        
-
     }
     
-    handleWordTap(e) {
-        const tappedIndex = parseInt(e.target.dataset.index);
-        const words = this.container.querySelectorAll('.scramble-word');
+    handleItemTap(e) {
+        const tappedIndex = parseInt(e.currentTarget.dataset.index);
+        const items = this.container.querySelectorAll('.time-ordering-item');
         
         if (this.selectedIndex === null) {
             // First selection
             this.selectedIndex = tappedIndex;
-            words[tappedIndex].classList.add('selected');
+            items[tappedIndex].classList.add('selected');
         } else if (this.selectedIndex === tappedIndex) {
             // Deselect
-            words[tappedIndex].classList.remove('selected');
+            items[tappedIndex].classList.remove('selected');
             this.selectedIndex = null;
         } else {
             // Swap
-            this.swapWords(this.selectedIndex, tappedIndex);
-            words[this.selectedIndex].classList.remove('selected');
+            this.swapItems(this.selectedIndex, tappedIndex);
+            items[this.selectedIndex].classList.remove('selected');
             this.selectedIndex = null;
         }
     }
     
-    swapWords(index1, index2) {
+    swapItems(index1, index2) {
         // Swap in array
         [this.currentOrder[index1], this.currentOrder[index2]] = 
         [this.currentOrder[index2], this.currentOrder[index1]];
         
-        // Re-render words
-        const container = this.container.querySelector('#scramble-words');
-        container.innerHTML = this.renderWords();
+        // Re-render items
+        const container = this.container.querySelector('#time-ordering-items');
+        container.innerHTML = this.renderItems();
         
         // Re-attach listeners
-        const words = container.querySelectorAll('.scramble-word');
-        words.forEach(word => {
-            word.addEventListener('click', (e) => this.handleWordTap(e));
+        const items = container.querySelectorAll('.time-ordering-item');
+        items.forEach(item => {
+            item.addEventListener('click', (e) => this.handleItemTap(e));
         });
         
         // Auto-check if correct order achieved
@@ -122,14 +115,14 @@ class ScrambleExercise extends BaseExercise {
     
     async checkOrder() {
         const isCorrect = this.arraysEqual(this.currentOrder, this.correctOrder);
-        const words = this.container.querySelectorAll('.scramble-word');
+        const items = this.container.querySelectorAll('.time-ordering-item');
         
         // Show which positions are correct/incorrect
-        words.forEach((word, index) => {
+        items.forEach((item, index) => {
             if (this.currentOrder[index] === this.correctOrder[index]) {
-                word.classList.add('correct-position');
+                item.classList.add('correct-position');
             } else {
-                word.classList.add('wrong-position');
+                item.classList.add('wrong-position');
             }
         });
         
@@ -145,8 +138,8 @@ class ScrambleExercise extends BaseExercise {
         } else {
             // Remove highlights after delay
             await this.delay(1500);
-            words.forEach(word => {
-                word.classList.remove('correct-position', 'wrong-position');
+            items.forEach(item => {
+                item.classList.remove('correct-position', 'wrong-position');
             });
             
             this.showFeedback(false, 'Not quite - try again or use a hint');
@@ -154,53 +147,53 @@ class ScrambleExercise extends BaseExercise {
     }
     
     async handlePlayAll() {
-        // First speak both instructions
-        await audioService.speak(t('exercises.scramble.instruction'));
+        // First speak the instruction
+        await audioService.speak(this.currentItem.description);
         await new Promise(resolve => setTimeout(resolve, 300));
-        await audioService.speak(t('exercises.scramble.tapToSwap'));
+        await audioService.speak(t('exercises.timeOrdering.tapToSwap'));
         await new Promise(resolve => setTimeout(resolve, 300));
         
-        // Then speak the scrambled words in their current order
-        const scrambledWords = this.currentOrder;
-        await audioService.speakSequence(scrambledWords);
+        // Then speak the scrambled items in their current order
+        const scrambledItems = this.currentOrder;
+        await audioService.speakSequence(scrambledItems);
     }
     
     async playPromptAudio() {
-        // Say both instructions
-        await audioService.speak(t('exercises.scramble.instruction'));
+        // Say instruction
+        await audioService.speak(this.currentItem.description);
         await new Promise(resolve => setTimeout(resolve, 300));
-        await audioService.speak(t('exercises.scramble.tapToSwap'));
+        await audioService.speak(t('exercises.timeOrdering.tapToSwap'));
         await new Promise(resolve => setTimeout(resolve, 300));
         await audioService.speakSequence(this.currentOrder);
     }
     
     async applyHint(hintType) {
-        // For scramble, hints show the next correct word
-        const words = this.container.querySelectorAll('.scramble-word');
+        // For time ordering, hints show the next correct item
+        const items = this.container.querySelectorAll('.time-ordering-item');
         const hintArea = this.container.querySelector('#hint-area');
         
         // Find first incorrect position
         for (let i = 0; i < this.correctOrder.length; i++) {
             if (this.currentOrder[i] !== this.correctOrder[i]) {
-                // Highlight the word that should go here
-                const correctWord = this.correctOrder[i];
-                words.forEach(w => {
-                    if (w.dataset.word === correctWord) {
-                        w.classList.add('hint-highlight');
+                // Highlight the item that should go here
+                const correctItem = this.correctOrder[i];
+                items.forEach(item => {
+                    if (item.dataset.item === correctItem) {
+                        item.classList.add('hint-highlight');
                     }
                 });
                 
                 // Show hint in hint area (or animate if already exists)
                 if (hintArea) {
-                    const wordPositions = [
+                    const orderWords = [
                         t('exercises.scramble.theFirstWord'),
                         t('exercises.scramble.theSecondWord'),
                         t('exercises.scramble.theThirdWord'),
                         t('exercises.scramble.theFourthWord'),
                         t('exercises.scramble.theFifthWord')
                     ];
-                    const wordPosition = i < wordPositions.length ? wordPositions[i] : `Word ${i + 1}`;
-                    const hintText = `${wordPosition} ${t('exercises.scramble.shouldBe')} "${correctWord}"`;
+                    const position = i < orderWords.length ? orderWords[i] : `Item ${i + 1}`;
+                    const hintText = `${position} ${t('exercises.scramble.shouldBe')} "${correctItem}"`;
                     
                     // Check if this hint already exists
                     const existingHint = Array.from(hintArea.children).find(child => 
@@ -212,7 +205,7 @@ class ScrambleExercise extends BaseExercise {
                         existingHint.classList.add('hint-pulse');
                         setTimeout(() => existingHint.classList.remove('hint-pulse'), 1000);
                         // Still play audio
-                        setTimeout(() => audioService.speak(`${wordPosition} ${t('exercises.scramble.shouldBe')} ${correctWord}`), 100);
+                        setTimeout(() => audioService.speak(`${position} ${t('exercises.scramble.shouldBe')} ${correctItem}`), 100);
                     } else {
                         // Create new hint
                         const hintItem = document.createElement('div');
@@ -221,13 +214,13 @@ class ScrambleExercise extends BaseExercise {
                         hintArea.appendChild(hintItem);
                         
                         // Play audio for the hint
-                        setTimeout(() => audioService.speak(`${wordPosition} ${t('exercises.scramble.shouldBe')} ${correctWord}`), 100);
+                        setTimeout(() => audioService.speak(`${position} ${t('exercises.scramble.shouldBe')} ${correctItem}`), 100);
                     }
                 }
                 
                 // Remove highlight after delay
                 setTimeout(() => {
-                    words.forEach(w => w.classList.remove('hint-highlight'));
+                    items.forEach(item => item.classList.remove('hint-highlight'));
                 }, 2000);
                 
                 break;
@@ -248,4 +241,4 @@ class ScrambleExercise extends BaseExercise {
     }
 }
 
-export default ScrambleExercise;
+export default TimeOrderingExercise;

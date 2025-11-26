@@ -109,6 +109,46 @@
             "typeKeyboardOrTap": "Type on your keyboard or tap the box above to type",
             "startsWith": "Starts with:",
             "listenCarefully": "Listen carefully"
+        },
+        "timeSequencing": {
+            "name": "Time Sequencing",
+            "instruction": "Choose the correct answer",
+            "daysBefore": "What day comes before",
+            "daysAfter": "What day comes after",
+            "monthsBefore": "What month comes before",
+            "monthsAfter": "What month comes after"
+        },
+        "clockMatching": {
+            "name": "Clock Matching",
+            "instruction": "Match the digital time with the analog clock",
+            "whatTimeIs": "What time is shown?",
+            "selectClock": "Select the clock that shows"
+        },
+        "timeOrdering": {
+            "name": "Time Ordering",
+            "instruction": "Put these activities in the correct time order",
+            "dragToReorder": "Drag items to reorder them",
+            "correctOrder": "Correct Order",
+            "scenario": "Scenario",
+            "tapToSwap": "Tap two buttons to swap them"
+        },
+        "workingMemory": {
+            "name": "Working Memory",
+            "instruction": "Watch the sequence, then select the items in the same order",
+            "watchSequence": "Watch the sequence carefully",
+            "memorize": "Memorize the sequence",
+            "yourSelection": "Your selection",
+            "clear": "Clear",
+            "alreadySelected": "You already selected that emoji",
+            "sequenceFull": "Sequence is full - clear to change",
+            "perfectMemory": "Perfect! You remembered the sequence correctly",
+            "correctSequence": "The correct sequence was:",
+            "hintSequence": "Here's the sequence:",
+            "sequenceIs": "The sequence is:",
+            "firstPosition": "The first emoji",
+            "shouldBe": "should be",
+            "replay": "Replay Sequence",
+            "tryAgain": "Try again! Clear your selection and try once more"
         }
     },
     "results": {
@@ -127,7 +167,8 @@
         "categories": {
             "meaning": "Meaning",
             "phonetics": "Phonetics", 
-            "words": "Words"
+            "words": "Words",
+            "time": "Time"
         }
     },
     "progress": {
@@ -311,14 +352,19 @@
         "chooseType": "Choose Exercise Type:",
         "types": {
             "picture": "Picture",
-            "sentence": "Sentence",
-            "words": "Words"
+            "sentence": "Sentence", 
+            "words": "Words",
+            "timeSequencing": "Time Sequencing",
+            "timeOrdering": "Time Ordering",
+            "clockMatching": "Clock Matching",
+            "workingMemory": "Working Memory"
         },
         "bulkUpload": {
             "title": "Bulk Upload from CSV",
             "instructions": "Instructions (click to expand)",
             "howTo": "How to upload custom exercises:",
-            "step1": "Download the template CSV file for the exercise type you want",
+            "selectExercises": "Select exercise types to include in template",
+            "step1": "Select which exercise types you want to upload and download the template",
             "step2": "Open it in Excel, Google Sheets, or any spreadsheet app", 
             "step3": "Fill in your custom exercises following the format",
             "step4": "Save as CSV file",
@@ -327,9 +373,13 @@
             "pictureFormat": "Picture Naming:",
             "sentenceFormat": "Sentence Completion:",
             "wordFormat": "Word Lists:",
-            "pictureExample": "Example: apple, https://example.com/apple.jpg, banana, orange, pear",
-            "sentenceExample": "Example: I drink __ every morning, coffee",
-            "wordExample": "Example: rhyming, cat, hat|bat|mat",
+            "pictureExample": "Example: apple, https://example.com/apple.jpg, banana, orange, pear, medium",
+            "sentenceExample": "Example: I drink __ every morning, coffee, easy",
+            "wordExample": "Example: rhyming, cat, hat|bat|mat, hard",
+            "timeSequencingExample": "Example: What day comes after Monday?, Tuesday, Wednesday, Sunday, Friday, easy",
+            "timeOrderingExample": "Example: Morning routine, Put these activities in order, Wake up, Brush teeth, Eat breakfast, Leave house, medium",
+            "clockMatchingExample": "Example: 3:00, three o'clock, easy", 
+            "workingMemoryExample": "Example: 🍎, 🍌, 🍊, 🍇, 🍓, 🥝, medium",
             "downloadTemplate": "Download Template",
             "uploadFile": "Upload CSV File",
             "selectFile": "Select File...",
@@ -371,7 +421,46 @@
             "uploadPictureHelp": "Upload a picture for this word",
             "autoGenerateHelp": "Leave empty to auto-generate from other words",
             "imageUrl": "Or Image URL",
-            "imageUrlPlaceholder": "https://example.com/image.jpg"
+            "imageUrlPlaceholder": "https://example.com/image.jpg",
+            "addTimeSequencing": "Add Time Sequencing Exercise",
+            "addTimeOrdering": "Add Time Ordering Exercise", 
+            "addClockMatching": "Add Clock Matching Exercise",
+            "addWorkingMemory": "Add Working Memory Exercise",
+            "question": "Question",
+            "timeQuestionPlaceholder": "e.g., What day comes after Monday?",
+            "correctAnswer": "Correct Answer",
+            "timeAnswerPlaceholder": "e.g., Tuesday",
+            "wrongOptions": "Wrong Options (comma separated)",
+            "timeOptionsPlaceholder": "e.g., Wednesday, Sunday, Friday",
+            "timeOptionsHelp": "Enter 3 wrong answer choices separated by commas",
+            "scenario": "Scenario",
+            "scenarioPlaceholder": "e.g., Daily routine",
+            "description": "Description", 
+            "descriptionPlaceholder": "e.g., Put these daily activities in order",
+            "activities": "Activities (one per line)",
+            "activitiesPlaceholder": "Wake up\nEat breakfast\nGo to work\nEat dinner\nGo to sleep",
+            "activitiesHelp": "Enter activities in the correct order, one per line",
+            "digitalTime": "Digital Time",
+            "timeWords": "Time in Words",
+            "timeWordsPlaceholder": "e.g., three o'clock",
+            "timeWordsHelp": "How the time should be spoken",
+            "emojiSequence": "Emoji Sequence (3 emojis)",
+            "sequencePlaceholder": "🍎🍌🍊",
+            "sequenceHelp": "Enter exactly 3 emojis that will be shown in sequence",
+            "extraOptions": "Extra Options (3+ emojis)",
+            "extraOptionsPlaceholder": "🍇🍓🥝🥭🍉",
+            "extraOptionsHelp": "Enter at least 3 additional emojis as wrong choices",
+            "difficulty": "Difficulty Level",
+            "easy": "Easy",
+            "medium": "Medium", 
+            "hard": "Hard"
+        },
+        "showActive": "Show Active",
+        "showArchived": "Show Archived",
+        "allDifficulties": "All Difficulties",
+        "status": {
+            "active": "Active",
+            "archived": "Archived"
         }
     }
 }

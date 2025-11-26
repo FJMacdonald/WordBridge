@@ -20,6 +20,7 @@
 @import url('./exercises/selection.css');
 @import url('./exercises/typing.css');
 @import url('./exercises/scramble.css');
+@import url('./exercises/time.css');
 
 /* Page styles */
 @import url('./pages/home.css');
