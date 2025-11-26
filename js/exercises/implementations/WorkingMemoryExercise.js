@@ -347,16 +347,8 @@ class WorkingMemoryExercise extends BaseExercise {
             btn.classList.add('eliminated');
         });
         
-        const hintArea = this.container.querySelector('#hint-area');
-        if (hintArea) {
-            const hintText = `${actualNumToRemove} incorrect ${actualNumToRemove === 1 ? 'option' : 'options'} removed`;
-            const hintItem = document.createElement('div');
-            hintItem.className = 'hint-item hint-phrase';
-            hintItem.textContent = hintText;
-            hintArea.appendChild(hintItem);
-            
-            setTimeout(() => audioService.speak(hintText), 100);
-        }
+        // Silent elimination - consistent with other exercises
+        console.log(`Eliminated ${actualNumToRemove} option(s) silently`);
     }
     
     highlightFirstItem() {
@@ -384,29 +376,27 @@ class WorkingMemoryExercise extends BaseExercise {
     }
     
     async replaySequence() {
-        console.log('Replaying sequence as hint');
+        console.log('Replaying sequence as hint (1 second display)');
         
-        const hintArea = this.container.querySelector('#hint-area');
-        if (hintArea) {
-            const hintText = `Replaying sequence: ${this.targetSequence.join(' ')}`;
-            const hintItem = document.createElement('div');
-            hintItem.className = 'hint-item hint-phrase';
-            hintItem.textContent = hintText;
-            hintArea.appendChild(hintItem);
-        }
-        
-        // Show the sequence again
+        // Show the sequence again for 1 second only
         const displayArea = this.container.querySelector('#memory-display');
         const selectionArea = this.container.querySelector('#memory-selection');
+        const feedback = this.container.querySelector('#memory-feedback');
         
         displayArea.style.display = 'block';
         selectionArea.style.display = 'none';
+        if (feedback) {
+            feedback.innerHTML = `<p class="memory-instruction">${t('exercises.workingMemory.memorize')}</p>`;
+        }
         
         this.phase = 'display';
         this.isSelectionPhase = false;
         
-        // Re-run the display sequence
-        await this.startDisplaySequence();
+        // Show for only 1 second
+        await this.delay(1000);
+        
+        // Switch back to selection
+        this.switchToSelectionPhase();
     }
     
     showSequenceHint() {
