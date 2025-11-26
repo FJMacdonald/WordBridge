@@ -736,25 +736,15 @@ class CustomizePage {
                     <span class="status-badge status-${status}">${status}</span>
                 </td>
                 <td class="col-actions">
-                    <button class="action-btn edit-btn" 
-                            data-type="${type}" 
-                            data-index="${index}" 
-                            title="Edit">✏️</button>
-                    ${!isArchived ? `
-                        <button class="action-btn archive-btn" 
-                                data-type="${type}" 
-                                data-index="${index}" 
-                                title="Archive">📦</button>
-                    ` : `
-                        <button class="action-btn unarchive-btn" 
-                                data-type="${type}" 
-                                data-index="${index}" 
-                                title="Unarchive">📂</button>
-                    `}
-                    <button class="action-btn delete-btn" 
-                            data-type="${type}" 
-                            data-index="${index}" 
-                            title="Delete">🗑️</button>
+                    <select class="action-dropdown" data-type="${type}" data-index="${index}">
+                        <option value="">Actions...</option>
+                        <option value="edit">✏️ Edit</option>
+                        ${!isArchived ? 
+                            '<option value="archive">📦 Archive</option>' : 
+                            '<option value="unarchive">📂 Unarchive</option>'
+                        }
+                        <option value="delete">🗑️ Delete</option>
+                    </select>
                 </td>
             </tr>
         `;
@@ -990,22 +980,28 @@ class CustomizePage {
             });
         }
         
-        // Edit, Archive, Unarchive, Delete buttons in spreadsheet
-        this.container.addEventListener('click', async (e) => {
-            const btn = e.target.closest('.action-btn');
-            if (!btn) return;
+        // Action dropdown in spreadsheet
+        this.container.addEventListener('change', async (e) => {
+            if (!e.target.classList.contains('action-dropdown')) return;
             
-            const type = btn.dataset.type;
-            const index = parseInt(btn.dataset.index);
+            const dropdown = e.target;
+            const action = dropdown.value;
+            const type = dropdown.dataset.type;
+            const index = parseInt(dropdown.dataset.index);
             
-            if (btn.classList.contains('edit-btn')) {
+            if (!action) return;
+            
+            // Reset dropdown
+            dropdown.value = '';
+            
+            if (action === 'edit') {
                 await this.editItem(type, index);
-            } else if (btn.classList.contains('archive-btn')) {
+            } else if (action === 'archive') {
                 await this.archiveItem(type, index);
-            } else if (btn.classList.contains('unarchive-btn')) {
+            } else if (action === 'unarchive') {
                 await this.unarchiveItem(type, index);
-            } else if (btn.classList.contains('delete-btn')) {
-                if (confirm('Are you sure you want to delete this exercise?')) {
+            } else if (action === 'delete') {
+                if (confirm(t('customize.confirmDelete'))) {
                     await this.deleteItem(type, index);
                 }
             }
