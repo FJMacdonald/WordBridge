@@ -25,6 +25,8 @@
 /* Page styles */
 @import url('./pages/home.css');
 @import url('./pages/customize.css');
+@import url('./pages/customize-library.css');
+@import url('./pages/customize-enhancements.css');
 @import url('./pages/progress.css');
 @import url('./pages/settings.css');
 @import url('./pages/assessment.css');

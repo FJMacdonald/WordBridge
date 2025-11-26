@@ -2,6 +2,7 @@ import Config from '../../core/Config.js';
 import storageService from '../../services/StorageService.js';
 import importExportService from '../../services/ImportExportService.js';
 import pdfService from '../../services/PDFService.js';
+import exerciseFactory from '../../exercises/ExerciseFactory.js';
 import { i18n, t } from '../../core/i18n.js';
 
 /**
@@ -174,6 +175,18 @@ class SettingsPage {
                             </label>
                         </div>
                     </div>
+                    
+                    <!-- Practice Difficulty Per Exercise Type -->
+                    <details class="setting-item difficulty-settings">
+                        <summary class="setting-label setting-label--collapsible">
+                            ${t('settings.practiceDifficulty')}
+                            <span class="toggle-icon">▼</span>
+                        </summary>
+                        <p class="setting-description">${t('settings.practiceDifficultyDesc')}</p>
+                        <div class="difficulty-grid">
+                            ${this.renderDifficultySettings()}
+                        </div>
+                    </details>
                 </section>
                 
                 <!-- Translation Tools -->
@@ -320,6 +333,52 @@ class SettingsPage {
         });
     }
     
+    renderDifficultySettings() {
+        const practiceSettings = storageService.get('practiceSettings', {});
+        const defaultDifficulty = storageService.get('defaultDifficulty', 'easy');
+        const categories = exerciseFactory.getExercisesByCategory();
+        const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
+        
+        return categoryOrder.map(category => {
+            const exercises = categories[category];
+            const categoryInfo = {
+                words: '📚 Words',
+                phonetics: '🔊 Phonetics',
+                meaning: '💡 Meaning',
+                time: '⏰ Time'
+            };
+            
+            return `
+                <div class="difficulty-category">
+                    <h4>${categoryInfo[category]}</h4>
+                    ${exercises.map(ex => {
+                        const currentDiff = practiceSettings[ex.type] || defaultDifficulty;
+                        return `
+                            <div class="difficulty-item">
+                                <span class="exercise-icon">${ex.icon}</span>
+                                <span class="exercise-name">${t('exercises.' + ex.type + '.name')}</span>
+                                <div class="difficulty-selector">
+                                    <button class="diff-btn ${currentDiff === 'easy' ? 'active' : ''}" 
+                                            data-type="${ex.type}" data-diff="easy">
+                                        Easy
+                                    </button>
+                                    <button class="diff-btn ${currentDiff === 'medium' ? 'active' : ''}" 
+                                            data-type="${ex.type}" data-diff="medium">
+                                        Medium
+                                    </button>
+                                    <button class="diff-btn ${currentDiff === 'hard' ? 'active' : ''}" 
+                                            data-type="${ex.type}" data-diff="hard">
+                                        Hard
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }).join('');
+    }
+    
     attachListeners() {
         // Display settings
         this.container.querySelector('#text-size')?.addEventListener('change', (e) => {
@@ -419,6 +478,26 @@ class SettingsPage {
                 } catch (err) {
                     alert('Import failed: ' + err.message);
                 }
+            }
+        });
+        
+        // Practice difficulty selectors
+        this.container.addEventListener('click', (e) => {
+            if (e.target.classList.contains('diff-btn')) {
+                const type = e.target.dataset.type;
+                const difficulty = e.target.dataset.diff;
+                
+                // Update storage
+                const practiceSettings = storageService.get('practiceSettings', {});
+                practiceSettings[type] = difficulty;
+                storageService.set('practiceSettings', practiceSettings);
+                
+                // Update UI
+                const item = e.target.closest('.difficulty-item');
+                item.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                console.log('Practice difficulty set:', type, difficulty);
             }
         });
         

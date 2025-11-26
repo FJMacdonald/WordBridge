@@ -239,36 +239,113 @@ class CustomizePage {
                         
                         <h4>${t('customize.bulkUpload.formatGuidelines')}</h4>
                         <div class="format-guide">
-                            <div class="format-item">
-                                <strong>${t('customize.types.picture')}:</strong>
-                                <code>word, image_url, option1, option2, option3, difficulty</code>
-                                <p>${t('customize.bulkUpload.pictureExample')}</p>
-                            </div>
-                            <div class="format-item">
-                                <strong>${t('customize.types.sentence')}:</strong>
-                                <code>sentence_with_blank, answer, difficulty</code>
-                                <p>${t('customize.bulkUpload.sentenceExample')}</p>
-                            </div>
-                            <div class="format-item">
-                                <strong>${t('customize.types.timeSequencing')}:</strong>
-                                <code>question, answer, option1, option2, option3, difficulty</code>
-                                <p>${t('customize.bulkUpload.timeSequencingExample')}</p>
-                            </div>
-                            <div class="format-item">
-                                <strong>${t('customize.types.timeOrdering')}:</strong>
-                                <code>scenario, description, item1, item2, item3, item4, difficulty</code>
-                                <p>${t('customize.bulkUpload.timeOrderingExample')}</p>
-                            </div>
-                            <div class="format-item">
-                                <strong>${t('customize.types.clockMatching')}:</strong>
-                                <code>time(HH:MM), time_words, difficulty</code>
-                                <p>${t('customize.bulkUpload.clockMatchingExample')}</p>
-                            </div>
-                            <div class="format-item">
-                                <strong>${t('customize.types.workingMemory')}:</strong>
-                                <code>emoji1, emoji2, emoji3, extra_emoji1, extra_emoji2, extra_emoji3, difficulty</code>
-                                <p>${t('customize.bulkUpload.workingMemoryExample')}</p>
-                            </div>
+                            <!-- Words Category -->
+                            <details class="format-category">
+                                <summary><strong>📚 Words</strong></summary>
+                                <div class="format-items">
+                                    <div class="format-item">
+                                        <strong>🖼️ Picture Naming (naming):</strong>
+                                        <code>word, image_url, option1, option2, option3, difficulty</code>
+                                        <p>Example: apple, https://..., apple, orange, banana, pear, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>⌨️ Spelling (typing):</strong>
+                                        <code>emoji, answer, option1, option2, option3, difficulty</code>
+                                        <p>Example: 🍎, apple, apple, aple, appl, appel, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>📝 Fill Blank (sentenceTyping):</strong>
+                                        <code>sentence_with_blank, answer, difficulty</code>
+                                        <p>Example: I drink ______ every morning., coffee, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>📁 Categories (category):</strong>
+                                        <code>category, word, option1, option2, option3, difficulty</code>
+                                        <p>Example: fruit, apple, apple, carrot, bread, chair, easy</p>
+                                    </div>
+                                </div>
+                            </details>
+                            
+                            <!-- Phonetics Category -->
+                            <details class="format-category">
+                                <summary><strong>🔊 Phonetics</strong></summary>
+                                <div class="format-items">
+                                    <div class="format-item">
+                                        <strong>👂 Listening (listening):</strong>
+                                        <code>emoji, answer, option1, option2, option3, difficulty</code>
+                                        <p>Same format as Picture Naming</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>🎤 Speaking (speaking):</strong>
+                                        <code>emoji, answer, phrase1, phrase2, difficulty</code>
+                                        <p>Example: 🍎, apple, An apple a day..., I eat an apple, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>🔤 First Sounds (firstSound):</strong>
+                                        <code>sound, word1, word2, word3, word4, word5, difficulty</code>
+                                        <p>Example: b, ball, book, bed, bird, box, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>🎵 Rhyming (rhyming):</strong>
+                                        <code>word, rhyme1, rhyme2, rhyme3, non-rhyme1, non-rhyme2, difficulty</code>
+                                        <p>Example: cat, hat, bat, mat, dog, cup, easy</p>
+                                    </div>
+                                </div>
+                            </details>
+                            
+                            <!-- Meaning Category -->
+                            <details class="format-category">
+                                <summary><strong>💡 Meaning</strong></summary>
+                                <div class="format-items">
+                                    <div class="format-item">
+                                        <strong>📖 Definitions (definitions):</strong>
+                                        <code>word, definition, difficulty</code>
+                                        <p>Example: chair, A piece of furniture for sitting, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>🔗 Association (association):</strong>
+                                        <code>word, related1, related2, unrelated1, unrelated2, difficulty</code>
+                                        <p>Example: bread, butter, toast, car, phone, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>≈ Synonyms (synonyms):</strong>
+                                        <code>word, synonym1, synonym2, antonym1, antonym2, difficulty</code>
+                                        <p>Example: happy, glad, joyful, sad, unhappy, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>🔀 Unscramble (scramble):</strong>
+                                        <code>word1, word2, word3, word4, difficulty</code>
+                                        <p>Example: The, cat, is, sleeping, easy</p>
+                                    </div>
+                                </div>
+                            </details>
+                            
+                            <!-- Time Category -->
+                            <details class="format-category">
+                                <summary><strong>⏰ Time</strong></summary>
+                                <div class="format-items">
+                                    <div class="format-item">
+                                        <strong>📅 Time Sequencing (timeSequencing):</strong>
+                                        <code>question, answer, option1, option2, option3, difficulty</code>
+                                        <p>Example: What day comes after Monday?, Tuesday, Tuesday, Wednesday, Sunday, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>🕐 Clock Matching (clockMatching):</strong>
+                                        <code>time(HH:MM), time_words, difficulty</code>
+                                        <p>Example: 3:00, three o'clock, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>⏰ Time Ordering (timeOrdering):</strong>
+                                        <code>scenario, description, item1, item2, item3, item4, difficulty</code>
+                                        <p>Example: Morning routine, Put in order, Wake up, Eat breakfast, Go to work, easy</p>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>🧠 Working Memory (workingMemory):</strong>
+                                        <code>emoji1, emoji2, emoji3, extra1, extra2, extra3, difficulty</code>
+                                        <p>Example: 🍎, 🍌, 🍊, 🍇, 🍓, 🥝, easy</p>
+                                    </div>
+                                </div>
+                            </details>
                         </div>
                     </div>
                 </details>

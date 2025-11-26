@@ -1,0 +1,358 @@
+/* Custom Exercise Library Spreadsheet Styles */
+
+.spreadsheet-library {
+    margin-top: 2rem;
+}
+
+.collapsible-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Category Section */
+.category-section {
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+}
+
+.category-header {
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.category-header:hover {
+    background: linear-gradient(135deg, #e8ecf1 0%, #b8c5db 100%);
+}
+
+.category-section[open] > .category-header {
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.category-name {
+    font-size: 1.1rem;
+}
+
+.category-count {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+.category-content {
+    padding: 1rem;
+    background: #fafafa;
+}
+
+/* Type Section */
+.type-section {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    background: white;
+}
+
+.type-header {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.type-header:hover {
+    background: #e9ecef;
+}
+
+.type-section[open] > .type-header {
+    border-bottom: 1px solid #ddd;
+}
+
+.type-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.type-icon {
+    font-size: 1.2rem;
+}
+
+.type-name {
+    font-weight: 500;
+}
+
+.type-counts {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+}
+
+.count-active {
+    color: #28a745;
+    font-weight: 500;
+}
+
+.count-archived {
+    color: #6c757d;
+}
+
+/* Table Container */
+.type-table-container {
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Exercise Table */
+.exercise-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.exercise-table thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+.exercise-table th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+.exercise-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.exercise-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Column Widths */
+.col-difficulty {
+    width: 120px;
+}
+
+.col-content {
+    width: auto;
+    min-width: 300px;
+}
+
+.col-status {
+    width: 100px;
+}
+
+.col-actions {
+    width: 140px;
+}
+
+/* Difficulty Indicators */
+.difficulty-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.diff-easy {
+    background-color: #28a745;
+}
+
+.diff-medium {
+    background-color: #ffc107;
+}
+
+.diff-hard {
+    background-color: #dc3545;
+}
+
+.difficulty-text {
+    text-transform: capitalize;
+    font-size: 0.85rem;
+    color: #495057;
+}
+
+/* Content Preview */
+.content-preview {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.content-preview strong {
+    color: #212529;
+}
+
+.answer-preview {
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-archived {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Archived Row */
+.archived-row {
+    opacity: 0.5;
+    background-color: #f8f9fa !important;
+}
+
+.archived-row:hover {
+    opacity: 0.7;
+}
+
+/* Action Buttons */
+.action-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    margin: 0 0.1rem;
+    transition: transform 0.1s, opacity 0.2s;
+    opacity: 0.7;
+}
+
+.action-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.edit-btn:hover {
+    filter: drop-shadow(0 0 3px rgba(0, 123, 255, 0.5));
+}
+
+.archive-btn:hover {
+    filter: drop-shadow(0 0 3px rgba(255, 193, 7, 0.5));
+}
+
+.unarchive-btn:hover {
+    filter: drop-shadow(0 0 3px rgba(40, 167, 69, 0.5));
+}
+
+.delete-btn:hover {
+    filter: drop-shadow(0 0 3px rgba(220, 53, 69, 0.5));
+}
+
+/* Library Controls */
+.library-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Existing Section Header */
+.existing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.existing-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #212529;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .category-header {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+    }
+    
+    .type-header {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .exercise-table {
+        font-size: 0.8rem;
+    }
+    
+    .exercise-table th,
+    .exercise-table td {
+        padding: 0.5rem;
+    }
+    
+    .col-difficulty,
+    .col-status,
+    .col-actions {
+        width: auto;
+    }
+    
+    .difficulty-text {
+        display: none;
+    }
+    
+    .library-controls {
+        flex-direction: column;
+    }
+}
+
+/* Scrollbar Styling */
+.type-table-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.type-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.type-table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.type-table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

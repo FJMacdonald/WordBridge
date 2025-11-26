@@ -691,3 +691,61 @@
     background: var(--color-error);
     color: white;
 }
+/* Collapsible Format Guidelines */
+.format-category {
+    margin: 1rem 0;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.format-category summary {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    font-weight: 600;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.format-category summary:hover {
+    background: #e9ecef;
+}
+
+.format-category[open] summary {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.format-items {
+    padding: 1rem;
+}
+
+.format-item {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.format-item strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #212529;
+}
+
+.format-item code {
+    display: block;
+    padding: 0.5rem;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+}
+
+.format-item p {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.85rem;
+    color: #6c757d;
+}

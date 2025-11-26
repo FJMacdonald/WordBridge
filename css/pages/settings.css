@@ -188,3 +188,99 @@ body {
     gap: var(--space-md);
     justify-content: flex-end;
 }
+/* Practice Difficulty Settings */
+.difficulty-settings summary {
+    cursor: pointer;
+    user-select: none;
+}
+
+.setting-label--collapsible {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-icon {
+    transition: transform 0.2s;
+}
+
+.difficulty-settings[open] .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.difficulty-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.difficulty-category {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.difficulty-category h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: #495057;
+}
+
+.difficulty-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.difficulty-item:last-child {
+    margin-bottom: 0;
+}
+
+.difficulty-selector {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.diff-btn {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid #dee2e6;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.diff-btn:hover {
+    background: #e9ecef;
+}
+
+.diff-btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+@media (max-width: 768px) {
+    .difficulty-item {
+        grid-template-columns: 1.5rem 1fr;
+        gap: 0.5rem;
+    }
+    
+    .difficulty-selector {
+        grid-column: 1 / -1;
+        justify-content: stretch;
+    }
+    
+    .diff-btn {
+        flex: 1;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+    }
+}
