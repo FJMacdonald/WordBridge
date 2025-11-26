@@ -21,22 +21,45 @@ class ProgressPage {
                     </div>
                 </header>
                 
-                <div id="charts-container"></div>
-                
-                <div class="recommendations-section">
-                    <h3>${t('progress.recommendations.title')}</h3>
-                    <div id="recommendations"></div>
+                <!-- Tab Navigation -->
+                <div class="progress-tabs">
+                    <button class="tab-btn active" data-tab="practice">
+                        📚 Practice Progress
+                    </button>
+                    <button class="tab-btn" data-tab="assessment">
+                        📋 Assessment Results
+                    </button>
                 </div>
                 
-
+                <!-- Practice Tab -->
+                <div class="tab-content" id="practice-tab">
+                    <!-- Time Range Controls -->
+                    <div class="time-range-controls">
+                        <button class="time-btn active" data-range="day">Day</button>
+                        <button class="time-btn" data-range="week">Week</button>
+                        <button class="time-btn" data-range="month">Month</button>
+                        <button class="time-btn" data-range="all">All Time</button>
+                    </div>
+                    
+                    <!-- Practice Cards Grid -->
+                    <div id="practice-cards" class="practice-grid"></div>
+                    
+                    <div class="recommendations-section">
+                        <h3>${t('progress.recommendations.title')}</h3>
+                        <div id="recommendations"></div>
+                    </div>
+                </div>
+                
+                <!-- Assessment Tab -->
+                <div class="tab-content" id="assessment-tab" hidden>
+                    <div id="assessment-results" class="assessment-grid"></div>
+                </div>
             </div>
         `;
         
-        // Render charts
-        const charts = new ProgressCharts(document.getElementById('charts-container'));
-        charts.render();
-        
-        // Show recommendations
+        // Render initial practice tab
+        this.renderPracticeTab('day');
+        this.renderAssessmentTab();
         this.renderRecommendations();
         
         this.attachListeners();
@@ -87,12 +110,435 @@ class ProgressPage {
             : `<p class="success">${t('progress.recommendations.goodJob')}</p>`;
     }
     
+    renderPracticeTab(timeRange = 'day') {
+        const practiceData = this.getPracticeData(timeRange);
+        const container = document.getElementById('practice-cards');
+        
+        if (!practiceData || Object.keys(practiceData).length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h3>No Practice Data Yet</h3>
+                    <p>Start practicing to see your progress here!</p>
+                    <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'home'}))">
+                        Start Practicing
+                    </button>
+                </div>
+            `;
+            return;
+        }
+        
+        const exerciseTypes = [
+            { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
+            { key: 'typing', name: 'Spelling', icon: '⌨️' },
+            { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
+            { key: 'category', name: 'Categories', icon: '📁' },
+            { key: 'listening', name: 'Listening', icon: '👂' },
+            { key: 'speaking', name: 'Speaking', icon: '🎤' },
+            { key: 'firstSound', name: 'First Sounds', icon: '🔤' },
+            { key: 'rhyming', name: 'Rhyming', icon: '🎵' },
+            { key: 'definitions', name: 'Definitions', icon: '📖' },
+            { key: 'association', name: 'Association', icon: '🔗' },
+            { key: 'synonyms', name: 'Synonyms', icon: '≈' },
+            { key: 'scramble', name: 'Unscramble', icon: '🔀' },
+            { key: 'timeSequencing', name: 'Time Sequencing', icon: '📅' },
+            { key: 'clockMatching', name: 'Clock Matching', icon: '🕐' },
+            { key: 'timeOrdering', name: 'Time Ordering', icon: '⏰' },
+            { key: 'workingMemory', name: 'Working Memory', icon: '🧠' }
+        ];
+        
+        let html = '';
+        exerciseTypes.forEach(type => {
+            const data = practiceData[type.key];
+            if (data && data.totalTime > 0) {
+                const avgDifficulty = this.getAverageDifficulty(data.attempts);
+                const difficultyLabel = avgDifficulty >= 2.5 ? 'Hard' : avgDifficulty >= 1.5 ? 'Medium' : 'Easy';
+                
+                html += `
+                    <div class="practice-card" data-exercise="${type.key}">
+                        <div class="card-header">
+                            <span class="card-icon">${type.icon}</span>
+                            <h4 class="card-title">${type.name}</h4>
+                        </div>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <span class="stat-value">${this.formatTime(data.totalTime)}</span>
+                                <span class="stat-label">Practice Time</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">${data.exerciseCount}</span>
+                                <span class="stat-label">Exercises</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">${difficultyLabel}</span>
+                                <span class="stat-label">Avg Difficulty</span>
+                            </div>
+                        </div>
+                        ${data.accuracy !== undefined ? `
+                            <div class="card-accuracy">
+                                <div class="accuracy-bar">
+                                    <div class="accuracy-fill" style="width: ${data.accuracy}%"></div>
+                                </div>
+                                <span class="accuracy-text">${data.accuracy}% Accuracy</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+        });
+        
+        container.innerHTML = html || '<p class="empty-message">No practice data for this time range.</p>';
+    }
+    
+    renderAssessmentTab() {
+        const assessmentData = assessmentService.getAssessmentHistory();
+        const container = document.getElementById('assessment-results');
+        
+        if (!assessmentData || assessmentData.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h3>No Assessment Results Yet</h3>
+                    <p>Take an assessment to track your progress objectively!</p>
+                    <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'assessment'}))">
+                        Take Assessment
+                    </button>
+                </div>
+            `;
+            return;
+        }
+        
+        const exerciseTypes = [
+            { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
+            { key: 'typing', name: 'Spelling', icon: '⌨️' },
+            { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
+            { key: 'category', name: 'Categories', icon: '📁' },
+            { key: 'listening', name: 'Listening', icon: '👂' },
+            { key: 'speaking', name: 'Speaking', icon: '🎤' },
+            { key: 'firstSound', name: 'First Sounds', icon: '🔤' },
+            { key: 'rhyming', name: 'Rhyming', icon: '🎵' },
+            { key: 'definitions', name: 'Definitions', icon: '📖' },
+            { key: 'association', name: 'Association', icon: '🔗' },
+            { key: 'synonyms', name: 'Synonyms', icon: '≈' },
+            { key: 'scramble', name: 'Unscramble', icon: '🔀' },
+            { key: 'timeSequencing', name: 'Time Sequencing', icon: '📅' },
+            { key: 'clockMatching', name: 'Clock Matching', icon: '🕐' },
+            { key: 'timeOrdering', name: 'Time Ordering', icon: '⏰' },
+            { key: 'workingMemory', name: 'Working Memory', icon: '🧠' }
+        ];
+        
+        let html = '';
+        exerciseTypes.forEach(type => {
+            const typeResults = this.getAssessmentResultsForType(assessmentData, type.key);
+            if (typeResults.length > 0) {
+                const latestResult = typeResults[0];
+                const trend = typeResults.length > 1 ? this.calculateTrend(typeResults) : null;
+                const difficulties = this.getAreasDifficulty(typeResults);
+                const recommendations = this.getRecommendationsForType(type.key, latestResult, difficulties);
+                
+                html += `
+                    <div class="assessment-card" data-exercise="${type.key}">
+                        <div class="card-header">
+                            <span class="card-icon">${type.icon}</span>
+                            <h4 class="card-title">${type.name}</h4>
+                            ${trend !== null ? `
+                                <span class="trend-indicator ${trend > 0 ? 'positive' : trend < 0 ? 'negative' : 'neutral'}">
+                                    ${trend > 0 ? '↗️' : trend < 0 ? '↘️' : '→'} ${Math.abs(trend)}%
+                                </span>
+                            ` : ''}
+                        </div>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <span class="stat-value">${latestResult.accuracy}%</span>
+                                <span class="stat-label">Latest Score</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">${typeResults.length}</span>
+                                <span class="stat-label">Assessments</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">${latestResult.difficulty}</span>
+                                <span class="stat-label">Level</span>
+                            </div>
+                        </div>
+                        <div class="difficulties-section">
+                            <h5>Areas of Difficulty:</h5>
+                            <div class="difficulty-tags">
+                                ${difficulties.map(d => `<span class="difficulty-tag">${d}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="recommendations-section">
+                            <h5>Recommendations:</h5>
+                            <ul class="recommendation-list">
+                                ${recommendations.map(r => `<li>${r}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+        
+        container.innerHTML = html || '<p class="empty-message">No assessment results available.</p>';
+    }
+    
+    getPracticeData(timeRange) {
+        // Get practice data from tracking service based on time range
+        // This would interface with the actual tracking service
+        const trackingService = window.trackingService;
+        if (!trackingService) return {};
+        
+        const endDate = new Date();
+        let startDate = new Date();
+        
+        switch (timeRange) {
+            case 'day':
+                startDate.setHours(0, 0, 0, 0);
+                break;
+            case 'week':
+                startDate.setDate(startDate.getDate() - 7);
+                break;
+            case 'month':
+                startDate.setMonth(startDate.getMonth() - 1);
+                break;
+            case 'all':
+                startDate = new Date(2020, 0, 1); // Far back date
+                break;
+        }
+        
+        return trackingService.getPracticeDataByDateRange(startDate, endDate);
+    }
+    
+    getAssessmentResultsForType(assessmentData, exerciseType) {
+        return assessmentData
+            .filter(result => result.exerciseType === exerciseType)
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+    
+    calculateTrend(results) {
+        if (results.length < 2) return null;
+        const latest = results[0].accuracy;
+        const previous = results[1].accuracy;
+        return Math.round(latest - previous);
+    }
+    
+    getAreasDifficulty(results) {
+        // Analyze results to find areas of difficulty
+        const difficulties = [];
+        const latest = results[0];
+        
+        if (latest.accuracy < 70) {
+            difficulties.push('Overall accuracy needs improvement');
+        }
+        if (latest.hintsUsed > 3) {
+            difficulties.push('Heavy reliance on hints');
+        }
+        if (latest.avgResponseTime > 10000) {
+            difficulties.push('Slow response time');
+        }
+        
+        return difficulties.length > 0 ? difficulties : ['No significant difficulties identified'];
+    }
+    
+    getRecommendationsForType(type, latestResult, difficulties) {
+        const recommendations = [];
+        
+        if (latestResult.accuracy < 70) {
+            recommendations.push('Focus more practice time on this exercise type');
+            recommendations.push('Start with easier difficulty levels');
+        }
+        
+        if (latestResult.hintsUsed > 3) {
+            recommendations.push('Try to complete exercises without hints first');
+            recommendations.push('Review the underlying concepts');
+        }
+        
+        if (latestResult.avgResponseTime > 10000) {
+            recommendations.push('Practice with shorter time pressure');
+            recommendations.push('Focus on automatic recall');
+        }
+        
+        if (latestResult.accuracy >= 85) {
+            recommendations.push('Ready to try higher difficulty level');
+            recommendations.push('Consider assessment in related exercise types');
+        }
+        
+        return recommendations.length > 0 ? recommendations : ['Keep up the good work!'];
+    }
+    
+    getAverageDifficulty(attempts) {
+        if (!attempts || attempts.length === 0) return 1;
+        const difficultyMap = { easy: 1, medium: 2, hard: 3 };
+        const total = attempts.reduce((sum, attempt) => sum + (difficultyMap[attempt.difficulty] || 2), 0);
+        return total / attempts.length;
+    }
+    
+    formatTime(milliseconds) {
+        const minutes = Math.floor(milliseconds / 60000);
+        const seconds = Math.floor((milliseconds % 60000) / 1000);
+        if (minutes > 60) {
+            const hours = Math.floor(minutes / 60);
+            const remainingMinutes = minutes % 60;
+            return `${hours}h ${remainingMinutes}m`;
+        }
+        return minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+    }
+    
     attachListeners() {
+        // Tab switching
+        this.container.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active tab
+                this.container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show/hide tab content
+                const activeTab = btn.dataset.tab;
+                this.container.querySelectorAll('.tab-content').forEach(content => {
+                    content.hidden = content.id !== `${activeTab}-tab`;
+                });
+                
+                // Refresh content if needed
+                if (activeTab === 'assessment') {
+                    this.renderAssessmentTab();
+                }
+            });
+        });
+        
+        // Time range switching (practice tab only)
+        this.container.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.container.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.renderPracticeTab(btn.dataset.range);
+            });
+        });
+        
+        // Assessment card click handlers
+        this.container.addEventListener('click', (e) => {
+            const assessmentCard = e.target.closest('.assessment-card');
+            if (assessmentCard) {
+                const exerciseType = assessmentCard.dataset.exercise;
+                this.showDetailedAssessmentReport(exerciseType);
+            }
+        });
+        
+        // Export report
         document.getElementById('export-report-btn')?.addEventListener('click', () => {
             pdfService.generateProgressReport();
         });
+    }
+    
+    showDetailedAssessmentReport(exerciseType) {
+        // Show a detailed modal or navigate to detailed view
+        const assessmentData = assessmentService.getAssessmentHistory();
+        const typeResults = this.getAssessmentResultsForType(assessmentData, exerciseType);
         
-
+        if (typeResults.length === 0) return;
+        
+        const modal = document.createElement('div');
+        modal.className = 'assessment-detail-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Assessment Details - ${exerciseType}</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="results-timeline">
+                        <h4>Assessment History</h4>
+                        <div class="timeline">
+                            ${typeResults.map((result, index) => `
+                                <div class="timeline-item">
+                                    <div class="timeline-date">${new Date(result.date).toLocaleDateString()}</div>
+                                    <div class="timeline-score ${result.accuracy >= 85 ? 'excellent' : result.accuracy >= 70 ? 'good' : 'needs-work'}">
+                                        ${result.accuracy}%
+                                    </div>
+                                    <div class="timeline-details">
+                                        <small>Difficulty: ${result.difficulty} | Time: ${this.formatTime(result.totalTime)}</small>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="performance-analysis">
+                        <h4>Performance Analysis</h4>
+                        <canvas id="performance-chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn--secondary modal-close">Close</button>
+                    <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'assessment'}))">Take New Assessment</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close modal handlers
+        modal.querySelectorAll('.modal-close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+        });
+        
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+        
+        // Draw performance chart (simple example)
+        this.drawPerformanceChart('performance-chart', typeResults);
+    }
+    
+    drawPerformanceChart(canvasId, data) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Simple line chart of accuracy over time
+        if (data.length > 1) {
+            ctx.strokeStyle = '#007bff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            data.reverse().forEach((result, index) => {
+                const x = (index / (data.length - 1)) * (width - 40) + 20;
+                const y = height - 20 - ((result.accuracy / 100) * (height - 40));
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+                
+                // Draw point
+                ctx.fillStyle = result.accuracy >= 85 ? '#28a745' : result.accuracy >= 70 ? '#ffc107' : '#dc3545';
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.closePath();
+                
+                // Restore line drawing
+                ctx.strokeStyle = '#007bff';
+                ctx.beginPath();
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    const prevX = ((index - 1) / (data.length - 1)) * (width - 40) + 20;
+                    const prevY = height - 20 - ((data[index - 1].accuracy / 100) * (height - 40));
+                    ctx.moveTo(prevX, prevY);
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+        }
     }
 }
 
