@@ -496,8 +496,6 @@ class SettingsPage {
                 const item = e.target.closest('.difficulty-item');
                 item.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
                 e.target.classList.add('active');
-                
-                console.log('Practice difficulty set:', type, difficulty);
             }
         });
         

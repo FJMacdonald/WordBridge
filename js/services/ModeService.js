@@ -32,7 +32,6 @@ class ModeService {
      * Start practice mode
      */
     startPracticeMode(exerciseType) {
-        console.log('Starting practice mode for:', exerciseType);
         this.currentMode = 'practice';
         this.testConfig = null;
         this.testProgress = null;
@@ -68,7 +67,6 @@ class ModeService {
      * Start test mode
      */
     startTestMode(exerciseType, difficulty = 'easy') {
-        console.log('Starting test mode:', exerciseType, difficulty);
         this.currentMode = 'test';
         
         this.testConfig = {
@@ -112,15 +110,7 @@ class ModeService {
         const diff = difficulty || 'easy';
         stats.timeByDifficulty[diff] += timeSpent;
         stats.countByDifficulty[diff]++;
-        
-        console.log('Practice attempt recorded:', {
-            exerciseType,
-            difficulty: diff,
-            timeSpent,
-            totalTime: stats.timeByDifficulty[diff],
-            count: stats.countByDifficulty[diff]
-        });
-        
+                
         storageService.set('practiceStats', practiceStats);
     }
     
@@ -143,9 +133,7 @@ class ModeService {
         
         // Reset item start time for next question
         this.testProgress.itemStartTime = Date.now();
-        
-        console.log('Test progress:', this.testProgress);
-        
+                
         return this.testProgress;
     }
     
@@ -211,9 +199,7 @@ class ModeService {
         const testResults = storageService.get('testResults', []);
         testResults.push(result);
         storageService.set('testResults', testResults);
-        
-        console.log('Test completed:', result);
-        
+                
         // Reset test state
         this.currentMode = 'practice';
         this.testConfig = null;
@@ -267,13 +253,6 @@ class ModeService {
         // Calculate average accuracy across recent tests
         const avgAccuracy = recentTests.reduce((sum, t) => sum + t.accuracy, 0) / recentTests.length;
         const avgHintsPerQ = recentTests.reduce((sum, t) => sum + parseFloat(t.hintsPerQuestion), 0) / recentTests.length;
-        
-        console.log('Recommended difficulty analysis:', {
-            exerciseType,
-            avgAccuracy,
-            avgHintsPerQ,
-            recentTests: recentTests.length
-        });
         
         // Decision logic
         if (avgAccuracy >= 90 && avgHintsPerQ < 0.5) {

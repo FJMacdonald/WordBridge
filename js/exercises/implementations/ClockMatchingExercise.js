@@ -128,8 +128,6 @@ class ClockMatchingExercise extends SelectionExercise {
         const currentItem = this.currentItem;
         const hintNumber = this.state.hintsUsed + 1;
         
-        console.log('ClockMatching hint requested:', hintNumber);
-        
         if (hintNumber === 1 || hintNumber === 3) {
             // Eliminate 1 option
             return super.applyHint('eliminate');

@@ -313,8 +313,7 @@ class WorkingMemoryExercise extends BaseExercise {
         if (!this.isSelectionPhase) return;
         
         const hintNumber = this.state.hintsUsed + 1;
-        console.log('WorkingMemory hint requested:', hintNumber);
-        
+
         // Hint 1: Remove 1 wrong option
         // Hint 2: Replay sequence
         // Hint 3: Remove another wrong option  
@@ -332,11 +331,6 @@ class WorkingMemoryExercise extends BaseExercise {
             !this.targetSequence.includes(btn.dataset.emoji)
         );
         
-        console.log('Eliminating options:', {
-            requested: numToRemove,
-            wrongOptionsAvailable: wrongOptions.length,
-            totalOptions: optionBtns.length
-        });
         
         // Only eliminate as many as exist, up to the requested number
         const actualNumToRemove = Math.min(numToRemove, wrongOptions.length);
@@ -345,10 +339,7 @@ class WorkingMemoryExercise extends BaseExercise {
         toEliminate.forEach(btn => {
             btn.disabled = true;
             btn.classList.add('eliminated');
-        });
-        
-        // Silent elimination - consistent with other exercises
-        console.log(`Eliminated ${actualNumToRemove} option(s) silently`);
+        });        
     }
     
     highlightFirstItem() {
@@ -375,9 +366,7 @@ class WorkingMemoryExercise extends BaseExercise {
         }
     }
     
-    async replaySequence() {
-        console.log('Replaying sequence as hint (1 second display)');
-        
+    async replaySequence() {        
         // Show the sequence again for 1 second only
         const displayArea = this.container.querySelector('#memory-display');
         const selectionArea = this.container.querySelector('#memory-selection');

@@ -1433,7 +1433,6 @@ class CustomizePage {
         if (customExercises[type] && customExercises[type][index]) {
             customExercises[type][index].status = 'archived';
             storageService.set(`customExercises_${locale}`, customExercises);
-            console.log('Archived item:', type, index);
         }
         
         await this.render();
@@ -1446,7 +1445,6 @@ class CustomizePage {
         if (customExercises[type] && customExercises[type][index]) {
             customExercises[type][index].status = 'active';
             storageService.set(`customExercises_${locale}`, customExercises);
-            console.log('Unarchived item:', type, index);
         }
         
         await this.render();
@@ -1464,9 +1462,7 @@ class CustomizePage {
             console.warn('Item not found for editing:', type, index);
             return;
         }
-        
-        console.log('Editing item:', type, index, item);
-        
+                
         // Render the form with pre-filled data
         const formContainer = this.container.querySelector('#add-form-container');
         if (formContainer) {

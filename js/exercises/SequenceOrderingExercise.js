@@ -33,7 +33,6 @@ class SequenceOrderingExercise extends BaseExercise {
             attempts++;
         }
         
-        console.log('Scrambled sequence:', scrambled, 'from:', sequence, 'attempts:', attempts);
         return scrambled;
     }
     
@@ -68,8 +67,6 @@ class SequenceOrderingExercise extends BaseExercise {
         [this.currentOrder[index1], this.currentOrder[index2]] = 
         [this.currentOrder[index2], this.currentOrder[index1]];
         
-        console.log('Swapped items:', index1, '<->', index2, 'New order:', this.currentOrder);
-        
         // Subclass should re-render and check if correct
     }
     
@@ -78,13 +75,7 @@ class SequenceOrderingExercise extends BaseExercise {
      */
     async checkOrder() {
         const isCorrect = this.arraysEqual(this.currentOrder, this.correctOrder);
-        
-        console.log('Checking order:', {
-            current: this.currentOrder,
-            correct: this.correctOrder,
-            isCorrect
-        });
-        
+                
         if (isCorrect) {
             trackingService.recordAttempt({
                 word: this.getItemIdentifier(),
