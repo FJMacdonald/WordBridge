@@ -460,5 +460,11 @@
     "test": "Test",
     "question": "Question",
     "of": "of"
+  },
+  "session": {
+    "paused": "Session Paused",
+    "pausedMessage": "You've been away for a while. Ready to continue?",
+    "resume": "Resume",
+    "endSession": "End Session"
   }
 }

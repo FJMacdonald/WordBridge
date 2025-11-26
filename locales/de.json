@@ -462,5 +462,17 @@
             "active": "Aktiv",
             "archived": "Archiviert"
         }
+    },
+    "modes": {
+        "practice": "Übung",
+        "test": "Test",
+        "question": "Frage",
+        "of": "von"
+    },
+    "session": {
+        "paused": "Sitzung pausiert",
+        "pausedMessage": "Sie waren eine Weile weg. Bereit fortzufahren?",
+        "resume": "Fortsetzen",
+        "endSession": "Sitzung beenden"
     }
 }

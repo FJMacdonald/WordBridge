@@ -163,10 +163,10 @@ class BaseExercise {
         dialog.className = 'inactivity-dialog';
         dialog.innerHTML = `
             <div class="dialog-content">
-                <h3>Session Paused</h3>
-                <p>You've been away for a while. Ready to continue?</p>
-                <button class="btn btn--primary" id="resume-btn">Resume</button>
-                <button class="btn btn--ghost" id="end-btn">End Session</button>
+                <h3>${t('session.paused')}</h3>
+                <p>${t('session.pausedMessage')}</p>
+                <button class="btn btn--primary" id="resume-btn">${t('session.resume')}</button>
+                <button class="btn btn--ghost" id="end-btn">${t('session.endSession')}</button>
             </div>
         `;
         
