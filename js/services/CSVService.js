@@ -72,10 +72,15 @@ class CSVService {
     detectType(headers) {
         const headerStr = headers.join(',').toLowerCase();
         
+        // Check for exercise_type column to determine format
+        if (headers.some(h => h.toLowerCase().includes('exercise_type'))) {
+            return 'multi_type'; // New format with type column
+        }
+        
         if (headerStr.includes('image') || headerStr.includes('picture') || headerStr.includes('word')) {
             // Check if it's specifically naming by looking for options
             if (headerStr.includes('option')) {
-                return 'naming';
+                return 'imageword'; // Unified image-word format
             }
         }
         
@@ -87,9 +92,9 @@ class CSVService {
             return 'words';
         }
         
-        // Default to naming if has word column
+        // Default to image-word if has word column
         if (headerStr.includes('word')) {
-            return 'naming';
+            return 'imageword';
         }
         
         throw new Error('Cannot detect exercise type from headers. Please use template.');
@@ -104,8 +109,10 @@ class CSVService {
             values.push('');
         }
         
-        if (type === 'naming') {
-            return this.transformNaming(values);
+        if (type === 'multi_type') {
+            return this.transformMultiType(headers, values);
+        } else if (type === 'imageword' || type === 'naming') {
+            return this.transformImageWord(values);
         } else if (type === 'sentenceTyping') {
             return this.transformSentence(values);
         } else if (type === 'words') {
@@ -115,8 +122,34 @@ class CSVService {
         throw new Error('Unknown exercise type');
     }
     
-    transformNaming(values) {
-        const [word, imageUrl, ...options] = values;
+    transformMultiType(headers, values) {
+        const exerciseTypeIndex = headers.findIndex(h => h.toLowerCase().includes('exercise_type'));
+        const exerciseType = values[exerciseTypeIndex]?.toLowerCase().trim();
+        
+        if (!exerciseType) {
+            throw new Error('exercise_type is required');
+        }
+        
+        if (exerciseType.includes('picture') || exerciseType.includes('typing') || exerciseType.includes('listening')) {
+            return {
+                type: 'imageword',
+                data: this.transformImageWord(values.filter((_, i) => i !== exerciseTypeIndex))
+            };
+        } else if (exerciseType === 'sentencetyping') {
+            return {
+                type: 'sentenceTyping', 
+                data: this.transformSentence(values.filter((_, i) => i !== exerciseTypeIndex))
+            };
+        } else {
+            return {
+                type: exerciseType,
+                data: this.transformWords(values.filter((_, i) => i !== exerciseTypeIndex))
+            };
+        }
+    }
+    
+    transformImageWord(values) {
+        const [word, imageEmojiUrl, ...options] = values;
         
         if (!word || !word.trim()) {
             throw new Error('Word is required');
@@ -124,16 +157,24 @@ class CSVService {
         
         const exercise = {
             answer: word.toLowerCase().trim(),
+            difficulty: values[values.length - 1] || 'medium', // Last column should be difficulty
             isCustom: true
         };
         
-        // Image URL is optional
-        if (imageUrl && imageUrl.trim()) {
-            exercise.imageUrl = imageUrl.trim();
+        // Handle image/emoji/URL
+        if (imageEmojiUrl && imageEmojiUrl.trim()) {
+            const imgData = imageEmojiUrl.trim();
+            if (imgData.startsWith('http')) {
+                exercise.imageUrl = imgData;
+            } else if (/[\u{1F600}-\u{1F6FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/u.test(imgData)) {
+                exercise.emoji = imgData;
+            } else {
+                exercise.imageUrl = imgData; // Assume it's a URL
+            }
         }
         
         // Options are optional - will auto-generate if not provided
-        const validOptions = options.filter(o => o && o.trim());
+        const validOptions = options.slice(0, -1).filter(o => o && o.trim()); // Exclude last column (difficulty)
         if (validOptions.length > 0) {
             exercise.options = [word.toLowerCase().trim(), ...validOptions.map(o => o.toLowerCase().trim())];
         }

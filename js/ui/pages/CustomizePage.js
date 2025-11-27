@@ -210,14 +210,11 @@ class CustomizePage {
                                 <summary><strong>📚 Words</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>🖼️ Picture Naming (naming):</strong>
-                                        <code>word, image_url, option1, option2, option3, difficulty</code>
-                                        <p>Example: apple, https://..., apple, orange, banana, pear, easy</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>⌨️ Spelling (typing):</strong>
-                                        <code>emoji, answer, option1, option2, option3, difficulty</code>
-                                        <p>Example: 🍎, apple, apple, aple, appl, appel, easy</p>
+                                        <strong>🖼️ Picture Naming / ⌨️ Spelling / 👂 Listening (picture/typing/listening):</strong>
+                                        <code>word, emoji_or_image_url, option1, option2, option3, difficulty</code>
+                                        <p>Example: apple, 🍎, banana, orange, pear, easy</p>
+                                        <p>Or: apple, https://example.com/apple.jpg, banana, orange, pear, easy</p>
+                                        <small>Note: This creates exercises for all three types. Options are ignored for spelling.</small>
                                     </div>
                                     <div class="format-item">
                                         <strong>📝 Fill Blank (sentenceTyping):</strong>
@@ -340,15 +337,13 @@ class CustomizePage {
     renderIndividualForm(type, editItem = null, editIndex = null) {
         switch (type) {
             case 'naming':
-                return this.renderNamingForm(editItem, editIndex);
             case 'typing':
-                return this.renderTypingForm(editItem, editIndex);
+            case 'listening':
+                return this.renderImageWordForm(type, editItem, editIndex);
             case 'sentenceTyping':
                 return this.renderSentenceForm(editItem, editIndex);
             case 'category':
                 return this.renderCategoryForm(editItem, editIndex);
-            case 'listening':
-                return this.renderListeningForm(editItem, editIndex);
             case 'speaking':
                 return this.renderSpeakingForm(editItem, editIndex);
             case 'firstSound':
@@ -376,43 +371,77 @@ class CustomizePage {
         }
     }
     
-    renderNamingForm(editItem = null, editIndex = null) {
+    renderImageWordForm(type, editItem = null, editIndex = null) {
         const isEditing = editItem !== null;
+        const exerciseNames = {
+            naming: 'Picture Naming',
+            typing: 'Spelling',
+            listening: 'Listening'
+        };
+        
+        const descriptions = {
+            naming: 'Users will see the image and select the correct word from multiple choices.',
+            typing: 'Users will see the image and type the correct word. Wrong options are ignored for typing exercises.',
+            listening: 'Users will hear the word and select the matching image from multiple choices.'
+        };
+        
         return `
-            <form class="add-form" id="add-naming-form" data-edit-type="${editItem ? 'naming' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Picture Exercise' : t('customize.forms.addPictureExercise')}</h3>
+            <form class="add-form" id="add-imageword-form" data-edit-type="${editItem ? type : ''}" data-edit-index="${editIndex || ''}">
+                <h3>${isEditing ? `Edit ${exerciseNames[type]} Exercise` : `Add ${exerciseNames[type]} Exercise`}</h3>
+                
+                <!-- Collapsible Info Box -->
+                <details class="info-box">
+                    <summary class="info-header">
+                        💡 About Image-Word Exercises
+                    </summary>
+                    <div class="info-content">
+                        <p><strong>This data is shared across Picture Naming, Spelling, and Listening exercises:</strong></p>
+                        <ul>
+                            <li><strong>Picture Naming:</strong> ${descriptions.naming}</li>
+                            <li><strong>Spelling:</strong> ${descriptions.typing}</li>
+                            <li><strong>Listening:</strong> ${descriptions.listening}</li>
+                        </ul>
+                        <p><em>When you save this exercise, it will appear in all three exercise types in your library.</em></p>
+                    </div>
+                </details>
                 
                 <div class="form-group">
-                    <label>${t('customize.forms.targetWord')}</label>
-                    <input type="text" id="word-input" placeholder="${t('customize.forms.targetWordPlaceholder')}" 
+                    <label>Target Word</label>
+                    <input type="text" id="word-input" placeholder="e.g., apple" 
                            value="${editItem ? editItem.answer || '' : ''}" required>
                 </div>
                 
                 <div class="form-group">
-                    <label>${t('customize.forms.imageFile')}</label>
+                    <label>Image (Upload, Emoji, or URL)</label>
                     <div class="image-upload-area">
-                        <input type="file" id="image-upload" accept="image/*" ${!isEditing ? 'required' : ''} style="display: none;">
-                        <button type="button" class="file-select-btn" id="file-select-btn">
-                            ${t('customize.forms.chooseFile')}
-                        </button>
-                        <span class="file-status" id="file-status">${editItem && editItem.localImageId ? 'Image uploaded' : t('customize.forms.noFileSelected')}</span>
-                        <div class="image-preview" id="image-preview">${editItem && editItem.localImageId ? '<div class="existing-image">Existing image will be kept if no new image is selected</div>' : ''}</div>
+                        <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                        <div class="upload-options">
+                            <button type="button" class="file-select-btn" id="file-select-btn">
+                                📁 Upload Image
+                            </button>
+                            <input type="text" id="emoji-input" placeholder="🍎 or enter emoji" 
+                                   value="${editItem && editItem.emoji ? editItem.emoji : ''}">
+                            <input type="text" id="image-url" placeholder="https://example.com/image.jpg" 
+                                   value="${editItem && editItem.imageUrl ? editItem.imageUrl : ''}">
+                        </div>
+                        <span class="file-status" id="file-status">${editItem && editItem.localImageId ? 'Image uploaded' : 'Choose one option above'}</span>
+                        <div class="image-preview" id="image-preview">${editItem && editItem.localImageId ? '<div class="existing-image">Existing image will be kept if no changes made</div>' : ''}</div>
                     </div>
-                    <small>${t('customize.forms.uploadPictureHelp')}</small>
+                    <small>Upload a file, enter an emoji, or provide an image URL</small>
                 </div>
                 
                 <div class="form-group">
-                    <label>${t('customize.forms.wrongOptionsOptional')}</label>
-                    <input type="text" id="options-input" placeholder="${t('customize.forms.wrongOptionsPlaceholder')}"
+                    <label>Wrong Options (for Picture Naming & Listening only)</label>
+                    <input type="text" id="options-input" placeholder="e.g., banana, orange, grape"
                            value="${editItem && editItem.options ? editItem.options.slice(1).join(', ') : ''}">
-                    <small>${t('customize.forms.autoGenerateHelp')}</small>
+                    <small>Comma-separated wrong answers. Leave empty to auto-generate. Ignored for Spelling exercises.</small>
                 </div>
                 
                 ${this.renderDifficultyField(editItem?.difficulty)}
                 
                 <div class="form-actions">
-                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
+                    <button type="button" class="btn btn--ghost" id="cancel-form">Cancel</button>
+                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : 'Add Exercise'}</button>
                 </div>
             </form>
         `;
@@ -447,42 +476,6 @@ class CustomizePage {
         `;
     }
     
-    renderTypingForm(editItem = null, editIndex = null) {
-        const isEditing = editItem !== null;
-        return `
-            <form class="add-form" id="add-typing-form" data-edit-type="${editItem ? 'typing' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Spelling Exercise' : 'Add Spelling Exercise'}</h3>
-                
-                <div class="form-group">
-                    <label>Target Word</label>
-                    <input type="text" id="target-word" placeholder="e.g., apple" 
-                           value="${editItem ? editItem.answer || '' : ''}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Emoji/Icon (optional)</label>
-                    <input type="text" id="word-emoji" placeholder="🍎" 
-                           value="${editItem ? editItem.emoji || '' : ''}">
-                    <small>Enter an emoji or leave blank for text-only</small>
-                </div>
-                
-                <div class="form-group">
-                    <label>Wrong Options (comma separated)</label>
-                    <input type="text" id="typing-options" 
-                           placeholder="e.g., aple, appl, appel"
-                           value="${editItem && editItem.options ? editItem.options.slice(1).join(', ') : ''}">
-                    <small>Leave empty to auto-generate options</small>
-                </div>
-                
-                ${this.renderDifficultyField(editItem?.difficulty)}
-                
-                <div class="form-actions">
-                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
-                </div>
-            </form>
-        `;
-    }
     
     renderCategoryForm(editItem = null, editIndex = null) {
         const isEditing = editItem !== null;
@@ -520,42 +513,6 @@ class CustomizePage {
         `;
     }
     
-    renderListeningForm(editItem = null, editIndex = null) {
-        const isEditing = editItem !== null;
-        return `
-            <form class="add-form" id="add-listening-form" data-edit-type="${editItem ? 'listening' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Listening Exercise' : 'Add Listening Exercise'}</h3>
-                
-                <div class="form-group">
-                    <label>Target Word</label>
-                    <input type="text" id="listen-word" placeholder="e.g., apple" 
-                           value="${editItem ? editItem.answer || '' : ''}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Emoji/Icon</label>
-                    <input type="text" id="listen-emoji" placeholder="🍎" 
-                           value="${editItem ? editItem.emoji || '' : ''}" required>
-                    <small>This will be shown as the correct option</small>
-                </div>
-                
-                <div class="form-group">
-                    <label>Wrong Options (comma separated)</label>
-                    <input type="text" id="listen-options" 
-                           placeholder="e.g., 🍌, 🍊, 🍇"
-                           value="${editItem && editItem.options ? editItem.options.slice(1).join(', ') : ''}" required>
-                    <small>Enter 3 emojis/icons as wrong choices</small>
-                </div>
-                
-                ${this.renderDifficultyField(editItem?.difficulty)}
-                
-                <div class="form-actions">
-                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
-                </div>
-            </form>
-        `;
-    }
     
     renderSpeakingForm(editItem = null, editIndex = null) {
         const isEditing = editItem !== null;
@@ -1342,10 +1299,13 @@ class CustomizePage {
             this.container.querySelector('#add-form-container').innerHTML = '';
         });
         
-        // Custom file button and image upload preview
+        // Image upload handling for unified form
         const imageInput = form.querySelector('#image-upload');
         const fileSelectBtn = form.querySelector('#file-select-btn');
         const fileStatus = form.querySelector('#file-status');
+        const emojiInput = form.querySelector('#emoji-input');
+        const imageUrlInput = form.querySelector('#image-url');
+        const imagePreview = form.querySelector('#image-preview');
         
         if (imageInput && fileSelectBtn) {
             // Custom file button click
@@ -1357,13 +1317,52 @@ class CustomizePage {
             imageInput.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
                 if (file) {
-                    fileStatus.textContent = file.name;
+                    fileStatus.textContent = `File: ${file.name}`;
                     const resized = await imageStorage.resizeImage(file);
-                    this.container.querySelector('#image-preview').innerHTML = 
-                        `<img src="${resized}" alt="Preview">`;
+                    imagePreview.innerHTML = `<img src="${resized}" alt="Preview" style="max-width: 100px; max-height: 100px;">`;
                     this.pendingImage = resized;
+                    // Clear other inputs
+                    if (emojiInput) emojiInput.value = '';
+                    if (imageUrlInput) imageUrlInput.value = '';
                 } else {
-                    fileStatus.textContent = t('customize.forms.noFileSelected');
+                    fileStatus.textContent = 'Choose one option above';
+                    imagePreview.innerHTML = '';
+                }
+            });
+        }
+        
+        // Handle emoji input
+        if (emojiInput) {
+            emojiInput.addEventListener('input', (e) => {
+                const value = e.target.value.trim();
+                if (value) {
+                    fileStatus.textContent = `Emoji: ${value}`;
+                    imagePreview.innerHTML = `<div style="font-size: 4rem;">${value}</div>`;
+                    // Clear other inputs
+                    if (imageInput) imageInput.value = '';
+                    if (imageUrlInput) imageUrlInput.value = '';
+                    this.pendingImage = null;
+                } else if (!imageInput?.files[0] && !imageUrlInput?.value) {
+                    fileStatus.textContent = 'Choose one option above';
+                    imagePreview.innerHTML = '';
+                }
+            });
+        }
+        
+        // Handle image URL input  
+        if (imageUrlInput) {
+            imageUrlInput.addEventListener('input', (e) => {
+                const value = e.target.value.trim();
+                if (value) {
+                    fileStatus.textContent = `URL: ${value.substring(0, 30)}...`;
+                    imagePreview.innerHTML = `<img src="${value}" alt="URL Preview" style="max-width: 100px; max-height: 100px;" onerror="this.innerHTML='❌ Invalid URL';">`;
+                    // Clear other inputs
+                    if (imageInput) imageInput.value = '';
+                    if (emojiInput) emojiInput.value = '';
+                    this.pendingImage = null;
+                } else if (!imageInput?.files[0] && !emojiInput?.value) {
+                    fileStatus.textContent = 'Choose one option above';
+                    imagePreview.innerHTML = '';
                 }
             });
         }
@@ -1379,19 +1378,15 @@ class CustomizePage {
             
             switch (type) {
                 case 'naming':
-                    await this.handleAddNaming(isEdit, editType, parseInt(editIndex));
-                    break;
                 case 'typing':
-                    await this.handleAddTyping(isEdit, editType, parseInt(editIndex));
+                case 'listening':
+                    await this.handleAddImageWord(type, isEdit, editType, parseInt(editIndex));
                     break;
                 case 'sentenceTyping':
                     await this.handleAddSentence(isEdit, editType, parseInt(editIndex));
                     break;
                 case 'category':
                     await this.handleAddCategory(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'listening':
-                    await this.handleAddListening(isEdit, editType, parseInt(editIndex));
                     break;
                 case 'speaking':
                     await this.handleAddSpeaking(isEdit, editType, parseInt(editIndex));
@@ -1430,50 +1425,85 @@ class CustomizePage {
         });
     }
     
-    async handleAddNaming(isEdit = false, editType = null, editIndex = null) {
+    async handleAddImageWord(formType, isEdit = false, editType = null, editIndex = null) {
         const word = this.container.querySelector('#word-input').value.trim().toLowerCase();
         const optionsInput = this.container.querySelector('#options-input').value;
+        const emojiInput = this.container.querySelector('#emoji-input').value.trim();
+        const imageUrlInput = this.container.querySelector('#image-url').value.trim();
         const difficulty = this.container.querySelector('#exercise-difficulty').value;
         
         if (!word) return;
         
-        const exercise = {
+        const baseExercise = {
             answer: word,
             difficulty,
             isCustom: true
         };
         
-        // Handle image
+        // Handle image - uploaded file takes priority
         if (this.pendingImage) {
             const imageId = await imageStorage.saveImage(this.pendingImage, {
                 word: word,
                 category: 'custom'
             });
-            exercise.localImageId = imageId;
+            baseExercise.localImageId = imageId;
             this.pendingImage = null;
+        } else if (emojiInput) {
+            baseExercise.emoji = emojiInput;
+        } else if (imageUrlInput) {
+            baseExercise.imageUrl = imageUrlInput;
         } else if (isEdit) {
             // Keep existing image if editing and no new image provided
             const locale = i18n.getCurrentLocale();
             const customExercises = storageService.get(`customExercises_${locale}`, {});
             const existingExercise = customExercises[editType]?.[editIndex];
             if (existingExercise?.localImageId) {
-                exercise.localImageId = existingExercise.localImageId;
+                baseExercise.localImageId = existingExercise.localImageId;
+            } else if (existingExercise?.emoji) {
+                baseExercise.emoji = existingExercise.emoji;
+            } else if (existingExercise?.imageUrl) {
+                baseExercise.imageUrl = existingExercise.imageUrl;
             }
         }
         
+        // Handle options for naming and listening (ignore for typing)
         if (optionsInput) {
-            const options = optionsInput.split(',').map(o => o.trim().toLowerCase());
-            exercise.options = [word, ...options];
+            const options = optionsInput.split(',').map(o => o.trim().toLowerCase()).filter(o => o);
+            if (options.length > 0) {
+                baseExercise.options = [word, ...options];
+            }
         }
         
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
-        if (!customExercises.naming) customExercises.naming = [];
         
-        if (isEdit && editIndex !== null) {
-            customExercises[editType][editIndex] = exercise;
+        if (isEdit && editType && editIndex !== null) {
+            // Only update the specific type being edited, but keep it in sync
+            if (!customExercises[editType]) customExercises[editType] = [];
+            customExercises[editType][editIndex] = { ...baseExercise };
+            
+            // Also update the other types if they exist at the same position
+            ['naming', 'typing', 'listening'].forEach(type => {
+                if (type !== editType && customExercises[type] && customExercises[type][editIndex] && 
+                    customExercises[type][editIndex].answer === word) {
+                    customExercises[type][editIndex] = { 
+                        ...baseExercise,
+                        // Keep options only for naming and listening
+                        ...(type === 'typing' ? { options: undefined } : {})
+                    };
+                }
+            });
         } else {
-            customExercises.naming.push(exercise);
+            // Add to all three exercise types
+            ['naming', 'typing', 'listening'].forEach(type => {
+                if (!customExercises[type]) customExercises[type] = [];
+                const exerciseForType = { 
+                    ...baseExercise,
+                    // Remove options for typing exercises
+                    ...(type === 'typing' ? { options: undefined } : {})
+                };
+                customExercises[type].push(exerciseForType);
+            });
         }
         
         storageService.set(`customExercises_${locale}`, customExercises);
@@ -1508,40 +1538,7 @@ class CustomizePage {
         await this.render();
     }
     
-    async handleAddTyping(isEdit = false, editType = null, editIndex = null) {
-        const word = this.container.querySelector('#target-word').value.trim().toLowerCase();
-        const emoji = this.container.querySelector('#word-emoji').value.trim();
-        const optionsInput = this.container.querySelector('#typing-options').value;
-        const difficulty = this.container.querySelector('#exercise-difficulty').value;
-        
-        if (!word) return;
-        
-        const exercise = {
-            answer: word,
-            difficulty,
-            isCustom: true
-        };
-        
-        if (emoji) exercise.emoji = emoji;
-        
-        if (optionsInput) {
-            const options = optionsInput.split(',').map(o => o.trim().toLowerCase());
-            exercise.options = [word, ...options];
-        }
-        
-        const locale = i18n.getCurrentLocale();
-        const customExercises = storageService.get(`customExercises_${locale}`, {});
-        if (!customExercises.typing) customExercises.typing = [];
-        
-        if (isEdit && editIndex !== null) {
-            customExercises[editType][editIndex] = exercise;
-        } else {
-            customExercises.typing.push(exercise);
-        }
-        
-        storageService.set(`customExercises_${locale}`, customExercises);
-        await this.render();
-    }
+
     
     async handleAddCategory(isEdit = false, editType = null, editIndex = null) {
         const category = this.container.querySelector('#category-name').value.trim().toLowerCase();
@@ -2085,11 +2082,29 @@ class CustomizePage {
     importCSVData(type, data) {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
-        if (!customExercises[type]) customExercises[type] = [];
-        customExercises[type].push(...data);
+        
+        if (type === 'imageword') {
+            // Add to all three types: naming, typing, listening
+            ['naming', 'typing', 'listening'].forEach(exerciseType => {
+                if (!customExercises[exerciseType]) customExercises[exerciseType] = [];
+                data.forEach(exercise => {
+                    const exerciseForType = { 
+                        ...exercise,
+                        // Remove options for typing exercises
+                        ...(exerciseType === 'typing' ? { options: undefined } : {})
+                    };
+                    customExercises[exerciseType].push(exerciseForType);
+                });
+            });
+        } else {
+            if (!customExercises[type]) customExercises[type] = [];
+            customExercises[type].push(...data);
+        }
+        
         storageService.set(`customExercises_${locale}`, customExercises);
         
-        alert(`Successfully imported ${data.length} exercises!`);
+        const totalImported = type === 'imageword' ? data.length * 3 : data.length;
+        alert(`Successfully imported ${totalImported} exercises!`);
         this.render();
     }
     
@@ -2108,21 +2123,18 @@ class CustomizePage {
         const isGerman = locale === 'de';
         
         // Create combined template with all selected types
-        const headers = ['exercise_type', 'word', 'image_url', 'option1', 'option2', 'option3', 'difficulty'];
+        const headers = ['exercise_type', 'word', 'image_emoji_url', 'option1', 'option2', 'option3', 'difficulty'];
         const rows = [];
         
         selectedTypes.forEach(type => {
             switch (type) {
                 case 'naming':
+                case 'typing':  
+                case 'listening':
+                    // These three share the same data format
                     rows.push(isGerman ? 
-                        ['naming', 'Apfel', 'https://example.com/apfel.jpg', 'Banane', 'Orange', 'Birne', 'easy'] :
-                        ['naming', 'apple', 'https://example.com/apple.jpg', 'banana', 'orange', 'pear', 'easy']
-                    );
-                    break;
-                case 'typing':
-                    rows.push(isGerman ?
-                        ['typing', 'Apfel', '🍎', 'Afel', 'Appel', 'Apfal', 'easy'] :
-                        ['typing', 'apple', '🍎', 'aple', 'appel', 'appl', 'easy']
+                        ['picture/typing/listening', 'Apfel', '🍎 or https://example.com/apfel.jpg', 'Banane', 'Orange', 'Birne', 'easy'] :
+                        ['picture/typing/listening', 'apple', '🍎 or https://example.com/apple.jpg', 'banana', 'orange', 'pear', 'easy']
                     );
                     break;
                 case 'sentenceTyping':
