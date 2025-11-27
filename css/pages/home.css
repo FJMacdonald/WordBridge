@@ -79,8 +79,118 @@
     text-align: center;
 }
 
+/* Assessment Results Grid */
+.assessment-breakdown {
+    margin: var(--space-2xl) 0;
+    text-align: left;
+}
+
+.assessment-breakdown h3 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.exercise-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.exercise-result-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+}
+
+.exercise-result-card.has-result {
+    border-color: var(--color-success);
+    background: var(--color-success-surface);
+}
+
+.exercise-result-card.no-result {
+    opacity: 0.5;
+    border-style: dashed;
+}
+
+.exercise-result-card .card-icon {
+    font-size: 2rem;
+}
+
+.exercise-result-card .card-name {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    text-align: center;
+}
+
+.card-score {
+    text-align: center;
+}
+
+.card-score .score {
+    display: block;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-success);
+}
+
+.card-score .accuracy {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.card-time {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.card-empty {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.overall-score {
+    margin: var(--space-lg) 0;
+}
+
+.score-display {
+    display: inline-block;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-primary-surface);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+}
+
+.score-value {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.score-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.assessment-actions {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    margin-top: var(--space-2xl);
+}
+
 /* Results page */
-.exercise-complete {
+.exercise-complete,
+.assessment-complete {
     text-align: center;
     padding: var(--space-2xl) 0;
 }
