@@ -283,6 +283,16 @@ class BaseExercise {
     }
     
     renderResults(results) {
+        const isAssessment = this.mode === 'test';
+        
+        if (isAssessment) {
+            this.renderAssessmentResults(results);
+        } else {
+            this.renderPracticeResults(results);
+        }
+    }
+    
+    renderPracticeResults(results) {
         this.container.innerHTML = `
             <div class="exercise-complete">
                 <h2>${t('results.title')}</h2>
@@ -321,6 +331,76 @@ class BaseExercise {
         `;
         
         this.attachResultListeners();
+    }
+    
+    renderAssessmentResults(results) {
+        // For assessments, show a home-page-style layout with results
+        const exerciseTypes = [
+            { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
+            { key: 'typing', name: 'Spelling', icon: '⌨️' },
+            { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
+            { key: 'category', name: 'Categories', icon: '📁' },
+            { key: 'listening', name: 'Listening', icon: '👂' },
+            { key: 'speaking', name: 'Speaking', icon: '🎤' },
+            { key: 'firstSound', name: 'First Sounds', icon: '🔤' },
+            { key: 'rhyming', name: 'Rhyming', icon: '🎵' },
+            { key: 'definitions', name: 'Definitions', icon: '📖' },
+            { key: 'association', name: 'Association', icon: '🔗' },
+            { key: 'synonyms', name: 'Synonyms', icon: '≈' },
+            { key: 'scramble', name: 'Unscramble', icon: '🔀' },
+            { key: 'timeSequencing', name: 'Time Sequencing', icon: '📅' },
+            { key: 'clockMatching', name: 'Clock Matching', icon: '🕐' },
+            { key: 'timeOrdering', name: 'Time Ordering', icon: '⏰' },
+            { key: 'workingMemory', name: 'Working Memory', icon: '🧠' }
+        ];
+        
+        this.container.innerHTML = `
+            <div class="assessment-complete">
+                <header class="page-header">
+                    <h2>Assessment Complete!</h2>
+                    <div class="overall-score">
+                        <div class="score-display">
+                            <span class="score-value">${results.correct}/${results.total}</span>
+                            <span class="score-label">${results.accuracy}% Overall</span>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="assessment-breakdown">
+                    <h3>Exercise Results</h3>
+                    <div class="exercise-results-grid">
+                        ${exerciseTypes.map(exercise => {
+                            // Check if this exercise type was tested
+                            const hasResult = this.type === exercise.key;
+                            return `
+                                <div class="exercise-result-card ${hasResult ? 'has-result' : 'no-result'}">
+                                    <div class="card-icon">${exercise.icon}</div>
+                                    <div class="card-name">${exercise.name}</div>
+                                    ${hasResult ? `
+                                        <div class="card-score">
+                                            <span class="score">${results.correct}/${results.total}</span>
+                                            <span class="accuracy">${results.accuracy}%</span>
+                                        </div>
+                                        <div class="card-time">${results.timeFormatted}</div>
+                                    ` : `
+                                        <div class="card-empty">Not tested</div>
+                                    `}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                
+                <div class="assessment-actions">
+                    <button class="btn btn--secondary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'assessment'}))">
+                        Take Another Assessment
+                    </button>
+                    <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'progress'}))">
+                        View Progress
+                    </button>
+                </div>
+            </div>
+        `;
     }
     
     generateResultsFeedback(results) {
