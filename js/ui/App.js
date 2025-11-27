@@ -363,7 +363,7 @@ class App {
             }
         }
         
-        const customExercises = storageService.get('customExercises', {});
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
         const customData = customExercises[type] || [];
         
         // Get custom exercise frequency setting
