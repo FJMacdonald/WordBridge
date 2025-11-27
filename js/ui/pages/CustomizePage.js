@@ -94,7 +94,7 @@ class CustomizePage {
                                 <select class="type-dropdown" data-category="words">
                                     <option value="">Select exercise type...</option>
                                     <option value="naming">🖼️ Picture Naming</option>
-                                    <option value="typing">⌨️ Spelling</option>
+                                    <option value="typing">⌨️ Typing</option>
                                     <option value="sentenceTyping">📝 Fill Blank</option>
                                     <option value="category">📁 Categories</option>
                                 </select>
@@ -179,7 +179,7 @@ class CustomizePage {
                             <strong>📚 Words:</strong>
                             <div class="checkbox-grid">
                                 <label><input type="checkbox" value="naming" checked> 🖼️ Picture Naming</label>
-                                <label><input type="checkbox" value="typing" checked> ⌨️ Spelling</label>
+                                <label><input type="checkbox" value="typing" checked> ⌨️ Typing</label>
                                 <label><input type="checkbox" value="sentenceTyping" checked> 📝 Fill Blank</label>
                                 <label><input type="checkbox" value="category" checked> 📁 Categories</label>
                             </div>
@@ -415,7 +415,7 @@ class CustomizePage {
         const isEditing = editItem !== null;
         const exerciseNames = {
             naming: 'Picture Naming',
-            typing: 'Spelling',
+            typing: 'Typing',
             listening: 'Listening'
         };
         
@@ -435,10 +435,10 @@ class CustomizePage {
                         💡 About Image-Word Exercises
                     </summary>
                     <div class="info-content">
-                        <p><strong>This data is shared across Picture Naming, Spelling, and Listening exercises:</strong></p>
+                        <p><strong>This data is shared across Picture Naming, Typing, and Listening exercises:</strong></p>
                         <ul>
                             <li><strong>Picture Naming:</strong> ${descriptions.naming}</li>
-                            <li><strong>Spelling:</strong> ${descriptions.typing}</li>
+                            <li><strong>Typing:</strong> ${descriptions.typing}</li>
                             <li><strong>Listening:</strong> ${descriptions.listening}</li>
                         </ul>
                         <p><em>When you save this exercise, it will appear in all three exercise types in your library.</em></p>
@@ -474,7 +474,7 @@ class CustomizePage {
                     <label>Wrong Options (for Picture Naming & Listening only)</label>
                     <input type="text" id="options-input" placeholder="e.g., banana, orange, grape"
                            value="${editItem && editItem.options ? editItem.options.slice(1).join(', ') : ''}">
-                    <small>Comma-separated wrong answers. Leave empty to auto-generate. Ignored for Spelling exercises.</small>
+                    <small>Comma-separated wrong answers (minimum 3 required). Leave empty to auto-generate. Ignored for Typing exercises.</small>
                 </div>
                 
                 ${this.renderDifficultyField(editItem?.difficulty)}
@@ -607,7 +607,7 @@ class CustomizePage {
                     <input type="text" id="sound-words" 
                            placeholder="e.g., ball, book, bed, bird, box"
                            value="${editItem && editItem.words ? editItem.words.join(', ') : ''}" required>
-                    <small>Enter 4-6 words that start with this sound</small>
+                    <small>Enter at least 4 words that start with this sound (minimum 4 required)</small>
                 </div>
                 
                 ${this.renderDifficultyField(editItem?.difficulty)}
@@ -637,7 +637,7 @@ class CustomizePage {
                     <input type="text" id="rhyme-words" 
                            placeholder="e.g., hat, bat, mat"
                            value="${editItem && editItem.rhymes ? editItem.rhymes.join(', ') : ''}" required>
-                    <small>Enter 3-4 words that rhyme with the target word</small>
+                    <small>Enter at least 2 words that rhyme with the target word (minimum 2 required)</small>
                 </div>
                 
                 <div class="form-group">
@@ -645,7 +645,7 @@ class CustomizePage {
                     <input type="text" id="non-rhyme-words" 
                            placeholder="e.g., dog, cup, tree"
                            value="${editItem && editItem.nonRhymes ? editItem.nonRhymes.join(', ') : ''}" required>
-                    <small>Enter 2-3 words that do NOT rhyme</small>
+                    <small>Enter at least 2 words that do NOT rhyme (minimum 2 required)</small>
                 </div>
                 
                 ${this.renderDifficultyField(editItem?.difficulty)}
@@ -703,7 +703,7 @@ class CustomizePage {
                     <input type="text" id="assoc-related" 
                            placeholder="e.g., butter, toast"
                            value="${editItem && editItem.associated ? editItem.associated.join(', ') : ''}" required>
-                    <small>Words that go well with the main word</small>
+                    <small>Words that go well with the main word (minimum 2 required)</small>
                 </div>
                 
                 <div class="form-group">
@@ -711,7 +711,7 @@ class CustomizePage {
                     <input type="text" id="assoc-unrelated" 
                            placeholder="e.g., car, phone"
                            value="${editItem && editItem.unrelated ? editItem.unrelated.join(', ') : ''}" required>
-                    <small>Words that don't relate to the main word</small>
+                    <small>Words that don't relate to the main word (minimum 2 required)</small>
                 </div>
                 
                 ${this.renderDifficultyField(editItem?.difficulty)}
@@ -741,7 +741,7 @@ class CustomizePage {
                     <input type="text" id="syn-synonyms" 
                            placeholder="e.g., glad, joyful"
                            value="${editItem && editItem.synonyms ? editItem.synonyms.join(', ') : ''}" required>
-                    <small>Words that mean the same</small>
+                    <small>Words that mean the same (minimum 2 required)</small>
                 </div>
                 
                 <div class="form-group">
@@ -749,7 +749,7 @@ class CustomizePage {
                     <input type="text" id="syn-antonyms" 
                            placeholder="e.g., sad, unhappy"
                            value="${editItem && editItem.antonyms ? editItem.antonyms.join(', ') : ''}" required>
-                    <small>Words that mean the opposite</small>
+                    <small>Words that mean the opposite (minimum 2 required)</small>
                 </div>
                 
                 ${this.renderDifficultyField(editItem?.difficulty)}
@@ -907,7 +907,7 @@ class CustomizePage {
                     <label>${t('customize.forms.extraOptions')}</label>
                     <input type="text" id="memory-options" placeholder="${t('customize.forms.extraOptionsPlaceholder')}" 
                            value="${extraOptions}" required>
-                    <small>${t('customize.forms.extraOptionsHelp')}</small>
+                    <small>${t('customize.forms.extraOptionsHelp')} (Minimum 3 additional emojis required)</small>
                 </div>
                 
                 ${this.renderDifficultyField(editItem?.difficulty)}
@@ -1070,7 +1070,7 @@ class CustomizePage {
     getTypeName(type) {
         const names = {
             naming: 'Picture Naming',
-            typing: 'Spelling',
+            typing: 'Typing',
             sentenceTyping: 'Fill Blank',
             category: 'Categories',
             listening: 'Listening',
@@ -1534,17 +1534,21 @@ class CustomizePage {
         const customExercises = storageService.get(`customExercises_${locale}`, {});
         
         if (isEdit && editType && editIndex !== null) {
-            // Only update the specific type being edited, but keep it in sync
-            if (!customExercises[editType]) customExercises[editType] = [];
-            customExercises[editType][editIndex] = { ...baseExercise };
+            // Update all three types when editing one of them
+            const originalWord = customExercises[editType]?.[editIndex]?.answer;
             
-            // Also update the other types if they exist at the same position
             ['naming', 'typing', 'listening'].forEach(type => {
-                if (type !== editType && customExercises[type] && customExercises[type][editIndex] && 
-                    customExercises[type][editIndex].answer === word) {
-                    customExercises[type][editIndex] = { 
+                if (!customExercises[type]) customExercises[type] = [];
+                
+                // Find the matching exercise in each type by the original answer word
+                const matchingIndex = customExercises[type].findIndex(ex => 
+                    ex.answer === originalWord
+                );
+                
+                if (matchingIndex !== -1) {
+                    customExercises[type][matchingIndex] = { 
                         ...baseExercise,
-                        // Keep options only for naming and listening
+                        // Remove options for typing exercises
                         ...(type === 'typing' ? { options: undefined } : {})
                     };
                 }
@@ -2016,24 +2020,41 @@ class CustomizePage {
     async handleAddWorkingMemory(isEdit = false, editType = null, editIndex = null) {
         const sequence = this.container.querySelector('#memory-sequence').value.trim();
         const extraOptions = this.container.querySelector('#memory-options').value.trim();
+        const difficulty = this.container.querySelector('#exercise-difficulty').value;
         
-        if (!sequence || !extraOptions) return;
+        if (!sequence || !extraOptions) {
+            alert('Please provide both sequence and extra options');
+            return;
+        }
         
-        // Parse emoji sequence (expect 3 emojis)
-        const sequenceArray = Array.from(sequence).filter(char => 
-            /[\u{1F600}-\u{1F6FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/u.test(char)
-        ).slice(0, 3);
+        // More flexible emoji parsing - split by spaces or extract emojis
+        const parseEmojis = (text) => {
+            // Try splitting by spaces first
+            let parts = text.split(/\s+/).filter(p => p);
+            // If no spaces, try to extract individual emojis
+            if (parts.length === 1) {
+                // Match emoji sequences more broadly
+                const emojiRegex = /[\p{Emoji_Presentation}\p{Emoji}\uFE0F]/gu;
+                const matches = text.match(emojiRegex);
+                return matches || [];
+            }
+            return parts;
+        };
         
-        // Parse extra options
-        const extraOptionsArray = Array.from(extraOptions).filter(char => 
-            /[\u{1F600}-\u{1F6FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/u.test(char)
-        );
+        const sequenceArray = parseEmojis(sequence).slice(0, 3);
+        const extraOptionsArray = parseEmojis(extraOptions);
         
-        if (sequenceArray.length !== 3 || extraOptionsArray.length < 3) return;
+        if (sequenceArray.length !== 3) {
+            alert('Please provide exactly 3 emojis for the sequence');
+            return;
+        }
+        
+        if (extraOptionsArray.length < 3) {
+            alert('Please provide at least 3 additional emojis for the options');
+            return;
+        }
         
         const allOptions = [...sequenceArray, ...extraOptionsArray];
-        
-        const difficulty = this.container.querySelector('#exercise-difficulty').value;
         
         const exercise = {
             id: isEdit ? null : `custom_${Date.now()}`,

@@ -337,7 +337,7 @@ class BaseExercise {
         // For assessments, show a home-page-style layout with results
         const exerciseTypes = [
             { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
-            { key: 'typing', name: 'Spelling', icon: '⌨️' },
+            { key: 'typing', name: 'Typing', icon: '⌨️' },
             { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
             { key: 'category', name: 'Categories', icon: '📁' },
             { key: 'listening', name: 'Listening', icon: '👂' },

@@ -32,7 +32,7 @@ class ExerciseFactory {
             },
             typing: {
                 class: TypingWordExercise,
-                name: 'Spelling',
+                name: 'Typing',
                 icon: '⌨️',
                 category: 'words',
                 order: 2
