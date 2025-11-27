@@ -198,14 +198,16 @@ class BaseExercise {
         const value = btn.dataset.value;
         const correct = this.checkAnswer(value);
         
-        // Enhanced tracking with response time
+        // Enhanced tracking with response time and wrong selections
         trackingService.recordAttempt({
             exerciseType: this.type,
             word: this.getCorrectAnswer(),
             correct,
             hintsUsed: this.state.hintsUsed,
             responseTime,
-            attemptNumber: this.state.eliminatedIndices.size + 1
+            attemptNumber: this.state.eliminatedIndices.size + 1,
+            wrongSelections: correct ? 0 : 1,
+            mistypedLetters: 0 // Will be updated by typing exercises
         });
         
         this.recordActivity('answer_submitted');

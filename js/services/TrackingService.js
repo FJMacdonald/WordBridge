@@ -46,7 +46,9 @@ class TrackingService {
         correct,
         hintsUsed = 0,
         responseTime = null,
-        attemptNumber = 1
+        attemptNumber = 1,
+        wrongSelections = 0,
+        mistypedLetters = 0
     }) {
         if (!this.currentSession) return;
         
@@ -56,6 +58,8 @@ class TrackingService {
             hintsUsed,
             responseTime,
             attemptNumber,
+            wrongSelections,
+            mistypedLetters,
             timestamp: Date.now()
         };
         

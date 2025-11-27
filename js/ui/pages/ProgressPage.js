@@ -193,6 +193,20 @@ class ProgressPage {
         let assessmentData;
         try {
             assessmentData = assessmentService.getAssessmentHistory();
+            // Transform to the format expected by the UI
+            if (assessmentData && assessmentData.length > 0) {
+                assessmentData = assessmentData.map(assessment => ({
+                    exerciseType: assessment.results?.exerciseType || 'unknown',
+                    accuracy: assessment.results?.overallScore || 0,
+                    difficulty: assessment.results?.difficulty || 'medium',
+                    date: assessment.date,
+                    hintsUsed: assessment.results?.hintsUsed || 0,
+                    avgResponseTime: assessment.results?.averageResponseTime || 0,
+                    totalTime: assessment.duration || 0,
+                    wrongSelections: assessment.results?.wrongSelections || 0,
+                    mistypedLetters: assessment.results?.mistypedLetters || 0
+                }));
+            }
         } catch (error) {
             console.warn('Error getting assessment data:', error);
             assessmentData = this.getMockAssessmentData();

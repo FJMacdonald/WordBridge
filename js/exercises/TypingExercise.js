@@ -16,10 +16,12 @@ class TypingExercise extends BaseExercise {
         this.targetWord = '';
         this.currentLetterIndex = 0;
         this.boundKeyHandler = null;
+        this.mistypedCount = 0;
     }
     
     async loadItem(index) {
         this.currentLetterIndex = 0;
+        this.mistypedCount = 0;
         await super.loadItem(index);
     }
     
@@ -180,6 +182,7 @@ class TypingExercise extends BaseExercise {
                 this.handleWordComplete();
             }
         } else {
+            this.mistypedCount++;
             if (box) {
                 box.classList.add('shake');
                 setTimeout(() => box.classList.remove('shake'), 300);
@@ -192,11 +195,17 @@ class TypingExercise extends BaseExercise {
      */
     async handleWordComplete() {
         const usedHints = this.state.hintsUsed > 0;
+        const responseTime = Date.now() - this.state.responseStartTime;
         
         trackingService.recordAttempt({
+            exerciseType: this.type,
             word: this.targetWord,
             correct: true,
-            hintsUsed: this.state.hintsUsed
+            hintsUsed: this.state.hintsUsed,
+            responseTime,
+            attemptNumber: 1,
+            wrongSelections: 0,
+            mistypedLetters: this.mistypedCount
         });
         
         this.showFeedback(true, usedHints ? t('feedback.withHints') : t('feedback.perfect'));
