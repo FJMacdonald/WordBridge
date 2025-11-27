@@ -27,6 +27,32 @@ class CustomizePage {
         `;
     }
     
+    getImageStatus(editItem) {
+        if (editItem) {
+            if (editItem.localImageId) {
+                return '📁 Uploaded File (current)';
+            } else if (editItem.emoji) {
+                return `😊 Emoji: ${editItem.emoji} (current)`;
+            } else if (editItem.imageUrl) {
+                return `🔗 URL: ${editItem.imageUrl.substring(0, 30)}... (current)`;
+            }
+        }
+        return 'Choose one option above';
+    }
+    
+    getImagePreview(editItem) {
+        if (editItem) {
+            if (editItem.localImageId) {
+                return '<div class="existing-image">📁 <strong>Uploaded File</strong><br><small>Existing image will be kept if no changes made</small></div>';
+            } else if (editItem.emoji) {
+                return `<div class="existing-image-preview"><div class="current-emoji">${editItem.emoji}</div><small>Current emoji</small></div>`;
+            } else if (editItem.imageUrl) {
+                return `<div class="existing-image"><img src="${editItem.imageUrl}" alt="Current" style="max-width: 100px; max-height: 100px;"><br><small>Current URL image</small></div>`;
+            }
+        }
+        return '';
+    }
+    
     async render() {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
@@ -210,11 +236,16 @@ class CustomizePage {
                                 <summary><strong>📚 Words</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>🖼️ Picture Naming / ⌨️ Spelling / 👂 Listening (picture/typing/listening):</strong>
+                                        <strong>🖼️ Picture Naming / ⌨️ Typing / 👂 Listening:</strong>
                                         <code>word, emoji_or_image_url, option1, option2, option3, difficulty</code>
                                         <p>Example: apple, 🍎, banana, orange, pear, easy</p>
                                         <p>Or: apple, https://example.com/apple.jpg, banana, orange, pear, easy</p>
-                                        <small>Note: This creates exercises for all three types. Options are ignored for spelling.</small>
+                                        <small>Note: This creates exercises for all three types. Options are ignored for typing.</small>
+                                    </div>
+                                    <div class="format-item">
+                                        <strong>📁 Categories (category):</strong>
+                                        <code>category, word, option1, option2, option3, difficulty</code>
+                                        <p>Example: fruit, apple, apple, carrot, bread, chair, easy</p>
                                     </div>
                                     <div class="format-item">
                                         <strong>📝 Fill Blank (sentenceTyping):</strong>
@@ -234,9 +265,9 @@ class CustomizePage {
                                 <summary><strong>🔊 Phonetics</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>👂 Listening (listening):</strong>
-                                        <code>emoji, answer, option1, option2, option3, difficulty</code>
-                                        <p>Same format as Picture Naming</p>
+                                        <strong>🖼️ Picture Naming / ⌨️ Typing / 👂 Listening:</strong>
+                                        <code>word, emoji_or_image_url, option1, option2, option3, difficulty</code>
+                                        <p>Same format as above - creates exercises for all three types</p>
                                     </div>
                                     <div class="format-item">
                                         <strong>🎤 Speaking (speaking):</strong>
@@ -424,8 +455,8 @@ class CustomizePage {
                             <input type="text" id="image-url" placeholder="https://example.com/image.jpg" 
                                    value="${editItem && editItem.imageUrl ? editItem.imageUrl : ''}">
                         </div>
-                        <span class="file-status" id="file-status">${editItem && editItem.localImageId ? 'Image uploaded' : 'Choose one option above'}</span>
-                        <div class="image-preview" id="image-preview">${editItem && editItem.localImageId ? '<div class="existing-image">Existing image will be kept if no changes made</div>' : ''}</div>
+                        <span class="file-status" id="file-status">${this.getImageStatus(editItem)}</span>
+                        <div class="image-preview" id="image-preview">${this.getImagePreview(editItem)}</div>
                     </div>
                     <small>Upload a file, enter an emoji, or provide an image URL</small>
                 </div>
@@ -2126,21 +2157,43 @@ class CustomizePage {
         const headers = ['exercise_type', 'word', 'image_emoji_url', 'option1', 'option2', 'option3', 'difficulty'];
         const rows = [];
         
+        const addedTypes = new Set();
         selectedTypes.forEach(type => {
             switch (type) {
                 case 'naming':
                 case 'typing':  
                 case 'listening':
-                    // These three share the same data format
-                    rows.push(isGerman ? 
-                        ['picture/typing/listening', 'Apfel', '🍎 or https://example.com/apfel.jpg', 'Banane', 'Orange', 'Birne', 'easy'] :
-                        ['picture/typing/listening', 'apple', '🍎 or https://example.com/apple.jpg', 'banana', 'orange', 'pear', 'easy']
+                    // These three share the same data format - only add once
+                    if (!addedTypes.has('picture/typing/listening')) {
+                        rows.push(isGerman ? 
+                            ['picture/typing/listening', 'Apfel', '🍎 or https://example.com/apfel.jpg', 'Banane', 'Orange', 'Birne', 'easy'] :
+                            ['picture/typing/listening', 'apple', '🍎 or https://example.com/apple.jpg', 'banana', 'orange', 'pear', 'easy']
+                        );
+                        addedTypes.add('picture/typing/listening');
+                    }
+                    break;
+                case 'category':
+                    rows.push(isGerman ?
+                        ['category', 'Obst', 'Apfel', 'Apfel', 'Karotte', 'Brot', 'easy'] :
+                        ['category', 'fruit', 'apple', 'apple', 'carrot', 'bread', 'easy']
                     );
                     break;
                 case 'sentenceTyping':
                     rows.push(isGerman ?
                         ['sentenceTyping', 'Ich trinke jeden Morgen __', 'Kaffee', '', '', '', 'easy'] :
                         ['sentenceTyping', 'I drink __ every morning', 'coffee', '', '', '', 'easy']
+                    );
+                    break;
+                case 'speaking':
+                    rows.push(isGerman ?
+                        ['speaking', 'Apfel', '🍎', 'Ein Apfel am Tag', 'Ich esse einen Apfel', '', 'easy'] :
+                        ['speaking', 'apple', '🍎', 'An apple a day', 'I eat an apple', '', 'easy']
+                    );
+                    break;
+                case 'firstSound':
+                    rows.push(isGerman ?
+                        ['firstSound', 'b', 'Ball,Buch,Bett,Vogel,Box', '', '', '', 'easy'] :
+                        ['firstSound', 'b', 'ball,book,bed,bird,box', '', '', '', 'easy']
                     );
                     break;
                 case 'rhyming':
@@ -2173,7 +2226,30 @@ class CustomizePage {
                         ['scramble', 'The cat is sleeping', '', '', '', '', 'easy']
                     );
                     break;
-                // Add more cases as needed
+                case 'timeSequencing':
+                    rows.push(isGerman ?
+                        ['timeSequencing', 'Was kommt nach Montag?', 'Dienstag', 'Mittwoch', 'Sonntag', 'Freitag', 'easy'] :
+                        ['timeSequencing', 'What day comes after Monday?', 'Tuesday', 'Wednesday', 'Sunday', 'Friday', 'easy']
+                    );
+                    break;
+                case 'clockMatching':
+                    rows.push(isGerman ?
+                        ['clockMatching', '3:00', 'drei Uhr', '', '', '', 'easy'] :
+                        ['clockMatching', '3:00', 'three o\'clock', '', '', '', 'easy']
+                    );
+                    break;
+                case 'timeOrdering':
+                    rows.push(isGerman ?
+                        ['timeOrdering', 'Morgenroutine', 'Aktivitäten in Reihenfolge bringen', 'Aufwachen', 'Zähne putzen', 'Frühstück', 'easy'] :
+                        ['timeOrdering', 'Morning routine', 'Put activities in order', 'Wake up', 'Brush teeth', 'Eat breakfast', 'easy']
+                    );
+                    break;
+                case 'workingMemory':
+                    rows.push(isGerman ?
+                        ['workingMemory', '🍎🍌🍊', '🍇🍓🥝', '', '', '', 'easy'] :
+                        ['workingMemory', '🍎🍌🍊', '🍇🍓🥝', '', '', '', 'easy']
+                    );
+                    break;
             }
         });
         
