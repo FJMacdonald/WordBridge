@@ -286,6 +286,15 @@ class ModeService {
         
         return Date.now() - this.testProgress.itemStartTime;
     }
+    
+    /**
+     * Reset mode to practice and clear test state
+     */
+    resetMode() {
+        this.currentMode = 'practice';
+        this.testConfig = null;
+        this.testProgress = null;
+    }
 }
 
 export const modeService = new ModeService();

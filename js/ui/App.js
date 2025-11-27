@@ -430,9 +430,13 @@ class App {
         // Randomize and limit to question count
         testData = this.shuffleArray(testData).slice(0, questions);
         
+        // Find the test exercise container (should be available when in test mode)
+        const testContainer = document.getElementById('test-exercise-container');
+        const exerciseContainer = testContainer || this.container;
+        
         this.currentExercise = exerciseFactory.create(exerciseType);
         this.currentExercise.mode = 'test';
-        await this.currentExercise.init(testData, this.container);
+        await this.currentExercise.init(testData, exerciseContainer);
     }
     
     getPracticeDifficulty(type) {

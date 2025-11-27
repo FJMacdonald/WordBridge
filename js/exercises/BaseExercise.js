@@ -4,6 +4,8 @@ import Config from '../core/Config.js';
 import audioService from '../services/AudioService.js';
 import hintService from '../services/HintService.js';
 import trackingService from '../services/TrackingService.js';
+import assessmentService from '../services/AssessmentService.js';
+import modeService from '../services/ModeService.js';
 
 class BaseExercise {
     constructor(options) {
@@ -279,7 +281,44 @@ class BaseExercise {
             inactivityGaps: this.state.inactivityGaps.length
         });
         
+        // If this is a test/assessment, save to assessment history
+        if (this.mode === 'test') {
+            this.saveAssessmentResults(results);
+            // Reset mode service to clear test state
+            modeService.resetMode();
+        }
+        
         this.renderResults(results);
+    }
+    
+    saveAssessmentResults(results) {
+        try {
+            const assessmentData = {
+                id: `assessment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                templateId: 'quick', // Individual exercise assessment
+                startTime: this.state.startTime,
+                duration: results.duration || (Date.now() - this.state.startTime),
+                results: {
+                    exerciseType: this.type,
+                    overallScore: results.correct,
+                    totalQuestions: results.total,
+                    accuracy: results.accuracy,
+                    difficulty: 'easy', // We'd need to get this from the test config
+                    hintsUsed: results.hintsUsed,
+                    averageResponseTime: results.medianResponseTime,
+                    wrongSelections: (results.total - results.correct),
+                    mistypedLetters: 0 // This would come from typing exercises specifically
+                },
+                metadata: {
+                    exerciseType: this.type,
+                    mode: this.mode
+                }
+            };
+            
+            assessmentService.saveAssessmentToHistory(assessmentData);
+        } catch (error) {
+            console.error('Error saving assessment results:', error);
+        }
     }
     
     renderResults(results) {
@@ -548,7 +587,7 @@ class BaseExercise {
     }
     
     async nextItem() {
-        await this.delay(Config.get('exercises.autoAdvanceDelay'));
+        await this.delay(Config.get('exercises.autoAdvanceDelay') || 1200);
         await this.loadItem(this.currentIndex + 1);
     }
     

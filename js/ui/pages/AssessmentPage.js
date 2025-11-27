@@ -35,7 +35,7 @@ class AssessmentPage {
                 
                 ${hasAllMastered && userLevel !== 'hard' ? `
                     <div class="level-up-banner">
-                        🎉 ${t('assessment.levelUpMessage', { level: userLevel === 'easy' ? t('assessment.difficulty.medium') : t('assessment.difficulty.hard') })}
+                        🎉 ${t('assessment.levelUpMessage', { level: userLevel === 'easy' ? t('assessment.medium') : t('assessment.hard') })}
                     </div>
                 ` : ''}
                 
