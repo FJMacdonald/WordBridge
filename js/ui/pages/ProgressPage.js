@@ -3,6 +3,7 @@ import { t } from '../../core/i18n.js';
 import ProgressCharts from '../components/ProgressCharts.js';
 import assessmentService from '../../services/AssessmentService.js';
 import pdfService from '../../services/PDFService.js';
+import analyticsService from '../../services/AnalyticsService.js';
 
 class ProgressPage {
     constructor(container) {
@@ -301,35 +302,47 @@ class ProgressPage {
     }
     
     getPracticeData(timeRange) {
-        // Try to get real data from tracking service, fall back to mock data for demo
+        // Use the same AnalyticsService that the PDF report uses
         try {
-            const trackingService = window.trackingService || (window.app && window.app.trackingService);
-            if (trackingService && typeof trackingService.getPracticeDataByDateRange === 'function') {
-                const endDate = new Date();
-                let startDate = new Date();
+            const dashboardData = analyticsService.getDashboardData();
+            let sourceData;
+            
+            switch (timeRange) {
+                case 'day':
+                    sourceData = dashboardData.today;
+                    break;
+                case 'week':
+                    sourceData = dashboardData.week;
+                    break;
+                case 'month':
+                    sourceData = dashboardData.month;
+                    break;
+                case 'all':
+                    sourceData = dashboardData.allTime;
+                    break;
+                default:
+                    sourceData = dashboardData.week;
+            }
+            
+            if (sourceData && sourceData.exerciseTypes) {
+                // Convert analytics format to progress page format
+                const practiceData = {};
+                Object.entries(sourceData.exerciseTypes).forEach(([type, data]) => {
+                    practiceData[type] = {
+                        totalTime: data.totalTime || 0,
+                        exerciseCount: data.totalAttempts || 0,
+                        accuracy: data.accuracy || 0,
+                        attempts: data.attempts || []
+                    };
+                });
                 
-                switch (timeRange) {
-                    case 'day':
-                        startDate.setHours(0, 0, 0, 0);
-                        break;
-                    case 'week':
-                        startDate.setDate(startDate.getDate() - 7);
-                        break;
-                    case 'month':
-                        startDate.setMonth(startDate.getMonth() - 1);
-                        break;
-                    case 'all':
-                        startDate = new Date(2020, 0, 1);
-                        break;
-                }
-                
-                const realData = trackingService.getPracticeDataByDateRange(startDate, endDate);
-                if (realData && Object.keys(realData).length > 0) {
-                    return realData;
+                // Only return data if we have some activity
+                if (Object.keys(practiceData).some(type => practiceData[type].totalTime > 0)) {
+                    return practiceData;
                 }
             }
         } catch (error) {
-            console.warn('Error getting tracking data, using mock data:', error);
+            console.warn('Error getting analytics data:', error);
         }
         
         // Return mock data for demonstration
