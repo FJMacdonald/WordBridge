@@ -28,6 +28,10 @@ class SelectionExercise extends BaseExercise {
         
         const promptContent = await this.renderPrompt();
         
+        // Handle async renderOption methods
+        const optionPromises = this.currentOptions.map((opt, i) => this.renderOption(opt, i));
+        const optionContents = await Promise.all(optionPromises);
+        
         this.container.innerHTML = `
             <div class="exercise exercise--selection exercise--${this.type}">
                 ${this.renderHeader()}
@@ -38,7 +42,7 @@ class SelectionExercise extends BaseExercise {
                     </div>
                     
                     <div class="options-grid">
-                        ${this.currentOptions.map((opt, i) => this.renderOption(opt, i)).join('')}
+                        ${optionContents.join('')}
                     </div>
                 </div>
                 
@@ -57,7 +61,7 @@ class SelectionExercise extends BaseExercise {
     /**
      * Render single option
      */
-    renderOption(option, index) {
+    async renderOption(option, index) {
         const value = typeof option === 'object' ? option.answer || option.value : option;
         const display = typeof option === 'object' ? option.display || value : value;
         

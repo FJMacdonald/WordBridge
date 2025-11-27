@@ -29,13 +29,15 @@ class TypingExercise extends BaseExercise {
         this.targetWord = this.getTargetWord().toLowerCase();
         this.currentLetterIndex = this.state.revealedLetters;
         
+        const promptContent = await this.renderPrompt();
+        
         this.container.innerHTML = `
             <div class="exercise exercise--typing exercise--${this.type}">
                 ${this.renderHeader()}
                 
                 <div class="exercise__content">
                     <div class="exercise__prompt">
-                        ${this.renderPrompt()}
+                        ${promptContent}
                     </div>
                     
                     <div class="letter-boxes-container">
@@ -81,7 +83,7 @@ class TypingExercise extends BaseExercise {
     /**
      * Render prompt - override in subclass
      */
-    renderPrompt() {
+    async renderPrompt() {
         return `<p class="prompt-instruction">${t(`exercises.${this.type}.instruction`)}</p>`;
     }
     

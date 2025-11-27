@@ -1063,25 +1063,31 @@ class CustomizePage {
     }
     
     getTypeName(type) {
-        const names = {
-            naming: 'Picture Naming',
-            typing: 'Typing',
-            sentenceTyping: 'Fill Blank',
-            category: 'Categories',
-            listening: 'Listening',
-            speaking: 'Speaking',
-            firstSound: 'First Sounds',
-            rhyming: 'Rhyming',
-            definitions: 'Definitions',
-            association: 'Association',
-            synonyms: 'Synonyms',
-            scramble: 'Unscramble',
-            timeSequencing: 'Time Sequencing',
-            clockMatching: 'Clock Matching',
-            timeOrdering: 'Time Ordering',
-            workingMemory: 'Working Memory'
-        };
-        return names[type] || type;
+        // Use localized names
+        try {
+            return t(`exercises.${type}.name`);
+        } catch {
+            // Fallback to English names
+            const names = {
+                naming: 'Picture Naming',
+                typing: 'Typing',
+                sentenceTyping: 'Fill Blank',
+                category: 'Categories',
+                listening: 'Listening',
+                speaking: 'Speaking',
+                firstSound: 'First Sounds',
+                rhyming: 'Rhyming',
+                definitions: 'Definitions',
+                association: 'Association',
+                synonyms: 'Synonyms',
+                scramble: 'Unscramble',
+                timeSequencing: 'Time Sequencing',
+                clockMatching: 'Clock Matching',
+                timeOrdering: 'Time Ordering',
+                workingMemory: 'Working Memory'
+            };
+            return names[type] || type;
+        }
     }
     
     getContentPreview(type, exercise) {
@@ -2407,7 +2413,29 @@ class CustomizePage {
                 await imageStorage.deleteImage(item.localImageId);
             }
             
+            // Delete the item from the current type
             customExercises[type].splice(index, 1);
+            
+            // If this is a shared exercise type (naming, typing, listening), 
+            // delete the corresponding item from the other shared types
+            const sharedTypes = ['naming', 'typing', 'listening'];
+            if (sharedTypes.includes(type)) {
+                // Find and delete the same item from other shared types
+                sharedTypes.forEach(sharedType => {
+                    if (sharedType !== type && customExercises[sharedType]) {
+                        // Find matching item by answer (they should have the same answer)
+                        const matchIndex = customExercises[sharedType].findIndex(ex => 
+                            ex.answer === item.answer && 
+                            ex.isCustom === item.isCustom &&
+                            ex.difficulty === item.difficulty
+                        );
+                        if (matchIndex !== -1) {
+                            customExercises[sharedType].splice(matchIndex, 1);
+                        }
+                    }
+                });
+            }
+            
             storageService.set(`customExercises_${locale}`, customExercises);
         }
         
