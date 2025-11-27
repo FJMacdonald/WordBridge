@@ -93,10 +93,10 @@ class CustomizePage {
                                 <label class="category-label">📚 Words</label>
                                 <select class="type-dropdown" data-category="words">
                                     <option value="">Select exercise type...</option>
-                                    <option value="naming">🖼️ Picture Naming</option>
-                                    <option value="typing">⌨️ Typing</option>
-                                    <option value="sentenceTyping">📝 Fill Blank</option>
-                                    <option value="category">📁 Categories</option>
+                                    <option value="naming">🖼️ ${t('exercises.naming.name')}</option>
+                                    <option value="typing">⌨️ ${t('exercises.typing.name')}</option>
+                                    <option value="sentenceTyping">📝 ${t('exercises.sentenceTyping.name')}</option>
+                                    <option value="category">📁 ${t('exercises.category.name')}</option>
                                 </select>
                             </div>
                             
@@ -105,10 +105,10 @@ class CustomizePage {
                                 <label class="category-label">🔊 Phonetics</label>
                                 <select class="type-dropdown" data-category="phonetics">
                                     <option value="">Select exercise type...</option>
-                                    <option value="listening">👂 Listening</option>
-                                    <option value="speaking">🎤 Speaking</option>
-                                    <option value="firstSound">🔤 First Sounds</option>
-                                    <option value="rhyming">🎵 Rhyming</option>
+                                    <option value="listening">👂 ${t('exercises.listening.name')}</option>
+                                    <option value="speaking">🎤 ${t('exercises.speaking.name')}</option>
+                                    <option value="firstSound">🔤 ${t('exercises.firstSound.name')}</option>
+                                    <option value="rhyming">🎵 ${t('exercises.rhyming.name')}</option>
                                 </select>
                             </div>
                             
@@ -117,10 +117,10 @@ class CustomizePage {
                                 <label class="category-label">💡 Meaning</label>
                                 <select class="type-dropdown" data-category="meaning">
                                     <option value="">Select exercise type...</option>
-                                    <option value="definitions">📖 Definitions</option>
-                                    <option value="association">🔗 Association</option>
-                                    <option value="synonyms">≈ Synonyms</option>
-                                    <option value="scramble">🔀 Unscramble</option>
+                                    <option value="definitions">📖 ${t('exercises.definitions.name')}</option>
+                                    <option value="association">🔗 ${t('exercises.association.name')}</option>
+                                    <option value="synonyms">≈ ${t('exercises.synonyms.name')}</option>
+                                    <option value="scramble">🔀 ${t('exercises.scramble.name')}</option>
                                 </select>
                             </div>
                             
@@ -129,10 +129,10 @@ class CustomizePage {
                                 <label class="category-label">⏰ Time</label>
                                 <select class="type-dropdown" data-category="time">
                                     <option value="">Select exercise type...</option>
-                                    <option value="timeSequencing">📅 Time Sequencing</option>
-                                    <option value="clockMatching">🕐 Clock Matching</option>
-                                    <option value="timeOrdering">⏰ Time Ordering</option>
-                                    <option value="workingMemory">🧠 Working Memory</option>
+                                    <option value="timeSequencing">📅 ${t('exercises.timeSequencing.name')}</option>
+                                    <option value="clockMatching">🕐 ${t('exercises.clockMatching.name')}</option>
+                                    <option value="timeOrdering">⏰ ${t('exercises.timeOrdering.name')}</option>
+                                    <option value="workingMemory">🧠 ${t('exercises.workingMemory.name')}</option>
                                 </select>
                             </div>
                         </div>
@@ -176,45 +176,45 @@ class CustomizePage {
                     <div class="exercise-type-checkboxes">
                         <!-- Words -->
                         <div class="checkbox-category">
-                            <strong>📚 Words:</strong>
+                            <strong>📚 ${t('home.categories.words')}:</strong>
                             <div class="checkbox-grid">
-                                <label><input type="checkbox" value="naming" checked> 🖼️ Picture Naming</label>
-                                <label><input type="checkbox" value="typing" checked> ⌨️ Typing</label>
-                                <label><input type="checkbox" value="sentenceTyping" checked> 📝 Fill Blank</label>
-                                <label><input type="checkbox" value="category" checked> 📁 Categories</label>
+                                <label><input type="checkbox" value="naming" checked> 🖼️ ${t('exercises.naming.name')}</label>
+                                <label><input type="checkbox" value="typing" checked> ⌨️ ${t('exercises.typing.name')}</label>
+                                <label><input type="checkbox" value="sentenceTyping" checked> 📝 ${t('exercises.sentenceTyping.name')}</label>
+                                <label><input type="checkbox" value="category" checked> 📁 ${t('exercises.category.name')}</label>
                             </div>
                         </div>
                         
                         <!-- Phonetics -->
                         <div class="checkbox-category">
-                            <strong>🔊 Phonetics:</strong>
+                            <strong>🔊 ${t('home.categories.phonetics')}:</strong>
                             <div class="checkbox-grid">
-                                <label><input type="checkbox" value="listening" checked> 👂 Listening</label>
-                                <label><input type="checkbox" value="speaking" checked> 🎤 Speaking</label>
-                                <label><input type="checkbox" value="firstSound" checked> 🔤 First Sounds</label>
-                                <label><input type="checkbox" value="rhyming" checked> 🎵 Rhyming</label>
+                                <label><input type="checkbox" value="listening" checked> 👂 ${t('exercises.listening.name')}</label>
+                                <label><input type="checkbox" value="speaking" checked> 🎤 ${t('exercises.speaking.name')}</label>
+                                <label><input type="checkbox" value="firstSound" checked> 🔤 ${t('exercises.firstSound.name')}</label>
+                                <label><input type="checkbox" value="rhyming" checked> 🎵 ${t('exercises.rhyming.name')}</label>
                             </div>
                         </div>
                         
                         <!-- Meaning -->
                         <div class="checkbox-category">
-                            <strong>💡 Meaning:</strong>
+                            <strong>💡 ${t('home.categories.meaning')}:</strong>
                             <div class="checkbox-grid">
-                                <label><input type="checkbox" value="definitions" checked> 📖 Definitions</label>
-                                <label><input type="checkbox" value="association" checked> 🔗 Association</label>
-                                <label><input type="checkbox" value="synonyms" checked> ≈ Synonyms</label>
-                                <label><input type="checkbox" value="scramble" checked> 🔀 Unscramble</label>
+                                <label><input type="checkbox" value="definitions" checked> 📖 ${t('exercises.definitions.name')}</label>
+                                <label><input type="checkbox" value="association" checked> 🔗 ${t('exercises.association.name')}</label>
+                                <label><input type="checkbox" value="synonyms" checked> ≈ ${t('exercises.synonyms.name')}</label>
+                                <label><input type="checkbox" value="scramble" checked> 🔀 ${t('exercises.scramble.name')}</label>
                             </div>
                         </div>
                         
                         <!-- Time -->
                         <div class="checkbox-category">
-                            <strong>⏰ Time:</strong>
+                            <strong>⏰ ${t('home.categories.time')}:</strong>
                             <div class="checkbox-grid">
-                                <label><input type="checkbox" value="timeSequencing" checked> 📅 Time Sequencing</label>
-                                <label><input type="checkbox" value="clockMatching" checked> 🕐 Clock Matching</label>
-                                <label><input type="checkbox" value="timeOrdering" checked> ⏰ Time Ordering</label>
-                                <label><input type="checkbox" value="workingMemory" checked> 🧠 Working Memory</label>
+                                <label><input type="checkbox" value="timeSequencing" checked> 📅 ${t('exercises.timeSequencing.name')}</label>
+                                <label><input type="checkbox" value="clockMatching" checked> 🕐 ${t('exercises.clockMatching.name')}</label>
+                                <label><input type="checkbox" value="timeOrdering" checked> ⏰ ${t('exercises.timeOrdering.name')}</label>
+                                <label><input type="checkbox" value="workingMemory" checked> 🧠 ${t('exercises.workingMemory.name')}</label>
                             </div>
                         </div>
                     </div>
@@ -242,110 +242,105 @@ class CustomizePage {
                         <div class="format-guide">
                             <!-- Words Category -->
                             <details class="format-category">
-                                <summary><strong>📚 Words</strong></summary>
+                                <summary><strong>📚 ${t('home.categories.words')}</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>🖼️ Picture Naming / ⌨️ Typing / 👂 Listening:</strong>
-                                        <code>word, emoji_or_image_url, option1, option2, option3, difficulty</code>
-                                        <p>Example: apple, 🍎, banana, orange, pear, easy</p>
-                                        <p>Or: apple, https://example.com/apple.jpg, banana, orange, pear, easy</p>
-                                        <small>Note: This creates exercises for all three types. Options are ignored for typing.</small>
+                                        <strong>${t('customize.bulkUpload.pictureFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.pictureFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.pictureExample')}</p>
+                                        <p>${t('customize.bulkUpload.pictureUrlExample')}</p>
+                                        <small>${t('customize.bulkUpload.pictureNote')}</small>
                                     </div>
                                     <div class="format-item">
-                                        <strong>📁 Categories (category):</strong>
-                                        <code>category, word, option1, option2, option3, difficulty</code>
-                                        <p>Example: fruit, apple, apple, carrot, bread, chair, easy</p>
+                                        <strong>${t('customize.bulkUpload.categoryFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.categoryFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.categoryExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>📝 Fill Blank (sentenceTyping):</strong>
-                                        <code>sentence_with_blank, answer, difficulty</code>
-                                        <p>Example: I drink ______ every morning., coffee, easy</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>📁 Categories (category):</strong>
-                                        <code>category, word, option1, option2, option3, difficulty</code>
-                                        <p>Example: fruit, apple, apple, carrot, bread, chair, easy</p>
+                                        <strong>${t('customize.bulkUpload.sentenceFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.sentenceFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.sentenceExample')}</p>
                                     </div>
                                 </div>
                             </details>
                             
                             <!-- Phonetics Category -->
                             <details class="format-category">
-                                <summary><strong>🔊 Phonetics</strong></summary>
+                                <summary><strong>🔊 ${t('home.categories.phonetics')}</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>🖼️ Picture Naming / ⌨️ Typing / 👂 Listening:</strong>
-                                        <code>word, emoji_or_image_url, option1, option2, option3, difficulty</code>
-                                        <p>Same format as above - creates exercises for all three types</p>
+                                        <strong>${t('customize.bulkUpload.pictureFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.pictureFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.pictureNote')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>🎤 Speaking (speaking):</strong>
-                                        <code>emoji, answer, phrase1, phrase2, difficulty</code>
-                                        <p>Example: 🍎, apple, An apple a day..., I eat an apple, easy</p>
+                                        <strong>${t('customize.bulkUpload.speakingFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.speakingFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.speakingExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>🔤 First Sounds (firstSound):</strong>
-                                        <code>sound, word1, word2, word3, word4, word5, difficulty</code>
-                                        <p>Example: b, ball, book, bed, bird, box, easy</p>
+                                        <strong>${t('customize.bulkUpload.firstSoundFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.firstSoundFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.firstSoundExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>🎵 Rhyming (rhyming):</strong>
-                                        <code>word, rhyme1, rhyme2, rhyme3, non-rhyme1, non-rhyme2, difficulty</code>
-                                        <p>Example: cat, hat, bat, mat, dog, cup, easy</p>
+                                        <strong>${t('customize.bulkUpload.rhymingFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.rhymingFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.rhymingExample')}</p>
                                     </div>
                                 </div>
                             </details>
                             
                             <!-- Meaning Category -->
                             <details class="format-category">
-                                <summary><strong>💡 Meaning</strong></summary>
+                                <summary><strong>💡 ${t('home.categories.meaning')}</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>📖 Definitions (definitions):</strong>
-                                        <code>word, definition, difficulty</code>
-                                        <p>Example: chair, A piece of furniture for sitting, easy</p>
+                                        <strong>${t('customize.bulkUpload.definitionsFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.definitionsFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.definitionsExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>🔗 Association (association):</strong>
-                                        <code>word, related1, related2, unrelated1, unrelated2, difficulty</code>
-                                        <p>Example: bread, butter, toast, car, phone, easy</p>
+                                        <strong>${t('customize.bulkUpload.associationFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.associationFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.associationExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>≈ Synonyms (synonyms):</strong>
-                                        <code>word, synonym1, synonym2, antonym1, antonym2, difficulty</code>
-                                        <p>Example: happy, glad, joyful, sad, unhappy, easy</p>
+                                        <strong>${t('customize.bulkUpload.synonymsFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.synonymsFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.synonymsExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>🔀 Unscramble (scramble):</strong>
-                                        <code>word1, word2, word3, word4, difficulty</code>
-                                        <p>Example: The, cat, is, sleeping, easy</p>
+                                        <strong>${t('customize.bulkUpload.scrambleFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.scrambleFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.scrambleExample')}</p>
                                     </div>
                                 </div>
                             </details>
                             
                             <!-- Time Category -->
                             <details class="format-category">
-                                <summary><strong>⏰ Time</strong></summary>
+                                <summary><strong>⏰ ${t('home.categories.time')}</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>📅 Time Sequencing (timeSequencing):</strong>
-                                        <code>question, answer, option1, option2, option3, difficulty</code>
-                                        <p>Example: What day comes after Monday?, Tuesday, Tuesday, Wednesday, Sunday, easy</p>
+                                        <strong>${t('customize.bulkUpload.timeSequencingFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.timeSequencingFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.timeSequencingExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>🕐 Clock Matching (clockMatching):</strong>
-                                        <code>time(HH:MM), time_words, difficulty</code>
-                                        <p>Example: 3:00, three o'clock, easy</p>
+                                        <strong>${t('customize.bulkUpload.clockMatchingFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.clockMatchingFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.clockMatchingExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>⏰ Time Ordering (timeOrdering):</strong>
-                                        <code>scenario, description, item1, item2, item3, item4, difficulty</code>
-                                        <p>Example: Morning routine, Put in order, Wake up, Eat breakfast, Go to work, easy</p>
+                                        <strong>${t('customize.bulkUpload.timeOrderingFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.timeOrderingFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.timeOrderingExample')}</p>
                                     </div>
                                     <div class="format-item">
-                                        <strong>🧠 Working Memory (workingMemory):</strong>
-                                        <code>emoji1, emoji2, emoji3, extra1, extra2, extra3, difficulty</code>
-                                        <p>Example: 🍎, 🍌, 🍊, 🍇, 🍓, 🥝, easy</p>
+                                        <strong>${t('customize.bulkUpload.workingMemoryFormat')}</strong>
+                                        <code>${t('customize.bulkUpload.workingMemoryFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.workingMemoryExample')}</p>
                                     </div>
                                 </div>
                             </details>
@@ -2159,6 +2154,7 @@ class CustomizePage {
     importCSVData(type, data) {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
+        let totalImported = 0;
         
         if (type === 'imageword') {
             // Add to all three types: naming, typing, listening
@@ -2173,15 +2169,45 @@ class CustomizePage {
                     customExercises[exerciseType].push(exerciseForType);
                 });
             });
+            totalImported = data.length * 3;
+        } else if (type === 'multi_type') {
+            // Handle new format where each row specifies its own exercise type
+            data.forEach(exercise => {
+                if (exercise.exerciseType === 'multiple') {
+                    // Add to all applicable types
+                    (exercise.applicableTypes || ['naming', 'typing', 'listening']).forEach(exerciseType => {
+                        if (!customExercises[exerciseType]) customExercises[exerciseType] = [];
+                        const exerciseForType = {
+                            ...exercise,
+                            // Remove options for typing exercises
+                            ...(exerciseType === 'typing' ? { options: undefined } : {})
+                        };
+                        delete exerciseForType.exerciseType;
+                        delete exerciseForType.applicableTypes;
+                        customExercises[exerciseType].push(exerciseForType);
+                        totalImported++;
+                    });
+                } else {
+                    // Single exercise type
+                    const exerciseType = exercise.exerciseType;
+                    if (!customExercises[exerciseType]) customExercises[exerciseType] = [];
+                    const cleanExercise = { ...exercise };
+                    delete cleanExercise.exerciseType;
+                    delete cleanExercise.applicableTypes;
+                    customExercises[exerciseType].push(cleanExercise);
+                    totalImported++;
+                }
+            });
         } else {
+            // Single type import
             if (!customExercises[type]) customExercises[type] = [];
             customExercises[type].push(...data);
+            totalImported = data.length;
         }
         
         storageService.set(`customExercises_${locale}`, customExercises);
         
-        const totalImported = type === 'imageword' ? data.length * 3 : data.length;
-        alert(`Successfully imported ${totalImported} exercises!`);
+        alert(t('customize.bulkUpload.success', { count: totalImported }));
         this.render();
     }
     

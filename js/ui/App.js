@@ -168,7 +168,7 @@ class App {
             words: {
                 name: t('home.categories.words'),
                 icon: '📚',
-                description: 'Recognition and spelling'
+                description: 'Recognition and typing'
             },
             phonetics: {
                 name: t('home.categories.phonetics'),

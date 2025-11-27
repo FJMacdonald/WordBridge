@@ -8,7 +8,7 @@ import trackingService from '../services/TrackingService.js';
 import Config from '../core/Config.js';
 
 /**
- * Base class for typing/spelling exercises
+ * Base class for typing exercises
  */
 class TypingExercise extends BaseExercise {
     constructor(options) {

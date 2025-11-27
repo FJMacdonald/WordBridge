@@ -43,7 +43,7 @@ class HintService {
             'firstSound': 'selection',
             'typing': 'typing',
             'sentenceTyping': 'typing',
-            'spelling': 'typing',
+
             'speaking': 'speaking'
         };
         
@@ -57,7 +57,7 @@ class HintService {
         const strategy = this.getStrategy(exerciseType);
         
         // Typing can always hint if there are unrevealed letters
-        if (exerciseType === 'typing' || exerciseType === 'sentenceTyping' || exerciseType === 'spelling') {
+        if (exerciseType === 'typing' || exerciseType === 'sentenceTyping') {
             const word = context.targetWord || '';
             const revealed = context.revealedLetters || 0;
             return revealed < word.length;
@@ -104,7 +104,7 @@ class HintService {
         const strategy = this.getStrategy(exerciseType);
         
         // Typing always returns revealLetter
-        if (exerciseType === 'typing' || exerciseType === 'sentenceTyping' || exerciseType === 'spelling') {
+        if (exerciseType === 'typing' || exerciseType === 'sentenceTyping') {
             return 'revealLetter';
         }
         
