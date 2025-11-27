@@ -1,4 +1,5 @@
 import storageService from './StorageService.js';
+import { i18n } from '../core/i18n.js';
 
 /**
  * Analytics service for detailed progress tracking and reporting
@@ -7,6 +8,14 @@ class AnalyticsService {
     constructor() {
         this.cacheTimeout = 60000; // 1 minute cache
         this.cache = {};
+    }
+    
+    /**
+     * Get language-specific storage key
+     */
+    getStorageKey(baseKey) {
+        const locale = i18n.getCurrentLocale();
+        return `${baseKey}_${locale}`;
     }
     
     // ==================== DATA AGGREGATION ====================
@@ -34,7 +43,7 @@ class AnalyticsService {
      */
     getTodayStats() {
         const today = this.formatDate(new Date());
-        const dailyStats = storageService.get('dailyStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         const todayData = dailyStats[today] || this.createEmptyDayStats();
         
         return {
@@ -54,7 +63,7 @@ class AnalyticsService {
      * Get weekly statistics
      */
     getWeeklyStats() {
-        const dailyStats = storageService.get('dailyStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         const days = [];
         let totals = this.createEmptyDayStats();
         const dailyActivity = []; // Add this
@@ -104,7 +113,7 @@ class AnalyticsService {
      * Get monthly statistics
      */
     getMonthlyStats() {
-        const dailyStats = storageService.get('dailyStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         const days = [];
         let totals = this.createEmptyDayStats();
         
@@ -145,8 +154,8 @@ class AnalyticsService {
      * Get all-time statistics
      */
     getAllTimeStats() {
-        const dailyStats = storageService.get('dailyStats', {});
-        const wordStats = storageService.get('wordStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
+        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
         
         let totals = this.createEmptyDayStats();
         let firstDay = null;
@@ -180,7 +189,7 @@ class AnalyticsService {
      * Get streak data
      */
     getStreakData() {
-        const dailyStats = storageService.get('dailyStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         const dates = Object.keys(dailyStats).sort();
         
         // Current streak
@@ -234,7 +243,7 @@ class AnalyticsService {
      * Get problem words
      */
     getProblemWords(limit = 10) {
-        const wordStats = storageService.get('wordStats', {});
+        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
         
         return Object.entries(wordStats)
             .map(([word, stats]) => ({
@@ -258,7 +267,7 @@ class AnalyticsService {
      * Get mastered words
      */
     getMasteredWords(limit = 10) {
-        const wordStats = storageService.get('wordStats', {});
+        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
         
         return Object.entries(wordStats)
             .map(([word, stats]) => ({
@@ -281,7 +290,7 @@ class AnalyticsService {
      * Get exercise type breakdown
      */
     getExerciseBreakdown(days = null) {
-        const sessionHistory = storageService.get('sessionHistory', []);
+        const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
         const breakdown = {};
         
         // Filter by date if days specified
@@ -322,7 +331,7 @@ class AnalyticsService {
      * Get recent sessions
      */
     getRecentSessions(limit = 10) {
-        const sessionHistory = storageService.get('sessionHistory', []);
+        const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
         
         return sessionHistory
             .sort((a, b) => (b.date || 0) - (a.date || 0))
@@ -340,7 +349,7 @@ class AnalyticsService {
      * Get progress trend over time
      */
     getProgressTrend(days = 30) {
-        const dailyStats = storageService.get('dailyStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         const trend = [];
         
         for (let i = days - 1; i >= 0; i--) {
@@ -376,7 +385,7 @@ class AnalyticsService {
      * Get response time analytics
      */
     getResponseTimeAnalytics() {
-        const wordStats = storageService.get('wordStats', {});
+        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
         const times = [];
         
         Object.values(wordStats).forEach(stats => {
@@ -440,7 +449,7 @@ class AnalyticsService {
      */
     recordDailyHint() {
         const today = this.formatDate(new Date());
-        const dailyStats = storageService.get('dailyStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         
         if (!dailyStats[today]) {
             dailyStats[today] = this.createEmptyDayStats();

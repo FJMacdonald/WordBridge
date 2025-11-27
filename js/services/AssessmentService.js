@@ -1,6 +1,6 @@
 // services/AssessmentService.js
 import storageService from './StorageService.js';
-import { t } from '../core/i18n.js';
+import { t, i18n } from '../core/i18n.js';
 
 class AssessmentService {
     constructor() {
@@ -10,6 +10,11 @@ class AssessmentService {
             'sentenceTyping', 'category', 'rhyming', 'firstSound', 
             'association', 'synonyms', 'definitions', 'scramble'
         ];
+        
+        this.getStorageKey = (baseKey) => {
+            const locale = i18n.getCurrentLocale();
+            return `${baseKey}_${locale}`;
+        };
         
         // Define assessment templates
         this.assessmentTemplates = {
@@ -31,7 +36,7 @@ class AssessmentService {
      * Users start at 'easy' and progress to 'medium' and 'hard'
      */
     getBaselineDifficulty() {
-        const userLevel = storageService.get('userLevel', {
+        const userLevel = storageService.get(this.getStorageKey('userLevel'), {
             baselineDifficulty: 'easy',
             masteredExercises: {}
         });
@@ -42,7 +47,7 @@ class AssessmentService {
      * Check if user has mastered all exercise types at current difficulty
      */
     hasUserMasteredAllExercises(difficulty = 'easy') {
-        const userLevel = storageService.get('userLevel', {
+        const userLevel = storageService.get(this.getStorageKey('userLevel'), {
             baselineDifficulty: 'easy',
             masteredExercises: {}
         });
@@ -71,7 +76,7 @@ class AssessmentService {
      * Generate quick check sections for a specific exercise type
      */
     generateQuickCheckSections(exerciseType) {
-        const userLevel = storageService.get('userLevel', {
+        const userLevel = storageService.get(this.getStorageKey('userLevel'), {
             baselineDifficulty: 'easy',
             masteredExercises: {}
         });
@@ -123,7 +128,7 @@ class AssessmentService {
         };
         
         // Save in progress
-        storageService.set('currentAssessment', assessment);
+        storageService.set(this.getStorageKey('currentAssessment'), assessment);
         
         return assessment;
     }
@@ -132,7 +137,7 @@ class AssessmentService {
      * Get current in-progress assessment
      */
     getCurrentAssessment() {
-        return storageService.get('currentAssessment', null);
+        return storageService.get(this.getStorageKey('currentAssessment'), null);
     }
     
     /**
@@ -148,7 +153,7 @@ class AssessmentService {
             timestamp: Date.now()
         });
         
-        storageService.set('currentAssessment', assessment);
+        storageService.set(this.getStorageKey('currentAssessment'), assessment);
     }
     
     /**
@@ -163,7 +168,7 @@ class AssessmentService {
         
         assessment.currentSectionIndex++;
         
-        storageService.set('currentAssessment', assessment);
+        storageService.set(this.getStorageKey('currentAssessment'), assessment);
         
         return assessment.currentSectionIndex < assessment.sections.length
             ? assessment.sections[assessment.currentSectionIndex]
@@ -226,7 +231,7 @@ class AssessmentService {
      * Update user level based on baseline assessment results
      */
     updateUserLevelFromBaseline(assessment) {
-        const userLevel = storageService.get('userLevel', {
+        const userLevel = storageService.get(this.getStorageKey('userLevel'), {
             baselineDifficulty: 'easy',
             masteredExercises: {}
         });
@@ -254,7 +259,7 @@ class AssessmentService {
             // If already at hard, stay there
         }
         
-        storageService.set('userLevel', userLevel);
+        storageService.set(this.getStorageKey('userLevel'), userLevel);
     }
     
     /**
@@ -282,7 +287,7 @@ class AssessmentService {
      * Save completed assessment to history
      */
     saveAssessmentToHistory(assessment) {
-        const history = storageService.get('assessmentHistory', []);
+        const history = storageService.get(this.getStorageKey('assessmentHistory'), []);
         history.push({
             id: assessment.id,
             templateId: assessment.templateId,
@@ -297,14 +302,14 @@ class AssessmentService {
             history.splice(0, history.length - 50);
         }
         
-        storageService.set('assessmentHistory', history);
+        storageService.set(this.getStorageKey('assessmentHistory'), history);
     }
     
     /**
      * Get assessment history
      */
     getAssessmentHistory(templateId = null) {
-        const history = storageService.get('assessmentHistory', []);
+        const history = storageService.get(this.getStorageKey('assessmentHistory'), []);
         return templateId
             ? history.filter(a => a.templateId === templateId)
             : history;

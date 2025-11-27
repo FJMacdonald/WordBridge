@@ -1,11 +1,20 @@
 // services/TrackingService.js - ENHANCED VERSION
 import storageService from './StorageService.js';
+import { i18n } from '../core/i18n.js';
 
 class TrackingService {
     constructor() {
         this.currentSession = null;
         this.exerciseTypeSession = null;
         this.responseTimes = [];
+    }
+    
+    /**
+     * Get language-specific storage key
+     */
+    getStorageKey(baseKey) {
+        const locale = i18n.getCurrentLocale();
+        return `${baseKey}_${locale}`;
     }
     
     /**
@@ -224,7 +233,7 @@ class TrackingService {
      * Update exercise-type specific statistics
      */
     updateExerciseTypeStats(type, data) {
-        const stats = storageService.get('exerciseTypeStats', {});
+        const stats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
         
         if (!stats[type]) {
             stats[type] = {
@@ -272,14 +281,14 @@ class TrackingService {
             }
         }
         
-        storageService.set('exerciseTypeStats', stats);
+        storageService.set(this.getStorageKey('exerciseTypeStats'), stats);
     }
     
     /**
      * Finalize exercise-type session data
      */
     finalizeExerciseTypeSession(sessionRecord) {
-        const stats = storageService.get('exerciseTypeStats', {});
+        const stats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
         const type = sessionRecord.exerciseType;
         
         if (!stats[type]) return;
@@ -322,7 +331,7 @@ class TrackingService {
         // Update flags (mastery/avoidance detection)
         this.updateExerciseFlags(type, stats[type]);
         
-        storageService.set('exerciseTypeStats', stats);
+        storageService.set(this.getStorageKey('exerciseTypeStats'), stats);
     }
     
     /**
@@ -370,7 +379,7 @@ class TrackingService {
      * Calculate engagement rate (this exercise vs others)
      */
     calculateEngagementRate(type) {
-        const allStats = storageService.get('exerciseTypeStats', {});
+        const allStats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
         const totalTime = Object.values(allStats)
             .reduce((sum, s) => sum + (s.totalActiveTime || 0), 0);
         
@@ -391,7 +400,7 @@ class TrackingService {
      * Calculate trend vs previous sessions
      */
     calculateTrend(exerciseType, currentAccuracy) {
-        const history = storageService.get('sessionHistory', []);
+        const history = storageService.get(this.getStorageKey('sessionHistory'), []);
         const previousSessions = history
             .filter(s => s.exerciseType === exerciseType)
             .slice(-5, -1); // Last 5 sessions, excluding current
@@ -408,7 +417,7 @@ class TrackingService {
      * Get recent sessions for an exercise type
      */
     getRecentSessions(type, limit = 10) {
-        const history = storageService.get('sessionHistory', []);
+        const history = storageService.get(this.getStorageKey('sessionHistory'), []);
         return history
             .filter(s => s.exerciseType === type)
             .slice(-limit);
@@ -418,7 +427,7 @@ class TrackingService {
      * Save session to history
      */
     saveSessionHistory(sessionRecord) {
-        const history = storageService.get('sessionHistory', []);
+        const history = storageService.get(this.getStorageKey('sessionHistory'), []);
         history.push(sessionRecord);
         
         // Keep only last 100 sessions
@@ -426,14 +435,14 @@ class TrackingService {
             history.splice(0, history.length - 100);
         }
         
-        storageService.set('sessionHistory', history);
+        storageService.set(this.getStorageKey('sessionHistory'), history);
     }
     
     /**
      * Update word-specific statistics
      */
     updateWordStats(word, correct, hintsUsed, responseTime, skipped = false) {
-        const wordStats = storageService.get('wordStats', {});
+        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
         
         if (!wordStats[word]) {
             wordStats[word] = {
@@ -483,7 +492,7 @@ class TrackingService {
             }
         }
         
-        storageService.set('wordStats', wordStats);
+        storageService.set(this.getStorageKey('wordStats'), wordStats);
     }
     
     /**
@@ -491,7 +500,7 @@ class TrackingService {
      */
     updateDailyStats(action, data) {
         const today = new Date().toISOString().split('T')[0];
-        const dailyStats = storageService.get('dailyStats', {});
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         
         if (!dailyStats[today]) {
             dailyStats[today] = {
@@ -541,7 +550,7 @@ class TrackingService {
                 break;
         }
         
-        storageService.set('dailyStats', dailyStats);
+        storageService.set(this.getStorageKey('dailyStats'), dailyStats);
     }
     
     /**
