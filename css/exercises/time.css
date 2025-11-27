@@ -393,8 +393,14 @@
 }
 
 .memory-option:disabled {
-    opacity: 0.3;
+    opacity: 0.2;
     cursor: not-allowed;
+}
+
+/* Lower opacity for preview emojis so they don't look interactive */
+.memory-option.preview-emoji,
+.sequence-item.preview-emoji {
+    opacity: 0.25;
 }
 
 .memory-option.eliminated {

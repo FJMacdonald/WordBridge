@@ -1482,7 +1482,7 @@
 /* Image preview styling */
 .existing-image-preview .current-emoji {
     font-size: 4rem;
-    opacity: 0.6;
+    opacity: 0.3;
     margin-bottom: var(--space-xs);
 }
 
@@ -1504,6 +1504,22 @@
 
 .existing-image img {
     border-radius: var(--radius-sm);
+}
+
+/* Image type highlighting with blue borders */
+.image-type-file {
+    border-color: var(--color-primary) !important;
+    border-width: 2px !important;
+}
+
+.image-type-emoji {
+    border-color: var(--color-primary) !important;
+    border-width: 2px !important;
+}
+
+.image-type-url {
+    border-color: var(--color-primary) !important;
+    border-width: 2px !important;
 }
 
 /* Progress Page Improvements - Match Customize Page Style */
