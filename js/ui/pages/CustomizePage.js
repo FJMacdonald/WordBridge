@@ -40,14 +40,23 @@ class CustomizePage {
         return 'Choose one option above';
     }
     
-    getImagePreview(editItem) {
+    async getImagePreview(editItem) {
         if (editItem) {
             if (editItem.localImageId) {
-                return '<div class="existing-image">📁 <strong>Uploaded File</strong><br><small>Existing image will be kept if no changes made</small></div>';
+                // Get the actual image data from storage
+                try {
+                    const imageData = await imageStorage.getImage(editItem.localImageId);
+                    if (imageData) {
+                        return `<div class="existing-image image-type-file"><img src="${imageData}" alt="Current uploaded image" style="max-width: 100px; max-height: 100px;"><br><small>Current uploaded file</small></div>`;
+                    }
+                } catch (error) {
+                    console.warn('Could not load stored image:', error);
+                }
+                return '<div class="existing-image image-type-file">📁 <strong>Uploaded File</strong><br><small>Existing image will be kept if no changes made</small></div>';
             } else if (editItem.emoji) {
-                return `<div class="existing-image-preview"><div class="current-emoji">${editItem.emoji}</div><small>Current emoji</small></div>`;
+                return `<div class="existing-image-preview image-type-emoji"><div class="current-emoji">${editItem.emoji}</div><small>Current emoji</small></div>`;
             } else if (editItem.imageUrl) {
-                return `<div class="existing-image"><img src="${editItem.imageUrl}" alt="Current" style="max-width: 100px; max-height: 100px;"><br><small>Current URL image</small></div>`;
+                return `<div class="existing-image image-type-url"><img src="${editItem.imageUrl}" alt="Current" style="max-width: 100px; max-height: 100px;"><br><small>Current URL image</small></div>`;
             }
         }
         return '';
@@ -456,7 +465,7 @@ class CustomizePage {
                                    value="${editItem && editItem.imageUrl ? editItem.imageUrl : ''}">
                         </div>
                         <span class="file-status" id="file-status">${this.getImageStatus(editItem)}</span>
-                        <div class="image-preview" id="image-preview">${this.getImagePreview(editItem)}</div>
+                        <div class="image-preview" id="image-preview"></div>
                     </div>
                     <small>Upload a file, enter an emoji, or provide an image URL</small>
                 </div>
@@ -1217,7 +1226,7 @@ class CustomizePage {
         
         // Exercise type selection from dropdowns
         this.container.querySelectorAll('.type-dropdown').forEach(dropdown => {
-            dropdown.addEventListener('change', () => {
+            dropdown.addEventListener('change', async () => {
                 const selectedType = dropdown.value;
                 
                 if (selectedType) {
@@ -1228,7 +1237,7 @@ class CustomizePage {
                     
                     this.container.querySelector('#add-form-container').innerHTML = 
                         this.renderIndividualForm(selectedType);
-                    this.attachFormListeners(selectedType);
+                    await this.attachFormListeners(selectedType);
                 } else {
                     this.container.querySelector('#add-form-container').innerHTML = '';
                 }
@@ -1321,9 +1330,25 @@ class CustomizePage {
         });
     }
     
-    attachFormListeners(type) {
+    async attachFormListeners(type) {
         const form = this.container.querySelector('.add-form');
         if (!form) return;
+        
+        // Populate image preview for editing
+        const editType = form.dataset.editType;
+        const editIndex = form.dataset.editIndex;
+        if (editType && editIndex) {
+            const locale = i18n.getCurrentLocale();
+            const customExercises = storageService.get(`customExercises_${locale}`, {});
+            const editItem = customExercises[editType]?.[editIndex];
+            if (editItem) {
+                const preview = await this.getImagePreview(editItem);
+                const previewContainer = form.querySelector('#image-preview');
+                if (previewContainer) {
+                    previewContainer.innerHTML = preview;
+                }
+            }
+        }
         
         // Cancel button
         form.querySelector('#cancel-form')?.addEventListener('click', () => {
@@ -2309,7 +2334,7 @@ class CustomizePage {
         const formContainer = this.container.querySelector('#add-form-container');
         if (formContainer) {
             formContainer.innerHTML = this.renderIndividualForm(type, item, index);
-            this.attachFormListeners(type);
+            await this.attachFormListeners(type);
             
             // Set the dropdown to show the correct type
             this.container.querySelectorAll('.type-dropdown').forEach(d => d.value = '');
