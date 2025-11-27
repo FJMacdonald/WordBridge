@@ -26,13 +26,15 @@ class SelectionExercise extends BaseExercise {
     async render() {
         this.currentOptions = this.prepareOptions();
         
+        const promptContent = await this.renderPrompt();
+        
         this.container.innerHTML = `
             <div class="exercise exercise--selection exercise--${this.type}">
                 ${this.renderHeader()}
                 
                 <div class="exercise__content">
                     <div class="exercise__prompt">
-                        ${this.renderPrompt()}
+                        ${promptContent}
                     </div>
                     
                     <div class="options-grid">
@@ -48,7 +50,7 @@ class SelectionExercise extends BaseExercise {
     /**
      * Render prompt area - override in subclass
      */
-    renderPrompt() {
+    async renderPrompt() {
         return `<p class="prompt-instruction">${t(`exercises.${this.type}.instruction`)}</p>`;
     }
     

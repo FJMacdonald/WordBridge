@@ -27,7 +27,14 @@ class NamingExercise extends SelectionExercise {
                 visual = `<div class="prompt-visual">🖼️</div>`;
             }
         } else if (item.imageUrl) {
-            visual = `<img src="${item.imageUrl}" alt="Name this" class="prompt-image">`;
+            // Create a wrapper with loading state, no confusing fallback
+            visual = `<div class="image-container">
+                        <img src="${item.imageUrl}" alt="Name this" class="prompt-image" 
+                             style="max-width: 200px; max-height: 200px;"
+                             onload="this.parentNode.querySelector('.image-loading').style.display='none';"
+                             onerror="this.style.display='none'; this.parentNode.querySelector('.image-loading').style.display='none';">
+                        <div class="image-loading prompt-visual">⏳</div>
+                      </div>`;
         }
         
         return `
