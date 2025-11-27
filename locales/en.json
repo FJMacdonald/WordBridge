@@ -168,6 +168,14 @@
     "viewReport": "View Report",
     "takeAssessment": "Take Assessment",
     "backToHome": "Back to Home",
+    "practiceProgress": "Practice Progress",
+    "assessmentResults": "Assessment Results",
+    "noPracticeData": "No Practice Data Yet",
+    "startPracticingMessage": "Start practicing to see your progress here!",
+    "startPracticing": "Start Practicing",
+    "noAssessmentResults": "No Assessment Results Yet",
+    "takeAssessmentMessage": "Take an assessment to track your progress objectively!",
+    "practiceMoreRecommendations": "Practice more to get personalized recommendations.",
     "qualityScore": "Practice Quality",
     "accuracyTrend": "Accuracy Over Time",
     "exerciseDistribution": "Time by Exercise",
@@ -175,6 +183,7 @@
     "assessmentComparison": "Assessment Progress",
     "timeRanges": {
       "today": "Today",
+      "day": "Day",
       "week": "Week",
       "month": "Month",
       "all": "All Time"
@@ -263,6 +272,10 @@
     "startTest": "Start Test",
     "testInProgress": "Test in Progress",
     "question": "Question",
+    "of": "of",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
     "easy": "Easy",
     "medium": "Medium",
     "hard": "Hard"

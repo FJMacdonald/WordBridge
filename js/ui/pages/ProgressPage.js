@@ -25,10 +25,10 @@ class ProgressPage {
                 <!-- Tab Navigation -->
                 <div class="progress-tabs">
                     <button class="tab-btn active" data-tab="practice">
-                        📚 Practice Progress
+                        📚 ${t('progress.practiceProgress')}
                     </button>
                     <button class="tab-btn" data-tab="assessment">
-                        📋 Assessment Results
+                        📋 ${t('progress.assessmentResults')}
                     </button>
                 </div>
                 
@@ -36,10 +36,10 @@ class ProgressPage {
                 <div class="tab-content" id="practice-tab">
                     <!-- Time Range Controls -->
                     <div class="time-range-controls">
-                        <button class="time-btn active" data-range="day">Day</button>
-                        <button class="time-btn" data-range="week">Week</button>
-                        <button class="time-btn" data-range="month">Month</button>
-                        <button class="time-btn" data-range="all">All Time</button>
+                        <button class="time-btn active" data-range="day">${t('progress.timeRanges.day')}</button>
+                        <button class="time-btn" data-range="week">${t('progress.timeRanges.week')}</button>
+                        <button class="time-btn" data-range="month">${t('progress.timeRanges.month')}</button>
+                        <button class="time-btn" data-range="all">${t('progress.timeRanges.all')}</button>
                     </div>
                     
                     <!-- Practice Cards Grid -->
@@ -71,7 +71,7 @@ class ProgressPage {
         const container = document.getElementById('recommendations');
         
         if (!quality) {
-            container.innerHTML = '<p>Practice more to get personalized recommendations.</p>';
+            container.innerHTML = `<p>${t('progress.practiceMoreRecommendations')}</p>`;
             return;
         }
         
@@ -118,10 +118,10 @@ class ProgressPage {
         if (!practiceData || Object.keys(practiceData).length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
-                    <h3>No Practice Data Yet</h3>
-                    <p>Start practicing to see your progress here!</p>
+                    <h3>${t('progress.noPracticeData')}</h3>
+                    <p>${t('progress.startPracticingMessage')}</p>
                     <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'home'}))">
-                        Start Practicing
+                        ${t('progress.startPracticing')}
                     </button>
                 </div>
             `;
@@ -130,7 +130,7 @@ class ProgressPage {
         
         const exerciseTypes = [
             { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
-            { key: 'typing', name: 'Spelling', icon: '⌨️' },
+            { key: 'typing', name: 'Typing', icon: '⌨️' },
             { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
             { key: 'category', name: 'Categories', icon: '📁' },
             { key: 'listening', name: 'Listening', icon: '👂' },
@@ -218,10 +218,10 @@ class ProgressPage {
         if (!assessmentData || assessmentData.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
-                    <h3>No Assessment Results Yet</h3>
-                    <p>Take an assessment to track your progress objectively!</p>
+                    <h3>${t('progress.noAssessmentResults')}</h3>
+                    <p>${t('progress.takeAssessmentMessage')}</p>
                     <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'assessment'}))">
-                        Take Assessment
+                        ${t('progress.takeAssessment')}
                     </button>
                 </div>
             `;
@@ -230,7 +230,7 @@ class ProgressPage {
         
         const exerciseTypes = [
             { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
-            { key: 'typing', name: 'Spelling', icon: '⌨️' },
+            { key: 'typing', name: 'Typing', icon: '⌨️' },
             { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
             { key: 'category', name: 'Categories', icon: '📁' },
             { key: 'listening', name: 'Listening', icon: '👂' },
