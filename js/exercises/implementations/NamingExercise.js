@@ -1,6 +1,7 @@
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
+import imageStorage from '../../services/ImageStorageService.js';
 
 /**
  * Picture Naming Exercise
@@ -11,12 +12,20 @@ class NamingExercise extends SelectionExercise {
         super({ type: 'naming' });
     }
     
-    renderPrompt() {
+    async renderPrompt() {
         const item = this.currentItem;
         let visual = '';
         
         if (item.emoji) {
             visual = `<div class="prompt-visual">${item.emoji}</div>`;
+        } else if (item.localImageId) {
+            // Load image from IndexedDB
+            const imageData = await imageStorage.getImage(item.localImageId);
+            if (imageData) {
+                visual = `<img src="${imageData}" alt="Name this" class="prompt-image">`;
+            } else {
+                visual = `<div class="prompt-visual">🖼️</div>`;
+            }
         } else if (item.imageUrl) {
             visual = `<img src="${item.imageUrl}" alt="Name this" class="prompt-image">`;
         }

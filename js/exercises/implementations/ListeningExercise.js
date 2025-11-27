@@ -1,6 +1,7 @@
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
+import imageStorage from '../../services/ImageStorageService.js';
 
 /**
  * Listening Exercise
@@ -13,16 +14,26 @@ class ListeningExercise extends SelectionExercise {
     
     prepareOptions() {
         const item = this.currentItem;
-        // Get wrong options (other items with emojis)
+        // Get wrong options (other items with visuals)
         const wrongItems = this.items
-            .filter(i => i.answer !== item.answer && i.emoji)
+            .filter(i => i.answer !== item.answer && (i.emoji || i.localImageId || i.imageUrl))
             .sort(() => Math.random() - 0.5)
             .slice(0, 3);
         
-        // Create option objects with emoji and answer
+        // Create option objects with visual and answer
         const options = [
-            { emoji: item.emoji, answer: item.answer },
-            ...wrongItems.map(i => ({ emoji: i.emoji, answer: i.answer }))
+            { 
+                emoji: item.emoji, 
+                localImageId: item.localImageId,
+                imageUrl: item.imageUrl,
+                answer: item.answer 
+            },
+            ...wrongItems.map(i => ({ 
+                emoji: i.emoji, 
+                localImageId: i.localImageId,
+                imageUrl: i.imageUrl,
+                answer: i.answer 
+            }))
         ];
         
         return this.shuffleArray(options);
@@ -37,10 +48,25 @@ class ListeningExercise extends SelectionExercise {
         `;
     }
     
-    renderOption(option, index) {
+    async renderOption(option, index) {
+        let visual = '';
+        
+        if (option.emoji) {
+            visual = `<span class="option-emoji-large">${option.emoji}</span>`;
+        } else if (option.localImageId) {
+            const imageData = await imageStorage.getImage(option.localImageId);
+            if (imageData) {
+                visual = `<img src="${imageData}" alt="${option.answer}" style="max-width: 100px; max-height: 100px;">`;
+            } else {
+                visual = `<span class="option-emoji-large">🖼️</span>`;
+            }
+        } else if (option.imageUrl) {
+            visual = `<img src="${option.imageUrl}" alt="${option.answer}" style="max-width: 100px; max-height: 100px;">`;
+        }
+        
         return `
             <button class="option-btn option-btn--emoji" data-index="${index}" data-value="${option.answer}">
-                <span class="option-emoji-large">${option.emoji}</span>
+                ${visual}
             </button>
         `;
     }
