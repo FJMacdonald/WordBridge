@@ -27,15 +27,24 @@ class NamingExercise extends SelectionExercise {
                 visual = `<div class="prompt-visual">🖼️</div>`;
             }
         } else if (item.imageUrl) {
-            // Create a wrapper with loading state, no confusing fallback
-            visual = `<div class="image-container">
-                        <img src="${item.imageUrl}" alt="Name this" class="prompt-image" 
-                             style="max-width: 200px; max-height: 200px;"
-                             onload="this.parentNode.querySelector('.image-loading').style.display='none';"
-                             onerror="this.style.display='none'; this.parentNode.querySelector('.image-loading').style.display='none';">
-                        <div class="image-loading prompt-visual">⏳</div>
-                      </div>`;
+            // For emojis in the imageUrl field, display them directly
+            if (item.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(item.imageUrl)) {
+                visual = `<div class="prompt-visual">${item.imageUrl}</div>`;
+            } else {
+                // Try to load as image URL
+                visual = `<div class="image-container">
+                            <img src="${item.imageUrl}" alt="Name this" class="prompt-image" 
+                                 style="max-width: 200px; max-height: 200px;"
+                                 crossorigin="anonymous"
+                                 onerror="this.style.display='none'; this.parentNode.querySelector('.image-fallback').style.display='block';">
+                            <div class="image-fallback prompt-visual" style="display:none;">
+                                <div style="font-size: 48px;">🖼️</div>
+                                <div style="font-size: 24px; margin-top: 10px;">${item.answer}</div>
+                            </div>
+                          </div>`;
+            }
         }
+        
         
         return `
             ${visual}
@@ -54,3 +63,4 @@ class NamingExercise extends SelectionExercise {
 }
 
 export default NamingExercise;
+

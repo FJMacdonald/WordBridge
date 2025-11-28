@@ -3,6 +3,7 @@ import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
 import hintService from '../../services/HintService.js';
 import trackingService from '../../services/TrackingService.js';
+import imageStorage from '../../services/ImageStorageService.js';
 import Config from '../../core/Config.js';
 
 /**
@@ -23,6 +24,31 @@ class SpeakingExercise extends BaseExercise {
     async render() {
         const item = this.currentItem;
         
+        // Determine what visual to show
+        let visual = '';
+        if (item.emoji) {
+            visual = `<div class="prompt-visual">${item.emoji}</div>`;
+        } else if (item.localImageId) {
+            // Load image from IndexedDB
+            const imageData = await imageStorage.getImage(item.localImageId);
+            if (imageData) {
+                visual = `<img src="${imageData}" alt="${item.answer}" class="prompt-image" style="max-width: 200px; max-height: 200px;">`;
+            } else {
+                visual = `<div class="prompt-visual">🗣️</div>`;
+            }
+        } else if (item.imageUrl) {
+            // External URL - show the actual image
+            visual = `<div class="image-container">
+                        <img src="${item.imageUrl}" alt="${item.answer}" class="prompt-image" 
+                             style="max-width: 200px; max-height: 200px;"
+                             onerror="this.style.display='none'; this.parentNode.querySelector('.image-fallback').style.display='block';">
+                        <div class="image-fallback prompt-visual" style="display:none;">🗣️</div>
+                      </div>`;
+        } else {
+            // No visual provided, use default
+            visual = `<div class="prompt-visual">🗣️</div>`;
+        }
+        
         this.container.innerHTML = `
             <div class="exercise exercise--speaking">
                 ${this.renderHeader()}
@@ -30,7 +56,7 @@ class SpeakingExercise extends BaseExercise {
                 <div class="exercise__content">
                     <div class="exercise__prompt">
                         <p class="prompt-instruction">${t('exercises.speaking.instruction')}</p>
-                        <div class="prompt-visual">${item.emoji}</div>
+                        ${visual}
                     </div>
                     
                     <div class="speaking-actions">

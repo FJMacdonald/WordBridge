@@ -27,8 +27,23 @@ class TypingWordExercise extends TypingExercise {
                 visual = `<div class="prompt-visual">🖼️</div>`;
             }
         } else if (item.imageUrl) {
-            visual = `<img src="${item.imageUrl}" alt="Type this word" class="prompt-image">`;
+            // For emojis in the imageUrl field, display them directly
+            if (item.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(item.imageUrl)) {
+                visual = `<div class="prompt-visual">${item.imageUrl}</div>`;
+            } else {
+                visual = `<div class="image-container">
+                            <img src="${item.imageUrl}" alt="Type this word" class="prompt-image" 
+                                 style="max-width: 200px; max-height: 200px;"
+                                 crossorigin="anonymous"
+                                 onerror="this.style.display='none'; this.parentNode.querySelector('.image-fallback').style.display='block';">
+                            <div class="image-fallback prompt-visual" style="display:none;">
+                                <div style="font-size: 48px;">⌨️</div>
+                                <div style="font-size: 24px; margin-top: 10px;">${item.answer}</div>
+                            </div>
+                          </div>`;
+            }
         }
+        
         
         return `
             ${visual}

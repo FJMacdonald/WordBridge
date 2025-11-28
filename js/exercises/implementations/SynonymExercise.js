@@ -16,8 +16,16 @@ class SynonymExercise extends SelectionExercise {
     prepareOptions() {
         const item = this.currentItem;
         
-        // Randomly choose synonym or antonym question
-        this.questionType = Math.random() > 0.5 ? 'synonym' : 'antonym';
+        // For custom exercises with explicit questionType, use it
+        if (item.questionType) {
+            this.questionType = item.questionType;
+        } else if (item.isCustom) {
+            // For custom exercises without explicit type, default to synonym
+            this.questionType = 'synonym';
+        } else {
+            // For default exercises, randomly choose
+            this.questionType = Math.random() > 0.5 ? 'synonym' : 'antonym';
+        }
         
         const correctList = this.questionType === 'synonym' ? item.synonyms : item.antonyms;
         const wrongList = this.questionType === 'synonym' ? item.antonyms : item.synonyms;
@@ -25,10 +33,22 @@ class SynonymExercise extends SelectionExercise {
         // Pick correct answer
         this.correctAnswer = correctList[Math.floor(Math.random() * correctList.length)];
         
-        // Get wrong answers - mix from opposite category and other words
-        const wrongFromOpposite = wrongList.slice(0, 2);
-        const otherWords = this.getOtherWords(1);
-        const wrongAnswers = [...wrongFromOpposite, ...otherWords].slice(0, 3);
+        // Get wrong answers - need exactly 3
+        let wrongAnswers = [];
+        
+        // Add from opposite category first
+        if (wrongList && wrongList.length > 0) {
+            wrongAnswers.push(...wrongList.slice(0, 3));
+        }
+        
+        // If we need more, get from other words
+        if (wrongAnswers.length < 3) {
+            const otherWords = this.getOtherWords(3 - wrongAnswers.length);
+            wrongAnswers.push(...otherWords);
+        }
+        
+        // Ensure we have exactly 3 wrong answers
+        wrongAnswers = wrongAnswers.slice(0, 3);
         
         return this.shuffleArray([this.correctAnswer, ...wrongAnswers]);
     }

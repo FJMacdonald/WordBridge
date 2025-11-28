@@ -20,7 +20,7 @@ class TimeSequencingExercise extends SelectionExercise {
         const item = this.currentItem;
         return `
             <p class="prompt-instruction">${item.question}</p>
-            <div class="prompt-target-word">${item.target}</div>
+            ${item.target ? `<div class="prompt-target-word">${item.target}</div>` : ''}
         `;
     }
     

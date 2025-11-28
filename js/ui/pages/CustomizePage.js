@@ -2231,8 +2231,8 @@ class CustomizePage {
         const locale = i18n.getCurrentLocale();
         const isGerman = locale === 'de';
         
-        // Create combined template with all selected types
-        const headers = ['exercise_type', 'word', 'image_emoji_url', 'option1', 'option2', 'option3', 'difficulty'];
+        // Create combined template with all selected types - difficulty in second column
+        const headers = ['exercise_type', 'difficulty', 'data1', 'data2', 'data3', 'data4', 'data5'];
         const rows = [];
         
         const addedTypes = new Set();
@@ -2244,88 +2244,92 @@ class CustomizePage {
                     // These three share the same data format - only add once
                     if (!addedTypes.has('picture/typing/listening')) {
                         rows.push(isGerman ? 
-                            ['picture/typing/listening', 'Apfel', '🍎 or https://example.com/apfel.jpg', 'Banane', 'Orange', 'Birne', 'easy'] :
-                            ['picture/typing/listening', 'apple', '🍎 or https://example.com/apple.jpg', 'banana', 'orange', 'pear', 'easy']
+                            ['picture/typing/listening', 'easy', 'Apfel', '🍎', 'Banane', 'Orange', 'Birne'] :
+                            ['picture/typing/listening', 'easy', 'apple', '🍎', 'banana', 'orange', 'pear']
                         );
                         addedTypes.add('picture/typing/listening');
                     }
                     break;
                 case 'category':
                     rows.push(isGerman ?
-                        ['category', 'Obst', 'Apfel', 'Apfel', 'Karotte', 'Brot', 'easy'] :
-                        ['category', 'fruit', 'apple', 'apple', 'carrot', 'bread', 'easy']
+                        ['category', 'easy', 'Obst', 'Apfel', 'Karotte', 'Brot', 'Stuhl'] :
+                        ['category', 'easy', 'fruit', 'apple', 'carrot', 'bread', 'chair']
                     );
                     break;
                 case 'sentenceTyping':
                     rows.push(isGerman ?
-                        ['sentenceTyping', 'Ich trinke jeden Morgen __', 'Kaffee', '', '', '', 'easy'] :
-                        ['sentenceTyping', 'I drink __ every morning', 'coffee', '', '', '', 'easy']
+                        ['sentenceTyping', 'easy', 'Ich trinke jeden Morgen __', 'Kaffee', '', ''] :
+                        ['sentenceTyping', 'easy', 'I drink __ every morning', 'coffee', '', '']
                     );
                     break;
                 case 'speaking':
                     rows.push(isGerman ?
-                        ['speaking', 'Apfel', '🍎', 'Ein Apfel am Tag', 'Ich esse einen Apfel', '', 'easy'] :
-                        ['speaking', 'apple', '🍎', 'An apple a day', 'I eat an apple', '', 'easy']
+                        ['speaking', 'easy', 'Apfel', '🍎', 'Ein Apfel am Tag', 'Ich esse einen Apfel'] :
+                        ['speaking', 'easy', 'apple', '🍎', 'An apple a day', 'I eat an apple']
                     );
                     break;
                 case 'firstSound':
                     rows.push(isGerman ?
-                        ['firstSound', 'b', 'Ball,Buch,Bett,Vogel,Box', '', '', '', 'easy'] :
-                        ['firstSound', 'b', 'ball,book,bed,bird,box', '', '', '', 'easy']
+                        ['firstSound', 'easy', 'b', 'Ball', 'Auto,Haus,Tisch', '', ''] :
+                        ['firstSound', 'easy', 'b', 'ball', 'car,house,table', '', '']
                     );
                     break;
                 case 'rhyming':
                     rows.push(isGerman ?
-                        ['rhyming', 'Katze', 'Tatze,Matze,Platze', 'Auto,Haus', '', '', 'easy'] :
-                        ['rhyming', 'cat', 'hat,bat,mat', 'dog,cup', '', '', 'easy']
+                        ['rhyming', 'easy', 'Katze', 'Tatze', 'Auto,Haus,Baum', '', ''] :
+                        ['rhyming', 'easy', 'cat', 'hat', 'dog,cup,tree', '', '']
                     );
                     break;
                 case 'association':
                     rows.push(isGerman ?
-                        ['association', 'Brot', 'Butter,Toast', 'Auto,Telefon', '', '', 'easy'] :
-                        ['association', 'bread', 'butter,toast', 'car,phone', '', '', 'easy']
+                        ['association', 'easy', 'Brot', 'Butter', 'Auto,Telefon,Baum', '', ''] :
+                        ['association', 'easy', 'bread', 'butter', 'car,phone,tree', '', '']
                     );
                     break;
                 case 'synonyms':
                     rows.push(isGerman ?
-                        ['synonyms', 'glücklich', 'froh,fröhlich', 'traurig,unglücklich', '', '', 'easy'] :
-                        ['synonyms', 'happy', 'glad,joyful', 'sad,unhappy', '', '', 'easy']
+                        ['synonyms', 'easy', 'glücklich', 'synonym', 'froh', 'traurig,wütend,müde', ''] :
+                        ['synonyms', 'easy', 'happy', 'synonym', 'glad', 'sad,angry,tired', '']
+                    );
+                    rows.push(isGerman ?
+                        ['synonyms', 'easy', 'heiß', 'antonym', 'kalt', 'warm,lauwarm,kühl', ''] :
+                        ['synonyms', 'easy', 'hot', 'antonym', 'cold', 'warm,tepid,cool', '']
                     );
                     break;
                 case 'definitions':
                     rows.push(isGerman ?
-                        ['definitions', 'Stuhl', 'Ein Möbelstück zum Sitzen', '', '', '', 'easy'] :
-                        ['definitions', 'chair', 'A piece of furniture for sitting', '', '', '', 'easy']
+                        ['definitions', 'easy', 'Stuhl', 'Ein Möbelstück zum Sitzen', 'Tisch,Auto,Baum', '', ''] :
+                        ['definitions', 'easy', 'chair', 'A piece of furniture for sitting', 'table,car,tree', '', '']
                     );
                     break;
                 case 'scramble':
                     rows.push(isGerman ?
-                        ['scramble', 'Die Katze schläft', '', '', '', '', 'easy'] :
-                        ['scramble', 'The cat is sleeping', '', '', '', '', 'easy']
+                        ['scramble', 'easy', 'Die Katze schläft', '', '', '', ''] :
+                        ['scramble', 'easy', 'The cat is sleeping', '', '', '', '']
                     );
                     break;
                 case 'timeSequencing':
                     rows.push(isGerman ?
-                        ['timeSequencing', 'Was kommt nach Montag?', 'Dienstag', 'Mittwoch', 'Sonntag', 'Freitag', 'easy'] :
-                        ['timeSequencing', 'What day comes after Monday?', 'Tuesday', 'Wednesday', 'Sunday', 'Friday', 'easy']
+                        ['timeSequencing', 'easy', 'Was kommt nach Montag?', 'Dienstag', 'Mittwoch,Sonntag,Freitag', ''] :
+                        ['timeSequencing', 'easy', 'What day comes after Monday?', 'Tuesday', 'Wednesday,Sunday,Friday', '']
                     );
                     break;
                 case 'clockMatching':
                     rows.push(isGerman ?
-                        ['clockMatching', '3:00', 'drei Uhr', '', '', '', 'easy'] :
-                        ['clockMatching', '3:00', 'three o\'clock', '', '', '', 'easy']
+                        ['clockMatching', 'easy', '3:00', 'drei Uhr', '4:00,5:00,6:00', '', ''] :
+                        ['clockMatching', 'easy', '3:00', 'three o\'clock', '4:00,5:00,6:00', '', '']
                     );
                     break;
                 case 'timeOrdering':
                     rows.push(isGerman ?
-                        ['timeOrdering', 'Morgenroutine', 'Aktivitäten in Reihenfolge bringen', 'Aufwachen', 'Zähne putzen', 'Frühstück', 'easy'] :
-                        ['timeOrdering', 'Morning routine', 'Put activities in order', 'Wake up', 'Brush teeth', 'Eat breakfast', 'easy']
+                        ['timeOrdering', 'easy', 'Morgenroutine', 'Aufwachen', 'Zähne putzen', 'Frühstück', 'Zur Arbeit gehen'] :
+                        ['timeOrdering', 'easy', 'Morning routine', 'Wake up', 'Brush teeth', 'Eat breakfast', 'Go to work']
                     );
                     break;
                 case 'workingMemory':
                     rows.push(isGerman ?
-                        ['workingMemory', '🍎🍌🍊', '🍇🍓🥝', '', '', '', 'easy'] :
-                        ['workingMemory', '🍎🍌🍊', '🍇🍓🥝', '', '', '', 'easy']
+                        ['workingMemory', 'easy', '🍎🍌🍊', '🍇🍓🥝', '', '', ''] :
+                        ['workingMemory', 'easy', '🍎🍌🍊', '🍇🍓🥝', '', '', '']
                     );
                     break;
             }

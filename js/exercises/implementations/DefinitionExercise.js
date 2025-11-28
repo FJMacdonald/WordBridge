@@ -13,7 +13,14 @@ class DefinitionExercise extends SelectionExercise {
     
     prepareOptions() {
         const item = this.currentItem;
-        // Get wrong words from other definitions
+        
+        // If the item has wrongOptions (from CSV import), use those
+        if (item.wrongOptions && item.wrongOptions.length >= 3) {
+            const wrongWords = item.wrongOptions.slice(0, 3);
+            return this.shuffleArray([item.word, ...wrongWords]);
+        }
+        
+        // Otherwise get wrong words from other definitions
         const wrongWords = this.items
             .filter(i => i.word !== item.word)
             .sort(() => Math.random() - 0.5)

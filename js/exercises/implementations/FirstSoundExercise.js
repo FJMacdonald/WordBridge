@@ -15,8 +15,19 @@ class FirstSoundExercise extends SelectionExercise {
     }
     
     prepareOptions() {
-        // Pick a random group for target
         const item = this.currentItem;
+        
+        // If custom exercise with explicit options, use those
+        if (item.options && item.options.length >= 4) {
+            this.targetWord = item.correctWord || item.words[0];
+            this.targetSound = item.sound;
+            this.correctAnswer = item.correctWord || item.words[0];
+            
+            // Return the provided options
+            return this.shuffleArray(item.options);
+        }
+        
+        // Otherwise use original logic for built-in exercises
         const words = [...item.words];
         
         // Pick target word
@@ -25,16 +36,23 @@ class FirstSoundExercise extends SelectionExercise {
         
         // Pick another word from same group as correct
         const sameGroupWords = words.filter(w => w !== this.targetWord);
-        this.correctAnswer = sameGroupWords[Math.floor(Math.random() * sameGroupWords.length)];
+        this.correctAnswer = sameGroupWords.length > 0 
+            ? sameGroupWords[Math.floor(Math.random() * sameGroupWords.length)]
+            : this.targetWord;
         
-        // Get wrong answers from other sounds (passed in via allGroups)
+        // Get wrong answers from other sounds
         const wrongAnswers = this.getWrongAnswers(3);
         
         return this.shuffleArray([this.correctAnswer, ...wrongAnswers]);
     }
     
     getWrongAnswers(count) {
-        // Get words from other items (different sounds)
+        // First check if current item has wrongWords (from CSV)
+        if (this.currentItem.wrongWords && this.currentItem.wrongWords.length >= count) {
+            return this.currentItem.wrongWords.slice(0, count);
+        }
+        
+        // Otherwise get words from other items (different sounds)
         const otherItems = this.items.filter(i => i.sound !== this.currentItem.sound);
         const wrongWords = [];
         
@@ -50,9 +68,14 @@ class FirstSoundExercise extends SelectionExercise {
     }
     
     renderPrompt() {
+        // For custom exercises, show the sound letter instead of the word
+        const displayValue = this.currentItem.isCustom ? 
+            this.targetSound.toUpperCase() : 
+            this.targetWord;
+            
         return `
             <p class="prompt-instruction">${t('exercises.firstSound.instruction')}</p>
-            <div class="prompt-target-word">${this.targetWord}</div>
+            <div class="prompt-target-word">${displayValue}</div>
         `;
     }
     

@@ -61,7 +61,24 @@ class ListeningExercise extends SelectionExercise {
                 visual = `<span class="option-emoji-large">🖼️</span>`;
             }
         } else if (option.imageUrl) {
-            visual = `<img src="${option.imageUrl}" alt="${option.answer}" style="max-width: 100px; max-height: 100px;">`;
+            // For emojis in the imageUrl field, display them directly
+            if (option.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(option.imageUrl)) {
+                visual = `<span class="option-emoji-large">${option.imageUrl}</span>`;
+            } else {
+                visual = `<div class="image-container" style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;">
+                            <img src="${option.imageUrl}" alt="${option.answer}" 
+                                 style="max-width: 100px; max-height: 100px;"
+                                 crossorigin="anonymous"
+                                 onerror="this.style.display='none'; this.parentNode.querySelector('.fallback').style.display='flex';">
+                            <div class="fallback" style="display:none; flex-direction: column; align-items: center;">
+                                <span style="font-size: 36px;">🔊</span>
+                                <small style="font-size: 12px; margin-top: 5px;">${option.answer}</small>
+                            </div>
+                          </div>`;
+            }
+        } else {
+            // No visual at all, show placeholder
+            visual = `<span class="option-emoji-large">❓</span>`;
         }
         
         return `

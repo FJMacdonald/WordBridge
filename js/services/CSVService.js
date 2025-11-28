@@ -130,13 +130,19 @@ class CSVService {
             throw new Error('exercise_type is required');
         }
         
-        // Remove exercise type from values for processing
-        const dataValues = values.map((v, i) => i === exerciseTypeIndex ? '' : v);
+        // Get difficulty from second column (index 1)
+        const difficulty = values[1]?.toLowerCase().trim() || 'easy';
+        if (!['easy', 'medium', 'hard'].includes(difficulty)) {
+            throw new Error('Difficulty must be easy, medium, or hard');
+        }
+        
+        // Remove exercise type and difficulty from values for processing
+        const dataValues = values.map((v, i) => (i === exerciseTypeIndex || i === 1) ? '' : v);
         
         let transformedData;
         if (exerciseType.includes('picture') || exerciseType.includes('typing') || exerciseType.includes('listening') || exerciseType.includes('/')) {
             // Handle combined types like "picture/typing/listening"
-            transformedData = this.transformImageWord(dataValues.filter(v => v !== ''));
+            transformedData = this.transformImageWord(dataValues.filter(v => v !== ''), difficulty);
             // Return as multiple exercise types
             if (exerciseType.includes('/')) {
                 transformedData.exerciseType = 'multiple';
@@ -149,54 +155,54 @@ class CSVService {
                 transformedData.exerciseType = 'listening';
             }
         } else if (exerciseType === 'sentencetyping' || exerciseType === 'sentence') {
-            transformedData = this.transformSentence(dataValues.filter(v => v !== ''));
+            transformedData = this.transformSentence(dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'sentenceTyping';
         } else if (exerciseType === 'workingmemory' || exerciseType === 'working_memory' || exerciseType === 'workingMemory') {
-            transformedData = this.transformWorkingMemory(dataValues.filter(v => v !== ''));
+            transformedData = this.transformWorkingMemory(dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'workingMemory';
         } else if (exerciseType === 'category' || exerciseType === 'categories') {
-            transformedData = this.transformCategory(dataValues.filter(v => v !== ''));
+            transformedData = this.transformCategory(dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'category';
         } else if (exerciseType === 'timesequencing' || exerciseType === 'time_sequencing' || exerciseType === 'timeSequencing') {
-            transformedData = this.transformTimeSequencing(dataValues.filter(v => v !== ''));
+            transformedData = this.transformTimeSequencing(dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'timeSequencing';
         } else if (exerciseType === 'clockmatching' || exerciseType === 'clock_matching' || exerciseType === 'clockMatching') {
-            transformedData = this.transformClockMatching(dataValues.filter(v => v !== ''));
+            transformedData = this.transformClockMatching(dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'clockMatching';
         } else if (exerciseType === 'timeordering' || exerciseType === 'time_ordering' || exerciseType === 'timeOrdering') {
-            transformedData = this.transformTimeOrdering(dataValues.filter(v => v !== ''));
+            transformedData = this.transformTimeOrdering(dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'timeOrdering';
         } else if (exerciseType === 'firstsound' || exerciseType === 'first_sound' || exerciseType === 'firstSound') {
-            transformedData = this.transformGenericExercise('firstsound', dataValues.filter(v => v !== ''));
+            transformedData = this.transformGenericExercise('firstsound', dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'firstSound';
         } else if (exerciseType === 'rhyming') {
-            transformedData = this.transformGenericExercise('rhyming', dataValues.filter(v => v !== ''));
+            transformedData = this.transformGenericExercise('rhyming', dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'rhyming';
         } else if (exerciseType === 'association') {
-            transformedData = this.transformGenericExercise('association', dataValues.filter(v => v !== ''));
+            transformedData = this.transformGenericExercise('association', dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'association';
-        } else if (exerciseType === 'synonyms') {
-            transformedData = this.transformGenericExercise('synonyms', dataValues.filter(v => v !== ''));
+        } else if (exerciseType === 'synonyms' || exerciseType === 'synonym') {
+            transformedData = this.transformGenericExercise('synonyms', dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'synonyms';
-        } else if (exerciseType === 'definitions') {
-            transformedData = this.transformGenericExercise('definitions', dataValues.filter(v => v !== ''));
+        } else if (exerciseType === 'definitions' || exerciseType === 'definition') {
+            transformedData = this.transformGenericExercise('definitions', dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'definitions';
         } else if (exerciseType === 'scramble') {
-            transformedData = this.transformGenericExercise('scramble', dataValues.filter(v => v !== ''));
+            transformedData = this.transformGenericExercise('scramble', dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'scramble';
         } else if (exerciseType === 'speaking') {
-            transformedData = this.transformGenericExercise('speaking', dataValues.filter(v => v !== ''));
+            transformedData = this.transformGenericExercise('speaking', dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = 'speaking';
         } else {
             // Default to generic word exercise handler
-            transformedData = this.transformGenericExercise(exerciseType, dataValues.filter(v => v !== ''));
+            transformedData = this.transformGenericExercise(exerciseType, dataValues.filter(v => v !== ''), difficulty);
             transformedData.exerciseType = exerciseType;
         }
         
         return transformedData;
     }
     
-    transformImageWord(values) {
+    transformImageWord(values, difficulty = 'easy') {
         const [word, imageEmojiUrl, ...options] = values;
         
         if (!word || !word.trim()) {
@@ -205,7 +211,7 @@ class CSVService {
         
         const exercise = {
             answer: word.toLowerCase().trim(),
-            difficulty: values[values.length - 1] || 'medium', // Last column should be difficulty
+            difficulty: difficulty,
             isCustom: true
         };
         
@@ -222,7 +228,7 @@ class CSVService {
         }
         
         // Options are optional - will auto-generate if not provided
-        const validOptions = options.slice(0, -1).filter(o => o && o.trim()); // Exclude last column (difficulty)
+        const validOptions = options.filter(o => o && o.trim());
         if (validOptions.length > 0) {
             exercise.options = [word.toLowerCase().trim(), ...validOptions.map(o => o.toLowerCase().trim())];
         }
@@ -230,9 +236,8 @@ class CSVService {
         return exercise;
     }
     
-    transformSentence(values) {
+    transformSentence(values, difficulty = 'easy') {
         const cleanValues = values.filter(v => v && v.trim());
-        const difficulty = cleanValues[cleanValues.length - 1] || 'easy';
         const [sentence, answer] = cleanValues;
         
         if (!sentence || !sentence.trim()) {
@@ -243,11 +248,24 @@ class CSVService {
             throw new Error('Answer is required');
         }
         
-        // Check for blank marker
-        const sentenceText = sentence.trim();
-        if (!sentenceText.includes('__') && !sentenceText.includes('___')) {
-            throw new Error('Sentence must contain blank marker (__)');
+        // Check for blank marker - accept ?, __, ___, or even a single _
+        let sentenceText = sentence.trim();
+        
+        // Look for any of these patterns as blank markers
+        const hasBlank = sentenceText.includes('?') || 
+                        sentenceText.includes('__') || 
+                        sentenceText.includes('___') ||
+                        sentenceText.includes('_');
+        
+        if (!hasBlank) {
+            throw new Error('Sentence must contain blank marker (? or _ or __)');
         }
+        
+        // Normalize blank markers to __
+        // Replace standalone ? (not followed by letters/punctuation except space)
+        sentenceText = sentenceText.replace(/\?(?!\w)/g, '__');
+        // Replace single or multiple underscores with double underscore
+        sentenceText = sentenceText.replace(/_{1,}/g, '__');
         
         return {
             sentence: sentenceText,
@@ -257,9 +275,8 @@ class CSVService {
         };
     }
     
-    transformWorkingMemory(values) {
-        const [sequence, extraOptionsStr, ...rest] = values;
-        const difficulty = rest[rest.length - 1] || 'easy';
+    transformWorkingMemory(values, difficulty = 'easy') {
+        const [sequence, extraOptionsStr] = values;
         
         if (!sequence || !sequence.trim()) {
             throw new Error('Sequence is required for working memory');
@@ -297,9 +314,8 @@ class CSVService {
         };
     }
     
-    transformCategory(values) {
+    transformCategory(values, difficulty = 'easy') {
         const [category, correct, ...optionValues] = values;
-        const difficulty = values[values.length - 1] || 'easy';
         
         if (!category || !category.trim()) {
             throw new Error('Category name is required');
@@ -309,8 +325,8 @@ class CSVService {
             throw new Error('Correct answer is required');
         }
         
-        // Filter out difficulty and empty values to get pure options
-        const options = optionValues.filter(o => o && o.trim() && o !== difficulty).map(o => o.toLowerCase().trim());
+        // Filter out empty values to get pure options
+        const options = optionValues.filter(o => o && o.trim()).map(o => o.toLowerCase().trim());
         if (options.length < 2) {
             throw new Error('At least 2 wrong options required for category');
         }
@@ -327,14 +343,10 @@ class CSVService {
         };
     }
     
-    transformTimeSequencing(values) {
+    transformTimeSequencing(values, difficulty = 'easy') {
         // Filter out empty values first
         const cleanValues = values.filter(v => v && v.trim() !== '');
-        const difficulty = cleanValues[cleanValues.length - 1] || 'easy';
-        
-        // Remove difficulty from values for processing
-        const dataValues = cleanValues.slice(0, -1);
-        const [question, correct, ...wrong] = dataValues;
+        const [question, correct, wrongOptionsStr] = cleanValues;
         
         if (!question || !question.trim()) {
             throw new Error('Question is required for time sequencing');
@@ -344,9 +356,20 @@ class CSVService {
             throw new Error('Correct answer is required');
         }
         
-        const wrongOptions = wrong.filter(w => w && w.trim()).map(w => w.trim());
+        // Parse wrong options (can be comma or pipe separated)
+        let wrongOptions = [];
+        if (wrongOptionsStr && wrongOptionsStr.trim()) {
+            if (wrongOptionsStr.includes(',')) {
+                wrongOptions = wrongOptionsStr.split(',').map(w => w.trim()).filter(w => w);
+            } else if (wrongOptionsStr.includes('|')) {
+                wrongOptions = wrongOptionsStr.split('|').map(w => w.trim()).filter(w => w);
+            } else {
+                wrongOptions = [wrongOptionsStr.trim()];
+            }
+        }
+        
         if (wrongOptions.length < 3) {
-            throw new Error('At least 3 wrong options required for time sequencing');
+            throw new Error('At least 3 wrong options required for time sequencing (separate with commas or |)');
         }
         
         return {
@@ -358,13 +381,9 @@ class CSVService {
         };
     }
     
-    transformClockMatching(values) {
+    transformClockMatching(values, difficulty = 'easy') {
         const cleanValues = values.filter(v => v && v.trim() !== '');
-        const difficulty = cleanValues[cleanValues.length - 1] || 'easy';
-        
-        // Remove difficulty from processing
-        const dataValues = cleanValues.slice(0, -1);
-        const [timeStr, timeWords] = dataValues;
+        const [timeStr, timeWords, wrongTimesStr] = cleanValues;
         
         if (!timeStr || !timeStr.trim()) {
             throw new Error('Time is required for clock matching');
@@ -374,49 +393,88 @@ class CSVService {
             throw new Error('Time words are required');
         }
         
-        // Parse time string (e.g., "3:00")
-        const timeParts = timeStr.trim().split(':');
-        if (timeParts.length !== 2) {
-            throw new Error('Time must be in HH:MM format');
+        // Parse wrong times (should be digital times like "4:00|5:00|6:00")
+        let wrongTimes = [];
+        if (wrongTimesStr && wrongTimesStr.trim()) {
+            if (wrongTimesStr.includes(',')) {
+                wrongTimes = wrongTimesStr.split(',').map(w => w.trim()).filter(w => w);
+            } else if (wrongTimesStr.includes('|')) {
+                wrongTimes = wrongTimesStr.split('|').map(w => w.trim()).filter(w => w);
+            } else {
+                wrongTimes = [wrongTimesStr.trim()];
+            }
         }
         
-        const hour = parseInt(timeParts[0]);
-        const minute = parseInt(timeParts[1]);
-        
-        if (isNaN(hour) || isNaN(minute) || hour < 1 || hour > 12 || minute < 0 || minute > 59) {
-            throw new Error('Invalid time values');
+        if (wrongTimes.length < 3) {
+            throw new Error('Clock matching exercises need at least 3 wrong times (e.g., 4:00|5:00|6:00)');
         }
         
-        // Calculate analog clock angles
-        const minuteAngle = minute * 6; // 6 degrees per minute
-        const hourAngle = (hour % 12) * 30 + (minute * 0.5); // 30 degrees per hour + minute adjustment
+        // Helper function to parse time and create clock data
+        const parseTimeToClockData = (timeString) => {
+            const timeParts = timeString.trim().split(':');
+            if (timeParts.length !== 2) {
+                throw new Error(`Time must be in HH:MM format: ${timeString}`);
+            }
+            
+            const hour = parseInt(timeParts[0]);
+            const minute = parseInt(timeParts[1]);
+            
+            if (isNaN(hour) || isNaN(minute) || hour < 1 || hour > 12 || minute < 0 || minute > 59) {
+                throw new Error(`Invalid time values: ${timeString}`);
+            }
+            
+            // Calculate analog clock angles
+            const minuteAngle = minute * 6; // 6 degrees per minute
+            const hourAngle = (hour % 12) * 30 + (minute * 0.5); // 30 degrees per hour + minute adjustment
+            
+            return {
+                time: timeString.trim(),
+                hour,
+                minute,
+                analogData: { hourAngle, minuteAngle }
+            };
+        };
+        
+        // Parse main time
+        const mainClock = parseTimeToClockData(timeStr);
+        
+        // Parse wrong times and create clock data for them
+        const wrongClocks = wrongTimes.map(t => parseTimeToClockData(t));
         
         return {
-            id: `${hour}_${minute}`,
-            time: timeStr.trim(),
-            hour,
-            minute,
-            digitalDisplay: timeStr.trim(),
-            analogData: { hourAngle, minuteAngle },
+            id: `${mainClock.hour}_${mainClock.minute}`,
+            time: mainClock.time,
+            hour: mainClock.hour,
+            minute: mainClock.minute,
+            digitalDisplay: mainClock.time,
+            analogData: mainClock.analogData,
             timeWords: timeWords.trim(),
+            wrongClocks: wrongClocks, // Store wrong clock data for analog display
             difficulty,
             isCustom: true
         };
     }
     
-    transformTimeOrdering(values) {
+    transformTimeOrdering(values, difficulty = 'easy') {
         const cleanValues = values.filter(v => v && v.trim() !== '');
-        const difficulty = cleanValues[cleanValues.length - 1] || 'easy';
-        
-        // Remove difficulty from processing
-        const dataValues = cleanValues.slice(0, -1);
-        const [scenario, description, ...activities] = dataValues;
+        const [scenario, ...activities] = cleanValues;
         
         if (!scenario || !scenario.trim()) {
             throw new Error('Scenario is required for time ordering');
         }
         
-        const activityList = activities.filter(a => a && a.trim()).map(a => a.trim());
+        // First activity might be description, rest are the actual activities
+        let description = 'Put these activities in the correct time order';
+        let activityList = activities;
+        
+        // Check if first activity looks like a description (contains "order" or is longer)
+        if (activities.length > 0 && (activities[0].toLowerCase().includes('order') || activities[0].length > 50)) {
+            description = activities[0].trim();
+            activityList = activities.slice(1);
+        }
+        
+        activityList = activityList.filter(a => a && a.trim()).map(a => a.trim());
+        
         if (activityList.length < 3) {
             throw new Error('At least 3 activities required for time ordering');
         }
@@ -424,7 +482,7 @@ class CSVService {
         return {
             id: scenario.toLowerCase().replace(/\s+/g, '_'),
             scenario: scenario.trim(),
-            description: description?.trim() || 'Put these activities in the correct time order',
+            description: description,
             items: activityList,
             correctOrder: activityList, // Assume CSV provides them in correct order
             difficulty,
@@ -432,48 +490,104 @@ class CSVService {
         };
     }
     
-    transformGenericExercise(exerciseType, values) {
-        const difficulty = values[values.length - 1] || 'easy';
+    transformGenericExercise(exerciseType, values, difficulty = 'easy') {
         
         // Handle different exercise types generically
         switch(exerciseType) {
             case 'speaking':
-                const cleanSpeakingValues = values.filter(v => v && v.trim() && v !== difficulty);
-                const [word, emoji, ...phrases] = cleanSpeakingValues;
-                return {
+                const cleanSpeakingValues = values.filter(v => v && v.trim());
+                const [word, emojiOrUrl, ...phrases] = cleanSpeakingValues;
+                
+                const speakingExercise = {
                     answer: word?.toLowerCase().trim() || '',
-                    emoji: emoji?.trim() || '',
                     phrases: phrases.filter(p => p && p.trim()).map(p => p.trim()),
                     difficulty,
                     isCustom: true
                 };
                 
+                // Check if emoji or URL
+                if (emojiOrUrl && emojiOrUrl.trim()) {
+                    const visual = emojiOrUrl.trim();
+                    if (visual.startsWith('http') || visual.startsWith('https')) {
+                        speakingExercise.imageUrl = visual;
+                    } else {
+                        speakingExercise.emoji = visual;
+                    }
+                }
+                
+                return speakingExercise;
+                
             case 'firstsound':
             case 'first_sound':
             case 'firstSound':
-                const [sound, ...wordValues] = values.filter(v => v && v.trim() && v !== difficulty);
-                const words = wordValues.map(w => w.trim().toLowerCase()).filter(w => w);
-                if (words.length < 4) {
-                    throw new Error('First Sound exercises need at least 4 words');
+                const [sound, correctWord, ...wrongWords] = values.filter(v => v && v.trim());
+                
+                if (!sound || !correctWord) {
+                    throw new Error('First Sound exercises need a sound and at least one word that starts with it');
                 }
+                
+                // Parse wrong words (can be comma or pipe separated)
+                let nonMatchingWords = [];
+                if (wrongWords.length > 0 && wrongWords[0]) {
+                    const wrongStr = wrongWords[0];
+                    if (wrongStr.includes(',')) {
+                        nonMatchingWords = wrongStr.split(',').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else if (wrongStr.includes('|')) {
+                        nonMatchingWords = wrongStr.split('|').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else {
+                        nonMatchingWords = wrongWords.filter(w => w).map(w => w.trim().toLowerCase());
+                    }
+                }
+                
+                if (nonMatchingWords.length < 3) {
+                    throw new Error('First Sound exercises need at least 3 words that do NOT start with the target sound');
+                }
+                
                 return {
                     sound: sound.toLowerCase().trim(),
-                    words,
+                    correctWord: correctWord.toLowerCase().trim(),
+                    words: [correctWord.toLowerCase().trim()], // For compatibility
+                    wrongWords: nonMatchingWords,
+                    options: [correctWord.toLowerCase().trim(), ...nonMatchingWords], // All options
                     difficulty,
                     isCustom: true
                 };
                 
             case 'rhyming':
-                const [rhymeWord, ...rhymeValues] = values.filter(v => v && v.trim() && v !== difficulty);
-                if (rhymeValues.length < 5) {
-                    throw new Error('Rhyming exercises need at least 2 rhyming words and 3 non-rhyming words (5 total) to create 4 options');
-                }
-                // Assume first 2 are rhymes, rest are non-rhymes
-                const rhymes = rhymeValues.slice(0, 2).map(w => w.trim().toLowerCase()).filter(w => w);
-                const nonRhymes = rhymeValues.slice(2).map(w => w.trim().toLowerCase()).filter(w => w);
+                const [rhymeWord, ...rhymeValues] = values.filter(v => v && v.trim());
+                // Parse rhyming words - can be comma or pipe separated in first column
+                let rhymes = [];
+                let nonRhymes = [];
                 
-                if (rhymes.length < 2 || nonRhymes.length < 3) {
-                    throw new Error('Rhyming exercises need at least 2 rhyming words and 3 non-rhyming words');
+                if (rhymeValues.length > 0 && rhymeValues[0]) {
+                    // First value after word contains rhyming words
+                    const rhymeStr = rhymeValues[0];
+                    if (rhymeStr.includes(',')) {
+                        rhymes = rhymeStr.split(',').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else if (rhymeStr.includes('|')) {
+                        rhymes = rhymeStr.split('|').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else {
+                        rhymes = [rhymeStr.trim().toLowerCase()];
+                    }
+                }
+                
+                // Second value contains non-rhyming words
+                if (rhymeValues.length > 1 && rhymeValues[1]) {
+                    const nonRhymeStr = rhymeValues[1];
+                    if (nonRhymeStr.includes(',')) {
+                        nonRhymes = nonRhymeStr.split(',').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else if (nonRhymeStr.includes('|')) {
+                        nonRhymes = nonRhymeStr.split('|').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else {
+                        nonRhymes = [nonRhymeStr.trim().toLowerCase()];
+                    }
+                }
+                
+                if (rhymes.length < 1) {
+                    throw new Error('Rhyming exercises need at least 1 word that rhymes with the target word');
+                }
+                if (nonRhymes.length < 3) {
+                    throw new Error('Rhyming exercises need at least 3 non-rhyming words for incorrect options');
                 }
                 
                 return {
@@ -485,16 +599,40 @@ class CSVService {
                 };
                 
             case 'association':
-                const [assocWord, ...assocValues] = values.filter(v => v && v.trim() && v !== difficulty);
-                if (assocValues.length < 5) {
-                    throw new Error('Association exercises need at least 2 related words and 3 unrelated words (5 total) to create 4 options');
-                }
-                // Assume first 2 are associated, rest are unrelated
-                const associated = assocValues.slice(0, 2).map(w => w.trim().toLowerCase()).filter(w => w);
-                const unrelated = assocValues.slice(2).map(w => w.trim().toLowerCase()).filter(w => w);
+                const [assocWord, ...assocValues] = values.filter(v => v && v.trim());
+                // Parse associated words - can be comma or pipe separated in first column
+                let associated = [];
+                let unrelated = [];
                 
-                if (associated.length < 2 || unrelated.length < 3) {
-                    throw new Error('Association exercises need at least 2 related words and 3 unrelated words');
+                if (assocValues.length > 0 && assocValues[0]) {
+                    // First value after word contains associated/related words
+                    const assocStr = assocValues[0];
+                    if (assocStr.includes(',')) {
+                        associated = assocStr.split(',').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else if (assocStr.includes('|')) {
+                        associated = assocStr.split('|').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else {
+                        associated = [assocStr.trim().toLowerCase()];
+                    }
+                }
+                
+                // Second value contains unrelated words
+                if (assocValues.length > 1 && assocValues[1]) {
+                    const unrelatedStr = assocValues[1];
+                    if (unrelatedStr.includes(',')) {
+                        unrelated = unrelatedStr.split(',').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else if (unrelatedStr.includes('|')) {
+                        unrelated = unrelatedStr.split('|').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else {
+                        unrelated = [unrelatedStr.trim().toLowerCase()];
+                    }
+                }
+                
+                if (associated.length < 1) {
+                    throw new Error('Association exercises need at least 1 word that is related/associated with the target word');
+                }
+                if (unrelated.length < 3) {
+                    throw new Error('Association exercises need at least 3 unrelated words for incorrect options');
                 }
                 
                 return {
@@ -506,41 +644,83 @@ class CSVService {
                 };
                 
             case 'synonyms':
-                const [synWord, ...synValues] = values.filter(v => v && v.trim() && v !== difficulty);
-                if (synValues.length < 5) {
-                    throw new Error('Synonym exercises need at least 2 synonyms and 3 antonyms (5 total) to create 4 options');
-                }
-                // Assume first 2 are synonyms, rest are antonyms
-                const synonyms = synValues.slice(0, 2).map(w => w.trim().toLowerCase()).filter(w => w);
-                const antonyms = synValues.slice(2).map(w => w.trim().toLowerCase()).filter(w => w);
+            case 'synonym':
+                const [synWord, typeIndicator, correctWord2, ...wrongWords2] = values.filter(v => v && v.trim());
                 
-                if (synonyms.length < 2 || antonyms.length < 3) {
-                    throw new Error('Synonym exercises need at least 2 synonyms and 3 antonyms');
+                // Parse type indicator (synonym/antonym or true/false)
+                let isSynonym = true;
+                if (typeIndicator) {
+                    const typeStr = typeIndicator.toLowerCase().trim();
+                    if (typeStr === 'antonym' || typeStr === 'false' || typeStr === 'opposite') {
+                        isSynonym = false;
+                    }
                 }
                 
+                // Parse wrong words (can be comma or pipe separated)
+                let wrongWordOptions = [];
+                if (wrongWords2.length > 0 && wrongWords2[0]) {
+                    const wrongStr = wrongWords2[0];
+                    if (wrongStr.includes(',')) {
+                        wrongWordOptions = wrongStr.split(',').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else if (wrongStr.includes('|')) {
+                        wrongWordOptions = wrongStr.split('|').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else {
+                        wrongWordOptions = wrongWords2.filter(w => w).map(w => w.trim().toLowerCase());
+                    }
+                }
+                
+                if (!correctWord2 || !correctWord2.trim()) {
+                    throw new Error('Synonym/Antonym exercises need a correct answer word');
+                }
+                
+                if (wrongWordOptions.length < 3) {
+                    throw new Error('Synonym/Antonym exercises need at least 3 wrong options');
+                }
+                
+                // Store in format expected by exercise
                 return {
                     word: synWord.toLowerCase().trim(),
-                    synonyms,
-                    antonyms,
+                    synonyms: isSynonym ? [correctWord2.toLowerCase().trim()] : wrongWordOptions,
+                    antonyms: isSynonym ? wrongWordOptions : [correctWord.toLowerCase().trim()],
+                    questionType: isSynonym ? 'synonym' : 'antonym',
                     difficulty,
                     isCustom: true
                 };
                 
             case 'definitions':
-                const cleanDefValues = values.filter(v => v && v.trim() && v !== difficulty);
-                const [defWord, definition] = cleanDefValues;
+                const cleanDefValues = values.filter(v => v && v.trim());
+                const [defWord, definition, ...wrongOptions] = cleanDefValues;
                 if (!defWord || !definition) {
                     throw new Error('Both word and definition are required');
                 }
+                
+                // Parse wrong options (other words that don't match the definition)
+                let wrongWords3 = [];
+                if (wrongOptions.length > 0 && wrongOptions[0]) {
+                    const wrongStr = wrongOptions[0];
+                    if (wrongStr.includes(',')) {
+                        wrongWords3 = wrongStr.split(',').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else if (wrongStr.includes('|')) {
+                        wrongWords3 = wrongStr.split('|').map(w => w.trim().toLowerCase()).filter(w => w);
+                    } else {
+                        wrongWords3 = wrongOptions.filter(w => w).map(w => w.trim().toLowerCase());
+                    }
+                }
+                
+                if (wrongWords3.length < 3) {
+                    throw new Error('Definition exercises need at least 3 wrong words for incorrect options');
+                }
+                
                 return {
                     word: defWord.toLowerCase().trim(),
                     definition: definition.trim(),
+                    wrongOptions: wrongWords3,
                     difficulty,
                     isCustom: true
                 };
                 
             case 'scramble':
-                const [sentence] = values.filter(v => v && v.trim() && v !== difficulty);
+                const [sentence] = values.filter(v => v && v.trim());
                 if (!sentence || !sentence.trim()) {
                     throw new Error('Sentence is required for scramble exercises');
                 }
@@ -613,10 +793,28 @@ class CSVService {
         const errorLower = error.toLowerCase();
         
         if (errorLower.includes('blank marker')) {
-            return 'Use __ (two underscores) to mark where the answer goes in the sentence';
+            return 'Use ? or __ to mark where the answer goes in the sentence';
         }
         if (errorLower.includes('required')) {
             return 'Make sure all required fields are filled. Check the template for examples.';
+        }
+        if (errorLower.includes('first sound')) {
+            return 'Provide the target sound, 1 word starting with that sound, and 3 words that do NOT start with it (separated by commas or |)';
+        }
+        if (errorLower.includes('rhyming')) {
+            return 'Provide the target word, 1 word that rhymes, and 3 words that do NOT rhyme (separated by commas or |)';
+        }
+        if (errorLower.includes('association')) {
+            return 'Provide the target word, 1 related word, and 3 unrelated words (separated by commas or |)';
+        }
+        if (errorLower.includes('synonym')) {
+            return 'Provide the target word, 1 synonym, and 3 other words (separated by commas or |)';
+        }
+        if (errorLower.includes('definition')) {
+            return 'Provide the word, its definition, and 3 wrong word options (separated by commas or |)';
+        }
+        if (errorLower.includes('clock')) {
+            return 'Provide the time (HH:MM), the correct time description, and 3 wrong descriptions (separated by commas or |)';
         }
         if (errorLower.includes('type must be')) {
             return 'For word exercises, type must be: rhyming, synonyms, or association';

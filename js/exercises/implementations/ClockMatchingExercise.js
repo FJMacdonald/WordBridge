@@ -15,7 +15,29 @@ class ClockMatchingExercise extends SelectionExercise {
     prepareOptions() {
         const targetTime = this.currentItem;
         
-        // Get 3 other random times as wrong options
+        // If the item has wrongClocks (from CSV import), use those to generate analog clocks
+        if (targetTime.wrongClocks && targetTime.wrongClocks.length >= 3) {
+            // Create analog clock displays from the time data
+            const allClocks = [
+                {
+                    id: targetTime.id,
+                    time: targetTime.time,
+                    display: this.renderAnalogClock(targetTime.analogData),
+                    answer: targetTime.timeWords
+                },
+                ...targetTime.wrongClocks.slice(0, 3).map((clock, idx) => ({
+                    id: `wrong_${idx}`,
+                    time: clock.time,
+                    display: this.renderAnalogClock(clock.analogData),
+                    answer: `wrong_${idx}`
+                }))
+            ];
+            
+            this.currentOptions = this.shuffleArray(allClocks);
+            return this.currentOptions;
+        }
+        
+        // Otherwise get 3 other random times as wrong options
         const allTimes = this.items.filter(item => item.id !== targetTime.id);
         const wrongOptions = this.shuffleArray(allTimes).slice(0, 3);
         
@@ -33,6 +55,16 @@ class ClockMatchingExercise extends SelectionExercise {
     
     renderPrompt() {
         const item = this.currentItem;
+        
+        // If text-based options (from CSV), show timeWords as the prompt
+        if (item.options && item.options.length >= 4) {
+            return `
+                <p class="prompt-instruction">${t('exercises.clockMatching.selectClock')}</p>
+                <div class="digital-time-display">${item.digitalDisplay}</div>
+            `;
+        }
+        
+        // Otherwise show analog clocks
         return `
             <p class="prompt-instruction">${t('exercises.clockMatching.selectClock')} ${item.digitalDisplay}</p>
             <div class="digital-time-display">${item.digitalDisplay}</div>
@@ -40,9 +72,17 @@ class ClockMatchingExercise extends SelectionExercise {
     }
     
     renderOption(option, index) {
+        // For text options, use the answer as the value
+        const dataValue = option.answer || option.time || option.id;
+        
+        // If display is plain text (not HTML with SVG), wrap it nicely
+        const displayContent = option.display.includes('<svg') ? 
+            option.display : 
+            `<div style="padding: 10px; font-size: 16px;">${option.display}</div>`;
+            
         return `
-            <button class="option-btn option-btn--clock" data-index="${index}" data-value="${option.time}">
-                ${option.display}
+            <button class="option-btn option-btn--clock" data-index="${index}" data-value="${dataValue}">
+                ${displayContent}
             </button>
         `;
     }
@@ -106,6 +146,10 @@ class ClockMatchingExercise extends SelectionExercise {
     }
     
     getCorrectAnswer() {
+        // For CSV imports with wrongClocks, return the timeWords
+        if (this.currentItem.wrongClocks) {
+            return this.currentItem.timeWords;
+        }
         return this.currentItem.time;
     }
     
