@@ -5,7 +5,7 @@ import imageStorage from '../../services/ImageStorageService.js';
 
 /**
  * Listening Exercise
- * Hear a word and select the matching picture/emoji
+ * Hear a word and select the matching written word
  */
 class ListeningExercise extends SelectionExercise {
     constructor() {
@@ -14,26 +14,22 @@ class ListeningExercise extends SelectionExercise {
     
     prepareOptions() {
         const item = this.currentItem;
-        // Get wrong options (other items with visuals)
+        
+        // If item has predefined options, use them
+        if (item.options && item.options.length > 0) {
+            return this.shuffleArray(item.options);
+        }
+        
+        // Get wrong options (other words)
         const wrongItems = this.items
-            .filter(i => i.answer !== item.answer && (i.emoji || i.localImageId || i.imageUrl))
+            .filter(i => i.answer !== item.answer)
             .sort(() => Math.random() - 0.5)
             .slice(0, 3);
         
-        // Create option objects with visual and answer
+        // Create option array with just the words
         const options = [
-            { 
-                emoji: item.emoji, 
-                localImageId: item.localImageId,
-                imageUrl: item.imageUrl,
-                answer: item.answer 
-            },
-            ...wrongItems.map(i => ({ 
-                emoji: i.emoji, 
-                localImageId: i.localImageId,
-                imageUrl: i.imageUrl,
-                answer: i.answer 
-            }))
+            item.answer,
+            ...wrongItems.map(i => i.answer)
         ];
         
         return this.shuffleArray(options);
@@ -49,41 +45,12 @@ class ListeningExercise extends SelectionExercise {
     }
     
     async renderOption(option, index) {
-        let visual = '';
-        
-        if (option.emoji) {
-            visual = `<span class="option-emoji-large">${option.emoji}</span>`;
-        } else if (option.localImageId) {
-            const imageData = await imageStorage.getImage(option.localImageId);
-            if (imageData) {
-                visual = `<img src="${imageData}" alt="${option.answer}" style="max-width: 100px; max-height: 100px;">`;
-            } else {
-                visual = `<span class="option-emoji-large">🖼️</span>`;
-            }
-        } else if (option.imageUrl) {
-            // For emojis in the imageUrl field, display them directly
-            if (option.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(option.imageUrl)) {
-                visual = `<span class="option-emoji-large">${option.imageUrl}</span>`;
-            } else {
-                visual = `<div class="image-container" style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;">
-                            <img src="${option.imageUrl}" alt="${option.answer}" 
-                                 style="max-width: 100px; max-height: 100px;"
-                                 crossorigin="anonymous"
-                                 onerror="this.style.display='none'; this.parentNode.querySelector('.fallback').style.display='flex';">
-                            <div class="fallback" style="display:none; flex-direction: column; align-items: center;">
-                                <span style="font-size: 36px;">🔊</span>
-                                <small style="font-size: 12px; margin-top: 5px;">${option.answer}</small>
-                            </div>
-                          </div>`;
-            }
-        } else {
-            // No visual at all, show placeholder
-            visual = `<span class="option-emoji-large">❓</span>`;
-        }
+        // For listening exercises, always show text options (written words)
+        const word = typeof option === 'string' ? option : option.answer;
         
         return `
-            <button class="option-btn option-btn--emoji" data-index="${index}" data-value="${option.answer}">
-                ${visual}
+            <button class="option-btn option-btn--text" data-index="${index}" data-value="${word}">
+                ${word}
             </button>
         `;
     }
