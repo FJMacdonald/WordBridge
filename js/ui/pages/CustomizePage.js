@@ -2221,7 +2221,6 @@ class CustomizePage {
                     delete cleanExercise.applicableTypes;
                     customExercises[exerciseType].push(cleanExercise);
                     totalImported++;
-                }
             });
         } else {
             // Single type import

@@ -9,23 +9,41 @@ class CSVService {
         const text = await this.readFile(file);
         const lines = text.split('\n').filter(line => line.trim());
         
-        if (lines.length < 2) {
-            throw new Error('CSV file is empty or has no data rows');
+        if (lines.length < 1) {
+            throw new Error('CSV file is empty');
         }
         
-        const headers = this.parseCSVLine(lines[0]);
-        const type = this.detectType(headers);
+        // Check if first line is a header by looking for 'exercise_type' or 'data1' etc
+        const firstLine = this.parseCSVLine(lines[0]);
+        let startIndex = 0;
+        
+        // If first line contains header-like values, skip it
+        if (firstLine.some(val => 
+            val.toLowerCase().includes('exercise_type') || 
+            val.toLowerCase().includes('difficulty') || 
+            val.toLowerCase().includes('data'))) {
+            startIndex = 1;
+        }
+        
+        if (startIndex >= lines.length) {
+            throw new Error('CSV file has no data rows (only header found)');
+        }
         
         const result = {
-            type,
+            type: 'multi_type',
             data: [],
             errors: []
         };
         
-        for (let i = 1; i < lines.length; i++) {
+        // Process each row independently
+        for (let i = startIndex; i < lines.length; i++) {
             try {
                 const values = this.parseCSVLine(lines[i]);
-                const item = this.validateAndTransform(type, headers, values, i + 1);
+                if (values.length === 0 || (values.length === 1 && !values[0])) {
+                    continue; // Skip empty rows
+                }
+                
+                const item = this.transformRow(values, i + 1);
                 if (item) {
                     result.data.push(item);
                 }
@@ -66,83 +84,42 @@ class CSVService {
         return result;
     }
     
-    /**
-     * Detect exercise type from headers
-     */
-    detectType(headers) {
-        const headerStr = headers.join(',').toLowerCase();
-        
-        // Check for exercise_type column to determine format
-        if (headers.some(h => h.toLowerCase().includes('exercise_type'))) {
-            return 'multi_type'; // New format with type column
-        }
-        
-        if (headerStr.includes('image') || headerStr.includes('picture') || headerStr.includes('word')) {
-            // Check if it's specifically naming by looking for options
-            if (headerStr.includes('option')) {
-                return 'imageword'; // Unified image-word format
-            }
-        }
-        
-        if (headerStr.includes('sentence')) {
-            return 'sentenceTyping';
-        }
-        
-        if (headerStr.includes('type') || headerStr.includes('rhym') || headerStr.includes('synonym')) {
-            return 'words';
-        }
-        
-        // Default to image-word if has word column
-        if (headerStr.includes('word')) {
-            return 'imageword';
-        }
-        
-        throw new Error('Cannot detect exercise type from headers. Please use template.');
-    }
+
     
     /**
-     * Validate and transform row based on type
+     * Transform a single row based on exercise_type in first column
      */
-    validateAndTransform(type, headers, values, rowNum) {
-        // Pad values array if too short
-        while (values.length < headers.length) {
-            values.push('');
-        }
-        
-        if (type === 'multi_type') {
-            return this.transformMultiType(headers, values);
-        } else if (type === 'imageword' || type === 'naming') {
-            return this.transformImageWord(values);
-        } else if (type === 'sentenceTyping') {
-            return this.transformSentence(values);
-        } else if (type === 'words') {
-            return this.transformWords(values);
-        }
-        
-        throw new Error('Unknown exercise type');
-    }
-    
-    transformMultiType(headers, values) {
-        const exerciseTypeIndex = headers.findIndex(h => h.toLowerCase().includes('exercise_type'));
-        const exerciseType = values[exerciseTypeIndex]?.toLowerCase().trim();
+    transformRow(values, rowNum) {
+        // Exercise type is always first column, difficulty is second
+        const exerciseType = values[0]?.toLowerCase().trim();
+        const difficulty = values[1]?.toLowerCase().trim() || 'easy';
         
         if (!exerciseType) {
-            throw new Error('exercise_type is required');
+            throw new Error('Exercise type is required in first column');
         }
         
-        // Get difficulty from second column (index 1)
-        const difficulty = values[1]?.toLowerCase().trim() || 'easy';
         if (!['easy', 'medium', 'hard'].includes(difficulty)) {
             throw new Error('Difficulty must be easy, medium, or hard');
         }
         
-        // Remove exercise type and difficulty from values for processing
-        const dataValues = values.map((v, i) => (i === exerciseTypeIndex || i === 1) ? '' : v);
+        // Get data values starting from column 3 (after exercise_type and difficulty)
+        const dataValues = values.slice(2);
+        
+        // Transform based on exercise type
+        return this.transformExerciseData(exerciseType, difficulty, dataValues);
+    }
+    
+    transformExerciseData(exerciseType, difficulty, dataValues) {
         
         let transformedData;
-        if (exerciseType.includes('picture') || exerciseType.includes('typing') || exerciseType.includes('listening') || exerciseType.includes('/')) {
+        
+        // Check for sentenceTyping FIRST (must come before generic 'typing' check)
+        if (exerciseType === 'sentencetyping' || exerciseType === 'sentence') {
+            transformedData = this.transformSentence(dataValues, difficulty);
+            transformedData.exerciseType = 'sentenceTyping';
+        } else if (exerciseType.includes('picture') || exerciseType === 'typing' || exerciseType.includes('listening') || exerciseType.includes('/') || exerciseType === 'naming') {
             // Handle combined types like "picture/typing/listening"
-            transformedData = this.transformImageWord(dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformImageWord(dataValues, difficulty);
             // Return as multiple exercise types
             if (exerciseType.includes('/')) {
                 transformedData.exerciseType = 'multiple';
@@ -154,48 +131,45 @@ class CSVService {
             } else if (exerciseType === 'listening') {
                 transformedData.exerciseType = 'listening';
             }
-        } else if (exerciseType === 'sentencetyping' || exerciseType === 'sentence') {
-            transformedData = this.transformSentence(dataValues.filter(v => v !== ''), difficulty);
-            transformedData.exerciseType = 'sentenceTyping';
         } else if (exerciseType === 'workingmemory' || exerciseType === 'working_memory' || exerciseType === 'workingMemory') {
-            transformedData = this.transformWorkingMemory(dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformWorkingMemory(dataValues, difficulty);
             transformedData.exerciseType = 'workingMemory';
         } else if (exerciseType === 'category' || exerciseType === 'categories') {
-            transformedData = this.transformCategory(dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformCategory(dataValues, difficulty);
             transformedData.exerciseType = 'category';
         } else if (exerciseType === 'timesequencing' || exerciseType === 'time_sequencing' || exerciseType === 'timeSequencing') {
-            transformedData = this.transformTimeSequencing(dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformTimeSequencing(dataValues, difficulty);
             transformedData.exerciseType = 'timeSequencing';
         } else if (exerciseType === 'clockmatching' || exerciseType === 'clock_matching' || exerciseType === 'clockMatching') {
-            transformedData = this.transformClockMatching(dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformClockMatching(dataValues, difficulty);
             transformedData.exerciseType = 'clockMatching';
         } else if (exerciseType === 'timeordering' || exerciseType === 'time_ordering' || exerciseType === 'timeOrdering') {
-            transformedData = this.transformTimeOrdering(dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformTimeOrdering(dataValues, difficulty);
             transformedData.exerciseType = 'timeOrdering';
         } else if (exerciseType === 'firstsound' || exerciseType === 'first_sound' || exerciseType === 'firstSound') {
-            transformedData = this.transformGenericExercise('firstsound', dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise('firstsound', dataValues, difficulty);
             transformedData.exerciseType = 'firstSound';
         } else if (exerciseType === 'rhyming') {
-            transformedData = this.transformGenericExercise('rhyming', dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise('rhyming', dataValues, difficulty);
             transformedData.exerciseType = 'rhyming';
         } else if (exerciseType === 'association') {
-            transformedData = this.transformGenericExercise('association', dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise('association', dataValues, difficulty);
             transformedData.exerciseType = 'association';
         } else if (exerciseType === 'synonyms' || exerciseType === 'synonym') {
-            transformedData = this.transformGenericExercise('synonyms', dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise('synonyms', dataValues, difficulty);
             transformedData.exerciseType = 'synonyms';
         } else if (exerciseType === 'definitions' || exerciseType === 'definition') {
-            transformedData = this.transformGenericExercise('definitions', dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise('definitions', dataValues, difficulty);
             transformedData.exerciseType = 'definitions';
         } else if (exerciseType === 'scramble') {
-            transformedData = this.transformGenericExercise('scramble', dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise('scramble', dataValues, difficulty);
             transformedData.exerciseType = 'scramble';
         } else if (exerciseType === 'speaking') {
-            transformedData = this.transformGenericExercise('speaking', dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise('speaking', dataValues, difficulty);
             transformedData.exerciseType = 'speaking';
         } else {
             // Default to generic word exercise handler
-            transformedData = this.transformGenericExercise(exerciseType, dataValues.filter(v => v !== ''), difficulty);
+            transformedData = this.transformGenericExercise(exerciseType, dataValues, difficulty);
             transformedData.exerciseType = exerciseType;
         }
         
@@ -744,56 +718,7 @@ class CSVService {
                 throw new Error(`Unknown exercise type: ${exerciseType}`);
         }
     }
-    
-    transformWords(values) {
-        const [type, word, relatedWords] = values;
-        
-        if (!type || !type.trim()) {
-            throw new Error('Exercise type is required (rhyming/synonyms/association)');
-        }
-        
-        if (!word || !word.trim()) {
-            throw new Error('Word is required');
-        }
-        
-        const exerciseType = type.toLowerCase().trim();
-        const validTypes = ['rhyming', 'synonyms', 'association'];
-        
-        if (!validTypes.includes(exerciseType)) {
-            throw new Error(`Type must be one of: ${validTypes.join(', ')}`);
-        }
-        
-        // Parse related words (pipe or comma separated)
-        let related = [];
-        if (relatedWords && relatedWords.trim()) {
-            if (relatedWords.includes('|')) {
-                related = relatedWords.split('|').map(w => w.trim().toLowerCase());
-            } else {
-                related = relatedWords.split(',').map(w => w.trim().toLowerCase());
-            }
-        }
-        
-        if (related.length === 0) {
-            throw new Error('At least one related word is required');
-        }
-        
-        // Store in the format expected by exercises
-        const exercise = {
-            word: word.toLowerCase().trim(),
-            isCustom: true
-        };
-        
-        // Add related words based on type
-        if (exerciseType === 'rhyming') {
-            exercise.rhymes = related;
-        } else if (exerciseType === 'synonyms') {
-            exercise.synonyms = related;
-        } else if (exerciseType === 'association') {
-            exercise.associated = related;
-        }
-        
-        return exercise;
-    }
+
     
     /**
      * Get helpful suggestion for error
@@ -825,11 +750,11 @@ class CSVService {
         if (errorLower.includes('clock')) {
             return 'Provide the time (HH:MM), the correct time description, and 3 wrong descriptions (separated by commas or |)';
         }
-        if (errorLower.includes('type must be')) {
-            return 'For word exercises, type must be: rhyming, synonyms, or association';
+        if (errorLower.includes('exercise type')) {
+            return 'First column must contain the exercise type (e.g., sentenceTyping, naming, etc.)';
         }
-        if (errorLower.includes('related word')) {
-            return 'Add related words separated by commas or pipes (|)';
+        if (errorLower.includes('difficulty')) {
+            return 'Second column must be: easy, medium, or hard';
         }
         return null;
     }
