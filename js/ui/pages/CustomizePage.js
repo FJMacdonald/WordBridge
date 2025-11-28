@@ -2288,12 +2288,12 @@ class CustomizePage {
                     break;
                 case 'synonyms':
                     rows.push(isGerman ?
-                        ['synonyms', 'easy', 'glücklich', 'synonym', 'froh', 'traurig,wütend,müde', ''] :
-                        ['synonyms', 'easy', 'happy', 'synonym', 'glad', 'sad,angry,tired', '']
+                        ['synonyms', 'easy', 'glücklich', 'true', 'froh', 'traurig,wütend,müde', ''] :
+                        ['synonyms', 'easy', 'happy', 'true', 'glad', 'sad,angry,tired', '']
                     );
                     rows.push(isGerman ?
-                        ['synonyms', 'easy', 'heiß', 'antonym', 'kalt', 'warm,lauwarm,kühl', ''] :
-                        ['synonyms', 'easy', 'hot', 'antonym', 'cold', 'warm,tepid,cool', '']
+                        ['synonyms', 'easy', 'heiß', 'false', 'kalt', 'warm,lauwarm,kühl', ''] :
+                        ['synonyms', 'easy', 'hot', 'false', 'cold', 'warm,tepid,cool', '']
                     );
                     break;
                 case 'definitions':

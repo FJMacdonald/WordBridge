@@ -647,12 +647,21 @@ class CSVService {
             case 'synonym':
                 const [synWord, typeIndicator, correctWord2, ...wrongWords2] = values.filter(v => v && v.trim());
                 
-                // Parse type indicator (synonym/antonym or true/false)
+                // Parse type indicator (true/false, synonym/antonym)
                 let isSynonym = true;
                 if (typeIndicator) {
                     const typeStr = typeIndicator.toLowerCase().trim();
-                    if (typeStr === 'antonym' || typeStr === 'false' || typeStr === 'opposite') {
+                    // Accept true/false format
+                    if (typeStr === 'false' || typeStr === '0' || typeStr === 'no') {
                         isSynonym = false;
+                    } else if (typeStr === 'true' || typeStr === '1' || typeStr === 'yes') {
+                        isSynonym = true;
+                    }
+                    // Also accept legacy format
+                    else if (typeStr === 'antonym' || typeStr === 'opposite') {
+                        isSynonym = false;
+                    } else if (typeStr === 'synonym') {
+                        isSynonym = true;
                     }
                 }
                 
@@ -681,7 +690,7 @@ class CSVService {
                 return {
                     word: synWord.toLowerCase().trim(),
                     synonyms: isSynonym ? [correctWord2.toLowerCase().trim()] : wrongWordOptions,
-                    antonyms: isSynonym ? wrongWordOptions : [correctWord.toLowerCase().trim()],
+                    antonyms: isSynonym ? wrongWordOptions : [correctWord2.toLowerCase().trim()],
                     questionType: isSynonym ? 'synonym' : 'antonym',
                     difficulty,
                     isCustom: true
