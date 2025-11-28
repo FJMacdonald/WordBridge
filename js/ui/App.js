@@ -364,7 +364,8 @@ class App {
         }
         
         const customExercises = storageService.get(`customExercises_${locale}`, {});
-        const customData = customExercises[type] || [];
+        // Filter out archived exercises
+        const customData = (customExercises[type] || []).filter(e => e.status !== 'archived');
         
         // Get custom exercise frequency setting
         const customFrequency = Config.get('exercises.customFrequency') || 'mixed';
