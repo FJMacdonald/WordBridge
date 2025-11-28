@@ -1494,7 +1494,8 @@ class CustomizePage {
         const baseExercise = {
             answer: word,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         // Handle image - uploaded file takes priority
@@ -1582,7 +1583,8 @@ class CustomizePage {
             sentence: sentence.includes('__') ? sentence : sentence + ' __',
             answer,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1617,7 +1619,8 @@ class CustomizePage {
             word,
             options: [word, ...options],
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1650,7 +1653,8 @@ class CustomizePage {
             emoji,
             options: [emoji, ...options],
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1679,7 +1683,8 @@ class CustomizePage {
             answer: word,
             emoji,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         if (phrasesInput) {
@@ -1715,7 +1720,8 @@ class CustomizePage {
             sound,
             words,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1750,7 +1756,8 @@ class CustomizePage {
             rhymes,
             nonRhymes,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1778,7 +1785,8 @@ class CustomizePage {
             word,
             definition,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1813,7 +1821,8 @@ class CustomizePage {
             associated,
             unrelated,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1848,7 +1857,8 @@ class CustomizePage {
             synonyms,
             antonyms,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1877,7 +1887,8 @@ class CustomizePage {
         const exercise = {
             words,
             difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1917,7 +1928,8 @@ class CustomizePage {
             target: this.extractTargetFromQuestion(question),
             sequence: this.getSequenceFromQuestion(question),
             difficulty: difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1951,7 +1963,8 @@ class CustomizePage {
             items: items,
             correctOrder: [...items], // Assume input is in correct order
             difficulty: difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -1999,7 +2012,8 @@ class CustomizePage {
             },
             timeWords: timeWords,
             difficulty: difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -2062,7 +2076,8 @@ class CustomizePage {
             sequence: sequenceArray,
             options: allOptions,
             difficulty: difficulty,
-            isCustom: true
+            isCustom: true,
+            status: 'active'
         };
         
         const locale = i18n.getCurrentLocale();
@@ -2185,6 +2200,7 @@ class CustomizePage {
                         if (!customExercises[exerciseType]) customExercises[exerciseType] = [];
                         const exerciseForType = {
                             ...exercise,
+                            status: 'active', // Explicitly set as active
                             // Remove options for typing exercises
                             ...(exerciseType === 'typing' ? { options: undefined } : {})
                         };
@@ -2197,7 +2213,10 @@ class CustomizePage {
                     // Single exercise type
                     const exerciseType = exercise.exerciseType;
                     if (!customExercises[exerciseType]) customExercises[exerciseType] = [];
-                    const cleanExercise = { ...exercise };
+                    const cleanExercise = { 
+                        ...exercise,
+                        status: 'active' // Explicitly set as active
+                    };
                     delete cleanExercise.exerciseType;
                     delete cleanExercise.applicableTypes;
                     customExercises[exerciseType].push(cleanExercise);
@@ -2207,7 +2226,9 @@ class CustomizePage {
         } else {
             // Single type import
             if (!customExercises[type]) customExercises[type] = [];
-            customExercises[type].push(...data);
+            // Add status: 'active' to each imported exercise
+            const dataWithStatus = data.map(item => ({ ...item, status: 'active' }));
+            customExercises[type].push(...dataWithStatus);
             totalImported = data.length;
         }
         
