@@ -38,7 +38,7 @@
     },
     "listening": {
       "name": "Listening",
-      "instruction": "Listen to the word and tap the corresponding picture",
+      "instruction": "Listen to the word and tap the matching word",
       "tapPictureFor": "Tap the picture for"
     },
     "speaking": {
@@ -404,9 +404,9 @@
       "associationFormatCode": "exercise_type, difficulty, word, related_word, unrelated_words",
       "associationExample": "Example: association, easy, bread, butter, car|phone|tree",
       "synonymsFormat": "Synonyms/Antonyms (synonyms):",
-      "synonymsFormatCode": "exercise_type, difficulty, word, type(synonym/antonym), correct_word, wrong_words",
-      "synonymsExample": "Examples: synonyms, easy, happy, synonym, glad, sad|angry|tired",
-      "synonymsExample2": "         synonyms, easy, hot, antonym, cold, warm|tepid|cool",
+      "synonymsFormatCode": "exercise_type, difficulty, word, is_synonym(true/false), correct_word, wrong_words",
+      "synonymsExample": "Examples: synonyms, easy, happy, true, glad, sad|angry|tired",
+      "synonymsExample2": "         synonyms, easy, hot, false, cold, warm|tepid|cool",
       "scrambleFormat": "Unscramble (scramble):",
       "scrambleFormatCode": "exercise_type, difficulty, sentence",
       "scrambleExample": "Example: scramble, easy, The cat is sleeping",

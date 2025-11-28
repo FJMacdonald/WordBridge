@@ -38,7 +38,7 @@
         },
         "listening": {
             "name": "Hören",
-            "instruction": "Höre das Wort und tippe auf das entsprechende Bild"
+            "instruction": "Höre das Wort und tippe auf das passende Wort"
         },
         "speaking": {
             "name": "Sprechen",
@@ -98,7 +98,7 @@
         },
         "listening": {
             "name": "Hören",
-            "instruction": "Höre das Wort und tippe auf das entsprechende Bild",
+            "instruction": "Höre das Wort und tippe auf das passende Wort",
             "tapPictureFor": "Tippe auf das Bild für"
         },
         "typing": {
