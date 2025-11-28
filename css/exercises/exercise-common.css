@@ -1,7 +1,7 @@
 .exercise {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - var(--header-height) - var(--space-lg) * 2);
+    min-height: calc(100vh - var(--header-height) - var(--space-lg) * 4);
 }
 
 .exercise__content {
@@ -12,7 +12,7 @@
 
 .exercise__prompt {
     text-align: center;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
 }
 
 .prompt-instruction {
@@ -22,15 +22,15 @@
 }
 
 .prompt-visual {
-    font-size: 6rem;
+    font-size: 5rem;
     line-height: 1;
-    margin: var(--space-lg) 0;
+    margin: var(--space-md) 0;
 }
 
 .prompt-image {
-    max-width: 200px;
-    max-height: 200px;
-    margin: var(--space-lg) auto;
+    max-width: 180px;
+    max-height: 180px;
+    margin: var(--space-md) auto;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
 }

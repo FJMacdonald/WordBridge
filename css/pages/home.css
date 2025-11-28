@@ -16,16 +16,16 @@
 
 .home-page {
     text-align: center;
-    padding: var(--space-lg) 0;
+    padding: var(--space-md) 0;
 }
 
 .home-subtitle {
     color: var(--color-text-muted);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
 }
 
 .home-actions {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
 }
 
 .exercise-categories {
@@ -33,7 +33,7 @@
 }
 
 .category-section {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
 }
 
 .category-title {
@@ -47,7 +47,7 @@
 .exercise-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: var(--space-md);
+    gap: var(--space-sm);
 }
 
 .exercise-card {
@@ -381,6 +381,40 @@
 @media (min-width: 768px) {
     .category-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop optimizations for better space utilization */
+@media (min-width: 1024px) {
+    .home-page {
+        padding: var(--space-sm) 0;
+    }
+    
+    .exercise-btn {
+        padding: var(--space-md) var(--space-sm);
+        min-height: 70px;
+    }
+    
+    .exercise-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+    
+    .category-section {
+        margin-bottom: var(--space-md);
+    }
+    
+    .category-title {
+        margin-bottom: var(--space-sm);
+        padding-bottom: var(--space-xs);
+    }
+    
+    .category-grid {
+        gap: var(--space-lg);
+        margin-bottom: var(--space-lg);
+    }
+    
+    .category-card {
+        padding: var(--space-md);
     }
 }
 

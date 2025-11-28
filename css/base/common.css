@@ -5,11 +5,11 @@
     max-width: var(--max-width);
     margin: 0 auto;
     padding: var(--space-lg);
-    padding-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
 }
 
 .page-header {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
     text-align: center;
 }
 
