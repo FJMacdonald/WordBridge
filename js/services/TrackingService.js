@@ -1,4 +1,4 @@
-// services/TrackingService.js - ENHANCED VERSION
+// services/TrackingService.js - FIXED VERSION
 import storageService from './StorageService.js';
 import { i18n } from '../core/i18n.js';
 
@@ -52,23 +52,27 @@ class TrackingService {
     recordAttempt({
         exerciseType,
         word,
+        wordId, // Add word ID for better tracking
         correct,
         hintsUsed = 0,
         responseTime = null,
         attemptNumber = 1,
         wrongSelections = 0,
-        mistypedLetters = 0
+        mistypedLetters = 0,
+        difficulty = null // Add difficulty tracking
     }) {
         if (!this.currentSession) return;
         
         const attempt = {
             word,
+            wordId,
             correct,
             hintsUsed,
             responseTime,
             attemptNumber,
             wrongSelections,
             mistypedLetters,
+            difficulty,
             timestamp: Date.now()
         };
         
@@ -79,91 +83,153 @@ class TrackingService {
             this.responseTimes.push(responseTime);
         }
         
-        // Update word stats
-        this.updateWordStats(word, correct, hintsUsed, responseTime);
+        // Update word stats with ID tracking
+        this.updateWordStats(wordId || word, correct, hintsUsed, responseTime, difficulty);
         
         // Update exercise-type stats
         this.updateExerciseTypeStats(exerciseType, {
             correct,
             hintsUsed,
             responseTime,
-            firstTry: attemptNumber === 1
+            firstTry: attemptNumber === 1,
+            difficulty
         });
         
         // Update daily stats
         this.updateDailyStats('attempt', { 
             exerciseType, 
             correct, 
-            hintsUsed 
+            hintsUsed,
+            difficulty
         });
     }
     
     /**
-     * Record hint usage
+     * Update word-specific statistics
      */
-    recordHint(exerciseType) {
-        if (!this.currentSession) return;
+    updateWordStats(wordId, correct, hintsUsed, responseTime, difficulty, skipped = false) {
+        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
         
-        this.currentSession.hints++;
+        // Use word ID as key if available
+        const key = wordId || 'unknown';
         
-        this.updateExerciseTypeStats(exerciseType, {
-            hintUsed: true
-        });
+        if (!wordStats[key]) {
+            wordStats[key] = {
+                attempts: 0,
+                correct: 0,
+                streak: 0,
+                hintsUsed: 0,
+                skips: 0,
+                responseTimes: [],
+                lastSeen: null,
+                difficulties: { easy: 0, medium: 0, hard: 0 },
+                firstSeen: Date.now()
+            };
+        }
         
-        this.updateDailyStats('hint', { exerciseType });
+        const stats = wordStats[key];
+        stats.attempts++;
+        stats.hintsUsed += hintsUsed;
+        stats.lastSeen = Date.now();
+        
+        // Track difficulty attempts
+        if (difficulty) {
+            stats.difficulties[difficulty] = (stats.difficulties[difficulty] || 0) + 1;
+        }
+        
+        if (skipped) {
+            stats.skips++;
+            stats.streak = 0;
+        } else if (correct) {
+            stats.correct++;
+            stats.streak++;
+            
+            if (responseTime) {
+                stats.responseTimes.push(responseTime);
+                // Keep only last 10 response times per word
+                if (stats.responseTimes.length > 10) {
+                    stats.responseTimes = stats.responseTimes.slice(-10);
+                }
+            }
+        } else {
+            stats.streak = 0;
+        }
+        
+        // Calculate accuracy
+        stats.accuracy = stats.attempts > 0 ? Math.round((stats.correct / stats.attempts) * 100) : 0;
+        
+        storageService.set(this.getStorageKey('wordStats'), wordStats);
     }
     
     /**
-     * Record skip with context
+     * Update daily statistics
      */
-    recordSkip({ exerciseType, word, responseTime, hintsUsed }) {
-        if (!this.currentSession) return;
+    updateDailyStats(action, data) {
+        const today = new Date().toISOString().split('T')[0];
+        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         
-        this.currentSession.skips++;
+        if (!dailyStats[today]) {
+            dailyStats[today] = {
+                date: today,
+                totalTime: 0,
+                sessionsCount: 0,
+                totalAttempts: 0,
+                totalCorrect: 0,
+                hintsUsed: 0,
+                exerciseTypes: {},
+                difficulties: { easy: 0, medium: 0, hard: 0 }
+            };
+        }
         
-        this.updateExerciseTypeStats(exerciseType, {
-            skipped: true,
-            responseTime,
-            hintsUsed
-        });
+        const todayStats = dailyStats[today];
         
-        this.updateWordStats(word, false, hintsUsed, responseTime, true);
-        this.updateDailyStats('skip', { exerciseType });
-    }
-    
-    /**
-     * Record inactivity gap
-     */
-    recordInactivityGap(duration) {
-        if (!this.currentSession) return;
+        switch (action) {
+            case 'sessionStart':
+                todayStats.sessionsCount++;
+                if (!todayStats.exerciseTypes[data.exerciseType]) {
+                    todayStats.exerciseTypes[data.exerciseType] = {
+                        sessions: 0,
+                        attempts: 0,
+                        correct: 0,
+                        time: 0,
+                        hintsUsed: 0
+                    };
+                }
+                todayStats.exerciseTypes[data.exerciseType].sessions++;
+                break;
+                
+            case 'attempt':
+                todayStats.totalAttempts++;
+                if (data.correct) todayStats.totalCorrect++;
+                if (data.difficulty) {
+                    todayStats.difficulties[data.difficulty]++;
+                }
+                
+                if (todayStats.exerciseTypes[data.exerciseType]) {
+                    const exerciseStats = todayStats.exerciseTypes[data.exerciseType];
+                    exerciseStats.attempts++;
+                    if (data.correct) exerciseStats.correct++;
+                    if (data.hintsUsed) exerciseStats.hintsUsed += data.hintsUsed;
+                }
+                break;
+                
+            case 'hint':
+                todayStats.hintsUsed++;
+                if (todayStats.exerciseTypes[data.exerciseType]) {
+                    todayStats.exerciseTypes[data.exerciseType].hintsUsed = 
+                        (todayStats.exerciseTypes[data.exerciseType].hintsUsed || 0) + 1;
+                }
+                break;
+                
+            case 'sessionEnd':
+                if (data.duration && todayStats.exerciseTypes[data.exerciseType]) {
+                    todayStats.exerciseTypes[data.exerciseType].time += data.duration;
+                    todayStats.totalTime += data.duration;
+                }
+                break;
+        }
         
-        this.currentSession.inactivityGaps.push({
-            duration,
-            timestamp: Date.now()
-        });
-    }
-    
-    /**
-     * Pause session (for inactivity)
-     */
-    pauseSession(reason = 'manual') {
-        if (!this.currentSession) return;
-        
-        this.currentSession.pausedAt = Date.now();
-        this.currentSession.pauseReason = reason;
-    }
-    
-    /**
-     * Resume paused session
-     */
-    resumeSession() {
-        if (!this.currentSession || !this.currentSession.pausedAt) return;
-        
-        const pauseDuration = Date.now() - this.currentSession.pausedAt;
-        this.recordInactivityGap(pauseDuration);
-        
-        delete this.currentSession.pausedAt;
-        delete this.currentSession.pauseReason;
+        storageService.set(this.getStorageKey('dailyStats'), dailyStats);
     }
     
     /**
@@ -192,6 +258,12 @@ class TrackingService {
                 ? (sorted[mid - 1] + sorted[mid]) / 2
                 : sorted[mid];
         }
+        
+        // Update daily stats with session end
+        this.updateDailyStats('sessionEnd', {
+            exerciseType: session.exerciseType,
+            duration: activeTime
+        });
         
         // Save session history
         const sessionRecord = {
@@ -230,170 +302,18 @@ class TrackingService {
     }
     
     /**
-     * Update exercise-type specific statistics
+     * Save session to history
      */
-    updateExerciseTypeStats(type, data) {
-        const stats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
+    saveSessionHistory(sessionRecord) {
+        const history = storageService.get(this.getStorageKey('sessionHistory'), []);
+        history.push(sessionRecord);
         
-        if (!stats[type]) {
-            stats[type] = {
-                totalAttempts: 0,
-                firstTryCorrect: 0,
-                correctWithHints: 0,
-                totalSkips: 0,
-                totalHintsUsed: 0,
-                totalActiveTime: 0,
-                responseTimes: [],
-                dailySnapshots: {},
-                flags: {}
-            };
+        // Keep only last 100 sessions
+        if (history.length > 100) {
+            history.splice(0, history.length - 100);
         }
         
-        const typeStats = stats[type];
-        
-        // Update based on data
-        if (data.correct !== undefined) {
-            typeStats.totalAttempts++;
-            if (data.correct) {
-                if (data.firstTry && !data.hintsUsed) {
-                    typeStats.firstTryCorrect++;
-                } else if (data.hintsUsed) {
-                    typeStats.correctWithHints++;
-                }
-            }
-        }
-        
-        if (data.hintUsed) {
-            typeStats.totalHintsUsed++;
-        }
-        
-        if (data.skipped) {
-            typeStats.totalSkips++;
-        }
-        
-        if (data.responseTime && data.firstTry) {
-            if (!typeStats.responseTimes) typeStats.responseTimes = [];
-            typeStats.responseTimes.push(data.responseTime);
-            
-            // Keep only last 100 response times
-            if (typeStats.responseTimes.length > 100) {
-                typeStats.responseTimes = typeStats.responseTimes.slice(-100);
-            }
-        }
-        
-        storageService.set(this.getStorageKey('exerciseTypeStats'), stats);
-    }
-    
-    /**
-     * Finalize exercise-type session data
-     */
-    finalizeExerciseTypeSession(sessionRecord) {
-        const stats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
-        const type = sessionRecord.exerciseType;
-        
-        if (!stats[type]) return;
-        
-        // Add to total active time
-        stats[type].totalActiveTime += sessionRecord.activeTime;
-        
-        // Update daily snapshot
-        const today = new Date().toISOString().split('T')[0];
-        if (!stats[type].dailySnapshots) {
-            stats[type].dailySnapshots = {};
-        }
-        
-        if (!stats[type].dailySnapshots[today]) {
-            stats[type].dailySnapshots[today] = {
-                attempts: 0,
-                firstTryCorrect: 0,
-                correctWithHints: 0,
-                skips: 0,
-                hintsUsed: 0,
-                activeTime: 0,
-                sessions: 0,
-                responseTimes: []
-            };
-        }
-        
-        const daily = stats[type].dailySnapshots[today];
-        daily.attempts += sessionRecord.total;
-        daily.firstTryCorrect += sessionRecord.firstTryCorrect;
-        daily.correctWithHints += (sessionRecord.correct - sessionRecord.firstTryCorrect);
-        daily.skips += sessionRecord.skips;
-        daily.hintsUsed += sessionRecord.hintsUsed;
-        daily.activeTime += sessionRecord.activeTime;
-        daily.sessions++;
-        
-        if (sessionRecord.medianResponseTime) {
-            daily.responseTimes.push(sessionRecord.medianResponseTime);
-        }
-        
-        // Update flags (mastery/avoidance detection)
-        this.updateExerciseFlags(type, stats[type]);
-        
-        storageService.set(this.getStorageKey('exerciseTypeStats'), stats);
-    }
-    
-    /**
-     * Update flags for mastery/avoidance detection
-     */
-    updateExerciseFlags(type, stats) {
-        const recentSessions = this.getRecentSessions(type, 5);
-        
-        if (recentSessions.length < 3) return; // Not enough data
-        
-        const recentAccuracy = this.calculateRecentAccuracy(stats);
-        const engagementRate = this.calculateEngagementRate(type);
-        const hintDependency = this.calculateHintDependency(stats);
-        
-        stats.flags = {
-            possibleMastery: recentAccuracy > 90 && hintDependency < 0.1,
-            possibleAvoidance: recentAccuracy < 60 && engagementRate < 0.1,
-            needsAttention: (recentAccuracy < 70 && hintDependency > 0.3) || 
-                           (stats.totalSkips / stats.totalAttempts > 0.2),
-            trending: this.calculateTrend(type, recentAccuracy) > 5 ? 'up' : 
-                     this.calculateTrend(type, recentAccuracy) < -5 ? 'down' : 'stable',
-            lastFlagUpdate: Date.now()
-        };
-    }
-    
-    /**
-     * Calculate recent accuracy (last 7 days)
-     */
-    calculateRecentAccuracy(stats) {
-        const cutoff = Date.now() - (7 * 24 * 60 * 60 * 1000);
-        const recentDays = Object.entries(stats.dailySnapshots || {})
-            .filter(([date]) => new Date(date).getTime() > cutoff)
-            .map(([, data]) => data);
-        
-        if (recentDays.length === 0) return 0;
-        
-        const totalAttempts = recentDays.reduce((sum, d) => sum + d.attempts, 0);
-        const totalCorrect = recentDays.reduce((sum, d) => 
-            sum + d.firstTryCorrect + d.correctWithHints, 0);
-        
-        return totalAttempts > 0 ? (totalCorrect / totalAttempts) * 100 : 0;
-    }
-    
-    /**
-     * Calculate engagement rate (this exercise vs others)
-     */
-    calculateEngagementRate(type) {
-        const allStats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
-        const totalTime = Object.values(allStats)
-            .reduce((sum, s) => sum + (s.totalActiveTime || 0), 0);
-        
-        if (totalTime === 0) return 0;
-        
-        return (allStats[type]?.totalActiveTime || 0) / totalTime;
-    }
-    
-    /**
-     * Calculate hint dependency ratio
-     */
-    calculateHintDependency(stats) {
-        if (!stats.totalAttempts || stats.totalAttempts === 0) return 0;
-        return stats.totalHintsUsed / stats.totalAttempts;
+        storageService.set(this.getStorageKey('sessionHistory'), history);
     }
     
     /**
@@ -413,149 +333,80 @@ class TrackingService {
         return Math.round(currentAccuracy - avgPrevious);
     }
     
-    /**
-     * Get recent sessions for an exercise type
-     */
-    getRecentSessions(type, limit = 10) {
-        const history = storageService.get(this.getStorageKey('sessionHistory'), []);
-        return history
-            .filter(s => s.exerciseType === type)
-            .slice(-limit);
-    }
-    
-    /**
-     * Save session to history
-     */
-    saveSessionHistory(sessionRecord) {
-        const history = storageService.get(this.getStorageKey('sessionHistory'), []);
-        history.push(sessionRecord);
+    // Simplified exercise type stats update
+    updateExerciseTypeStats(type, data) {
+        const stats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
         
-        // Keep only last 100 sessions
-        if (history.length > 100) {
-            history.splice(0, history.length - 100);
-        }
-        
-        storageService.set(this.getStorageKey('sessionHistory'), history);
-    }
-    
-    /**
-     * Update word-specific statistics
-     */
-    updateWordStats(word, correct, hintsUsed, responseTime, skipped = false) {
-        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
-        
-        if (!wordStats[word]) {
-            wordStats[word] = {
-                attempts: 0,
-                correct: 0,
-                streak: 0,
-                hintsUsed: 0,
-                skips: 0,
-                responseTimes: [],
-                lastSeen: null,
-                difficulty: 'normal'
-            };
-        }
-        
-        const stats = wordStats[word];
-        stats.attempts++;
-        stats.hintsUsed += hintsUsed;
-        stats.lastSeen = Date.now();
-        
-        if (skipped) {
-            stats.skips++;
-            stats.streak = 0;
-        } else if (correct) {
-            stats.correct++;
-            stats.streak++;
-            
-            if (responseTime) {
-                stats.responseTimes.push(responseTime);
-                // Keep only last 10 response times per word
-                if (stats.responseTimes.length > 10) {
-                    stats.responseTimes = stats.responseTimes.slice(-10);
-                }
-            }
-        } else {
-            stats.streak = 0;
-        }
-        
-        // Update difficulty assessment
-        const accuracy = stats.correct / stats.attempts;
-        if (stats.attempts >= 3) {
-            if (accuracy < 0.4) {
-                stats.difficulty = 'hard';
-            } else if (accuracy > 0.8 && stats.hintsUsed / stats.attempts < 0.2) {
-                stats.difficulty = 'easy';
-            } else {
-                stats.difficulty = 'normal';
-            }
-        }
-        
-        storageService.set(this.getStorageKey('wordStats'), wordStats);
-    }
-    
-    /**
-     * Update daily statistics
-     */
-    updateDailyStats(action, data) {
-        const today = new Date().toISOString().split('T')[0];
-        const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
-        
-        if (!dailyStats[today]) {
-            dailyStats[today] = {
-                date: today,
-                totalTime: 0,
-                sessionsCount: 0,
+        if (!stats[type]) {
+            stats[type] = {
                 totalAttempts: 0,
-                totalCorrect: 0,
-                hintsUsed: 0,
-                exerciseTypes: {}
+                firstTryCorrect: 0,
+                correctWithHints: 0,
+                totalSkips: 0,
+                totalHintsUsed: 0,
+                totalActiveTime: 0,
+                responseTimes: [],
+                byDifficulty: {
+                    easy: { attempts: 0, correct: 0 },
+                    medium: { attempts: 0, correct: 0 },
+                    hard: { attempts: 0, correct: 0 }
+                }
             };
         }
         
-        const todayStats = dailyStats[today];
+        const typeStats = stats[type];
         
-        switch (action) {
-            case 'sessionStart':
-                todayStats.sessionsCount++;
-                if (!todayStats.exerciseTypes[data.exerciseType]) {
-                    todayStats.exerciseTypes[data.exerciseType] = {
-                        sessions: 0,
-                        attempts: 0,
-                        correct: 0,
-                        time: 0
-                    };
+        // Update based on data
+        if (data.correct !== undefined) {
+            typeStats.totalAttempts++;
+            
+            // Track by difficulty
+            if (data.difficulty && typeStats.byDifficulty[data.difficulty]) {
+                typeStats.byDifficulty[data.difficulty].attempts++;
+                if (data.correct) {
+                    typeStats.byDifficulty[data.difficulty].correct++;
                 }
-                todayStats.exerciseTypes[data.exerciseType].sessions++;
-                break;
-                
-            case 'attempt':
-                todayStats.totalAttempts++;
-                if (data.correct) todayStats.totalCorrect++;
-                if (todayStats.exerciseTypes[data.exerciseType]) {
-                    todayStats.exerciseTypes[data.exerciseType].attempts++;
-                    if (data.correct) {
-                        todayStats.exerciseTypes[data.exerciseType].correct++;
-                    }
+            }
+            
+            if (data.correct) {
+                if (data.firstTry && !data.hintsUsed) {
+                    typeStats.firstTryCorrect++;
+                } else if (data.hintsUsed) {
+                    typeStats.correctWithHints++;
                 }
-                break;
-                
-            case 'hint':
-                todayStats.hintsUsed++;
-                break;
-                
-            case 'skip':
-                // Track skips if needed
-                break;
+            }
         }
         
-        storageService.set(this.getStorageKey('dailyStats'), dailyStats);
+        if (data.hintUsed) {
+            typeStats.totalHintsUsed++;
+        }
+        
+        if (data.skipped) {
+            typeStats.totalSkips++;
+        }
+        
+        if (data.responseTime && data.firstTry) {
+            typeStats.responseTimes.push(data.responseTime);
+            // Keep only last 100 response times
+            if (typeStats.responseTimes.length > 100) {
+                typeStats.responseTimes = typeStats.responseTimes.slice(-100);
+            }
+        }
+        
+        storageService.set(this.getStorageKey('exerciseTypeStats'), stats);
     }
     
-    /**
-     * Format duration for display
-     */
+    finalizeExerciseTypeSession(sessionRecord) {
+        const stats = storageService.get(this.getStorageKey('exerciseTypeStats'), {});
+        const type = sessionRecord.exerciseType;
+        
+        if (stats[type]) {
+            stats[type].totalActiveTime += sessionRecord.activeTime;
+        }
+        
+        storageService.set(this.getStorageKey('exerciseTypeStats'), stats);
+    }
+    
     formatDuration(ms) {
         const seconds = Math.floor(ms / 1000);
         const minutes = Math.floor(seconds / 60);
@@ -568,6 +419,34 @@ class TrackingService {
         } else {
             return `${seconds}s`;
         }
+    }
+    
+    // Methods for recording hints and skips remain the same
+    recordHint(exerciseType) {
+        if (!this.currentSession) return;
+        
+        this.currentSession.hints++;
+        
+        this.updateExerciseTypeStats(exerciseType, {
+            hintUsed: true
+        });
+        
+        this.updateDailyStats('hint', { exerciseType });
+    }
+    
+    recordSkip({ exerciseType, word, wordId, responseTime, hintsUsed }) {
+        if (!this.currentSession) return;
+        
+        this.currentSession.skips++;
+        
+        this.updateExerciseTypeStats(exerciseType, {
+            skipped: true,
+            responseTime,
+            hintsUsed
+        });
+        
+        this.updateWordStats(wordId || word, false, hintsUsed, responseTime, null, true);
+        this.updateDailyStats('skip', { exerciseType });
     }
 }
 

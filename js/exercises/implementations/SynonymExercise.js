@@ -1,3 +1,5 @@
+// js/exercises/implementations/SynonymExercise.js
+
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
@@ -10,62 +12,27 @@ class SynonymExercise extends SelectionExercise {
     constructor() {
         super({ type: 'synonyms' });
         this.correctAnswer = null;
-        this.questionType = 'synonym'; // or 'antonym'
+        
+        // 1. Randomly choose the question type
+        const types = ['synonym', 'antonym'];
+        this.questionType = types[Math.floor(Math.random() * types.length)];
+
+        // 2. Pass the chosen type to the superclass constructor
+        super({ type: this.questionType });
+
+        // 3. Initialize other properties
+        this.correctAnswer = null;
     }
     
     prepareOptions() {
         const item = this.currentItem;
         
-        // For custom exercises with explicit questionType, use it
-        if (item.questionType) {
-            this.questionType = item.questionType;
-        } else if (item.isCustom) {
-            // For custom exercises without explicit type, default to synonym
-            this.questionType = 'synonym';
-        } else {
-            // For default exercises, randomly choose
-            this.questionType = Math.random() > 0.5 ? 'synonym' : 'antonym';
-        }
+        // Use the prepared data from WordbankService
+        this.correctAnswer = item.correctAnswer;
+        this.questionType = item.questionType || 'synonym';
         
-        const correctList = this.questionType === 'synonym' ? item.synonyms : item.antonyms;
-        const wrongList = this.questionType === 'synonym' ? item.antonyms : item.synonyms;
-        
-        // Pick correct answer
-        this.correctAnswer = correctList[Math.floor(Math.random() * correctList.length)];
-        
-        // Get wrong answers - need exactly 3
-        let wrongAnswers = [];
-        
-        // Add from opposite category first
-        if (wrongList && wrongList.length > 0) {
-            wrongAnswers.push(...wrongList.slice(0, 3));
-        }
-        
-        // If we need more, get from other words
-        if (wrongAnswers.length < 3) {
-            const otherWords = this.getOtherWords(3 - wrongAnswers.length);
-            wrongAnswers.push(...otherWords);
-        }
-        
-        // Ensure we have exactly 3 wrong answers
-        wrongAnswers = wrongAnswers.slice(0, 3);
-        
-        return this.shuffleArray([this.correctAnswer, ...wrongAnswers]);
-    }
-    
-    getOtherWords(count) {
-        const otherItems = this.items.filter(i => i.word !== this.currentItem.word);
-        const words = [];
-        
-        for (let i = 0; i < count && otherItems.length > 0; i++) {
-            const item = otherItems[Math.floor(Math.random() * otherItems.length)];
-            const word = Math.random() > 0.5 ? item.synonyms[0] : item.antonyms[0];
-            if (!words.includes(word)) {
-                words.push(word);
-            }
-        }
-        
-        return words;
+        // Return the pre-shuffled options from WordbankService
+        return item.options || [this.correctAnswer];
     }
     
     renderPrompt() {
@@ -84,22 +51,17 @@ class SynonymExercise extends SelectionExercise {
     }
     
     async handlePlayAll() {
-        // Override to use the correct instruction based on question type
         const instruction = this.questionType === 'synonym' 
             ? t('exercises.synonyms.synonymInstruction')
             : t('exercises.synonyms.antonymInstruction');
         await audioService.speak(`${instruction} ${this.currentItem.word}?`);
         await this.delay(300);
         
-        // Get active options (non-eliminated)
-        const activeOptions = this.currentOptions
-            .filter((_, i) => !this.state.eliminatedIndices.has(i))
-            .map(opt => typeof opt === 'object' ? opt.answer || opt.value : opt);
+        const activeOptions = this.getActiveOptions();
         await audioService.speakSequence(activeOptions);
     }
 
     async playPromptAudio() {
-        // For manual prompt audio, also use the correct instruction
         const instruction = this.questionType === 'synonym' 
             ? t('exercises.synonyms.synonymInstruction')
             : t('exercises.synonyms.antonymInstruction');

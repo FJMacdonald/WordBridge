@@ -288,18 +288,22 @@ class AssessmentService {
      */
     saveAssessmentToHistory(assessment) {
         const history = storageService.get(this.getStorageKey('assessmentHistory'), []);
-        history.push({
+        
+        // Ensure we're saving with the right structure
+        const record = {
             id: assessment.id,
             templateId: assessment.templateId,
-            date: assessment.startTime,
+            date: assessment.startTime || assessment.date,
             duration: assessment.duration,
             results: assessment.results,
             metadata: assessment.metadata
-        });
+        };
         
-        // Keep last 50 assessments
-        if (history.length > 50) {
-            history.splice(0, history.length - 50);
+        history.push(record);
+        
+        // Keep last 100 assessments
+        if (history.length > 100) {
+            history.splice(0, history.length - 100);
         }
         
         storageService.set(this.getStorageKey('assessmentHistory'), history);

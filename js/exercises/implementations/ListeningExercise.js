@@ -1,7 +1,8 @@
+// js/exercises/implementations/ListeningExercise.js
+
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
-import imageStorage from '../../services/ImageStorageService.js';
 
 /**
  * Listening Exercise
@@ -10,29 +11,6 @@ import imageStorage from '../../services/ImageStorageService.js';
 class ListeningExercise extends SelectionExercise {
     constructor() {
         super({ type: 'listening' });
-    }
-    
-    prepareOptions() {
-        const item = this.currentItem;
-        
-        // If item has predefined options, use them
-        if (item.options && item.options.length > 0) {
-            return this.shuffleArray(item.options);
-        }
-        
-        // Get wrong options (other words)
-        const wrongItems = this.items
-            .filter(i => i.answer !== item.answer)
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 3);
-        
-        // Create option array with just the words
-        const options = [
-            item.answer,
-            ...wrongItems.map(i => i.answer)
-        ];
-        
-        return this.shuffleArray(options);
     }
     
     renderPrompt() {
@@ -46,7 +24,7 @@ class ListeningExercise extends SelectionExercise {
     
     async renderOption(option, index) {
         // For listening exercises, always show text options (written words)
-        const word = typeof option === 'string' ? option : option.answer;
+        const word = typeof option === 'string' ? option : option.answer || option;
         
         return `
             <button class="option-btn option-btn--text" data-index="${index}" data-value="${word}">
@@ -70,16 +48,13 @@ class ListeningExercise extends SelectionExercise {
     }
     
     async playPromptAudio() {
-        // Say instruction first, then the target word
-        await audioService.speak(t('exercises.listening.instruction'));
-        await new Promise(resolve => setTimeout(resolve, 300));
         await audioService.speak(this.currentItem.answer);
     }
     
     async handlePlayAll() {
         // Say instruction first, then play the target word
         await audioService.speak(t('exercises.listening.instruction'));
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await this.delay(300);
         await this.playTargetWord();
     }
     

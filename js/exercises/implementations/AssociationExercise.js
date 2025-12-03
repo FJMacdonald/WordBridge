@@ -1,3 +1,5 @@
+// js/exercises/implementations/AssociationExercise.js
+
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
@@ -29,7 +31,6 @@ class AssociationExercise extends SelectionExercise {
     }
     
     async playPromptAudio() {
-        // Just speak the target word since the instruction is already spoken by handlePlayAll
         await audioService.speak(this.currentItem.word);
     }
     

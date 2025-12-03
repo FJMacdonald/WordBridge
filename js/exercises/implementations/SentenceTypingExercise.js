@@ -1,3 +1,5 @@
+// js/exercises/implementations/SentenceTypingExercise.js
+
 import TypingExercise from '../TypingExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
@@ -14,9 +16,10 @@ class SentenceTypingExercise extends TypingExercise {
     renderPrompt() {
         const item = this.currentItem;
         
-        // Replace blank marker with styled span
+        // The sentence already has blanks (underscores) from WordbankService
+        // Replace underscores with styled span
         const sentenceHTML = item.sentence.replace(
-            /_{2,}|\[blank\]|\{\}/g,
+            /_{2,}/g,
             '<span class="prompt-blank"></span>'
         );
         
@@ -31,13 +34,12 @@ class SentenceTypingExercise extends TypingExercise {
     }
     
     async playPromptAudio() {
-        // Say instruction first
         await audioService.speak(t('exercises.sentenceTyping.instruction'));
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await this.delay(300);
         
-        // Then speak the sentence with "blank" where the missing word is
+        // Speak the sentence with "blank" where the missing word is
         const sentence = this.currentItem.sentence.replace(
-            /_{2,}|\[blank\]|\{\}/g,
+            /_{2,}/g,
             'blank'
         );
         await audioService.speak(sentence, { rate: 0.9 });

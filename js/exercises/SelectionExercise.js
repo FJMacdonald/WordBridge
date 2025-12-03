@@ -1,4 +1,4 @@
-// exercises/SelectionExercise.js
+// js/exercises/SelectionExercise.js
 
 import BaseExercise from './BaseExercise.js';
 import { t } from '../core/i18n.js';
@@ -18,9 +18,15 @@ class SelectionExercise extends BaseExercise {
     
     /**
      * Prepare options for current item
+     * Override in subclass if options need special handling
      */
     prepareOptions() {
-        return this.shuffleArray([...this.currentItem.options]);
+        // Most exercises now have pre-built options from WordbankService
+        if (this.currentItem.options && this.currentItem.options.length > 0) {
+            return this.shuffleArray([...this.currentItem.options]);
+        }
+        // Fallback for legacy data format
+        return [];
     }
     
     async render() {
@@ -90,9 +96,12 @@ class SelectionExercise extends BaseExercise {
         const correct = this.checkAnswer(value);
         
         trackingService.recordAttempt({
+            exerciseType: this.type,
             word: this.getCorrectAnswer(),
             correct,
-            hintsUsed: this.state.hintsUsed
+            hintsUsed: this.state.hintsUsed,
+            responseTime: Date.now() - this.state.responseStartTime,
+            attemptNumber: this.state.eliminatedIndices.size + 1
         });
         
         btn.classList.add(correct ? 'correct' : 'incorrect');
@@ -125,7 +134,7 @@ class SelectionExercise extends BaseExercise {
      * Check if answer is correct
      */
     checkAnswer(value) {
-        return value === this.getCorrectAnswer();
+        return value.toLowerCase() === this.getCorrectAnswer().toLowerCase();
     }
     
     /**

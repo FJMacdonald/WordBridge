@@ -192,7 +192,7 @@ class BaseExercise {
     
     async handleOptionClick(e) {
         // Record response time
-        const responseTime = Date.now() - this.state.responseStartTime;
+        const responseTime = Date.now() - this.state.responseStart;
         
         const btn = e.currentTarget;
         if (btn.disabled || btn.classList.contains('eliminated')) return;
@@ -200,18 +200,20 @@ class BaseExercise {
         const value = btn.dataset.value;
         const correct = this.checkAnswer(value);
         
-        // Enhanced tracking with response time and wrong selections
+        // Enhanced tracking with word ID and difficulty
         trackingService.recordAttempt({
             exerciseType: this.type,
             word: this.getCorrectAnswer(),
+            wordId: this.currentItem?.id || this.getCorrectAnswer(), // Use word ID if available
             correct,
             hintsUsed: this.state.hintsUsed,
             responseTime,
             attemptNumber: this.state.eliminatedIndices.size + 1,
             wrongSelections: correct ? 0 : 1,
-            mistypedLetters: 0 // Will be updated by typing exercises
+            mistypedLetters: 0,
+            difficulty: this.currentItem?.difficulty || 'medium' // Pass difficulty from item
         });
-        
+            
         this.recordActivity('answer_submitted');
         
         // ... rest of existing logic

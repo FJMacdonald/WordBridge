@@ -1,3 +1,5 @@
+// js/exercises/implementations/DefinitionExercise.js
+
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
@@ -11,24 +13,7 @@ class DefinitionExercise extends SelectionExercise {
         super({ type: 'definitions' });
     }
     
-    prepareOptions() {
-        const item = this.currentItem;
-        
-        // If the item has wrongOptions (from CSV import), use those
-        if (item.wrongOptions && item.wrongOptions.length >= 3) {
-            const wrongWords = item.wrongOptions.slice(0, 3);
-            return this.shuffleArray([item.word, ...wrongWords]);
-        }
-        
-        // Otherwise get wrong words from other definitions
-        const wrongWords = this.items
-            .filter(i => i.word !== item.word)
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 3)
-            .map(i => i.word);
-        
-        return this.shuffleArray([item.word, ...wrongWords]);
-    }
+    // Options are pre-built by WordbankService, so we just use the default prepareOptions
     
     renderPrompt() {
         return `

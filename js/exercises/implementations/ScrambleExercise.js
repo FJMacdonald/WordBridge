@@ -1,11 +1,12 @@
+// js/exercises/implementations/ScrambleExercise.js
+
 import SequenceOrderingExercise from '../SequenceOrderingExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
-import trackingService from '../../services/TrackingService.js';
 
 /**
  * Sentence Scramble Exercise
- * Drag/tap words to arrange them in correct order
+ * Tap words to arrange them in correct order
  */
 class ScrambleExercise extends SequenceOrderingExercise {
     constructor() {
@@ -32,14 +33,11 @@ class ScrambleExercise extends SequenceOrderingExercise {
                         </div>
                         <p class="scramble-help" id="scramble-help">${t('exercises.scramble.tapToSwap')}</p>
                     </div>
-                    
-
                 </div>
                 
                 ${this.renderFooter()}
             </div>
         `;
-        
     }
     
     renderWords() {
@@ -50,28 +48,23 @@ class ScrambleExercise extends SequenceOrderingExercise {
         `).join('');
     }
     
-    
     attachExerciseListeners() {
-        // Word tap to select/swap
         const words = this.container.querySelectorAll('.scramble-word');
         words.forEach(word => {
             word.addEventListener('click', (e) => this.handleWordTap(e));
         });
-        
-
     }
     
     handleWordTap(e) {
         const tappedIndex = parseInt(e.target.dataset.index);
         this.handleItemTap(tappedIndex, '.scramble-word');
-        // Re-render after parent handles the tap
+        
         if (this.selectedIndex === null) {
-            // If no longer selected, we swapped, so re-render
             this.reRenderWords();
         }
     }
     
-    swapWords(index1, index2) {
+    swapItems(index1, index2) {
         super.swapItems(index1, index2);
         this.reRenderWords();
     }
@@ -80,7 +73,6 @@ class ScrambleExercise extends SequenceOrderingExercise {
         const container = this.container.querySelector('#scramble-words');
         container.innerHTML = this.renderWords();
         
-        // Re-attach listeners
         const words = container.querySelectorAll('.scramble-word');
         words.forEach(word => {
             word.addEventListener('click', (e) => this.handleWordTap(e));
@@ -95,7 +87,6 @@ class ScrambleExercise extends SequenceOrderingExercise {
     async checkOrder() {
         const words = this.container.querySelectorAll('.scramble-word');
         
-        // Show which positions are correct/incorrect
         words.forEach((word, index) => {
             if (this.currentOrder[index] === this.correctOrder[index]) {
                 word.classList.add('correct-position');
@@ -107,7 +98,6 @@ class ScrambleExercise extends SequenceOrderingExercise {
         const isCorrect = await super.checkOrder();
         
         if (!isCorrect) {
-            // Remove highlights after delay
             await this.delay(1500);
             words.forEach(word => {
                 word.classList.remove('correct-position', 'wrong-position');
@@ -116,23 +106,16 @@ class ScrambleExercise extends SequenceOrderingExercise {
     }
     
     async handlePlayAll() {
-        // First speak both instructions
         await audioService.speak(t('exercises.scramble.instruction'));
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await this.delay(300);
         await audioService.speak(t('exercises.scramble.tapToSwap'));
-        await new Promise(resolve => setTimeout(resolve, 300));
-        
-        // Then speak the scrambled words in their current order
-        const scrambledWords = this.currentOrder;
-        await audioService.speakSequence(scrambledWords);
+        await this.delay(300);
+        await audioService.speakSequence(this.currentOrder);
     }
     
     async playPromptAudio() {
-        // Say both instructions
         await audioService.speak(t('exercises.scramble.instruction'));
-        await new Promise(resolve => setTimeout(resolve, 300));
-        await audioService.speak(t('exercises.scramble.tapToSwap'));
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await this.delay(300);
         await audioService.speakSequence(this.currentOrder);
     }
     
@@ -144,7 +127,6 @@ class ScrambleExercise extends SequenceOrderingExercise {
             }
         });
         
-        // Remove highlight after delay
         setTimeout(() => {
             words.forEach(w => w.classList.remove('hint-highlight'));
         }, 2000);

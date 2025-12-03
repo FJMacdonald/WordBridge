@@ -1,0 +1,86 @@
+{
+  "version": "1.0",
+  "language": "en",
+  "sentences": [
+    {
+      "id": "s001",
+      "sentence": "The cat sat",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s002",
+      "sentence": "I like apples",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s003",
+      "sentence": "She is happy",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s004",
+      "sentence": "The dog runs",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s005",
+      "sentence": "He drinks water",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s006",
+      "sentence": "We eat bread",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s007",
+      "sentence": "The bird sings",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s008",
+      "sentence": "I see you",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s009",
+      "sentence": "The cat sat on the mat",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s010",
+      "sentence": "I drink coffee every morning",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s011",
+      "sentence": "She walks to school daily",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s012",
+      "sentence": "The dog runs in the park",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s013",
+      "sentence": "He reads a book at night",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s014",
+      "sentence": "We had dinner with friends",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s015",
+      "sentence": "The baby is sleeping now",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s016",
+      "sentence": "My mother makes great cake",
+      "difficulty": "medium"
+    }
+  ]
+}

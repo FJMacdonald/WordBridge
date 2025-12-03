@@ -46,6 +46,18 @@ class AnalyticsService {
         const dailyStats = storageService.get(this.getStorageKey('dailyStats'), {});
         const todayData = dailyStats[today] || this.createEmptyDayStats();
         
+        // Calculate accuracy for exercise types
+        if (todayData.exerciseTypes) {
+            Object.keys(todayData.exerciseTypes).forEach(type => {
+                const typeData = todayData.exerciseTypes[type];
+                typeData.accuracy = typeData.attempts > 0 
+                    ? Math.round((typeData.correct / typeData.attempts) * 100)
+                    : 0;
+                typeData.totalTime = typeData.time || 0;
+                typeData.totalAttempts = typeData.attempts || 0;
+            });
+        }
+        
         return {
             date: today,
             practiceTime: todayData.totalTime || 0,
@@ -58,7 +70,25 @@ class AnalyticsService {
             exerciseTypes: todayData.exerciseTypes || {}
         };
     }
-    
+
+    getProblemWords(limit = 10) {
+        const wordStats = storageService.get(this.getStorageKey('wordStats'), {});
+        
+        return Object.entries(wordStats)
+            .map(([wordId, stats]) => ({
+                word: wordId, // This might be the ID, need to look up actual word
+                wordId,
+                attempts: stats.attempts || 0,
+                correct: stats.correct || 0,
+                accuracy: stats.accuracy || 0,
+                hintsUsed: stats.hintsUsed || 0,
+                streak: stats.streak || 0,
+                lastSeen: stats.lastSeen
+            }))
+            .filter(w => w.attempts >= 2 && w.accuracy < 70)
+            .sort((a, b) => a.accuracy - b.accuracy)
+            .slice(0, limit);
+    }    
     /**
      * Get weekly statistics
      */

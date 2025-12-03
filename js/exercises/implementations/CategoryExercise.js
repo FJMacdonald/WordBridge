@@ -1,3 +1,5 @@
+// js/exercises/implementations/CategoryExercise.js
+
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
@@ -13,9 +15,14 @@ class CategoryExercise extends SelectionExercise {
     
     renderPrompt() {
         const category = this.currentItem.category;
-        const article = /^[aeiou]/i.test(category) ? 'an' : 'a';
+        const isPlural = category.endsWith('s');
+        const article = isPlural ? '' : (/^[aeiou]/i.test(category) ? 'an' : 'a');
+        const questionText = isPlural 
+            ? `Which word belongs to ${category}?`
+            : `Which word is ${article} ${category}?`;
+        
         return `
-            <p class="prompt-instruction">Which word is ${article} ${category}?</p>
+            <p class="prompt-instruction">${questionText}</p>
             <div class="prompt-category">${category.toUpperCase()}</div>
         `;
     }
@@ -27,13 +34,10 @@ class CategoryExercise extends SelectionExercise {
     }
     
     async handlePlayAll() {
-        // Say the specific category instruction, then read options
         await this.playPromptAudio();
         await this.delay(300);
         
-        const activeOptions = this.currentOptions
-            .filter((_, i) => !this.state.eliminatedIndices.has(i))
-            .map(opt => typeof opt === 'object' ? opt.answer || opt.value : opt);
+        const activeOptions = this.getActiveOptions();
         await audioService.speakSequence(activeOptions);
     }
     

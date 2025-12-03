@@ -1,3 +1,5 @@
+// js/exercises/implementations/NamingExercise.js
+
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';
@@ -19,35 +21,40 @@ class NamingExercise extends SelectionExercise {
         if (item.emoji) {
             visual = `<div class="prompt-visual">${item.emoji}</div>`;
         } else if (item.localImageId) {
-            // Load image from IndexedDB
+            // Custom exercise with IndexedDB image
             const imageData = await imageStorage.getImage(item.localImageId);
             if (imageData) {
-                visual = `<img src="${imageData}" alt="Name this" class="prompt-image">`;
+                visual = `<img src="${imageData}" alt="${item.alt || 'Name this'}" class="prompt-image">`;
             } else {
                 visual = `<div class="prompt-visual">🖼️</div>`;
             }
         } else if (item.imageUrl) {
-            // For emojis in the imageUrl field, display them directly
+            // Check if it's actually an emoji stored as imageUrl
             if (item.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(item.imageUrl)) {
                 visual = `<div class="prompt-visual">${item.imageUrl}</div>`;
             } else {
-                // Try to load as image URL
                 visual = `<div class="image-container">
-                            <img src="${item.imageUrl}" alt="Name this" class="prompt-image" 
+                            <img src="${item.imageUrl}" 
+                                 alt="${item.alt || 'Name this'}" 
+                                 class="prompt-image" 
                                  style="max-width: 200px; max-height: 200px;"
                                  crossorigin="anonymous"
                                  onerror="this.style.display='none'; this.parentNode.querySelector('.image-fallback').style.display='block';">
                             <div class="image-fallback prompt-visual" style="display:none;">
                                 <div style="font-size: 48px;">🖼️</div>
-                                <div style="font-size: 24px; margin-top: 10px;">${item.answer}</div>
                             </div>
                           </div>`;
             }
+        } else {
+            visual = `<div class="prompt-visual">🖼️</div>`;
         }
         
+        // Use alt text if provided for additional context
+        const altInfo = item.alt ? `<p class="prompt-alt-hint">${item.alt}</p>` : '';
         
         return `
             ${visual}
+            ${altInfo}
             <p class="prompt-instruction">${t('exercises.naming.instruction')}</p>
         `;
     }
@@ -63,4 +70,3 @@ class NamingExercise extends SelectionExercise {
 }
 
 export default NamingExercise;
-

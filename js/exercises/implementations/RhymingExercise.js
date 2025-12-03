@@ -1,3 +1,5 @@
+// js/exercises/implementations/RhymingExercise.js
+
 import SelectionExercise from '../SelectionExercise.js';
 import { t } from '../../core/i18n.js';
 import audioService from '../../services/AudioService.js';

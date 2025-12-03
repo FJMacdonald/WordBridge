@@ -71,7 +71,8 @@
     },
     "firstSound": {
       "name": "First Sounds",
-      "instruction": "Which word starts with the same sound as:",
+      "instruction": "Which word starts with the same sound?",
+      "startsWithSound": "Starts with sound",
       "bothStartWith": "Both start with"
     },
     "association": {
