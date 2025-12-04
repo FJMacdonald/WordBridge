@@ -1061,7 +1061,7 @@
       "id": "ball",
       "word": "ball",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "game",
       "soundGroup": "b",
       "definition": "A round object used in many games",
       "visual": {
@@ -1115,7 +1115,7 @@
       "id": "balloon",
       "word": "balloon",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "toy",
       "soundGroup": "b",
       "definition": "A rubber bag filled with air or gas",
       "visual": {
@@ -1166,7 +1166,7 @@
       "id": "ballot",
       "word": "ballot",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "democracy",
       "soundGroup": "b",
       "definition": "A paper used to vote",
       "visual": {
@@ -1260,7 +1260,7 @@
       "id": "bandage",
       "word": "bandage",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "medical",
       "soundGroup": "b",
       "definition": "A strip of material used to cover a wound",
       "visual": {
@@ -2088,7 +2088,7 @@
       "id": "bell",
       "word": "bell",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "noise",
       "soundGroup": "b",
       "definition": "A hollow metal object that makes a ringing sound",
       "visual": {
@@ -2752,7 +2752,7 @@
       "word": "book",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "object",
+      "category": "information",
       "definition": "A set of printed pages bound together for reading",
       "visual": {
         "emoji": "📕",
@@ -2807,7 +2807,7 @@
       "id": "bookmark",
       "word": "bookmark",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "reading",
       "soundGroup": "b",
       "definition": "Something placed in a book to mark your page",
       "visual": {
@@ -3773,7 +3773,7 @@
       "word": "bubbles",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "object",
+      "category": "clean",
       "definition": "Balls of air in liquid or a thin film",
       "visual": {
         "emoji": "🫧",
@@ -3958,7 +3958,7 @@
       "id": "bulb",
       "word": "bulb",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "engineering",
       "soundGroup": "b",
       "definition": "A glass object that produces electric light",
       "visual": {
@@ -4366,7 +4366,7 @@
       "word": "calendar",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "object",
+      "category": "time",
       "definition": "A chart showing the days, weeks, and months of a year",
       "visual": {
         "emoji": "📆",
@@ -4837,7 +4837,7 @@
       "word": "card",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "object",
+      "category": "finance",
       "definition": "A flat piece of plastic used to pay for things",
       "visual": {
         "emoji": "💳",
@@ -5188,7 +5188,7 @@
       "word": "chain",
       "partOfSpeech": "noun",
       "soundGroup": "ch",
-      "category": "object",
+      "category": "engineering",
       "definition": "A series of metal rings connected together",
       "visual": {
         "emoji": "⛓️",
@@ -5345,7 +5345,7 @@
       "id": "chart",
       "word": "chart",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "information",
       "soundGroup": "ch",
       "definition": "A drawing that shows information",
       "visual": {
@@ -6006,7 +6006,7 @@
       "word": "cigarette",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "object",
+      "category": "habbit",
       "definition": "A thin tube of tobacco for smoking",
       "visual": {
         "emoji": "🚬",
@@ -6320,7 +6320,7 @@
       "id": "clock",
       "word": "clock",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "time",
       "soundGroup": "k",
       "definition": "A device that shows the time",
       "visual": {
@@ -6701,7 +6701,7 @@
       "word": "coffin",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "object",
+      "category": "death",
       "definition": "A box in which dead people are buried",
       "visual": {
         "emoji": "⚰️",
@@ -6954,7 +6954,7 @@
       "word": "compass",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "object",
+      "category": "travel",
       "definition": "A device that shows which direction is north",
       "visual": {
         "emoji": "🧭",
@@ -9998,7 +9998,7 @@
       "word": "fan",
       "partOfSpeech": "noun",
       "soundGroup": "f",
-      "category": "object",
+      "category": "accessory",
       "definition": "A device that moves air to create a breeze",
       "visual": {
         "emoji": "🪭",
@@ -11293,65 +11293,6 @@
       ]
     },
     {
-      "id": "free",
-      "word": "free",
-      "partOfSpeech": "adjective",
-      "soundGroup": "f",
-      "category": "other",
-      "definition": "Not costing money; able to do what you want",
-      "visual": {
-        "emoji": "🆓",
-        "asset": null
-      },
-      "relationships": {
-        "associated": [
-          "cost",
-          "liberty",
-          "open",
-          "available",
-          "release",
-          "gift"
-        ],
-        "antonyms": [
-          "expensive",
-          "captive"
-        ],
-        "rhymes": [
-          "bee",
-          "see",
-          "tree",
-          "key",
-          "me",
-          "three"
-        ],
-        "synonyms": [
-          "gratis",
-          "liberated"
-        ]
-      },
-      "distractors": [
-        "sure",
-        "only",
-        "nice",
-        "tall",
-        "warm",
-        "main",
-        "able",
-        "high",
-        "past",
-        "best"
-      ],
-      "sentences": [
-        "The gift was free.",
-        "I am free to go."
-      ],
-      "phrases": [
-        "Free as a bird",
-        "Free lunch",
-        "Set free"
-      ]
-    },
-    {
       "id": "fries",
       "word": "fries",
       "partOfSpeech": "noun",
@@ -11569,7 +11510,7 @@
       "word": "gear",
       "partOfSpeech": "noun",
       "soundGroup": "g",
-      "category": "object",
+      "category": "engineering",
       "definition": "A wheel with teeth that turns other wheels",
       "visual": {
         "emoji": "⚙️",
@@ -11782,7 +11723,7 @@
       "id": "gift",
       "word": "gift",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "celebration",
       "soundGroup": "g",
       "definition": "Something you give to someone",
       "visual": {
@@ -12032,7 +11973,7 @@
       "id": "globe",
       "word": "globe",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "travel",
       "soundGroup": "g",
       "definition": "A round model of the earth",
       "visual": {
@@ -12856,7 +12797,7 @@
       "id": "gun",
       "word": "gun",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "weapon",
       "soundGroup": "g",
       "definition": "A weapon that shoots bullets",
       "visual": {
@@ -13386,7 +13327,7 @@
       "word": "headstone",
       "partOfSpeech": "noun",
       "soundGroup": "h",
-      "category": "object",
+      "category": "death",
       "definition": "A stone marker on a grave",
       "visual": {
         "emoji": "🪦",
@@ -14960,7 +14901,7 @@
       "word": "key",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "object",
+      "category": "security",
       "definition": "A small metal object that opens locks",
       "visual": {
         "emoji": "🗝️",
@@ -16282,7 +16223,7 @@
       "id": "lipstick",
       "word": "lipstick",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "makeup",
       "soundGroup": "l",
       "definition": "A colored stick used to color the lips",
       "visual": {
@@ -16474,7 +16415,7 @@
       "word": "lock",
       "partOfSpeech": "noun",
       "soundGroup": "l",
-      "category": "object",
+      "category": "security",
       "definition": "A device that keeps something closed and secure",
       "visual": {
         "emoji": "🔒",
@@ -16844,7 +16785,7 @@
       "word": "magnet",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "object",
+      "category": "engineering",
       "definition": "An object that attracts iron and steel",
       "visual": {
         "emoji": "🧲",
@@ -17101,7 +17042,7 @@
       "word": "map",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "object",
+      "category": "travel",
       "definition": "A drawing that shows where places are",
       "visual": {
         "emoji": "🗺️",
@@ -17307,7 +17248,7 @@
       "id": "medal",
       "word": "medal",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "award",
       "soundGroup": "m",
       "definition": "A metal disc given as a prize",
       "visual": {
@@ -17393,7 +17334,7 @@
       "id": "megaphone",
       "word": "megaphone",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "noise",
       "soundGroup": "m",
       "definition": "A cone-shaped device that makes your voice louder",
       "visual": {
@@ -17547,7 +17488,7 @@
       "id": "microscope",
       "word": "microscope",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "instrument",
       "soundGroup": "m",
       "definition": "A device for seeing very small things",
       "visual": {
@@ -18381,70 +18322,11 @@
       "phrases": []
     },
     {
-      "id": "new",
-      "word": "new",
-      "partOfSpeech": "adjective",
-      "soundGroup": "n",
-      "category": "other",
-      "definition": "Recently made or bought; not old",
-      "visual": {
-        "emoji": "🆕",
-        "asset": null
-      },
-      "relationships": {
-        "associated": [
-          "fresh",
-          "recent",
-          "young",
-          "modern",
-          "unused",
-          "latest"
-        ],
-        "antonyms": [
-          "old"
-        ],
-        "rhymes": [
-          "blue",
-          "do",
-          "true",
-          "two",
-          "you",
-          "shoe",
-          "flew"
-        ],
-        "synonyms": [
-          "fresh",
-          "recent"
-        ]
-      },
-      "distractors": [
-        "dry",
-        "few",
-        "big",
-        "fit",
-        "bad",
-        "raw",
-        "low",
-        "far",
-        "fun",
-        "odd"
-      ],
-      "sentences": [
-        "I got new shoes.",
-        "This is a new book."
-      ],
-      "phrases": [
-        "New leaf",
-        "New blood",
-        "Brand new"
-      ]
-    },
-    {
       "id": "newspaper",
       "word": "newspaper",
       "partOfSpeech": "noun",
       "soundGroup": "n",
-      "category": "object",
+      "category": "information",
       "definition": "Printed sheets of paper with news and articles",
       "visual": {
         "emoji": "📰",
@@ -18890,56 +18772,11 @@
       ]
     },
     {
-      "id": "ok",
-      "word": "OK",
-      "partOfSpeech": "adjective",
-      "soundGroup": "o",
-      "category": "other",
-      "definition": "All right; acceptable",
-      "visual": {
-        "emoji": "🆗",
-        "asset": null
-      },
-      "relationships": {
-        "associated": [
-          "fine",
-          "good",
-          "agree",
-          "yes",
-          "alright",
-          "acceptable"
-        ],
-        "antonyms": [
-          "bad",
-          "wrong"
-        ],
-        "rhymes": [
-          "kay",
-          "say",
-          "day",
-          "way",
-          "play",
-          "stay"
-        ],
-        "synonyms": [
-          "okay",
-          "fine",
-          "alright"
-        ]
-      },
-      "distractors": [],
-      "sentences": [
-        "Everything is OK.",
-        "Is it OK if I sit here?"
-      ],
-      "phrases": []
-    },
-    {
       "id": "okay",
       "word": "okay",
       "partOfSpeech": "adjective",
       "soundGroup": "o",
-      "category": "other",
+      "category": "sinage",
       "definition": "All right or acceptable",
       "visual": {
         "emoji": "👌",
@@ -20719,7 +20556,7 @@
       "id": "pill",
       "word": "pill",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "medical",
       "soundGroup": "p",
       "definition": "A small round piece of medicine that you swallow",
       "visual": {
@@ -20822,7 +20659,7 @@
       "word": "pin",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "object",
+      "category": "stationary",
       "definition": "A thin pointed piece of metal",
       "visual": {
         "emoji": "📌",
@@ -22787,7 +22624,7 @@
       "word": "robot",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "object",
+      "category": "technology",
       "definition": "A machine that can do tasks automatically",
       "visual": {
         "emoji": "🤖",
@@ -23003,7 +22840,7 @@
       "word": "ruler",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "object",
+      "category": "stationary",
       "definition": "A straight tool used for measuring length",
       "visual": {
         "emoji": "📏",
@@ -23978,7 +23815,7 @@
       "word": "scissors",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "object",
+      "category": "stationery",
       "definition": "A tool with two sharp blades for cutting",
       "visual": {
         "emoji": "✂️",
@@ -25026,7 +24863,7 @@
       "id": "sign",
       "word": "sign",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "information",
       "soundGroup": "s",
       "definition": "A board with words or symbols giving information",
       "visual": {
@@ -26045,7 +25882,7 @@
       "word": "snowman",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "object",
+      "category": "winter",
       "definition": "A figure made of snow shaped like a person",
       "visual": {
         "emoji": "⛄",
@@ -26401,7 +26238,7 @@
       "word": "SOS",
       "partOfSpeech": "noun",
       "soundGroup": "e",
-      "category": "other",
+      "category": "sinage",
       "definition": "A signal asking for help",
       "visual": {
         "emoji": "🆘",
@@ -28120,7 +27957,7 @@
       "id": "syringe",
       "word": "syringe",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "medical",
       "soundGroup": "s",
       "definition": "A medical tool with a needle for giving injections",
       "visual": {
@@ -28214,7 +28051,7 @@
       "id": "tag",
       "word": "tag",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "information",
       "soundGroup": "t",
       "definition": "A small label attached to something",
       "visual": {
@@ -28324,7 +28161,7 @@
       "id": "target",
       "word": "target",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "sport",
       "soundGroup": "t",
       "definition": "Something you aim at",
       "visual": {
@@ -28835,7 +28672,7 @@
       "word": "tent",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "object",
+      "category": "camping",
       "definition": "A portable shelter made of fabric",
       "visual": {
         "emoji": "⛺",
@@ -29163,7 +29000,7 @@
       "id": "thumbs up",
       "word": "thumbs up",
       "partOfSpeech": "noun",
-      "category": "other",
+      "category": "sinage",
       "soundGroup": "th",
       "definition": "A gesture showing approval",
       "visual": {
@@ -29974,7 +29811,7 @@
       "id": "trophy",
       "word": "trophy",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "award",
       "soundGroup": "t",
       "definition": "A prize given for winning",
       "visual": {
@@ -30275,7 +30112,7 @@
       "word": "umbrella",
       "partOfSpeech": "noun",
       "soundGroup": "u",
-      "category": "object",
+      "category": "accessory",
       "definition": "A device held over your head to keep rain off",
       "visual": {
         "emoji": "☂️",
@@ -30770,7 +30607,7 @@
       "id": "watch",
       "word": "watch",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "time",
       "soundGroup": "w",
       "definition": "A small clock worn on the wrist",
       "visual": {
@@ -31129,7 +30966,7 @@
       "id": "wheel",
       "word": "wheel",
       "partOfSpeech": "noun",
-      "category": "object",
+      "category": "engineering",
       "soundGroup": "w",
       "definition": "A circular object that turns to move a vehicle",
       "visual": {

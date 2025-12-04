@@ -169,3 +169,43 @@
 - [ ] Easy filter only shows easy words
 - [ ] Medium filter only shows medium words
 - [ ] Mixed mode shows both
+
+
+
+## To add
+🤣 laughing
+😂 funny
+😇 holy
+😘 kiss
+🥲 emotional
+😋 yummy
+🤪 crazy
+🤑 rich
+🫣 peek
+🤫 quiet
+🫡 agreed
+🤐 secret
+🤨 sceptical
+😶‍🌫️ foggy
+😏 smirk
+🙄 eyeroll
+😬 scared
+😮‍💨 sneeze
+🤥 lie
+🤤 drool
+😴 sleepy
+🫩 tired
+😷 covid
+🤒 fever
+🤕 concussion
+🤮 vomit
+🤧 sneeze
+🥴 drunk
+😵‍💫 wired
+🤠 adventure
+🥳 party
+🤓 nerd
+😳 embarrased 
+🥱 yawn
+🛀 bath
+🛌 bed
