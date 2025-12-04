@@ -335,12 +335,21 @@ class WordbankService {
     
     /**
      * Build exercise data for naming/listening/typing exercises
+     * For easy difficulty, only include nouns (not verbs)
      */
     buildNamingData(filters = {}) {
-        const words = this.getWords({ 
+        // For easy exercises, focus on nouns only
+        const exerciseFilters = { 
             ...filters, 
             hasEmoji: true 
-        });
+        };
+        
+        // Easy exercises should focus on nouns
+        if (filters.difficulty === 'easy') {
+            exerciseFilters.partOfSpeech = 'noun';
+        }
+        
+        const words = this.getWords(exerciseFilters);
         
         return words.map(word => {
             const distractors = this.getDistractors(word, 'naming', 3);
@@ -351,7 +360,8 @@ class WordbankService {
                 alt: word.visual.alt,
                 answer: word.word,
                 options: this.shuffleArray([word.word, ...distractors]),
-                difficulty: word.difficulty
+                difficulty: word.difficulty,
+                partOfSpeech: word.partOfSpeech
             };
         });
     }
