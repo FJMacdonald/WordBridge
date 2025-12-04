@@ -2,7 +2,6 @@
 import { t } from '../../core/i18n.js';
 import assessmentService from '../../services/AssessmentService.js';
 import pdfService from '../../services/PDFService.js';
-import analyticsService from '../../services/AnalyticsService.js';
 import storageService from '../../services/StorageService.js';
 import { i18n } from '../../core/i18n.js';
 
@@ -189,11 +188,13 @@ class ProgressPage {
     
     renderExerciseCards() {
         const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
+        const testHistory = storageService.get(this.getStorageKey('testHistory'), {}); // Add this
         const assessmentHistory = assessmentService.getAssessmentHistory();
         
         // Group sessions by exercise type
         const statsByType = {};
         
+        // Process session history
         sessionHistory.forEach(session => {
             const type = session.exerciseType;
             if (!statsByType[type]) {
@@ -218,11 +219,44 @@ class ProgressPage {
                     date: session.date,
                     correct: session.correct,
                     total: session.total,
-                    accuracy: session.accuracy
+                    accuracy: session.accuracy,
+                    wordList: session.wordList,
+                    attempts: session.attempts
                 });
             } else {
                 statsByType[type].practiceSessions++;
             }
+        });
+        
+        // ALSO process dedicated test history (in case sessionHistory didn't capture it)
+        Object.entries(testHistory).forEach(([exerciseType, tests]) => {
+            if (!statsByType[exerciseType]) {
+                statsByType[exerciseType] = {
+                    attempts: 0,
+                    correct: 0,
+                    time: 0,
+                    practiceSessions: 0,
+                    testSessions: 0,
+                    tests: []
+                };
+            }
+            
+            tests.forEach(test => {
+                // Check if this test is already in the tests array (avoid duplicates)
+                const exists = statsByType[exerciseType].tests.some(t => t.id === test.id);
+                if (!exists) {
+                    statsByType[exerciseType].testSessions++;
+                    statsByType[exerciseType].tests.push({
+                        id: test.id,
+                        date: test.date,
+                        correct: test.correct,
+                        total: test.total,
+                        accuracy: test.accuracy,
+                        wordList: test.wordList,
+                        attempts: test.attempts
+                    });
+                }
+            });
         });
         
         // Also include assessment history
@@ -240,17 +274,21 @@ class ProgressPage {
                     };
                 }
                 
-                statsByType[type].testSessions++;
-                statsByType[type].tests.push({
-                    id: assessment.id,
-                    date: assessment.date,
-                    correct: assessment.results?.overallScore || 0,
-                    total: assessment.results?.totalQuestions || 10,
-                    accuracy: assessment.results?.accuracy || 0
-                });
+                // Check for duplicates
+                const exists = statsByType[type].tests.some(t => t.id === assessment.id);
+                if (!exists) {
+                    statsByType[type].testSessions++;
+                    statsByType[type].tests.push({
+                        id: assessment.id,
+                        date: assessment.date,
+                        correct: assessment.results?.overallScore || 0,
+                        total: assessment.results?.totalQuestions || 10,
+                        accuracy: assessment.results?.accuracy || 0
+                    });
+                }
             }
         });
-        
+            
         // Update each card
         const allTypes = [
             'naming', 'typing', 'sentenceTyping', 'category',

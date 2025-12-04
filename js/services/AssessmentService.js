@@ -32,6 +32,14 @@ class AssessmentService {
     }
     
     /**
+     * Get language-specific storage key - ensure this is used consistently
+     */
+    getStorageKey(baseKey) {
+        const locale = i18n.getCurrentLocale();
+        return `${baseKey}_${locale}`;
+    }
+    
+    /**
      * Get the current difficulty level for baseline assessments
      * Users start at 'easy' and progress to 'medium' and 'hard'
      */
@@ -283,17 +291,20 @@ class AssessmentService {
         return Math.round(times.reduce((a, b) => a + b, 0) / times.length);
     }
     
+
+    
     /**
-     * Save completed assessment to history
+     * Save completed assessment to history - fix to use getStorageKey
      */
     saveAssessmentToHistory(assessment) {
-        const history = storageService.get(this.getStorageKey('assessmentHistory'), []);
+        const key = this.getStorageKey('assessmentHistory');
+        const history = storageService.get(key, []);
         
         // Ensure we're saving with the right structure
         const record = {
             id: assessment.id,
             templateId: assessment.templateId,
-            date: assessment.startTime || assessment.date,
+            date: assessment.startTime || assessment.date || Date.now(),
             duration: assessment.duration,
             results: assessment.results,
             metadata: assessment.metadata
@@ -306,14 +317,16 @@ class AssessmentService {
             history.splice(0, history.length - 100);
         }
         
-        storageService.set(this.getStorageKey('assessmentHistory'), history);
+        storageService.set(key, history);
+        console.log('Assessment history saved, total:', history.length);
     }
     
     /**
-     * Get assessment history
+     * Get assessment history - fix to use getStorageKey
      */
     getAssessmentHistory(templateId = null) {
-        const history = storageService.get(this.getStorageKey('assessmentHistory'), []);
+        const key = this.getStorageKey('assessmentHistory');
+        const history = storageService.get(key, []);
         return templateId
             ? history.filter(a => a.templateId === templateId)
             : history;

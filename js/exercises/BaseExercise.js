@@ -297,7 +297,8 @@ class BaseExercise {
         try {
             const assessmentData = {
                 id: `assessment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-                templateId: 'quick', // Individual exercise assessment
+                templateId: 'quick',
+                date: this.state.startTime, // Use 'date' not 'startTime' for consistency
                 startTime: this.state.startTime,
                 duration: results.duration || (Date.now() - this.state.startTime),
                 results: {
@@ -305,11 +306,9 @@ class BaseExercise {
                     overallScore: results.correct,
                     totalQuestions: results.total,
                     accuracy: results.accuracy,
-                    difficulty: 'easy', // We'd need to get this from the test config
+                    difficulty: this.currentItem?.difficulty || 'easy',
                     hintsUsed: results.hintsUsed,
-                    averageResponseTime: results.medianResponseTime,
-                    wrongSelections: (results.total - results.correct),
-                    mistypedLetters: 0 // This would come from typing exercises specifically
+                    averageResponseTime: results.medianResponseTime
                 },
                 metadata: {
                     exerciseType: this.type,
@@ -318,10 +317,11 @@ class BaseExercise {
             };
             
             assessmentService.saveAssessmentToHistory(assessmentData);
+            console.log('Assessment saved:', assessmentData.id);
         } catch (error) {
             console.error('Error saving assessment results:', error);
         }
-    }
+    }    
     
     renderResults(results) {
         const isAssessment = this.mode === 'test';
