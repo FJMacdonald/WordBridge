@@ -493,14 +493,16 @@ class AnalyticsService {
         switch(timeRange) {
             case 'today':
                 return this.getTodayStats();
+            case 'week':
             case '7days':
-                return this.getWeeklyStats();
+                return this.getWeeklyStats().totals;
+            case 'month':
             case '30days':
-                return this.getMonthlyStats();
+                return this.getMonthlyStats().totals;
             case 'all':
                 return this.getAllTimeStats();
             default:
-                return this.getWeeklyStats();
+                return this.getWeeklyStats().totals;
         }
     }
 
