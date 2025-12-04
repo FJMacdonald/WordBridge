@@ -1,4 +1,4 @@
-// exercises/BaseExercise.js - ENHANCED VERSION
+// exercises/BaseExercise.js - FIXED VERSION
 import { t } from '../core/i18n.js';
 import Config from '../core/Config.js';
 import audioService from '../services/AudioService.js';
@@ -15,6 +15,7 @@ class BaseExercise {
         this.currentItem = null;
         this.currentIndex = 0;
         this.mode = 'practice'; // 'practice' or 'test'
+        this.originPage = 'home'; // Track where the user came from
         
         this.state = {
             hintsUsed: 0,
@@ -39,18 +40,42 @@ class BaseExercise {
         this.recordActivity = this.recordActivity.bind(this);
     }
     
-    async init(items, container) {
+    async init(items, container, options = {}) {
         this.items = this.shuffleArray([...items]);
         this.container = container;
         this.currentIndex = 0;
+        this.originPage = options.originPage || (this.mode === 'test' ? 'assessment' : 'home');
+        this.isRetake = options.isRetake || false;
+        this.originalTestId = options.originalTestId || null;
+        
+        // Initialize state
+        this.state = {
+            hintsUsed: 0,
+            eliminatedIndices: new Set(),
+            revealedLetters: 0,
+            startTime: Date.now(),
+            lastActivityTime: Date.now(),
+            responseStartTime: Date.now(),
+            inactivityGaps: []
+        };
         
         // Start tracking
-        trackingService.startSession(this.type);
+        trackingService.startSession(this.type, this.mode);
+        
+        // IMPORTANT: Save the word list for test retake functionality
+        const wordList = this.items.map(item => {
+            // Use a consistent identifier - prefer 'id', then 'word', then 'answer'
+            return item.id || item.word || item.text || item.answer || item.target || 
+                   (typeof item === 'string' ? item : JSON.stringify(item));
+        });
+        trackingService.setSessionWordList(wordList);
+        console.log(`Session started with ${wordList.length} items, word list saved`);
+        
         this.startActivityMonitoring();
         
         await this.loadItem(0);
     }
-    
+        
     async loadItem(index) {
         if (index >= this.items.length) {
             this.complete();
@@ -80,10 +105,10 @@ class BaseExercise {
             hintsUsed: 0,
             eliminatedIndices: new Set(),
             revealedLetters: 0,
-            startTime: now,
+            startTime: this.state.startTime || now,
             lastActivityTime: now,
             responseStartTime: now,
-            inactivityGaps: []
+            inactivityGaps: this.state.inactivityGaps || []
         };
     }
     
@@ -192,7 +217,7 @@ class BaseExercise {
     
     async handleOptionClick(e) {
         // Record response time
-        const responseTime = Date.now() - this.state.responseStart;
+        const responseTime = Date.now() - this.state.responseStartTime;
         
         const btn = e.currentTarget;
         if (btn.disabled || btn.classList.contains('eliminated')) return;
@@ -204,19 +229,19 @@ class BaseExercise {
         trackingService.recordAttempt({
             exerciseType: this.type,
             word: this.getCorrectAnswer(),
-            wordId: this.currentItem?.id || this.getCorrectAnswer(), // Use word ID if available
+            wordId: this.currentItem?.id || this.getCorrectAnswer(),
             correct,
             hintsUsed: this.state.hintsUsed,
             responseTime,
             attemptNumber: this.state.eliminatedIndices.size + 1,
             wrongSelections: correct ? 0 : 1,
             mistypedLetters: 0,
-            difficulty: this.currentItem?.difficulty || 'medium' // Pass difficulty from item
+            difficulty: this.currentItem?.difficulty || 'medium',
+            questionData: this.currentItem // Store full question data for retry
         });
             
         this.recordActivity('answer_submitted');
         
-        // ... rest of existing logic
         btn.classList.add(correct ? 'correct' : 'incorrect');
         
         if (correct) {
@@ -264,6 +289,7 @@ class BaseExercise {
         trackingService.recordSkip({
             exerciseType: this.type,
             word: this.getCorrectAnswer(),
+            wordId: this.currentItem?.id || this.getCorrectAnswer(),
             responseTime,
             hintsUsed: this.state.hintsUsed
         });
@@ -288,9 +314,96 @@ class BaseExercise {
             this.saveAssessmentResults(results);
             // Reset mode service to clear test state
             modeService.resetMode();
+            
+            // Navigate back to the originating page instead of showing results
+            this.navigateBackAfterTest(results);
+        } else {
+            // For practice mode, show the results page
+            this.renderResults(results);
+        }
+    }
+    
+    navigateBackAfterTest(results) {
+        // Show a brief toast/notification with results
+        this.showTestCompleteToast(results);
+        
+        // Navigate back to the appropriate page
+        const targetPage = this.originPage || 'progress';
+        
+        // Small delay to let the toast show
+        setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('navigate', { detail: targetPage }));
+        }, 1500);
+    }
+    
+    showTestCompleteToast(results) {
+        // Create a toast notification
+        const toast = document.createElement('div');
+        toast.className = 'test-complete-toast';
+        toast.innerHTML = `
+            <div class="toast-content">
+                <div class="toast-icon">✅</div>
+                <div class="toast-message">
+                    <strong>Test Complete!</strong>
+                    <span>${results.correct}/${results.total} (${results.accuracy}%)</span>
+                </div>
+            </div>
+        `;
+        
+        // Add toast styles if not already present
+        if (!document.getElementById('toast-styles')) {
+            const style = document.createElement('style');
+            style.id = 'toast-styles';
+            style.textContent = `
+                .test-complete-toast {
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--color-success, #22c55e);
+                    color: white;
+                    padding: 1rem 2rem;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    animation: slideDown 0.3s ease-out;
+                }
+                .toast-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                }
+                .toast-icon {
+                    font-size: 1.5rem;
+                }
+                .toast-message {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .toast-message strong {
+                    font-size: 1.1rem;
+                }
+                @keyframes slideDown {
+                    from {
+                        opacity: 0;
+                        transform: translateX(-50%) translateY(-20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(-50%) translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
         }
         
-        this.renderResults(results);
+        document.body.appendChild(toast);
+        
+        // Remove after delay
+        setTimeout(() => {
+            toast.style.animation = 'slideDown 0.3s ease-out reverse';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
     }
     
     saveAssessmentResults(results) {
@@ -298,7 +411,7 @@ class BaseExercise {
             const assessmentData = {
                 id: `assessment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                 templateId: 'quick',
-                date: this.state.startTime, // Use 'date' not 'startTime' for consistency
+                date: this.state.startTime,
                 startTime: this.state.startTime,
                 duration: results.duration || (Date.now() - this.state.startTime),
                 results: {
@@ -312,8 +425,12 @@ class BaseExercise {
                 },
                 metadata: {
                     exerciseType: this.type,
-                    mode: this.mode
-                }
+                    mode: this.mode,
+                    difficulty: this.items[0]?.difficulty || 'easy'
+                },
+                // Include word list and attempts for retake functionality
+                wordList: results.wordList || [],
+                attempts: results.attempts || []
             };
             
             assessmentService.saveAssessmentToHistory(assessmentData);
@@ -324,13 +441,8 @@ class BaseExercise {
     }    
     
     renderResults(results) {
-        const isAssessment = this.mode === 'test';
-        
-        if (isAssessment) {
-            this.renderAssessmentResults(results);
-        } else {
-            this.renderPracticeResults(results);
-        }
+        // Only for practice mode now
+        this.renderPracticeResults(results);
     }
     
     renderPracticeResults(results) {
@@ -345,11 +457,11 @@ class BaseExercise {
                     </div>
                     <div class="stat">
                         <span class="stat-value">${results.accuracy}%</span>
-                        <span class="stat-label">Accuracy</span>
+                        <span class="stat-label">${t('progress.accuracy') || 'Accuracy'}</span>
                     </div>
                     <div class="stat">
                         <span class="stat-value">${results.timeFormatted}</span>
-                        <span class="stat-label">Active Time</span>
+                        <span class="stat-label">${t('progress.totalTime') || 'Time'}</span>
                     </div>
                     ${results.medianResponseTime ? `
                     <div class="stat">
@@ -372,76 +484,6 @@ class BaseExercise {
         `;
         
         this.attachResultListeners();
-    }
-    
-    renderAssessmentResults(results) {
-        // For assessments, show a home-page-style layout with results
-        const exerciseTypes = [
-            { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
-            { key: 'typing', name: 'Typing', icon: '⌨️' },
-            { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
-            { key: 'category', name: 'Categories', icon: '📁' },
-            { key: 'listening', name: 'Listening', icon: '👂' },
-            { key: 'speaking', name: 'Speaking', icon: '🎤' },
-            { key: 'firstSound', name: 'First Sounds', icon: '🔤' },
-            { key: 'rhyming', name: 'Rhyming', icon: '🎵' },
-            { key: 'definitions', name: 'Definitions', icon: '📖' },
-            { key: 'association', name: 'Association', icon: '🔗' },
-            { key: 'synonyms', name: 'Synonyms', icon: '≈' },
-            { key: 'scramble', name: 'Unscramble', icon: '🔀' },
-            { key: 'timeSequencing', name: 'Time Sequencing', icon: '📅' },
-            { key: 'clockMatching', name: 'Clock Matching', icon: '🕐' },
-            { key: 'timeOrdering', name: 'Time Ordering', icon: '⏰' },
-            { key: 'workingMemory', name: 'Working Memory', icon: '🧠' }
-        ];
-        
-        this.container.innerHTML = `
-            <div class="assessment-complete">
-                <header class="page-header">
-                    <h2>Assessment Complete!</h2>
-                    <div class="overall-score">
-                        <div class="score-display">
-                            <span class="score-value">${results.correct}/${results.total}</span>
-                            <span class="score-label">${results.accuracy}% Overall</span>
-                        </div>
-                    </div>
-                </header>
-                
-                <div class="assessment-breakdown">
-                    <h3>Exercise Results</h3>
-                    <div class="exercise-results-grid">
-                        ${exerciseTypes.map(exercise => {
-                            // Check if this exercise type was tested
-                            const hasResult = this.type === exercise.key;
-                            return `
-                                <div class="exercise-result-card ${hasResult ? 'has-result' : 'no-result'}">
-                                    <div class="card-icon">${exercise.icon}</div>
-                                    <div class="card-name">${exercise.name}</div>
-                                    ${hasResult ? `
-                                        <div class="card-score">
-                                            <span class="score">${results.correct}/${results.total}</span>
-                                            <span class="accuracy">${results.accuracy}%</span>
-                                        </div>
-                                        <div class="card-time">${results.timeFormatted}</div>
-                                    ` : `
-                                        <div class="card-empty">Not tested</div>
-                                    `}
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                </div>
-                
-                <div class="assessment-actions">
-                    <button class="btn btn--secondary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'assessment'}))">
-                        Take Another Assessment
-                    </button>
-                    <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'progress'}))">
-                        View Progress
-                    </button>
-                </div>
-            </div>
-        `;
     }
     
     generateResultsFeedback(results) {
@@ -479,8 +521,6 @@ class BaseExercise {
         
         audioService.stop();
     }
-    
-    // ... rest of existing methods ...
     
     shuffleArray(arr) {
         for (let i = arr.length - 1; i > 0; i--) {

@@ -310,7 +310,7 @@ class TrackingService {
             duration: activeTime
         });
         
-        // Create session record
+        // Create session record with word list and attempts for retake
         const sessionRecord = {
             id: session.id,
             exerciseType: session.exerciseType,
@@ -326,9 +326,17 @@ class TrackingService {
             skips: session.skips,
             medianResponseTime,
             inactivityGaps: session.inactivityGaps.length,
-            wordList: session.wordList, // Store word list for retry
-            attempts: session.attempts, // Store full attempt details
-            testConfig: session.testConfig
+            wordList: session.wordList || [], // IMPORTANT: Include word list
+            attempts: session.attempts.map(a => ({ // IMPORTANT: Include attempts with word info
+                word: a.word,
+                wordId: a.wordId,
+                correct: a.correct,
+                hintsUsed: a.hintsUsed || 0,
+                responseTime: a.responseTime,
+                difficulty: a.difficulty
+            })),
+            testConfig: session.testConfig,
+            difficulty: session.testConfig?.difficulty || session.attempts[0]?.difficulty || 'easy'
         };
         
         // Save session history
@@ -356,7 +364,7 @@ class TrackingService {
             timeFormatted: this.formatDuration(activeTime)
         };
     }
-    
+        
     /**
      * Save session to history
      */

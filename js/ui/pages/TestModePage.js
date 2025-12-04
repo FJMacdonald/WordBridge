@@ -1,10 +1,11 @@
 import { t } from '../../core/i18n.js';
 import exerciseFactory from '../../exercises/ExerciseFactory.js';
 import modeService from '../../services/ModeService.js';
-import storageService from '../../services/StorageService.js';
+
 
 /**
  * Test Mode Page - Structured assessment with difficulty selection
+ * Styled to match home page layout
  */
 class TestModePage {
     constructor(container) {
@@ -24,40 +25,49 @@ class TestModePage {
         const categories = exerciseFactory.getExercisesByCategory();
         const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
         
+        const categoryInfo = {
+            words: { icon: '📚', name: t('home.categories.words') },
+            phonetics: { icon: '🔊', name: t('home.categories.phonetics') },
+            meaning: { icon: '💡', name: t('home.categories.meaning') },
+            time: { icon: '⏰', name: t('home.categories.time') }
+        };
+        
         this.container.innerHTML = `
             <div class="test-mode-page">
-                <header class="page-header">
-                    <h2>📋 ${t('assessment.testMode')}</h2>
-                    <p class="test-subtitle">${t('assessment.testModeDescription')}</p>
-                </header>
-                
-                <div class="test-instructions">
-                    <h3>📖 ${t('assessment.instructions')}</h3>
-                    <ul>
-                        <li>${t('assessment.instruction1')}</li>
-                        <li>${t('assessment.instruction2')}</li>
-                        <li>${t('assessment.instruction3')}</li>
-                        <li>${t('assessment.instruction4')}</li>
-                        <li>${t('assessment.instruction5')}</li>
-                    </ul>
+                <div class="home-header">
+                    <h1 class="home-title">📋 ${t('assessment.testMode')}</h1>
+                    <p class="home-subtitle">${t('assessment.testModeDescription')}</p>
                 </div>
                 
-                <div class="test-setup">
-                    <h3>${t('assessment.selectTest')}</h3>
-                    
+                <div class="test-instructions">
+                    <details>
+                        <summary><strong>📖 ${t('assessment.instructions')}</strong></summary>
+                        <ul>
+                            <li>${t('assessment.instruction1')}</li>
+                            <li>${t('assessment.instruction2')}</li>
+                            <li>${t('assessment.instruction3')}</li>
+                            <li>${t('assessment.instruction4')}</li>
+                            <li>${t('assessment.instruction5')}</li>
+                        </ul>
+                    </details>
+                </div>
+                
+                <div class="category-grid">
                     ${categoryOrder.map(category => {
                         const exercises = categories[category];
-                        const categoryInfo = this.getCategoryInfo(category);
+                        if (!exercises || exercises.length === 0) return '';
                         return `
-                            <details class="test-category" open>
-                                <summary class="category-header">
-                                    <span class="category-icon">${categoryInfo.icon}</span>
-                                    <span class="category-name">${categoryInfo.name}</span>
-                                </summary>
-                                <div class="test-exercises">
-                                    ${exercises.map(ex => this.renderTestOption(ex)).join('')}
-                                </div>
-                            </details>
+                        <div class="category-card">
+                            <div class="category-header">
+                                <h3 class="category-title">
+                                    <span class="category-icon">${categoryInfo[category].icon}</span>
+                                    ${categoryInfo[category].name}
+                                </h3>
+                            </div>
+                            <div class="exercise-grid test-exercise-grid">
+                                ${exercises.map(ex => this.renderTestOption(ex)).join('')}
+                            </div>
+                        </div>
                         `;
                     }).join('')}
                 </div>
@@ -71,46 +81,33 @@ class TestModePage {
         const recommended = modeService.getRecommendedDifficulty(exercise.type);
         
         return `
-            <div class="test-option">
-                <div class="test-option-info">
-                    <span class="exercise-icon">${exercise.icon}</span>
-                    <span class="exercise-name">${t('exercises.' + exercise.type + '.name')}</span>
-                </div>
-                <div class="test-option-controls">
-                    <select class="difficulty-select" data-recommended="${recommended}">
+            <div class="exercise-card test-option-card" data-type="${exercise.type}">
+                <span class="exercise-icon">${exercise.icon}</span>
+                <span class="exercise-name">${t('exercises.' + exercise.type + '.name')}</span>
+                <div class="test-controls">
+                    <select class="difficulty-select compact-select" data-recommended="${recommended}">
                         <option value="easy" ${recommended === 'easy' ? 'selected' : ''}>
-                            ${t('assessment.easy')} ${recommended === 'easy' ? '⭐' : ''}
+                            ${t('assessment.easy')}${recommended === 'easy' ? ' ⭐' : ''}
                         </option>
                         <option value="medium" ${recommended === 'medium' ? 'selected' : ''}>
-                            ${t('assessment.medium')} ${recommended === 'medium' ? '⭐' : ''}
+                            ${t('assessment.medium')}${recommended === 'medium' ? ' ⭐' : ''}
                         </option>
                         <option value="hard" ${recommended === 'hard' ? 'selected' : ''}>
-                            ${t('assessment.hard')} ${recommended === 'hard' ? '⭐' : ''}
+                            ${t('assessment.hard')}${recommended === 'hard' ? ' ⭐' : ''}
                         </option>
                     </select>
-                    <select class="questions-select">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
+                    <select class="questions-select compact-select">
+                        <option value="5">5 Q</option>
+                        <option value="10" selected>10 Q</option>
+                        <option value="15">15 Q</option>
+                        <option value="20">20 Q</option>
                     </select>
-                    <button class="btn btn--primary btn--compact start-test-btn" 
-                            data-type="${exercise.type}">
-                        ${t('assessment.startTest')}
+                    <button class="btn btn--primary btn--compact start-test-btn">
+                        ▶
                     </button>
                 </div>
             </div>
         `;
-    }
-    
-    getCategoryInfo(category) {
-        const info = {
-            words: { icon: '📚', name: t('home.categories.words') },
-            phonetics: { icon: '🔊', name: t('home.categories.phonetics') },
-            meaning: { icon: '💡', name: t('home.categories.meaning') },
-            time: { icon: '⏰', name: t('home.categories.time') }
-        };
-        return info[category] || { icon: '📚', name: category };
     }
     
     renderInProgress() {
@@ -143,26 +140,38 @@ class TestModePage {
     attachListeners() {
         // Start test buttons
         this.container.querySelectorAll('.start-test-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const exerciseType = btn.dataset.type;
-                const option = btn.closest('.test-option');
-                const difficulty = option.querySelector('.difficulty-select').value;
-                const questions = parseInt(option.querySelector('.questions-select').value);
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = btn.closest('.test-option-card');
+                const exerciseType = card.dataset.type;
+                const difficulty = card.querySelector('.difficulty-select').value;
+                const questions = parseInt(card.querySelector('.questions-select').value);
                 
                 this.startTest(exerciseType, difficulty, questions);
+            });
+        });
+        
+        // Prevent card click from triggering when clicking controls
+        this.container.querySelectorAll('.test-controls').forEach(controls => {
+            controls.addEventListener('click', (e) => {
+                e.stopPropagation();
             });
         });
     }
     
     startTest(exerciseType, difficulty, questions) {
-        
         // Start test mode in ModeService
         modeService.startTestMode(exerciseType, difficulty);
         modeService.testConfig.totalQuestions = questions;
         
-        // Dispatch event to start exercise
+        // Dispatch event to start exercise with origin page
         window.dispatchEvent(new CustomEvent('startTest', {
-            detail: { exerciseType, difficulty, questions }
+            detail: { 
+                exerciseType, 
+                difficulty, 
+                questions,
+                originPage: 'assessment' // Track origin
+            }
         }));
     }
 }

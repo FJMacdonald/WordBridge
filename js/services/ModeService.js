@@ -1,5 +1,4 @@
 import storageService from './StorageService.js';
-import trackingService from './TrackingService.js';
 
 /**
  * Service for managing Practice vs Test modes
@@ -192,13 +191,25 @@ class ModeService {
             avgProcessingTime,
             medianProcessingTime,
             hintsPerQuestion: (this.testProgress.hintsUsed / this.testProgress.questionsAnswered).toFixed(2),
-            skipsPerQuestion: (this.testProgress.skipsUsed / this.testProgress.questionsAnswered).toFixed(2)
+            skipsPerQuestion: (this.testProgress.skipsUsed / this.testProgress.questionsAnswered).toFixed(2),
+            // IMPORTANT: Save the word list for retakes
+            wordList: this.words.map(w => typeof w === 'string' ? w : w.word || w.text),
+            // IMPORTANT: Save individual attempts for comparison
+            attempts: this.attempts.map(a => ({
+                word: a.word || a.target,
+                correct: a.correct,
+                userAnswer: a.userAnswer,
+                hintsUsed: a.hintsUsed || 0
+            }))
         };
         
         // Save test result
-        const testResults = storageService.get('testResults', []);
-        testResults.push(result);
-        storageService.set('testResults', testResults);
+        const testHistory = storageService.get(this.getStorageKey('testHistory'), {});
+        if (!testHistory[this.exerciseType]) {
+            testHistory[this.exerciseType] = [];
+        }
+        testHistory[this.exerciseType].push(testRecord);
+        storageService.set(this.getStorageKey('testHistory'), testHistory);
                 
         // Reset test state
         this.currentMode = 'practice';

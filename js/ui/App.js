@@ -26,6 +26,7 @@ class App {
     constructor() {
         this.container = null;
         this.currentExercise = null;
+        this.currentPage = 'home'; // Track current page
     }
     
     async init() {
@@ -44,7 +45,6 @@ class App {
             console.log('Wordbank loaded:', wordbankService.wordbank.words.length, 'words');
         } catch (error) {
             console.error('Failed to load wordbank:', error);
-            // Could show error UI here
         }
         
         await imageStorage.init();
@@ -101,6 +101,8 @@ class App {
             this.currentExercise.destroy();
             this.currentExercise = null;
         }
+        
+        this.currentPage = page; // Track current page
         
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.page === page);
@@ -201,23 +203,14 @@ class App {
         });
     }
     
-    /**
-     * Check if an exercise type has enough data to be available
-     */
     isExerciseAvailable(type) {
-        // Standalone exercises are always available
         const standaloneTypes = ['clockMatching', 'timeSequencing', 'timeOrdering', 'workingMemory'];
         if (standaloneTypes.includes(type)) {
             return true;
         }
-        
-        // Check wordbank service
         return wordbankService.isExerciseAvailable(type);
     }
     
-    /**
-     * Get exercise data from wordbank or standalone files
-     */
     async getExerciseData(type) {
         const difficulty = this.getPracticeDifficulty(type);
         const filters = difficulty !== 'all' ? { difficulty } : {};
@@ -225,72 +218,55 @@ class App {
         let data = [];
         
         switch (type) {
-            // Wordbank-based exercises
             case 'naming':
             case 'listening':
             case 'typing':
                 data = wordbankService.buildNamingData(filters);
                 break;
-                
             case 'sentenceTyping':
                 data = wordbankService.buildSentenceData(filters);
                 break;
-                
             case 'category':
                 data = wordbankService.buildCategoryData(filters);
                 break;
-                
             case 'rhyming':
                 data = wordbankService.buildRhymingData(filters);
                 break;
-                
             case 'firstSound':
                 data = wordbankService.buildFirstSoundData(filters);
                 break;
-                
             case 'association':
                 data = wordbankService.buildAssociationData(filters);
                 break;
-                
             case 'synonyms':
                 data = wordbankService.buildSynonymData(filters);
                 break;
-                
             case 'definitions':
                 data = wordbankService.buildDefinitionData(filters);
                 break;
-                
             case 'speaking':
                 data = wordbankService.buildSpeakingData(filters);
                 break;
-                
             case 'scramble':
                 data = wordbankService.buildScrambleData(filters);
                 break;
-                
-            // Standalone exercises
             case 'clockMatching':
                 data = this.filterByDifficulty(clockMatchingData, difficulty);
                 break;
-                
             case 'timeSequencing':
                 data = this.filterByDifficulty(timeSequencingData, difficulty);
                 break;
-                
             case 'timeOrdering':
                 data = this.filterByDifficulty(timeOrderingData, difficulty);
                 break;
-                
             case 'workingMemory':
                 data = this.filterByDifficulty(workingMemoryData, difficulty);
                 break;
-                
             default:
                 console.warn(`Unknown exercise type: ${type}`);
                 data = [];
         }
         
-        // Merge with custom exercises if any
         const customData = await this.getCustomExerciseData(type, difficulty);
         if (customData.length > 0) {
             data = [...data, ...customData];
@@ -299,9 +275,6 @@ class App {
         return data;
     }
     
-    /**
-     * Get custom exercises for a type
-     */
     async getCustomExerciseData(type, difficulty) {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
@@ -314,9 +287,6 @@ class App {
         return customData;
     }
     
-    /**
-     * Filter standalone data by difficulty
-     */
     filterByDifficulty(data, difficulty) {
         if (!difficulty || difficulty === 'all') return [...data];
         return data.filter(item => !item.difficulty || item.difficulty === difficulty);
@@ -332,60 +302,76 @@ class App {
         
         this.currentExercise = exerciseFactory.create(type);
         this.currentExercise.mode = mode;
-        await this.currentExercise.init(data, this.container);
+        await this.currentExercise.init(data, this.container, { 
+            originPage: this.currentPage 
+        });
     }
     
-    async startTestExercise({ exerciseType, difficulty, questions }) {
-        const filters = { difficulty };
+    async startTestExercise({ exerciseType, difficulty, questions, wordList, isRetake, originalTestId, originPage }) {
         let data = [];
         
-        switch (exerciseType) {
-            case 'naming':
-            case 'listening':
-            case 'typing':
-                data = wordbankService.buildNamingData(filters);
-                break;
-            case 'category':
-                data = wordbankService.buildCategoryData(filters);
-                break;
-            case 'rhyming':
-                data = wordbankService.buildRhymingData(filters);
-                break;
-            case 'firstSound':
-                data = wordbankService.buildFirstSoundData(filters);
-                break;
-            case 'association':
-                data = wordbankService.buildAssociationData(filters);
-                break;
-            case 'synonyms':
-                data = wordbankService.buildSynonymData(filters);
-                break;
-            case 'definitions':
-                data = wordbankService.buildDefinitionData(filters);
-                break;
-            case 'speaking':
-                data = wordbankService.buildSpeakingData(filters);
-                break;
-            case 'sentenceTyping':
-                data = wordbankService.buildSentenceData(filters);
-                break;
-            case 'scramble':
-                data = wordbankService.buildScrambleData(filters);
-                break;
-            case 'clockMatching':
-                data = this.filterByDifficulty(clockMatchingData, difficulty);
-                break;
-            case 'timeSequencing':
-                data = this.filterByDifficulty(timeSequencingData, difficulty);
-                break;
-            case 'timeOrdering':
-                data = this.filterByDifficulty(timeOrderingData, difficulty);
-                break;
-            case 'workingMemory':
-                data = this.filterByDifficulty(workingMemoryData, difficulty);
-                break;
-            default:
-                data = [];
+        // Track origin page - default to assessment if not specified
+        const testOriginPage = originPage || this.currentPage || 'assessment';
+        
+        // If this is a retake with a specific word list, use that
+        if (isRetake && wordList && wordList.length > 0) {
+            data = await this.rebuildTestDataFromWordList(exerciseType, wordList, difficulty);
+            console.log(`Retake: rebuilt ${data.length} items from word list of ${wordList.length}`);
+        } else {
+            // Normal test - get new data
+            const filters = { difficulty };
+            
+            switch (exerciseType) {
+                case 'naming':
+                case 'listening':
+                case 'typing':
+                    data = wordbankService.buildNamingData(filters);
+                    break;
+                case 'category':
+                    data = wordbankService.buildCategoryData(filters);
+                    break;
+                case 'rhyming':
+                    data = wordbankService.buildRhymingData(filters);
+                    break;
+                case 'firstSound':
+                    data = wordbankService.buildFirstSoundData(filters);
+                    break;
+                case 'association':
+                    data = wordbankService.buildAssociationData(filters);
+                    break;
+                case 'synonyms':
+                    data = wordbankService.buildSynonymData(filters);
+                    break;
+                case 'definitions':
+                    data = wordbankService.buildDefinitionData(filters);
+                    break;
+                case 'speaking':
+                    data = wordbankService.buildSpeakingData(filters);
+                    break;
+                case 'sentenceTyping':
+                    data = wordbankService.buildSentenceData(filters);
+                    break;
+                case 'scramble':
+                    data = wordbankService.buildScrambleData(filters);
+                    break;
+                case 'clockMatching':
+                    data = this.filterByDifficulty(clockMatchingData, difficulty);
+                    break;
+                case 'timeSequencing':
+                    data = this.filterByDifficulty(timeSequencingData, difficulty);
+                    break;
+                case 'timeOrdering':
+                    data = this.filterByDifficulty(timeOrderingData, difficulty);
+                    break;
+                case 'workingMemory':
+                    data = this.filterByDifficulty(workingMemoryData, difficulty);
+                    break;
+                default:
+                    data = [];
+            }
+            
+            // Randomize and limit to question count
+            data = this.shuffleArray(data).slice(0, questions);
         }
         
         if (!data || data.length === 0) {
@@ -393,15 +379,89 @@ class App {
             return;
         }
         
-        // Randomize and limit to question count
-        data = this.shuffleArray(data).slice(0, questions);
-        
         const testContainer = document.getElementById('test-exercise-container');
         const exerciseContainer = testContainer || this.container;
         
         this.currentExercise = exerciseFactory.create(exerciseType);
         this.currentExercise.mode = 'test';
-        await this.currentExercise.init(data, exerciseContainer);
+        
+        await this.currentExercise.init(data, exerciseContainer, { 
+            originPage: testOriginPage,
+            isRetake,
+            originalTestId 
+        });
+    }
+    
+    /**
+     * Rebuild test data from a word list (for retakes)
+     */
+    async rebuildTestDataFromWordList(exerciseType, wordList, difficulty) {
+        // Get all available data for this exercise type (no difficulty filter for retakes)
+        let allData = [];
+        
+        switch (exerciseType) {
+            case 'naming':
+            case 'listening':
+            case 'typing':
+                allData = wordbankService.buildNamingData({});
+                break;
+            case 'category':
+                allData = wordbankService.buildCategoryData({});
+                break;
+            case 'rhyming':
+                allData = wordbankService.buildRhymingData({});
+                break;
+            case 'firstSound':
+                allData = wordbankService.buildFirstSoundData({});
+                break;
+            case 'association':
+                allData = wordbankService.buildAssociationData({});
+                break;
+            case 'synonyms':
+                allData = wordbankService.buildSynonymData({});
+                break;
+            case 'definitions':
+                allData = wordbankService.buildDefinitionData({});
+                break;
+            case 'speaking':
+                allData = wordbankService.buildSpeakingData({});
+                break;
+            case 'sentenceTyping':
+                allData = wordbankService.buildSentenceData({});
+                break;
+            case 'scramble':
+                allData = wordbankService.buildScrambleData({});
+                break;
+            case 'clockMatching':
+                allData = [...clockMatchingData];
+                break;
+            case 'timeSequencing':
+                allData = [...timeSequencingData];
+                break;
+            case 'timeOrdering':
+                allData = [...timeOrderingData];
+                break;
+            case 'workingMemory':
+                allData = [...workingMemoryData];
+                break;
+        }
+        
+        // Filter to only include items from the word list, maintaining order
+        const rebuiltData = [];
+        for (const wordId of wordList) {
+            const item = allData.find(d => {
+                // Try multiple possible ID fields
+                const itemId = d.id || d.word || d.text || d.answer || d.target;
+                return itemId === wordId;
+            });
+            if (item) {
+                rebuiltData.push(item);
+            } else {
+                console.warn(`Could not find item for wordId: ${wordId}`);
+            }
+        }
+        
+        return rebuiltData;
     }
     
     showNoDataMessage(type) {

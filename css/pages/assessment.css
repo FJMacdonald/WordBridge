@@ -174,3 +174,40 @@
         grid-template-columns: 1fr;
     }
 }
+.test-option-card {
+    min-height: 140px;
+    padding: var(--space-sm);
+}
+
+.test-option-card .exercise-icon {
+    font-size: 1.5rem;
+}
+
+.test-option-card .exercise-name {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--space-xs);
+}
+
+/* Test Controls */
+.test-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    width: 100%;
+    margin-top: auto;
+}
+
+.compact-select {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn--compact {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-sm);
+}

@@ -14,347 +14,10 @@
     --color-primary: #0000cc;
 }
 
-.home-page {
-    text-align: center;
-    padding: var(--space-md) 0;
-}
+/* Home Page & Test Mode Page - Consistent Card Styling */
 
-.home-subtitle {
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-md);
-}
-
-.home-actions {
-    margin-bottom: var(--space-lg);
-}
-
-.exercise-categories {
-    text-align: left;
-}
-
-.category-section {
-    margin-bottom: var(--space-lg);
-}
-
-.category-title {
-    font-size: var(--font-size-base);
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-md);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--color-border);
-}
-
-.exercise-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: var(--space-sm);
-}
-
-.exercise-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-lg);
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.exercise-card:hover {
-    border-color: var(--color-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.exercise-icon {
-    font-size: 2rem;
-}
-
-.exercise-name {
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    text-align: center;
-}
-
-/* Assessment Results Grid */
-.assessment-breakdown {
-    margin: var(--space-2xl) 0;
-    text-align: left;
-}
-
-.assessment-breakdown h3 {
-    text-align: center;
-    margin-bottom: var(--space-xl);
-}
-
-.exercise-results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: var(--space-lg);
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.exercise-result-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-lg);
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    transition: all var(--transition-fast);
-}
-
-.exercise-result-card.has-result {
-    border-color: var(--color-success);
-    background: var(--color-success-surface);
-}
-
-.exercise-result-card.no-result {
-    opacity: 0.5;
-    border-style: dashed;
-}
-
-.exercise-result-card .card-icon {
-    font-size: 2rem;
-}
-
-.exercise-result-card .card-name {
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    text-align: center;
-}
-
-.card-score {
-    text-align: center;
-}
-
-.card-score .score {
-    display: block;
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-    color: var(--color-success);
-}
-
-.card-score .accuracy {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-}
-
-.card-time {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-}
-
-.card-empty {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-    font-style: italic;
-}
-
-.overall-score {
-    margin: var(--space-lg) 0;
-}
-
-.score-display {
-    display: inline-block;
-    padding: var(--space-md) var(--space-xl);
-    background: var(--color-primary-surface);
-    border: 2px solid var(--color-primary);
-    border-radius: var(--radius-lg);
-}
-
-.score-value {
-    display: block;
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-    color: var(--color-primary);
-}
-
-.score-label {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-}
-
-.assessment-actions {
-    display: flex;
-    gap: var(--space-lg);
-    justify-content: center;
-    margin-top: var(--space-2xl);
-}
-
-/* Results page */
-.exercise-complete,
-.assessment-complete {
-    text-align: center;
-    padding: var(--space-2xl) 0;
-}
-
-.results-stats {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-xl);
-    margin: var(--space-2xl) 0;
-}
-
-.stat {
-    text-align: center;
-}
-
-.stat-value {
-    display: block;
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-    color: var(--color-primary);
-}
-
-.stat-label {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-}
-
-.results-actions {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    max-width: 300px;
-    margin: 0 auto;
-}
-
-/* Speaking exercise */
-.speaking-actions {
-    display: flex;
-    gap: var(--space-md);
-    justify-content: center;
-    margin-top: var(--space-xl);
-}
-
-.btn--success {
-    background: var(--color-success);
-    color: white;
-}
-
-.btn--success:hover {
-    background: #4a9c4a;
-}
-
-.btn--error {
-    background: var(--color-error);
-    color: white;
-}
-
-.btn--error:hover {
-    background: #c0413d;
-}
-
-.hint-area {
-    min-height: 80px;
-}
-
-.hint-item {
-    padding: var(--space-md);
-    margin: var(--space-sm) 0;
-    border-radius: var(--radius-md);
-    background: var(--color-primary-light);
-}
-
-.hint-letters {
-    font-size: var(--font-size-xl);
-    font-family: monospace;
-    letter-spacing: 0.3em;
-}
-
-.hint-phrase {
-    font-style: italic;
-}
-
-.hint-answer {
-    background: var(--color-success-light);
-    font-weight: bold;
-}
-
-.hint-answer.revealed {
-    font-size: var(--font-size-lg);
-}
-
-/* Synonym badge */
-.synonym-type-badge {
-    display: inline-block;
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-full);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    margin-bottom: var(--space-md);
-}
-
-.synonym-type-badge.synonym {
-    background: var(--color-success-light);
-    color: var(--color-success);
-}
-
-.synonym-type-badge.antonym {
-    background: var(--color-error-light);
-    color: var(--color-error);
-}
-
-/* Definition prompt */
-.prompt-definition {
-    font-size: var(--font-size-lg);
-    font-style: italic;
-    padding: var(--space-lg);
-    background: var(--color-surface);
-    border-left: 4px solid var(--color-primary);
-    border-radius: var(--radius-md);
-    margin: var(--space-lg) 0;
-}
-
-/* Category prompt */
-.prompt-category {
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-    color: var(--color-primary);
-    padding: var(--space-md);
-    background: var(--color-primary-light);
-    border-radius: var(--radius-lg);
-    display: inline-block;
-}
-
-/* Target word */
-.prompt-target-word {
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-    margin: var(--space-lg) 0;
-}
-
-/* Listening exercise */
-.option-btn--emoji {
-    padding: var(--space-lg);
-}
-
-.option-emoji-large {
-    font-size: 3rem;
-}
-
-/* Page container */
-.page {
-    text-align: center;
-    padding: var(--space-xl) 0;
-}
-
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-xl);
-}
-/* Home Page Styles */
-
-.home-page {
+.home-page,
+.test-mode-page {
     padding: var(--space-lg) 0;
 }
 
@@ -372,6 +35,36 @@
     color: var(--color-text-muted);
 }
 
+/* Test Instructions - Collapsible */
+.test-instructions {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-xl);
+    overflow: hidden;
+}
+
+.test-instructions summary {
+    padding: var(--space-md) var(--space-lg);
+    cursor: pointer;
+    user-select: none;
+}
+
+.test-instructions summary:hover {
+    background: var(--color-background);
+}
+
+.test-instructions ul {
+    margin: 0;
+    padding: var(--space-sm) var(--space-lg) var(--space-lg) var(--space-2xl);
+}
+
+.test-instructions li {
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-muted);
+}
+
+/* Category Grid */
 .category-grid {
     display: grid;
     gap: var(--space-xl);
@@ -384,40 +77,7 @@
     }
 }
 
-/* Desktop optimizations for better space utilization */
-@media (min-width: 1024px) {
-    .home-page {
-        padding: var(--space-sm) 0;
-    }
-    
-    .exercise-btn {
-        padding: var(--space-md) var(--space-sm);
-        min-height: 70px;
-    }
-    
-    .exercise-list {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    }
-    
-    .category-section {
-        margin-bottom: var(--space-md);
-    }
-    
-    .category-title {
-        margin-bottom: var(--space-sm);
-        padding-bottom: var(--space-xs);
-    }
-    
-    .category-grid {
-        gap: var(--space-lg);
-        margin-bottom: var(--space-lg);
-    }
-    
-    .category-card {
-        padding: var(--space-md);
-    }
-}
-
+/* Category Card */
 .category-card {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -440,24 +100,29 @@
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    margin: 0;
 }
 
 .category-icon {
     font-size: 1.5rem;
 }
 
+/* Exercise Grid - Consistent Heights */
 .exercise-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
 }
 
+/* Exercise Card - Fixed Height */
 .exercise-card {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: var(--space-xs);
     padding: var(--space-md);
+    min-height: 100px; /* Ensure consistent height */
     background: var(--color-background);
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -466,79 +131,31 @@
     text-align: center;
 }
 
-.exercise-card:hover {
+.exercise-card:hover:not(.disabled) {
     border-color: var(--color-primary);
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
 
+.exercise-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .exercise-icon {
     font-size: 1.75rem;
+    flex-shrink: 0;
 }
 
 .exercise-name {
     font-size: var(--font-size-sm);
     font-weight: 500;
+    line-height: 1.2;
 }
 
-/* Custom exercises section */
-.custom-section {
-    background: var(--color-surface);
-    border: 2px dashed var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    text-align: center;
-}
-
-.add-custom-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-md) var(--space-lg);
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-full);
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.add-custom-btn:hover {
-    background: var(--color-primary-dark);
-    transform: scale(1.05);
-}
-
-.add-icon {
-    font-size: 1.5rem;
-}
-
-.custom-info {
-    margin-top: var(--space-md);
+.exercise-unavailable {
+    font-size: var(--font-size-xs);
     color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+    font-style: italic;
 }
 
-/* Floating add button alternative */
-.fab-add {
-    position: fixed;
-    bottom: calc(70px + var(--space-lg));
-    right: var(--space-lg);
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    font-size: 1.5rem;
-    box-shadow: var(--shadow-lg);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    z-index: 100;
-}
-
-.fab-add:hover {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-xl);
-}

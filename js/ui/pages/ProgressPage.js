@@ -1,14 +1,15 @@
-// ui/pages/ProgressPage.js - Mirrors home page layout with exercise cards
-import { t } from '../../core/i18n.js';
+// ui/pages/ProgressPage.js - With test retake and comparison functionality
+import { t, i18n } from '../../core/i18n.js';
 import assessmentService from '../../services/AssessmentService.js';
 import pdfService from '../../services/PDFService.js';
 import storageService from '../../services/StorageService.js';
-import { i18n } from '../../core/i18n.js';
 
 class ProgressPage {
     constructor(container) {
         this.container = container;
         this.selectedTests = [];
+        this.currentTests = [];
+        this.currentExerciseType = null;
     }
     
     /**
@@ -24,19 +25,19 @@ class ProgressPage {
         
         const categoryInfo = {
             words: {
-                name: t('home.categories.words'),
+                name: t('home.categories.words') || 'Words',
                 icon: '📚'
             },
             phonetics: {
-                name: t('home.categories.phonetics'),
+                name: t('home.categories.phonetics') || 'Phonetics',
                 icon: '🔊'
             },
             meaning: {
-                name: t('home.categories.meaning'),
+                name: t('home.categories.meaning') || 'Meaning',
                 icon: '💡'
             },
             time: {
-                name: t('home.categories.time'),
+                name: t('home.categories.time') || 'Time',
                 icon: '⏰'
             }
         };
@@ -71,10 +72,10 @@ class ProgressPage {
         this.container.innerHTML = `
             <div class="progress-page">
                 <header class="page-header">
-                    <h2>${t('progress.title')}</h2>
+                    <h2>${t('progress.title') || 'Your Progress'}</h2>
                     <div class="header-actions">
                         <button class="btn btn--primary" id="export-report-btn">
-                            📊 ${t('progress.viewReport')}
+                            📊 ${t('progress.viewReport') || 'View Report'}
                         </button>
                     </div>
                 </header>
@@ -99,7 +100,7 @@ class ProgressPage {
                                 <button class="exercise-card progress-card" 
                                         data-type="${ex.type}">
                                     <span class="exercise-icon">${ex.icon}</span>
-                                    <span class="exercise-name">${t('exercises.' + ex.type + '.name')}</span>
+                                    <span class="exercise-name">${t('exercises.' + ex.type + '.name') || ex.type}</span>
                                     <div class="exercise-mini-stats" id="mini-stats-${ex.type}">
                                         <span class="loading-dots">...</span>
                                     </div>
@@ -113,9 +114,17 @@ class ProgressPage {
                 
                 <!-- Exercise Detail Modal -->
                 <div class="modal-overlay hidden" id="exercise-modal">
-                    <div class="modal-content">
+                    <div class="modal-content modal-large">
                         <button class="modal-close" id="close-modal">&times;</button>
                         <div id="modal-body"></div>
+                    </div>
+                </div>
+                
+                <!-- Comparison Modal -->
+                <div class="modal-overlay hidden" id="comparison-modal">
+                    <div class="modal-content modal-large">
+                        <button class="modal-close" id="close-comparison-modal">&times;</button>
+                        <div id="comparison-modal-body"></div>
                     </div>
                 </div>
             </div>
@@ -164,23 +173,23 @@ class ProgressPage {
             <div class="summary-stats">
                 <div class="summary-stat">
                     <span class="stat-value">${totalAttempts}</span>
-                    <span class="stat-label">${t('progress.totalQuestions')}</span>
+                    <span class="stat-label">${t('progress.totalQuestions') || 'Questions'}</span>
                 </div>
                 <div class="summary-stat">
                     <span class="stat-value">${overallAccuracy}%</span>
-                    <span class="stat-label">${t('progress.accuracy')}</span>
+                    <span class="stat-label">${t('progress.accuracy') || 'Accuracy'}</span>
                 </div>
                 <div class="summary-stat">
                     <span class="stat-value">${this.formatTime(totalTime)}</span>
-                    <span class="stat-label">${t('progress.totalTime')}</span>
+                    <span class="stat-label">${t('progress.totalTime') || 'Time'}</span>
                 </div>
                 <div class="summary-stat">
                     <span class="stat-value">${testSessions}</span>
-                    <span class="stat-label">${t('progress.testsTaken')}</span>
+                    <span class="stat-label">${t('progress.testsTaken') || 'Tests'}</span>
                 </div>
                 <div class="summary-stat">
                     <span class="stat-value">${practiceSessions}</span>
-                    <span class="stat-label">${t('progress.practiceSessions')}</span>
+                    <span class="stat-label">${t('progress.practiceSessions') || 'Practice'}</span>
                 </div>
             </div>
         `;
@@ -188,7 +197,7 @@ class ProgressPage {
     
     renderExerciseCards() {
         const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
-        const testHistory = storageService.get(this.getStorageKey('testHistory'), {}); // Add this
+        const testHistory = storageService.get(this.getStorageKey('testHistory'), {});
         const assessmentHistory = assessmentService.getAssessmentHistory();
         
         // Group sessions by exercise type
@@ -215,20 +224,21 @@ class ProgressPage {
             if (session.mode === 'test') {
                 statsByType[type].testSessions++;
                 statsByType[type].tests.push({
-                    id: session.id,
+                    id: session.id || `session_${session.date}`,
                     date: session.date,
                     correct: session.correct,
                     total: session.total,
                     accuracy: session.accuracy,
-                    wordList: session.wordList,
-                    attempts: session.attempts
+                    wordList: session.wordList || [],
+                    attempts: session.attempts || [],
+                    difficulty: session.difficulty || 'easy'
                 });
             } else {
                 statsByType[type].practiceSessions++;
             }
         });
         
-        // ALSO process dedicated test history (in case sessionHistory didn't capture it)
+        // Also process dedicated test history
         Object.entries(testHistory).forEach(([exerciseType, tests]) => {
             if (!statsByType[exerciseType]) {
                 statsByType[exerciseType] = {
@@ -242,7 +252,6 @@ class ProgressPage {
             }
             
             tests.forEach(test => {
-                // Check if this test is already in the tests array (avoid duplicates)
                 const exists = statsByType[exerciseType].tests.some(t => t.id === test.id);
                 if (!exists) {
                     statsByType[exerciseType].testSessions++;
@@ -252,8 +261,9 @@ class ProgressPage {
                         correct: test.correct,
                         total: test.total,
                         accuracy: test.accuracy,
-                        wordList: test.wordList,
-                        attempts: test.attempts
+                        wordList: test.wordList || [],
+                        attempts: test.attempts || [],
+                        difficulty: test.difficulty || 'easy'
                     });
                 }
             });
@@ -274,7 +284,6 @@ class ProgressPage {
                     };
                 }
                 
-                // Check for duplicates
                 const exists = statsByType[type].tests.some(t => t.id === assessment.id);
                 if (!exists) {
                     statsByType[type].testSessions++;
@@ -283,7 +292,10 @@ class ProgressPage {
                         date: assessment.date,
                         correct: assessment.results?.overallScore || 0,
                         total: assessment.results?.totalQuestions || 10,
-                        accuracy: assessment.results?.accuracy || 0
+                        accuracy: assessment.results?.accuracy || 0,
+                        wordList: assessment.wordList || [],
+                        attempts: assessment.attempts || [],
+                        difficulty: assessment.metadata?.difficulty || 'easy'
                     });
                 }
             }
@@ -305,7 +317,7 @@ class ProgressPage {
             
             if (!stats || stats.attempts === 0) {
                 container.innerHTML = `
-                    <span class="no-data">${t('progress.noData')}</span>
+                    <span class="no-data">${t('progress.noData') || 'No data'}</span>
                 `;
             } else {
                 const accuracy = stats.attempts > 0 
@@ -316,150 +328,188 @@ class ProgressPage {
                 
                 container.innerHTML = `
                     <span class="mini-accuracy ${accuracyClass}">${accuracy}%</span>
-                    <span class="mini-count">${stats.attempts} ${t('progress.questions')}</span>
+                    <span class="mini-count">${stats.attempts} ${t('progress.questions') || 'Q'}</span>
                 `;
             }
         });
+        
+        // Store for later use
+        this.statsByType = statsByType;
     }
     
     showExerciseDetail(exerciseType) {
         const modal = document.getElementById('exercise-modal');
         const modalBody = document.getElementById('modal-body');
         
+        this.currentExerciseType = exerciseType;
+        
         // Get stats for this exercise
-        const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
-        const assessmentHistory = assessmentService.getAssessmentHistory();
+        const stats = this.statsByType?.[exerciseType] || this.getExerciseStats(exerciseType);
         
-        // Filter for this exercise
-        const exerciseSessions = sessionHistory.filter(s => s.exerciseType === exerciseType);
-        const exerciseAssessments = assessmentHistory.filter(a => 
-            a.metadata?.exerciseType === exerciseType || 
-            a.results?.exerciseType === exerciseType
-        );
-        
-        // Calculate stats
-        let totalAttempts = 0;
-        let totalCorrect = 0;
-        let totalTime = 0;
-        let practiceSessions = 0;
-        let testSessions = 0;
-        const tests = [];
-        
-        exerciseSessions.forEach(session => {
-            totalAttempts += session.total || 0;
-            totalCorrect += session.correct || 0;
-            totalTime += session.activeTime || session.duration || 0;
-            
-            if (session.mode === 'test') {
-                testSessions++;
-                tests.push({
-                    id: session.id,
-                    date: session.date,
-                    correct: session.correct,
-                    total: session.total,
-                    accuracy: session.accuracy,
-                    wordList: session.wordList,
-                    attempts: session.attempts
-                });
-            } else {
-                practiceSessions++;
-            }
-        });
-        
-        // Add assessments as tests
-        exerciseAssessments.forEach(assessment => {
-            testSessions++;
-            tests.push({
-                id: assessment.id,
-                date: assessment.date,
-                correct: assessment.results?.overallScore || 0,
-                total: assessment.results?.totalQuestions || 10,
-                accuracy: assessment.results?.accuracy || 0
-            });
-        });
-        
-        const accuracy = totalAttempts > 0 
-            ? Math.round((totalCorrect / totalAttempts) * 100) 
+        const accuracy = stats.attempts > 0 
+            ? Math.round((stats.correct / stats.attempts) * 100) 
             : 0;
         
         // Sort tests by date (newest first)
-        tests.sort((a, b) => (b.date || 0) - (a.date || 0));
+        const tests = [...(stats.tests || [])].sort((a, b) => (b.date || 0) - (a.date || 0));
+        this.currentTests = tests;
         
         modalBody.innerHTML = `
-            <h2>${t('exercises.' + exerciseType + '.name')}</h2>
+            <h2>${t('exercises.' + exerciseType + '.name') || exerciseType}</h2>
             
             <div class="detail-stats-grid">
                 <div class="detail-stat">
-                    <span class="stat-value">${totalAttempts}</span>
-                    <span class="stat-label">${t('progress.totalQuestions')}</span>
+                    <span class="stat-value">${stats.attempts || 0}</span>
+                    <span class="stat-label">${t('progress.totalQuestions') || 'Questions'}</span>
                 </div>
                 <div class="detail-stat">
                     <span class="stat-value">${accuracy}%</span>
-                    <span class="stat-label">${t('progress.accuracy')}</span>
+                    <span class="stat-label">${t('progress.accuracy') || 'Accuracy'}</span>
                 </div>
                 <div class="detail-stat">
-                    <span class="stat-value">${this.formatTime(totalTime)}</span>
-                    <span class="stat-label">${t('progress.totalTime')}</span>
+                    <span class="stat-value">${this.formatTime(stats.time || 0)}</span>
+                    <span class="stat-label">${t('progress.totalTime') || 'Time'}</span>
                 </div>
                 <div class="detail-stat">
-                    <span class="stat-value">${practiceSessions}</span>
-                    <span class="stat-label">${t('progress.practiceSessions')}</span>
+                    <span class="stat-value">${stats.practiceSessions || 0}</span>
+                    <span class="stat-label">${t('progress.practiceSessions') || 'Practice'}</span>
                 </div>
             </div>
             
-            <h3>${t('progress.testHistory')} (${testSessions})</h3>
-            
-            ${tests.length === 0 ? `
-                <div class="empty-state">
-                    <p>${t('progress.noTestsYet')}</p>
-                    <button class="btn btn--primary" id="take-test-btn" data-type="${exerciseType}">
-                        ${t('progress.takeTest')}
-                    </button>
-                </div>
-            ` : `
-                <div class="test-list">
-                    ${tests.slice(0, 10).map((test, index) => {
-                        const dateStr = test.date ? new Date(test.date).toLocaleDateString() : t('progress.unknownDate');
-                        const accuracyClass = test.accuracy >= 80 ? 'good' : test.accuracy >= 60 ? 'ok' : 'needs-work';
-                        
-                        return `
-                            <div class="test-item" data-test-index="${index}">
-                                <div class="test-info">
-                                    <span class="test-date">${dateStr}</span>
-                                    <span class="test-score">${test.correct}/${test.total}</span>
-                                    <span class="test-accuracy ${accuracyClass}">${test.accuracy}%</span>
-                                </div>
-                                ${index > 0 ? `
-                                    <button class="btn btn--small btn--ghost compare-btn" 
-                                            data-test1="${index - 1}" data-test2="${index}">
-                                        ${t('progress.compare')}
-                                    </button>
-                                ` : ''}
-                            </div>
-                        `;
-                    }).join('')}
+            <div class="test-history-section">
+                <div class="section-header">
+                    <h3>${t('progress.testHistory') || 'Test History'} (${tests.length})</h3>
+                    ${tests.length >= 2 ? `
+                        <button class="btn btn--small btn--secondary" id="compare-mode-btn">
+                            📊 ${t('progress.compareTests') || 'Compare Tests'}
+                        </button>
+                    ` : ''}
                 </div>
                 
-                <div class="comparison-area hidden" id="comparison-area"></div>
-            `}
+                ${tests.length === 0 ? `
+                    <div class="empty-state">
+                        <p>${t('progress.noTestsYet') || 'No tests taken yet for this exercise.'}</p>
+                        <button class="btn btn--primary" id="take-test-btn" data-type="${exerciseType}">
+                            ${t('progress.takeTest') || 'Take Test'}
+                        </button>
+                    </div>
+                ` : `
+                    <div class="test-selection-hint hidden" id="selection-hint">
+                        <p>📌 Select two tests to compare, then click "Compare Selected"</p>
+                        <button class="btn btn--primary btn--small" id="compare-selected-btn" disabled>
+                            Compare Selected (0/2)
+                        </button>
+                        <button class="btn btn--ghost btn--small" id="cancel-compare-btn">
+                            Cancel
+                        </button>
+                    </div>
+                    
+                    <div class="test-list" id="test-list">
+                        ${tests.slice(0, 20).map((test, index) => {
+                            const dateStr = test.date ? new Date(test.date).toLocaleDateString() : (t('progress.unknownDate') || 'Unknown date');
+                            const timeStr = test.date ? new Date(test.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
+                            const accuracyClass = test.accuracy >= 80 ? 'good' : test.accuracy >= 60 ? 'ok' : 'needs-work';
+                            const hasWordList = test.wordList && test.wordList.length > 0;
+                            
+                            return `
+                                <div class="test-item ${hasWordList ? 'retakeable' : ''}" 
+                                     data-test-index="${index}"
+                                     data-test-id="${test.id}">
+                                    <div class="test-checkbox hidden">
+                                        <input type="checkbox" id="test-check-${index}" data-index="${index}">
+                                    </div>
+                                    <div class="test-info">
+                                        <div class="test-date-time">
+                                            <span class="test-date">${dateStr}</span>
+                                            <span class="test-time">${timeStr}</span>
+                                        </div>
+                                        <div class="test-results">
+                                            <span class="test-score">${test.correct}/${test.total}</span>
+                                            <span class="test-accuracy ${accuracyClass}">${test.accuracy}%</span>
+                                        </div>
+                                    </div>
+                                    <div class="test-actions">
+                                        ${hasWordList ? `
+                                            <button class="btn btn--small btn--primary retake-btn" 
+                                                    data-test-index="${index}"
+                                                    title="${t('progress.retakeTest') || 'Retake this exact test'}">
+                                                🔄 ${t('progress.retake') || 'Retake'}
+                                            </button>
+                                        ` : `
+                                            <span class="no-retake-hint" title="Word list not saved">
+                                                ⚠️
+                                            </span>
+                                        `}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `}
+            </div>
             
             <div class="modal-actions">
                 <button class="btn btn--secondary" id="practice-btn" data-type="${exerciseType}">
-                    ${t('progress.practice')}
+                    ${t('progress.practice') || 'Practice'}
                 </button>
-                <button class="btn btn--primary" id="test-btn" data-type="${exerciseType}">
-                    ${t('progress.takeTest')}
+                <button class="btn btn--primary" id="new-test-btn" data-type="${exerciseType}">
+                    ${t('progress.takeNewTest') || 'New Test'}
                 </button>
             </div>
         `;
-        
-        // Store tests data for comparison
-        this.currentTests = tests;
         
         // Attach modal listeners
         this.attachModalListeners(exerciseType);
         
         modal.classList.remove('hidden');
+    }
+    
+    getExerciseStats(exerciseType) {
+        const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
+        const testHistory = storageService.get(this.getStorageKey('testHistory'), {});
+        
+        const stats = {
+            attempts: 0,
+            correct: 0,
+            time: 0,
+            practiceSessions: 0,
+            testSessions: 0,
+            tests: []
+        };
+        
+        // Process sessions
+        sessionHistory.filter(s => s.exerciseType === exerciseType).forEach(session => {
+            stats.attempts += session.total || 0;
+            stats.correct += session.correct || 0;
+            stats.time += session.activeTime || session.duration || 0;
+            
+            if (session.mode === 'test') {
+                stats.testSessions++;
+                stats.tests.push({
+                    id: session.id || `session_${session.date}`,
+                    date: session.date,
+                    correct: session.correct,
+                    total: session.total,
+                    accuracy: session.accuracy,
+                    wordList: session.wordList || [],
+                    attempts: session.attempts || [],
+                    difficulty: session.difficulty || 'easy'
+                });
+            } else {
+                stats.practiceSessions++;
+            }
+        });
+        
+        // Process test history
+        const exerciseTests = testHistory[exerciseType] || [];
+        exerciseTests.forEach(test => {
+            const exists = stats.tests.some(t => t.id === test.id);
+            if (!exists) {
+                stats.tests.push(test);
+            }
+        });
+        
+        return stats;
     }
     
     attachModalListeners(exerciseType) {
@@ -472,10 +522,10 @@ class ProgressPage {
             });
         }
         
-        // Test button
-        const testBtn = document.getElementById('test-btn');
-        if (testBtn) {
-            testBtn.addEventListener('click', () => {
+        // New test button
+        const newTestBtn = document.getElementById('new-test-btn');
+        if (newTestBtn) {
+            newTestBtn.addEventListener('click', () => {
                 document.getElementById('exercise-modal').classList.add('hidden');
                 window.dispatchEvent(new CustomEvent('startTest', {
                     detail: {
@@ -502,49 +552,325 @@ class ProgressPage {
             });
         }
         
-        // Compare buttons
-        document.querySelectorAll('.compare-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx1 = parseInt(btn.dataset.test1);
-                const idx2 = parseInt(btn.dataset.test2);
-                this.showComparison(idx1, idx2);
+        // Retake buttons
+        document.querySelectorAll('.retake-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const index = parseInt(btn.dataset.testIndex);
+                this.retakeTest(index);
+            });
+        });
+        
+        // Compare mode button
+        const compareModeBtn = document.getElementById('compare-mode-btn');
+        if (compareModeBtn) {
+            compareModeBtn.addEventListener('click', () => {
+                this.enterCompareMode();
+            });
+        }
+        
+        // Cancel compare button
+        const cancelCompareBtn = document.getElementById('cancel-compare-btn');
+        if (cancelCompareBtn) {
+            cancelCompareBtn.addEventListener('click', () => {
+                this.exitCompareMode();
+            });
+        }
+        
+        // Compare selected button
+        const compareSelectedBtn = document.getElementById('compare-selected-btn');
+        if (compareSelectedBtn) {
+            compareSelectedBtn.addEventListener('click', () => {
+                this.compareSelectedTests();
+            });
+        }
+    }
+    
+    enterCompareMode() {
+        this.selectedTests = [];
+        
+        // Show checkboxes
+        document.querySelectorAll('.test-checkbox').forEach(el => {
+            el.classList.remove('hidden');
+        });
+        
+        // Show hint
+        document.getElementById('selection-hint')?.classList.remove('hidden');
+        
+        // Hide compare mode button
+        document.getElementById('compare-mode-btn')?.classList.add('hidden');
+        
+        //  checkbox listeners
+        document.querySelectorAll('.test-checkbox input').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                this.handleTestSelection(e.target);
             });
         });
     }
     
-    showComparison(idx1, idx2) {
-        const test1 = this.currentTests[idx1];
-        const test2 = this.currentTests[idx2];
+    exitCompareMode() {
+        this.selectedTests = [];
         
-        if (!test1 || !test2) return;
+        // Hide checkboxes
+        document.querySelectorAll('.test-checkbox').forEach(el => {
+            el.classList.add('hidden');
+        });
         
-        const comparisonArea = document.getElementById('comparison-area');
+        // Uncheck all
+        document.querySelectorAll('.test-checkbox input').forEach(cb => {
+            cb.checked = false;
+        });
         
-        const improvement = test1.accuracy - test2.accuracy;
+        // Hide hint
+        document.getElementById('selection-hint')?.classList.add('hidden');
+        
+        // Show compare mode button
+        document.getElementById('compare-mode-btn')?.classList.remove('hidden');
+    }
+    
+    handleTestSelection(checkbox) {
+        const index = parseInt(checkbox.dataset.index);
+        
+        if (checkbox.checked) {
+            if (this.selectedTests.length < 2) {
+                this.selectedTests.push(index);
+            } else {
+                checkbox.checked = false;
+                return;
+            }
+        } else {
+            this.selectedTests = this.selectedTests.filter(i => i !== index);
+        }
+        
+        // Update button
+        const btn = document.getElementById('compare-selected-btn');
+        if (btn) {
+            btn.textContent = `Compare Selected (${this.selectedTests.length}/2)`;
+            btn.disabled = this.selectedTests.length !== 2;
+        }
+    }
+    
+    retakeTest(testIndex) {
+        const test = this.currentTests[testIndex];
+        
+        if (!test || !test.wordList || test.wordList.length === 0) {
+            alert(t('progress.cannotRetake') || 'Cannot retake this test - word list not saved.');
+            return;
+        }
+        
+        // Close modal
+        document.getElementById('exercise-modal').classList.add('hidden');
+        
+        // Start test with the same word list
+        window.dispatchEvent(new CustomEvent('startTest', {
+            detail: {
+                exerciseType: this.currentExerciseType,
+                difficulty: test.difficulty || 'easy',
+                questions: test.wordList.length,
+                wordList: test.wordList,
+                isRetake: true,
+                originalTestId: test.id,
+                originalTestDate: test.date,
+                originalScore: test.accuracy,
+                originPage: 'progress' // Track origin
+            }
+        }));
+    }
+    
+    compareSelectedTests() {
+        if (this.selectedTests.length !== 2) return;
+        
+        // Sort so older test is first
+        const sorted = [...this.selectedTests].sort((a, b) => {
+            const testA = this.currentTests[a];
+            const testB = this.currentTests[b];
+            return (testA.date || 0) - (testB.date || 0);
+        });
+        
+        const olderTest = this.currentTests[sorted[0]];
+        const newerTest = this.currentTests[sorted[1]];
+        
+        this.showComparisonModal(olderTest, newerTest);
+    }
+    
+    showComparisonModal(olderTest, newerTest) {
+        const modal = document.getElementById('comparison-modal');
+        const modalBody = document.getElementById('comparison-modal-body');
+        
+        const improvement = newerTest.accuracy - olderTest.accuracy;
         const improvementClass = improvement > 0 ? 'positive' : improvement < 0 ? 'negative' : 'neutral';
-        const improvementIcon = improvement > 0 ? '↑' : improvement < 0 ? '↓' : '→';
+        const improvementIcon = improvement > 0 ? '📈' : improvement < 0 ? '📉' : '➡️';
+        const improvementText = improvement > 0 ? `+${improvement}%` : `${improvement}%`;
         
-        comparisonArea.innerHTML = `
-            <h4>${t('progress.comparison')}</h4>
-            <div class="comparison-grid">
-                <div class="comparison-item">
-                    <span class="compare-label">${t('progress.newer')}</span>
-                    <span class="compare-date">${new Date(test1.date).toLocaleDateString()}</span>
-                    <span class="compare-score">${test1.accuracy}%</span>
+        // Calculate detailed comparison if we have attempt data
+        let wordComparison = '';
+        if (olderTest.attempts?.length && newerTest.attempts?.length && olderTest.wordList) {
+            wordComparison = this.generateWordComparison(olderTest, newerTest);
+        }
+        
+        modalBody.innerHTML = `
+            <h2>📊 ${t('progress.testComparison') || 'Test Comparison'}</h2>
+            
+            <div class="comparison-summary ${improvementClass}">
+                <span class="comparison-icon">${improvementIcon}</span>
+                <span class="comparison-text">
+                    ${improvement > 0 ? (t('progress.improved') || 'Improved') : 
+                      improvement < 0 ? (t('progress.declined') || 'Declined') : 
+                      (t('progress.noChange') || 'No Change')}
+                </span>
+                <span class="comparison-value">${improvementText}</span>
+            </div>
+            
+            <div class="comparison-cards">
+                <div class="comparison-card older">
+                    <div class="card-label">${t('progress.olderTest') || 'Earlier Test'}</div>
+                    <div class="card-date">${new Date(olderTest.date).toLocaleDateString()}</div>
+                    <div class="card-score">${olderTest.correct}/${olderTest.total}</div>
+                    <div class="card-accuracy">${olderTest.accuracy}%</div>
                 </div>
-                <div class="comparison-arrow ${improvementClass}">
-                    <span class="arrow">${improvementIcon}</span>
-                    <span class="diff">${Math.abs(improvement)}%</span>
+                
+                <div class="comparison-arrow-container">
+                    <div class="comparison-arrow ${improvementClass}">
+                        ${improvement > 0 ? '→' : improvement < 0 ? '→' : '='}
+                    </div>
+                    <div class="comparison-diff ${improvementClass}">
+                        ${improvementText}
+                    </div>
                 </div>
-                <div class="comparison-item">
-                    <span class="compare-label">${t('progress.older')}</span>
-                    <span class="compare-date">${new Date(test2.date).toLocaleDateString()}</span>
-                    <span class="compare-score">${test2.accuracy}%</span>
+                
+                <div class="comparison-card newer">
+                    <div class="card-label">${t('progress.newerTest') || 'Recent Test'}</div>
+                    <div class="card-date">${new Date(newerTest.date).toLocaleDateString()}</div>
+                    <div class="card-score">${newerTest.correct}/${newerTest.total}</div>
+                    <div class="card-accuracy">${newerTest.accuracy}%</div>
                 </div>
+            </div>
+            
+            ${wordComparison ? `
+                <div class="word-comparison-section">
+                    <h3>${t('progress.wordByWord') || 'Word-by-Word Comparison'}</h3>
+                    ${wordComparison}
+                </div>
+            ` : ''}
+            
+            <div class="comparison-actions">
+                ${newerTest.wordList?.length ? `
+                    <button class="btn btn--secondary" id="retake-from-comparison" data-test-id="${newerTest.id}">
+                        🔄 ${t('progress.retakeNewerTest') || 'Retake Recent Test'}
+                    </button>
+                ` : ''}
+                <button class="btn btn--primary" id="close-comparison">
+                    ${t('common.close') || 'Close'}
+                </button>
             </div>
         `;
         
-        comparisonArea.classList.remove('hidden');
+        // Attach listeners
+        const closeBtn = document.getElementById('close-comparison');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+        }
+        
+        const retakeBtn = document.getElementById('retake-from-comparison');
+        if (retakeBtn) {
+            retakeBtn.addEventListener('click', () => {
+                const testIndex = this.currentTests.findIndex(t => t.id === newerTest.id);
+                if (testIndex >= 0) {
+                    modal.classList.add('hidden');
+                    document.getElementById('exercise-modal').classList.add('hidden');
+                    this.retakeTest(testIndex);
+                }
+            });
+        }
+        
+        modal.classList.remove('hidden');
+    }
+    
+    generateWordComparison(olderTest, newerTest) {
+        // Create a map of word results from both tests
+        const wordResults = new Map();
+        
+        // Process older test attempts
+        if (olderTest.attempts) {
+            olderTest.attempts.forEach(attempt => {
+                const word = attempt.word || attempt.target;
+                if (word) {
+                    wordResults.set(word, {
+                        word,
+                        olderCorrect: attempt.correct,
+                        newerCorrect: null
+                    });
+                }
+            });
+        }
+        
+        // Process newer test attempts
+        if (newerTest.attempts) {
+            newerTest.attempts.forEach(attempt => {
+                const word = attempt.word || attempt.target;
+                if (word) {
+                    if (wordResults.has(word)) {
+                        wordResults.get(word).newerCorrect = attempt.correct;
+                    } else {
+                        wordResults.set(word, {
+                            word,
+                            olderCorrect: null,
+                            newerCorrect: attempt.correct
+                        });
+                    }
+                }
+            });
+        }
+        
+        // Generate HTML
+        const rows = Array.from(wordResults.values()).map(result => {
+            let statusClass = 'neutral';
+            let statusIcon = '➡️';
+            
+            if (result.olderCorrect !== null && result.newerCorrect !== null) {
+                if (!result.olderCorrect && result.newerCorrect) {
+                    statusClass = 'improved';
+                    statusIcon = '✅';
+                } else if (result.olderCorrect && !result.newerCorrect) {
+                    statusClass = 'declined';
+                    statusIcon = '❌';
+                } else if (result.olderCorrect && result.newerCorrect) {
+                    statusClass = 'maintained';
+                    statusIcon = '✓';
+                } else {
+                    statusClass = 'still-learning';
+                    statusIcon = '📚';
+                }
+            }
+            
+            return `
+                <div class="word-row ${statusClass}">
+                    <span class="word-text">${result.word}</span>
+                    <span class="word-status">${statusIcon}</span>
+                    <span class="word-detail">
+                        ${result.olderCorrect === null ? '—' : result.olderCorrect ? '✓' : '✗'}
+                        →
+                        ${result.newerCorrect === null ? '—' : result.newerCorrect ? '✓' : '✗'}
+                    </span>
+                </div>
+            `;
+        }).join('');
+        
+        return `
+            <div class="word-comparison-grid">
+                <div class="word-comparison-legend">
+                    <span class="legend-item improved">✅ Improved</span>
+                    <span class="legend-item maintained">✓ Maintained</span>
+                    <span class="legend-item declined">❌ Declined</span>
+                    <span class="legend-item still-learning">📚 Still Learning</span>
+                </div>
+                <div class="word-rows">
+                    ${rows}
+                </div>
+            </div>
+        `;
     }
     
     formatTime(milliseconds) {
@@ -582,12 +908,29 @@ class ProgressPage {
             });
         }
         
+        // Close comparison modal
+        const closeComparisonBtn = document.getElementById('close-comparison-modal');
+        if (closeComparisonBtn) {
+            closeComparisonBtn.addEventListener('click', () => {
+                document.getElementById('comparison-modal').classList.add('hidden');
+            });
+        }
+        
         // Close on overlay click
         const modal = document.getElementById('exercise-modal');
         if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.classList.add('hidden');
+                }
+            });
+        }
+        
+        const comparisonModal = document.getElementById('comparison-modal');
+        if (comparisonModal) {
+            comparisonModal.addEventListener('click', (e) => {
+                if (e.target === comparisonModal) {
+                    comparisonModal.classList.add('hidden');
                 }
             });
         }
