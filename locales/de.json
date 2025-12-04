@@ -1,546 +1,549 @@
 {
-    "app": {
-        "title": "Wort-Brücke"
+  "app": {
+    "title": "Wort-Br\u00fccke"
+  },
+  "common": {
+    "correct": "Richtig",
+    "incorrect": "Versuche es nochmal",
+    "skip": "\u00dcberspringen ->",
+    "hint": "Hinweis",
+    "playAll": "Alle abspielen",
+    "next": "Weiter",
+    "back": "Zur\u00fcck",
+    "close": "Schlie\u00dfen",
+    "continue": "Fortsetzen",
+    "cancel": "Abbrechen"
+  },
+  "audio": {
+    "playAll": "Alle Optionen anh\u00f6ren",
+    "playWord": "Wort abspielen"
+  },
+  "hints": {
+    "removeOne": "Eine entfernen",
+    "showLetter": "Buchstaben zeigen",
+    "noMoreHints": "Keine weiteren Hinweise",
+    "remaining": "{count} \u00fcbrig"
+  },
+  "feedback": {
+    "correct": "\u2713 Richtig!",
+    "incorrect": "\u2717 Nicht ganz",
+    "perfect": "\u2713 Perfekt!",
+    "theAnswerWas": "Die Antwort war: {answer}",
+    "withHints": "\u2713 Mit Hilfe geschafft!"
+  },
+  "exercises": {
+    "naming": {
+      "name": "Bilder Benennen",
+      "instruction": "Was ist das?"
     },
-    "common": {
-        "correct": "Richtig",
-        "incorrect": "Versuche es nochmal",
-        "skip": "Überspringen ->",
-        "hint": "Hinweis",
-        "playAll": "Alle abspielen",
-        "next": "Weiter",
-        "back": "Zurück",
-        "close": "Schließen",
-        "continue": "Fortsetzen",
-        "cancel": "Abbrechen"
+    "listening": {
+      "name": "H\u00f6ren",
+      "instruction": "H\u00f6re das Wort und tippe auf das passende Wort",
+      "tapPictureFor": "Tippe auf das Bild f\u00fcr"
     },
-    "audio": {
-        "playAll": "Alle Optionen anhören",
-        "playWord": "Wort abspielen"
+    "speaking": {
+      "name": "Sprechen",
+      "instruction": "Sag dieses Wort",
+      "iSaidIt": "Ich habe es gesagt",
+      "iCouldnt": "Ich konnte es nicht"
     },
-    "hints": {
-        "removeOne": "Eine entfernen",
-        "showLetter": "Buchstaben zeigen",
-        "noMoreHints": "Keine weiteren Hinweise",
-        "remaining": "{count} übrig"
+    "typing": {
+      "name": "Tippen",
+      "instruction": "Tippe was du siehst",
+      "typeWord": "Tippe das Wort",
+      "tapHereToType": "Hier tippen zum Schreiben",
+      "typeKeyboardOrTap": "Tippe auf der Tastatur oder tippe auf das Feld oben",
+      "startsWith": "Beginnt mit:",
+      "listenCarefully": "H\u00f6re genau zu"
     },
-    "feedback": {
-        "correct": "✓ Richtig!",
-        "incorrect": "✗ Nicht ganz",
-        "perfect": "✓ Perfekt!",
-        "theAnswerWas": "Die Antwort war: {answer}",
-        "withHints": "✓ Mit Hilfe geschafft!"
+    "sentenceTyping": {
+      "name": "Satz Vervollst\u00e4ndigen",
+      "instruction": "Tippe das fehlende Wort"
     },
-    "exercises": {
-        "naming": {
-            "name": "Bilder Benennen",
-            "instruction": "Was ist das?"
-        },
-        "listening": {
-            "name": "Hören",
-            "instruction": "Höre das Wort und tippe auf das passende Wort"
-        },
-        "speaking": {
-            "name": "Sprechen",
-            "instruction": "Sag dieses Wort",
-            "iSaidIt": "Ich habe es gesagt",
-            "iCouldnt": "Ich konnte es nicht"
-        },
-        "typing": {
-            "name": "Wort Tippen",
-            "instruction": "Tippe was du siehst"
-        },
-        "sentenceTyping": {
-            "name": "Satz Vervollständigen",
-            "instruction": "Tippe das fehlende Wort"
-        },
-        "category": {
-            "name": "Kategorien",
-            "instruction": "Welches Wort ist ein {category}?"
-        },
-        "rhyming": {
-            "name": "Reimende Wörter",
-            "instruction": "Welches Wort reimt sich mit:",
-            "rhymesWith": "reimt sich mit"
-        },
-        "firstSound": {
-            "name": "Erste Laute",
-            "instruction": "Welches Wort beginnt mit demselben Laut wie:",
-            "bothStartWith": "Beide beginnen mit"
-        },
-        "association": {
-            "name": "Wort-Assoziation",
-            "instruction": "Welches Wort passt zu:",
-            "goesWithPhrase": "passt zu"
-        },
-        "synonyms": {
-            "name": "Synonyme & Antonyme",
-            "synonymInstruction": "Welches Wort bedeutet dasselbe wie:",
-            "antonymInstruction": "Welches Wort bedeutet das Gegenteil von:",
-            "isOppositeOf": "ist das Gegenteil von",
-            "meansSameAs": "bedeutet dasselbe wie"
-        },
-        "definitions": {
-            "name": "Definitionen",
-            "instruction": "Welches Wort passt zu dieser Definition?"
-        },
-        "scramble": {
-            "name": "Satz Durcheinander",
-            "instruction": "Bringe diese Wörter in die richtige Reihenfolge",
-            "checkOrder": "Reihenfolge prüfen",
-            "tapToSwap": "Tippe zwei Wörter an, um sie zu vertauschen",
-            "theFirstWord": "Das erste Wort",
-            "theSecondWord": "Das zweite Wort",
-            "theThirdWord": "Das dritte Wort",
-            "theFourthWord": "Das vierte Wort",
-            "theFifthWord": "Das fünfte Wort",
-            "shouldBe": "sollte sein"
-        },
-        "listening": {
-            "name": "Hören",
-            "instruction": "Höre das Wort und tippe auf das passende Wort",
-            "tapPictureFor": "Tippe auf das Bild für"
-        },
-        "typing": {
-            "name": "Tippen",
-            "instruction": "Tippe was du siehst",
-            "typeWord": "Tippe das Wort",
-            "tapHereToType": "Hier tippen zum Schreiben",
-            "typeKeyboardOrTap": "Tippe auf der Tastatur oder tippe auf das Feld oben",
-            "startsWith": "Beginnt mit:",
-            "listenCarefully": "Höre genau zu"
-        },
-        "timeSequencing": {
-            "name": "Zeit Reihenfolge",
-            "instruction": "Wähle die richtige Antwort",
-            "daysBefore": "Welcher Tag kommt vor",
-            "daysAfter": "Welcher Tag kommt nach",
-            "monthsBefore": "Welcher Monat kommt vor",
-            "monthsAfter": "Welcher Monat kommt nach"
-        },
-        "clockMatching": {
-            "name": "Uhren Zuordnen",
-            "instruction": "Ordne die digitale Zeit der analogen Uhr zu",
-            "whatTimeIs": "Wie spät ist es?",
-            "selectClock": "Wähle die Uhr aus, die zeigt"
-        },
-        "timeOrdering": {
-            "name": "Zeit Ordnen",
-            "instruction": "Bringe diese Aktivitäten in die richtige zeitliche Reihenfolge",
-            "dragToReorder": "Ziehe Elemente zum Neuordnen",
-            "correctOrder": "Richtige Reihenfolge",
-            "scenario": "Szenario",
-            "tapToSwap": "Tippe auf zwei Schaltflächen um sie zu tauschen"
-        },
-        "workingMemory": {
-            "name": "Arbeitsgedächtnis",
-            "instruction": "Beobachte die Reihenfolge, dann wähle die Elemente in derselben Reihenfolge aus",
-            "watchSequence": "Beobachte die Reihenfolge sorgfältig",
-            "memorize": "Merke dir die Reihenfolge",
-            "yourSelection": "Deine Auswahl",
-            "clear": "Löschen",
-            "alreadySelected": "Du hast dieses Emoji bereits ausgewählt",
-            "sequenceFull": "Reihenfolge ist voll - lösche um zu ändern",
-            "perfectMemory": "Perfekt! Du hast dir die Reihenfolge richtig gemerkt",
-            "correctSequence": "Die richtige Reihenfolge war:",
-            "hintSequence": "Hier ist die Reihenfolge:",
-            "sequenceIs": "Die Reihenfolge ist:",
-            "firstPosition": "Das erste Emoji",
-            "shouldBe": "sollte sein",
-            "replay": "Sequenz Wiederholen",
-            "tryAgain": "Versuche es nochmal! Lösche deine Auswahl und versuche es erneut"
-        }
+    "category": {
+      "name": "Kategorien",
+      "instruction": "Welches Wort ist ein {category}?"
     },
-    "results": {
-        "title": "Sitzung Abgeschlossen!",
-        "score": "{correct} von {total}",
-        "accuracy": "{percent}% Genauigkeit",
-        "time": "Zeit: {time}",
-        "playAgain": "Nochmal Üben",
-        "backToMenu": "Zurück zum Menü"
+    "rhyming": {
+      "name": "Reimende W\u00f6rter",
+      "instruction": "Welches Wort reimt sich mit:",
+      "rhymesWith": "reimt sich mit"
     },
-    "home": {
-        "title": "Wähle eine Übung",
-        "subtitle": "Übe in deinem eigenen Tempo",
-        "speechTherapy": "Sprachtherapie",
-        "chooseExercise": "Wähle eine Übung zum Üben",
-        "categories": {
-            "meaning": "Bedeutung",
-            "phonetics": "Phonetik",
-            "words": "Wörter",
-            "time": "Zeit"
-        }
+    "firstSound": {
+      "name": "Erste Laute",
+      "instruction": "Welches Wort beginnt mit demselben Laut wie:",
+      "bothStartWith": "Beide beginnen mit"
+    },
+    "association": {
+      "name": "Wort-Assoziation",
+      "instruction": "Welches Wort passt zu:",
+      "goesWithPhrase": "passt zu"
+    },
+    "synonyms": {
+      "name": "Synonyme & Antonyme",
+      "synonymInstruction": "Welches Wort bedeutet dasselbe wie:",
+      "antonymInstruction": "Welches Wort bedeutet das Gegenteil von:",
+      "isOppositeOf": "ist das Gegenteil von",
+      "meansSameAs": "bedeutet dasselbe wie"
+    },
+    "definitions": {
+      "name": "Definitionen",
+      "instruction": "Welches Wort passt zu dieser Definition?"
+    },
+    "scramble": {
+      "name": "Satz Durcheinander",
+      "instruction": "Bringe diese W\u00f6rter in die richtige Reihenfolge",
+      "checkOrder": "Reihenfolge pr\u00fcfen",
+      "tapToSwap": "Tippe zwei W\u00f6rter an, um sie zu vertauschen",
+      "theFirstWord": "Das erste Wort",
+      "theSecondWord": "Das zweite Wort",
+      "theThirdWord": "Das dritte Wort",
+      "theFourthWord": "Das vierte Wort",
+      "theFifthWord": "Das f\u00fcnfte Wort",
+      "shouldBe": "sollte sein"
+    },
+    "timeSequencing": {
+      "name": "Zeit Reihenfolge",
+      "instruction": "W\u00e4hle die richtige Antwort",
+      "daysBefore": "Welcher Tag kommt vor",
+      "daysAfter": "Welcher Tag kommt nach",
+      "monthsBefore": "Welcher Monat kommt vor",
+      "monthsAfter": "Welcher Monat kommt nach"
+    },
+    "clockMatching": {
+      "name": "Uhren Zuordnen",
+      "instruction": "Ordne die digitale Zeit der analogen Uhr zu",
+      "whatTimeIs": "Wie sp\u00e4t ist es?",
+      "selectClock": "W\u00e4hle die Uhr aus, die zeigt"
+    },
+    "timeOrdering": {
+      "name": "Zeit Ordnen",
+      "instruction": "Bringe diese Aktivit\u00e4ten in die richtige zeitliche Reihenfolge",
+      "dragToReorder": "Ziehe Elemente zum Neuordnen",
+      "correctOrder": "Richtige Reihenfolge",
+      "scenario": "Szenario",
+      "tapToSwap": "Tippe auf zwei Schaltfl\u00e4chen um sie zu tauschen"
+    },
+    "workingMemory": {
+      "name": "Arbeitsged\u00e4chtnis",
+      "instruction": "Beobachte die Reihenfolge, dann w\u00e4hle die Elemente in derselben Reihenfolge aus",
+      "watchSequence": "Beobachte die Reihenfolge sorgf\u00e4ltig",
+      "memorize": "Merke dir die Reihenfolge",
+      "yourSelection": "Deine Auswahl",
+      "clear": "L\u00f6schen",
+      "alreadySelected": "Du hast dieses Emoji bereits ausgew\u00e4hlt",
+      "sequenceFull": "Reihenfolge ist voll - l\u00f6sche um zu \u00e4ndern",
+      "perfectMemory": "Perfekt! Du hast dir die Reihenfolge richtig gemerkt",
+      "correctSequence": "Die richtige Reihenfolge war:",
+      "hintSequence": "Hier ist die Reihenfolge:",
+      "sequenceIs": "Die Reihenfolge ist:",
+      "firstPosition": "Das erste Emoji",
+      "shouldBe": "sollte sein",
+      "replay": "Sequenz Wiederholen",
+      "tryAgain": "Versuche es nochmal! L\u00f6sche deine Auswahl und versuche es erneut"
+    }
+  },
+  "results": {
+    "title": "Sitzung Abgeschlossen!",
+    "score": "{correct} von {total}",
+    "accuracy": "{percent}% Genauigkeit",
+    "time": "Zeit: {time}",
+    "playAgain": "Nochmal \u00dcben",
+    "backToMenu": "Zur\u00fcck zum Men\u00fc"
+  },
+  "home": {
+    "title": "W\u00e4hle eine \u00dcbung",
+    "subtitle": "\u00dcbe in deinem eigenen Tempo",
+    "speechTherapy": "Sprachtherapie",
+    "chooseExercise": "W\u00e4hle eine \u00dcbung zum \u00dcben",
+    "categories": {
+      "meaning": "Bedeutung",
+      "phonetics": "Phonetik",
+      "words": "W\u00f6rter",
+      "time": "Zeit"
+    }
+  },
+  "progress": {
+    "title": "Dein Fortschritt",
+    "viewReport": "Bericht Ansehen",
+    "takeAssessment": "Test Machen",
+    "backToHome": "Zur\u00fcck zur Startseite",
+    "practiceProgress": "\u00dcbungsfortschritt",
+    "assessmentResults": "Testergebnisse",
+    "noPracticeData": "Noch keine \u00dcbungsdaten",
+    "startPracticingMessage": "Beginne zu \u00fcben, um deinen Fortschritt hier zu sehen!",
+    "startPracticing": "Mit \u00dcben beginnen",
+    "noAssessmentResults": "Noch keine Testergebnisse",
+    "takeAssessmentMessage": "Mache einen Test, um deinen Fortschritt objektiv zu verfolgen!",
+    "practiceMoreRecommendations": "\u00dcbe mehr, um personalisierte Empfehlungen zu erhalten.",
+    "qualityScore": "\u00dcbungsqualit\u00e4t",
+    "accuracyTrend": "Genauigkeit im Zeitverlauf",
+    "exerciseDistribution": "Zeit nach \u00dcbung",
+    "performanceHeatmap": "Leistung nach \u00dcbung",
+    "assessmentComparison": "Test-Fortschritt",
+    "timeRanges": {
+      "today": "Heute",
+      "day": "Tag",
+      "week": "Woche",
+      "month": "Monat",
+      "all": "Gesamt"
+    },
+    "chart": {
+      "daily": "T\u00e4glich",
+      "average": "7-Tage-Durchschnitt"
+    },
+    "quality": {
+      "consistency": "Best\u00e4ndigkeit",
+      "duration": "Sitzungsl\u00e4nge",
+      "variety": "\u00dcbungsvielfalt",
+      "accuracy": "Genauigkeit"
+    },
+    "info": {
+      "qualityScore": "Der Qualit\u00e4tswert kombiniert Best\u00e4ndigkeit (\u00dcbungsh\u00e4ufigkeit), Dauer (Sitzungsl\u00e4nge), Vielfalt (verschiedene \u00dcbungen) und Genauigkeit in einer einzigen Metrik.",
+      "accuracyTrend": "Zeigt Ihre t\u00e4gliche Genauigkeit im Zeitverlauf. Die gepunktete Linie ist ein gleitender 7-Tage-Durchschnitt, um allgemeine Trends aufzuzeigen.",
+      "accuracyCalculation": "Die Genauigkeit f\u00fcr einen Tag wird berechnet als: (Korrekte Versuche / Gesamtversuche) \u00d7 100%. Nur Tage mit \u00dcbungsaktivit\u00e4t werden angezeigt.",
+      "heatmap": "Dunklere Farben zeigen bessere Leistung an. Jede Zelle zeigt die Genauigkeit f\u00fcr eine bestimmte \u00dcbung an einem bestimmten Tag.",
+      "assessmentComparison": "Vergleicht Ihre Leistung zwischen standardisierten Tests, um objektiven Fortschritt zu messen."
+    },
+    "recommendations": {
+      "title": "Schwerpunktbereiche",
+      "consistency": "Versuche regelm\u00e4\u00dfiger zu \u00fcben - ziele auf 5 Tage pro Woche ab",
+      "duration": "Erh\u00f6he die Sitzungsl\u00e4nge - ziele auf 15-20 Minuten pro Sitzung ab",
+      "variety": "Probiere mehr \u00dcbungstypen aus - Vielfalt hilft bei der Gesamtverbesserung",
+      "goodJob": "Gro\u00dfartige Arbeit! Mach weiter so mit dem best\u00e4ndigen \u00dcben."
+    },
+    "performanceLegend": {
+      "title": "Leistungsebenen",
+      "excellent": "Ausgezeichnet (\u226585%)",
+      "good": "Gut (70-84%)",
+      "needsPractice": "Braucht \u00dcbung (50-69%)",
+      "challenging": "Herausfordernd (<50%)",
+      "noData": "Keine Daten"
+    },
+    "totalQuestions": "Fragen",
+    "accuracy": "Genauigkeit",
+    "totalTime": "Zeit",
+    "testsTaken": "Tests",
+    "practiceSessions": "\u00dcbung",
+    "noData": "Keine Daten",
+    "questions": "F",
+    "testHistory": "Testverlauf",
+    "noTestsYet": "Noch keine Tests f\u00fcr diese \u00dcbung.",
+    "takeTest": "Test starten",
+    "practice": "\u00dcben",
+    "compare": "Vergleichen",
+    "comparison": "Vergleich",
+    "newer": "Neuer",
+    "older": "\u00c4lter",
+    "unknownDate": "Unbekanntes Datum"
+  },
+  "assessment": {
+    "title": "Fortschrittstest",
+    "subtitle": "Standardisierter Test zur Messung deines Fortschritts",
+    "currentLevel": "Dein Aktuelles Niveau",
+    "selectExerciseType": "\u00dcbungstyp Ausw\u00e4hlen",
+    "levelUpMessage": "Gl\u00fcckwunsch! Du hast alle \u00dcbungen gemeistert. Bereit f\u00fcr {level}?",
+    "types": {
+      "baseline": {
+        "name": "Vollst\u00e4ndige Grundlinie",
+        "description": "Umfassender Test \u00fcber alle \u00dcbungstypen. Meistere alle 12 \u00dcbungstypen auf einfachem Niveau, um schwierigere Stufen freizuschalten.",
+        "duration": "20-30 Minuten"
+      },
+      "quick": {
+        "name": "Schnelltest",
+        "description": "Kurze Bewertung einzelner \u00dcbungstypen auf deinem aktuellen Niveau",
+        "duration": "5-10 Minuten"
+      }
+    },
+    "start": "Test Starten",
+    "resume": "Test Fortsetzen",
+    "instructions": {
+      "title": "Test-Anweisungen",
+      "intro": "Dies ist ein standardisierter Test, um deinen Fortschritt im Zeitverlauf zu messen.",
+      "rules": [
+        "Beantworte alle Fragen - kein \u00dcberspringen",
+        "Verwende Hinweise sparsam (sie beeinflussen deine Punktzahl)",
+        "Nimm dir Zeit - Genauigkeit ist wichtiger als Geschwindigkeit",
+        "Suche eine ruhige Umgebung",
+        "Schlie\u00dfe nach M\u00f6glichkeit in einer Sitzung ab"
+      ],
+      "ready": "Ich bin bereit"
     },
     "progress": {
-        "title": "Dein Fortschritt",
-        "viewReport": "Bericht Ansehen",
-        "takeAssessment": "Test Machen",
-        "backToHome": "Zurück zur Startseite",
-        "practiceProgress": "Übungsfortschritt",
-        "assessmentResults": "Testergebnisse",
-        "noPracticeData": "Noch keine Übungsdaten",
-        "startPracticingMessage": "Beginne zu üben, um deinen Fortschritt hier zu sehen!",
-        "startPracticing": "Mit Üben beginnen",
-        "noAssessmentResults": "Noch keine Testergebnisse",
-        "takeAssessmentMessage": "Mache einen Test, um deinen Fortschritt objektiv zu verfolgen!",
-        "practiceMoreRecommendations": "Übe mehr, um personalisierte Empfehlungen zu erhalten.",
-        "qualityScore": "Übungsqualität",
-        "accuracyTrend": "Genauigkeit im Zeitverlauf",
-        "exerciseDistribution": "Zeit nach Übung",
-        "performanceHeatmap": "Leistung nach Übung",
-        "assessmentComparison": "Test-Fortschritt",
-        "timeRanges": {
-            "today": "Heute",
-            "day": "Tag",
-            "week": "Woche",
-            "month": "Monat",
-            "all": "Gesamt"
-        },
-        "chart": {
-            "daily": "Täglich",
-            "average": "7-Tage-Durchschnitt"
-        },
-        "quality": {
-            "consistency": "Beständigkeit",
-            "duration": "Sitzungslänge",
-            "variety": "Übungsvielfalt",
-            "accuracy": "Genauigkeit"
-        },
-        "info": {
-            "qualityScore": "Der Qualitätswert kombiniert Beständigkeit (Übungshäufigkeit), Dauer (Sitzungslänge), Vielfalt (verschiedene Übungen) und Genauigkeit in einer einzigen Metrik.",
-            "accuracyTrend": "Zeigt Ihre tägliche Genauigkeit im Zeitverlauf. Die gepunktete Linie ist ein gleitender 7-Tage-Durchschnitt, um allgemeine Trends aufzuzeigen.",
-            "accuracyCalculation": "Die Genauigkeit für einen Tag wird berechnet als: (Korrekte Versuche / Gesamtversuche) × 100%. Nur Tage mit Übungsaktivität werden angezeigt.",
-            "heatmap": "Dunklere Farben zeigen bessere Leistung an. Jede Zelle zeigt die Genauigkeit für eine bestimmte Übung an einem bestimmten Tag.",
-            "assessmentComparison": "Vergleicht Ihre Leistung zwischen standardisierten Tests, um objektiven Fortschritt zu messen."
-        },
-        "recommendations": {
-            "title": "Schwerpunktbereiche",
-            "consistency": "Versuche regelmäßiger zu üben - ziele auf 5 Tage pro Woche ab",
-            "duration": "Erhöhe die Sitzungslänge - ziele auf 15-20 Minuten pro Sitzung ab",
-            "variety": "Probiere mehr Übungstypen aus - Vielfalt hilft bei der Gesamtverbesserung",
-            "goodJob": "Großartige Arbeit! Mach weiter so mit dem beständigen Üben."
-        },
-        "performanceLegend": {
-            "title": "Leistungsebenen",
-            "excellent": "Ausgezeichnet (≥85%)",
-            "good": "Gut (70-84%)",
-            "needsPractice": "Braucht Übung (50-69%)",
-            "challenging": "Herausfordernd (<50%)",
-            "noData": "Keine Daten"
-        }
+      "section": "Abschnitt {current} von {total}",
+      "overall": "Gesamtfortschritt"
     },
-    "assessment": {
-        "title": "Fortschrittstest",
-        "subtitle": "Standardisierter Test zur Messung deines Fortschritts",
-        "currentLevel": "Dein Aktuelles Niveau",
-        "selectExerciseType": "Übungstyp Auswählen",
-        "levelUpMessage": "Glückwunsch! Du hast alle Übungen gemeistert. Bereit für {level}?",
-        "types": {
-            "baseline": {
-                "name": "Vollständige Grundlinie",
-                "description": "Umfassender Test über alle Übungstypen. Meistere alle 12 Übungstypen auf einfachem Niveau, um schwierigere Stufen freizuschalten.",
-                "duration": "20-30 Minuten"
-            },
-            "quick": {
-                "name": "Schnelltest",
-                "description": "Kurze Bewertung einzelner Übungstypen auf deinem aktuellen Niveau",
-                "duration": "5-10 Minuten"
-            }
-        },
-        "start": "Test Starten",
-        "resume": "Test Fortsetzen",
-        "instructions": {
-            "title": "Test-Anweisungen",
-            "intro": "Dies ist ein standardisierter Test, um deinen Fortschritt im Zeitverlauf zu messen.",
-            "rules": [
-                "Beantworte alle Fragen - kein Überspringen",
-                "Verwende Hinweise sparsam (sie beeinflussen deine Punktzahl)",
-                "Nimm dir Zeit - Genauigkeit ist wichtiger als Geschwindigkeit",
-                "Suche eine ruhige Umgebung",
-                "Schließe nach Möglichkeit in einer Sitzung ab"
-            ],
-            "ready": "Ich bin bereit"
-        },
-        "progress": {
-            "section": "Abschnitt {current} von {total}",
-            "overall": "Gesamtfortschritt"
-        },
-        "results": {
-            "title": "Test Abgeschlossen",
-            "overallScore": "Gesamtpunktzahl",
-            "breakdown": "Leistungsaufschlüsselung",
-            "comparison": "Vergleich zum Vorherigen",
-            "recommendations": "Empfehlungen",
-            "viewDetails": "Detaillierten Bericht Ansehen",
-            "done": "Fertig"
-        },
-        "difficulty": {
-            "easy": "Einfach",
-            "medium": "Mittel",
-            "hard": "Schwer",
-            "mixed": "Gemischt"
-        },
-        "testInProgress": "Test läuft",
-        "question": "Frage",
-        "of": "von",
-        "easy": "Einfach",
-        "medium": "Mittel",
-        "hard": "Schwer",
-        "testMode": "Testmodus",
-        "testModeDescription": "Strukturierte Bewertung zur Beurteilung deiner Fähigkeiten",
-        "instruction1": "Wähle einen Übungstyp und Schwierigkeitsgrad",
-        "instruction2": "Wähle die Anzahl der Fragen (10, 20 oder 30)",
-        "instruction3": "Fragen werden zufällig aus der gewählten Schwierigkeit ausgewählt",
-        "instruction4": "Deine Hinweise, Übersprungungen und Zeit werden verfolgt",
-        "instruction5": "Ergebnisse helfen bei der Empfehlung geeigneter Schwierigkeitsstufen",
-        "selectTest": "Test auswählen",
-        "questions": "Fragen",
-        "startTest": "Test starten",
-        "needsAssessment": "Du brauchst mindestens 2 Bewertungen zum Vergleichen.",
-        "takeFirstAssessment": "Mache einen Test, um Fortschritte zu verfolgen.",
-        "assessmentButton": "Test Machen",
-        "pauseConfirm": "Test pausieren? Du kannst später fortfahren."
+    "results": {
+      "title": "Test Abgeschlossen",
+      "overallScore": "Gesamtpunktzahl",
+      "breakdown": "Leistungsaufschl\u00fcsselung",
+      "comparison": "Vergleich zum Vorherigen",
+      "recommendations": "Empfehlungen",
+      "viewDetails": "Detaillierten Bericht Ansehen",
+      "done": "Fertig"
     },
-    "navigation": {
-        "home": "Startseite",
-        "progress": "Fortschritt",
-        "assessment": "Test",
-        "customize": "Anpassen",
-        "settings": "Einstellungen"
+    "difficulty": {
+      "easy": "Einfach",
+      "medium": "Mittel",
+      "hard": "Schwer",
+      "mixed": "Gemischt"
     },
-    "settings": {
-        "title": "Einstellungen",
-        "language": "Sprache", 
-        "textSize": "Textgröße",
-        "highContrast": "Hoher Kontrast Modus",
-        "sections": {
-            "display": "Anzeige",
-            "audio": "Audio",
-            "practice": "Übung",
-            "translation": "Übersetzung",
-            "dataManagement": "Datenverwaltung",
-            "dangerZone": "Gefahrenbereich"
-        },
-        "options": {
-            "small": "Klein",
-            "medium": "Mittel",
-            "large": "Groß",
-            "voiceSelection": "Stimme auswählen",
-            "autoPlayQuestions": "Fragen automatisch abspielen",
-            "speechSpeed": "Sprechgeschwindigkeit",
-            "testVoice": "Stimme testen",
-            "voiceTestPhrase": "Hallo! So klingt die Stimme.",
-            "customExerciseFrequency": "Häufigkeit benutzerdefinierter Übungen",
-            "customFrequencyDesc": "Wie oft deine benutzerdefinierten Übungen verwendet werden sollen",
-            "problemWordFrequency": "Häufigkeit schwieriger Wörter",
-            "problemFrequencyDesc": "Wie oft schwierige Wörter angezeigt werden sollen",
-            "masteryStreak": "Beherrschungssträhne",
-            "masteryStreakDesc": "Richtige Antworten hintereinander, um ein Wort zu beherrschen",
-            "hideMasteredWords": "Beherrschte Wörter ausblenden", 
-            "hideMasteredDesc": "Beherrschte Wörter aus der Übung entfernen",
-            "exportTranslation": "Für Übersetzung exportieren (CSV)",
-            "exportTranslationDesc": "Alle Texte als CSV zum Übersetzen herunterladen",
-            "importTranslation": "Übersetzung importieren (CSV)",
-            "importTranslationDesc": "Übersetzte CSV hochladen, um neue Sprache hinzuzufügen",
-            "createBackup": "Vollständige Sicherung erstellen",
-            "createBackupDesc": "Alle deine Daten und Einstellungen herunterladen",
-            "restoreBackup": "Aus Sicherung wiederherstellen",
-            "restoreBackupDesc": "Eine zuvor gespeicherte Sicherung importieren",
-            "resetProgress": "Gesamten Fortschritt zurücksetzen",
-            "resetProgressDesc": "Dies löscht allen Fortschritt, behält aber benutzerdefinierte Übungen",
-            "resetEverything": "Alles zurücksetzen", 
-            "resetEverythingDesc": "ALLE Daten einschließlich benutzerdefinierter Übungen löschen"
-        },
-        "frequencies": {
-            "mixed": "Gemischt mit Standard",
-            "high": "Hauptsächlich benutzerdefiniert (70%)",
-            "only": "Nur benutzerdefiniert"
-        },
-        "times": {
-            "2times": "2 mal",
-            "3times": "3 mal",
-            "4times": "4 mal", 
-            "5times": "5 mal"
-        },
-        "modal": {
-            "confirm": "Bestätigen",
-            "cancel": "Abbrechen",
-            "areYouSure": "Bist du sicher?"
-        }
+    "testInProgress": "Test l\u00e4uft",
+    "question": "Frage",
+    "of": "von",
+    "easy": "Einfach",
+    "medium": "Mittel",
+    "hard": "Schwer",
+    "testMode": "Testmodus",
+    "testModeDescription": "Strukturierte Bewertung zur Beurteilung deiner F\u00e4higkeiten",
+    "instruction1": "W\u00e4hle einen \u00dcbungstyp und Schwierigkeitsgrad",
+    "instruction2": "W\u00e4hle die Anzahl der Fragen (10, 20 oder 30)",
+    "instruction3": "Fragen werden zuf\u00e4llig aus der gew\u00e4hlten Schwierigkeit ausgew\u00e4hlt",
+    "instruction4": "Deine Hinweise, \u00dcbersprungungen und Zeit werden verfolgt",
+    "instruction5": "Ergebnisse helfen bei der Empfehlung geeigneter Schwierigkeitsstufen",
+    "selectTest": "Test ausw\u00e4hlen",
+    "questions": "Fragen",
+    "startTest": "Test starten",
+    "needsAssessment": "Du brauchst mindestens 2 Bewertungen zum Vergleichen.",
+    "takeFirstAssessment": "Mache einen Test, um Fortschritte zu verfolgen.",
+    "assessmentButton": "Test Machen",
+    "pauseConfirm": "Test pausieren? Du kannst sp\u00e4ter fortfahren."
+  },
+  "navigation": {
+    "home": "Startseite",
+    "progress": "Fortschritt",
+    "assessment": "Test",
+    "customize": "Anpassen",
+    "settings": "Einstellungen"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "textSize": "Textgr\u00f6\u00dfe",
+    "highContrast": "Hoher Kontrast Modus",
+    "sections": {
+      "display": "Anzeige",
+      "audio": "Audio",
+      "practice": "\u00dcbung",
+      "translation": "\u00dcbersetzung",
+      "dataManagement": "Datenverwaltung",
+      "dangerZone": "Gefahrenbereich"
     },
-    "customize": {
-        "title": "Benutzerdefinierte Übungen hinzufügen",
-        "modes": {
-            "individual": "Einzeln",
-            "bulkUpload": "Massenupload"
-        },
-        "chooseType": "Übungstyp wählen:",
-        "types": {
-            "picture": "Bild",
-            "sentence": "Satz",
-            "words": "Wörter",
-            "timeSequencing": "Zeit Reihenfolge",
-            "timeOrdering": "Zeit Ordnen",
-            "clockMatching": "Uhren Zuordnen",
-            "workingMemory": "Arbeitsgedächtnis"
-        },
-        "bulkUpload": {
-            "title": "Massenupload aus CSV",
-            "instructions": "Anweisungen (zum Aufklappen klicken)",
-            "howTo": "So lädst du benutzerdefinierte Übungen hoch:",
-            "selectExercises": "Wähle Übungstypen für die Vorlage aus",
-            "step1": "Wähle aus, welche Übungstypen du hochladen möchtest und lade die Vorlage herunter",
-            "step2": "Öffne sie in Excel, Google Sheets oder einer anderen Tabellenkalkulation",
-            "step3": "Fülle deine benutzerdefinierten Übungen nach dem Format aus",
-            "step4": "Speichere als CSV-Datei",
-            "step5": "Lade die Datei hier hoch",
-            "formatGuidelines": "CSV-Format-Richtlinien:",
-            "headerNote": "⚠️ WICHTIG: Erste Zeile muss sein: exercise_type,difficulty,data1,data2,data3,data4,data5",
-            "difficultyNote": "Schwierigkeit ist IMMER in Spalte 2 (easy, medium oder hard)",
-            "pictureFormat": "Bilder Benennen / Tippen / Hören:",
-            "sentenceFormat": "Satz Vervollständigen:",
-            "wordFormat": "Wortlisten:",
-            "pictureFormatCode": "exercise_type, difficulty, wort, emoji_oder_bild_url, option1, option2, option3",
-            "pictureExample": "Beispiel: picture/typing/listening, easy, apfel, 🍎, banane, orange, birne",
-            "pictureUrlExample": "Oder: apfel, https://example.com/apfel.jpg, banane, orange, birne, einfach",
-            "pictureNote": "Hinweis: Dies erstellt Übungen für alle drei Typen. Optionen werden beim Tippen ignoriert.",
-            "categoryFormat": "Kategorien (category):",
-            "categoryFormatCode": "exercise_type, difficulty, kategorie, richtiges_wort, falsch1, falsch2, falsch3",
-            "categoryExample": "Beispiel: category, easy, obst, apfel, möhre, brot, stuhl",
-            "sentenceFormatCode": "exercise_type, difficulty, satz_mit_lücke, antwort",
-            "sentenceExample": "Beispiel: sentenceTyping, easy, Ich trinke jeden Morgen ?, kaffee (nutze ? oder __ für Lücke)",
-            "speakingFormat": "Sprechen (speaking):",
-            "speakingFormatCode": "exercise_type, difficulty, wort, emoji, phrase1, phrase2",
-            "speakingExample": "Beispiel: speaking, easy, apfel, 🍎, Ein Apfel am Tag..., Ich esse einen Apfel",
-            "firstSoundFormat": "Erste Laute (firstSound):",
-            "firstSoundFormatCode": "exercise_type, difficulty, laut, wort_mit_laut, wörter_ohne_laut (getrennt durch |)",
-            "firstSoundExample": "Beispiel: firstSound, easy, b, ball, auto|haus|tisch",
-            "rhymingFormat": "Reimwörter (rhyming):",
-            "rhymingFormatCode": "exercise_type, difficulty, wort, reimendes_wort, nicht_reimende_wörter (getrennt durch |)",
-            "rhymingExample": "Beispiel: rhyming, easy, katze, tatze, hund|sonne|baum",
-            "definitionsFormat": "Definitionen (definitions):",
-            "definitionsFormatCode": "exercise_type, difficulty, wort, definition, falsche_wörter (getrennt durch |)",
-            "definitionsExample": "Beispiel: definitions, easy, stuhl, Ein Möbelstück zum Sitzen, tisch|auto|baum",
-            "associationFormat": "Assoziation (association):",
-            "associationFormatCode": "exercise_type, difficulty, wort, verwandtes_wort, nicht_verwandte_wörter (getrennt durch |)",
-            "associationExample": "Beispiel: association, easy, brot, butter, auto|telefon|baum",
-            "synonymsFormat": "Synonyme/Antonyme (synonyms):",
-            "synonymsFormatCode": "exercise_type, difficulty, wort, ist_synonym(true/false), richtiges_wort, falsche_wörter",
-            "synonymsExample": "Beispiele: synonyms, easy, glücklich, true, froh, traurig|wütend|müde",
-            "synonymsExample2": "          synonyms, easy, heiß, false, kalt, warm|lauwarm|kühl",
-            "scrambleFormat": "Wörter Ordnen (scramble):",
-            "scrambleFormatCode": "exercise_type, difficulty, satz",
-            "scrambleExample": "Beispiel: scramble, easy, Die Katze schläft",
-            "timeSequencingFormat": "Zeit Reihenfolge (timeSequencing):",
-            "timeSequencingFormatCode": "exercise_type, difficulty, frage, antwort, falsche_optionen (getrennt durch |)",
-            "timeSequencingExample": "Beispiel: timeSequencing, easy, Welcher Tag kommt nach Montag?, Dienstag, Mittwoch|Sonntag|Freitag",
-            "clockMatchingFormat": "Uhren Zuordnen (clockMatching):",
-            "clockMatchingFormatCode": "exercise_type, difficulty, zeit, zeitwörter, falsche_zeiten (getrennt durch |)",
-            "clockMatchingExample": "Beispiel: clockMatching, easy, 3:00, drei Uhr, 4:00|5:00|6:00",
-            "timeOrderingFormat": "Zeit Ordnen (timeOrdering):",
-            "timeOrderingFormatCode": "exercise_type, difficulty, szenario, aktivität1, aktivität2, aktivität3, ...",
-            "timeOrderingExample": "Beispiel: timeOrdering, easy, Morgenroutine, Aufwachen, Zähne putzen, Frühstücken, Zur Arbeit gehen",
-            "timeOrderingNote": "Hinweis: Füge beliebig viele Aktivitäten in der richtigen Reihenfolge hinzu",
-            "workingMemoryFormat": "Arbeitsgedächtnis (workingMemory):",
-            "workingMemoryFormatCode": "exercise_type, difficulty, sequenz (3 Emojis), extra_optionen (3+ Emojis)",
-            "workingMemoryExample": "Beispiel: workingMemory, easy, 🍎🍌🍊, 🍇🍓🥝",
-            "downloadTemplate": "Vorlage herunterladen", 
-            "uploadFile": "Lade die Datei hier hoch",
-            "selectFile": "Datei auswählen...",
-            "processing": "Wird verarbeitet...",
-            "success": "{count} Übungen erfolgreich importiert!",
-            "error": "Fehler beim Importieren der Datei: {message}"
-        },
-        "existing": "Deine benutzerdefinierten Übungen",
-        "noCustom": "Noch keine benutzerdefinierten Übungen.",
-        "delete": "Löschen",
-        "edit": "Bearbeiten",
-        "confirmDelete": "Diese Übung löschen?",
-        "status": {
-            "active": "Aktiv",
-            "archived": "Archiviert"
-        },
-        "forms": {
-            "addWordExercise": "Wortübung hinzufügen",
-            "addPictureExercise": "Bildübung hinzufügen",
-            "addSentenceExercise": "Satzübung hinzufügen",
-            "exerciseType": "Übungstyp",
-            "rhymingWords": "Reimwörter",
-            "wordAssociation": "Wort-Assoziation",
-            "synonyms": "Synonyme",
-            "mainWord": "Hauptwort",
-            "mainWordPlaceholder": "z.B. Katze",
-            "relatedWords": "Verwandte Wörter (kommagetrennt)",
-            "relatedWordsPlaceholder": "z.B. Tatze, Matze, Platze",
-            "targetWord": "Zielwort",
-            "targetWordPlaceholder": "z.B. Apfel",
-            "wrongOptions": "Falsche Optionen",
-            "wrongOptionsOptional": "Falsche Optionen (optional)",
-            "wrongOptionsPlaceholder": "z.B. Banane, Orange, Traube",
-            "sentence": "Satz",
-            "sentenceWithBlank": "Satz (verwende __ für Lücke)",
-            "sentencePlaceholder": "z.B. Ich trinke jeden Morgen __",
-            "answer": "Antwort",
-            "answerPlaceholder": "z.B. Kaffee",
-            "addExercise": "Übung hinzufügen",
-            "imageFile": "Bilddatei (optional)",
-            "chooseFile": "Datei wählen...",
-            "noFileSelected": "keine Datei ausgewählt",
-            "uploadPictureHelp": "Lade ein Bild für dieses Wort hoch",
-            "autoGenerateHelp": "Leer lassen für automatische Generierung aus anderen Wörtern",
-            "imageUrl": "Oder Bild-URL",
-            "imageUrlPlaceholder": "https://example.com/bild.jpg",
-            "addTimeSequencing": "Zeit Reihenfolge Übung hinzufügen",
-            "addTimeOrdering": "Zeit Ordnen Übung hinzufügen",
-            "addClockMatching": "Uhren Zuordnen Übung hinzufügen", 
-            "addWorkingMemory": "Arbeitsgedächtnis Übung hinzufügen",
-            "question": "Frage",
-            "timeQuestionPlaceholder": "z.B., Welcher Tag kommt nach Montag?",
-            "correctAnswer": "Richtige Antwort",
-            "timeAnswerPlaceholder": "z.B., Dienstag",
-            "wrongOptions": "Falsche Optionen (durch Kommas getrennt)",
-            "timeOptionsPlaceholder": "z.B., Mittwoch, Sonntag, Freitag",
-            "timeOptionsHelp": "Gib 3 falsche Antwortmöglichkeiten durch Kommas getrennt ein",
-            "scenario": "Szenario",
-            "scenarioPlaceholder": "z.B., Tägliche Routine",
-            "description": "Beschreibung",
-            "descriptionPlaceholder": "z.B., Bringe diese täglichen Aktivitäten in die richtige Reihenfolge",
-            "activities": "Aktivitäten (eine pro Zeile)",
-            "activitiesPlaceholder": "Aufwachen\nFrühstücken\nZur Arbeit gehen\nZu Abend essen\nSchlafen gehen",
-            "activitiesHelp": "Gib die Aktivitäten in der richtigen Reihenfolge ein, eine pro Zeile",
-            "digitalTime": "Digitale Zeit",
-            "timeWords": "Zeit in Worten",
-            "timeWordsPlaceholder": "z.B., drei Uhr",
-            "timeWordsHelp": "Wie die Zeit ausgesprochen werden soll",
-            "emojiSequence": "Emoji Reihenfolge (3 Emojis)",
-            "sequencePlaceholder": "🍎🍌🍊",
-            "sequenceHelp": "Gib genau 3 Emojis ein, die nacheinander gezeigt werden",
-            "extraOptions": "Zusätzliche Optionen (3+ Emojis)",
-            "extraOptionsPlaceholder": "🍇🍓🥝🥭🍉",
-            "extraOptionsHelp": "Gib mindestens 3 zusätzliche Emojis als falsche Auswahlmöglichkeiten ein",
-            "difficulty": "Schwierigkeitsgrad",
-            "easy": "Einfach",
-            "medium": "Mittel",
-            "hard": "Schwer"
-        },
-        "showActive": "Aktive Anzeigen",
-        "showArchived": "Archivierte Anzeigen", 
-        "allDifficulties": "Alle Schwierigkeitsgrade",
-        "status": {
-            "active": "Aktiv",
-            "archived": "Archiviert"
-        }
+    "options": {
+      "small": "Klein",
+      "medium": "Mittel",
+      "large": "Gro\u00df",
+      "voiceSelection": "Stimme ausw\u00e4hlen",
+      "autoPlayQuestions": "Fragen automatisch abspielen",
+      "speechSpeed": "Sprechgeschwindigkeit",
+      "testVoice": "Stimme testen",
+      "voiceTestPhrase": "Hallo! So klingt die Stimme.",
+      "customExerciseFrequency": "H\u00e4ufigkeit benutzerdefinierter \u00dcbungen",
+      "customFrequencyDesc": "Wie oft deine benutzerdefinierten \u00dcbungen verwendet werden sollen",
+      "problemWordFrequency": "H\u00e4ufigkeit schwieriger W\u00f6rter",
+      "problemFrequencyDesc": "Wie oft schwierige W\u00f6rter angezeigt werden sollen",
+      "masteryStreak": "Beherrschungsstr\u00e4hne",
+      "masteryStreakDesc": "Richtige Antworten hintereinander, um ein Wort zu beherrschen",
+      "hideMasteredWords": "Beherrschte W\u00f6rter ausblenden",
+      "hideMasteredDesc": "Beherrschte W\u00f6rter aus der \u00dcbung entfernen",
+      "exportTranslation": "F\u00fcr \u00dcbersetzung exportieren (CSV)",
+      "exportTranslationDesc": "Alle Texte als CSV zum \u00dcbersetzen herunterladen",
+      "importTranslation": "\u00dcbersetzung importieren (CSV)",
+      "importTranslationDesc": "\u00dcbersetzte CSV hochladen, um neue Sprache hinzuzuf\u00fcgen",
+      "createBackup": "Vollst\u00e4ndige Sicherung erstellen",
+      "createBackupDesc": "Alle deine Daten und Einstellungen herunterladen",
+      "restoreBackup": "Aus Sicherung wiederherstellen",
+      "restoreBackupDesc": "Eine zuvor gespeicherte Sicherung importieren",
+      "resetProgress": "Gesamten Fortschritt zur\u00fccksetzen",
+      "resetProgressDesc": "Dies l\u00f6scht allen Fortschritt, beh\u00e4lt aber benutzerdefinierte \u00dcbungen",
+      "resetEverything": "Alles zur\u00fccksetzen",
+      "resetEverythingDesc": "ALLE Daten einschlie\u00dflich benutzerdefinierter \u00dcbungen l\u00f6schen"
     },
-    "modes": {
-        "practice": "Übung",
-        "test": "Test",
-        "question": "Frage",
-        "of": "von"
+    "frequencies": {
+      "mixed": "Gemischt mit Standard",
+      "high": "Haupts\u00e4chlich benutzerdefiniert (70%)",
+      "only": "Nur benutzerdefiniert"
     },
-    "session": {
-        "paused": "Sitzung pausiert",
-        "pausedMessage": "Sie waren eine Weile weg. Bereit fortzufahren?",
-        "resume": "Fortsetzen",
-        "endSession": "Sitzung beenden"
+    "times": {
+      "2times": "2 mal",
+      "3times": "3 mal",
+      "4times": "4 mal",
+      "5times": "5 mal"
+    },
+    "modal": {
+      "confirm": "Best\u00e4tigen",
+      "cancel": "Abbrechen",
+      "areYouSure": "Bist du sicher?"
     }
+  },
+  "customize": {
+    "title": "Benutzerdefinierte \u00dcbungen hinzuf\u00fcgen",
+    "modes": {
+      "individual": "Einzeln",
+      "bulkUpload": "Massenupload"
+    },
+    "chooseType": "\u00dcbungstyp w\u00e4hlen:",
+    "types": {
+      "picture": "Bild",
+      "sentence": "Satz",
+      "words": "W\u00f6rter",
+      "timeSequencing": "Zeit Reihenfolge",
+      "timeOrdering": "Zeit Ordnen",
+      "clockMatching": "Uhren Zuordnen",
+      "workingMemory": "Arbeitsged\u00e4chtnis"
+    },
+    "bulkUpload": {
+      "title": "Massenupload aus CSV",
+      "instructions": "Anweisungen (zum Aufklappen klicken)",
+      "howTo": "So l\u00e4dst du benutzerdefinierte \u00dcbungen hoch:",
+      "selectExercises": "W\u00e4hle \u00dcbungstypen f\u00fcr die Vorlage aus",
+      "step1": "W\u00e4hle aus, welche \u00dcbungstypen du hochladen m\u00f6chtest und lade die Vorlage herunter",
+      "step2": "\u00d6ffne sie in Excel, Google Sheets oder einer anderen Tabellenkalkulation",
+      "step3": "F\u00fclle deine benutzerdefinierten \u00dcbungen nach dem Format aus",
+      "step4": "Speichere als CSV-Datei",
+      "step5": "Lade die Datei hier hoch",
+      "formatGuidelines": "CSV-Format-Richtlinien:",
+      "headerNote": "\u26a0\ufe0f WICHTIG: Erste Zeile muss sein: exercise_type,difficulty,data1,data2,data3,data4,data5",
+      "difficultyNote": "Schwierigkeit ist IMMER in Spalte 2 (easy, medium oder hard)",
+      "pictureFormat": "Bilder Benennen / Tippen / H\u00f6ren:",
+      "sentenceFormat": "Satz Vervollst\u00e4ndigen:",
+      "wordFormat": "Wortlisten:",
+      "pictureFormatCode": "exercise_type, difficulty, wort, emoji_oder_bild_url, option1, option2, option3",
+      "pictureExample": "Beispiel: picture/typing/listening, easy, apfel, \ud83c\udf4e, banane, orange, birne",
+      "pictureUrlExample": "Oder: apfel, https://example.com/apfel.jpg, banane, orange, birne, einfach",
+      "pictureNote": "Hinweis: Dies erstellt \u00dcbungen f\u00fcr alle drei Typen. Optionen werden beim Tippen ignoriert.",
+      "categoryFormat": "Kategorien (category):",
+      "categoryFormatCode": "exercise_type, difficulty, kategorie, richtiges_wort, falsch1, falsch2, falsch3",
+      "categoryExample": "Beispiel: category, easy, obst, apfel, m\u00f6hre, brot, stuhl",
+      "sentenceFormatCode": "exercise_type, difficulty, satz_mit_l\u00fccke, antwort",
+      "sentenceExample": "Beispiel: sentenceTyping, easy, Ich trinke jeden Morgen ?, kaffee (nutze ? oder __ f\u00fcr L\u00fccke)",
+      "speakingFormat": "Sprechen (speaking):",
+      "speakingFormatCode": "exercise_type, difficulty, wort, emoji, phrase1, phrase2",
+      "speakingExample": "Beispiel: speaking, easy, apfel, \ud83c\udf4e, Ein Apfel am Tag..., Ich esse einen Apfel",
+      "firstSoundFormat": "Erste Laute (firstSound):",
+      "firstSoundFormatCode": "exercise_type, difficulty, laut, wort_mit_laut, w\u00f6rter_ohne_laut (getrennt durch |)",
+      "firstSoundExample": "Beispiel: firstSound, easy, b, ball, auto|haus|tisch",
+      "rhymingFormat": "Reimw\u00f6rter (rhyming):",
+      "rhymingFormatCode": "exercise_type, difficulty, wort, reimendes_wort, nicht_reimende_w\u00f6rter (getrennt durch |)",
+      "rhymingExample": "Beispiel: rhyming, easy, katze, tatze, hund|sonne|baum",
+      "definitionsFormat": "Definitionen (definitions):",
+      "definitionsFormatCode": "exercise_type, difficulty, wort, definition, falsche_w\u00f6rter (getrennt durch |)",
+      "definitionsExample": "Beispiel: definitions, easy, stuhl, Ein M\u00f6belst\u00fcck zum Sitzen, tisch|auto|baum",
+      "associationFormat": "Assoziation (association):",
+      "associationFormatCode": "exercise_type, difficulty, wort, verwandtes_wort, nicht_verwandte_w\u00f6rter (getrennt durch |)",
+      "associationExample": "Beispiel: association, easy, brot, butter, auto|telefon|baum",
+      "synonymsFormat": "Synonyme/Antonyme (synonyms):",
+      "synonymsFormatCode": "exercise_type, difficulty, wort, ist_synonym(true/false), richtiges_wort, falsche_w\u00f6rter",
+      "synonymsExample": "Beispiele: synonyms, easy, gl\u00fccklich, true, froh, traurig|w\u00fctend|m\u00fcde",
+      "synonymsExample2": "          synonyms, easy, hei\u00df, false, kalt, warm|lauwarm|k\u00fchl",
+      "scrambleFormat": "W\u00f6rter Ordnen (scramble):",
+      "scrambleFormatCode": "exercise_type, difficulty, satz",
+      "scrambleExample": "Beispiel: scramble, easy, Die Katze schl\u00e4ft",
+      "timeSequencingFormat": "Zeit Reihenfolge (timeSequencing):",
+      "timeSequencingFormatCode": "exercise_type, difficulty, frage, antwort, falsche_optionen (getrennt durch |)",
+      "timeSequencingExample": "Beispiel: timeSequencing, easy, Welcher Tag kommt nach Montag?, Dienstag, Mittwoch|Sonntag|Freitag",
+      "clockMatchingFormat": "Uhren Zuordnen (clockMatching):",
+      "clockMatchingFormatCode": "exercise_type, difficulty, zeit, zeitw\u00f6rter, falsche_zeiten (getrennt durch |)",
+      "clockMatchingExample": "Beispiel: clockMatching, easy, 3:00, drei Uhr, 4:00|5:00|6:00",
+      "timeOrderingFormat": "Zeit Ordnen (timeOrdering):",
+      "timeOrderingFormatCode": "exercise_type, difficulty, szenario, aktivit\u00e4t1, aktivit\u00e4t2, aktivit\u00e4t3, ...",
+      "timeOrderingExample": "Beispiel: timeOrdering, easy, Morgenroutine, Aufwachen, Z\u00e4hne putzen, Fr\u00fchst\u00fccken, Zur Arbeit gehen",
+      "timeOrderingNote": "Hinweis: F\u00fcge beliebig viele Aktivit\u00e4ten in der richtigen Reihenfolge hinzu",
+      "workingMemoryFormat": "Arbeitsged\u00e4chtnis (workingMemory):",
+      "workingMemoryFormatCode": "exercise_type, difficulty, sequenz (3 Emojis), extra_optionen (3+ Emojis)",
+      "workingMemoryExample": "Beispiel: workingMemory, easy, \ud83c\udf4e\ud83c\udf4c\ud83c\udf4a, \ud83c\udf47\ud83c\udf53\ud83e\udd5d",
+      "downloadTemplate": "Vorlage herunterladen",
+      "uploadFile": "Lade die Datei hier hoch",
+      "selectFile": "Datei ausw\u00e4hlen...",
+      "processing": "Wird verarbeitet...",
+      "success": "{count} \u00dcbungen erfolgreich importiert!",
+      "error": "Fehler beim Importieren der Datei: {message}"
+    },
+    "existing": "Deine benutzerdefinierten \u00dcbungen",
+    "noCustom": "Noch keine benutzerdefinierten \u00dcbungen.",
+    "delete": "L\u00f6schen",
+    "edit": "Bearbeiten",
+    "confirmDelete": "Diese \u00dcbung l\u00f6schen?",
+    "status": {
+      "active": "Aktiv",
+      "archived": "Archiviert"
+    },
+    "forms": {
+      "addWordExercise": "Wort\u00fcbung hinzuf\u00fcgen",
+      "addPictureExercise": "Bild\u00fcbung hinzuf\u00fcgen",
+      "addSentenceExercise": "Satz\u00fcbung hinzuf\u00fcgen",
+      "exerciseType": "\u00dcbungstyp",
+      "rhymingWords": "Reimw\u00f6rter",
+      "wordAssociation": "Wort-Assoziation",
+      "synonyms": "Synonyme",
+      "mainWord": "Hauptwort",
+      "mainWordPlaceholder": "z.B. Katze",
+      "relatedWords": "Verwandte W\u00f6rter (kommagetrennt)",
+      "relatedWordsPlaceholder": "z.B. Tatze, Matze, Platze",
+      "targetWord": "Zielwort",
+      "targetWordPlaceholder": "z.B. Apfel",
+      "wrongOptions": "Falsche Optionen (durch Kommas getrennt)",
+      "wrongOptionsOptional": "Falsche Optionen (optional)",
+      "wrongOptionsPlaceholder": "z.B. Banane, Orange, Traube",
+      "sentence": "Satz",
+      "sentenceWithBlank": "Satz (verwende __ f\u00fcr L\u00fccke)",
+      "sentencePlaceholder": "z.B. Ich trinke jeden Morgen __",
+      "answer": "Antwort",
+      "answerPlaceholder": "z.B. Kaffee",
+      "addExercise": "\u00dcbung hinzuf\u00fcgen",
+      "imageFile": "Bilddatei (optional)",
+      "chooseFile": "Datei w\u00e4hlen...",
+      "noFileSelected": "keine Datei ausgew\u00e4hlt",
+      "uploadPictureHelp": "Lade ein Bild f\u00fcr dieses Wort hoch",
+      "autoGenerateHelp": "Leer lassen f\u00fcr automatische Generierung aus anderen W\u00f6rtern",
+      "imageUrl": "Oder Bild-URL",
+      "imageUrlPlaceholder": "https://example.com/bild.jpg",
+      "addTimeSequencing": "Zeit Reihenfolge \u00dcbung hinzuf\u00fcgen",
+      "addTimeOrdering": "Zeit Ordnen \u00dcbung hinzuf\u00fcgen",
+      "addClockMatching": "Uhren Zuordnen \u00dcbung hinzuf\u00fcgen",
+      "addWorkingMemory": "Arbeitsged\u00e4chtnis \u00dcbung hinzuf\u00fcgen",
+      "question": "Frage",
+      "timeQuestionPlaceholder": "z.B., Welcher Tag kommt nach Montag?",
+      "correctAnswer": "Richtige Antwort",
+      "timeAnswerPlaceholder": "z.B., Dienstag",
+      "timeOptionsPlaceholder": "z.B., Mittwoch, Sonntag, Freitag",
+      "timeOptionsHelp": "Gib 3 falsche Antwortm\u00f6glichkeiten durch Kommas getrennt ein",
+      "scenario": "Szenario",
+      "scenarioPlaceholder": "z.B., T\u00e4gliche Routine",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B., Bringe diese t\u00e4glichen Aktivit\u00e4ten in die richtige Reihenfolge",
+      "activities": "Aktivit\u00e4ten (eine pro Zeile)",
+      "activitiesPlaceholder": "Aufwachen\nFr\u00fchst\u00fccken\nZur Arbeit gehen\nZu Abend essen\nSchlafen gehen",
+      "activitiesHelp": "Gib die Aktivit\u00e4ten in der richtigen Reihenfolge ein, eine pro Zeile",
+      "digitalTime": "Digitale Zeit",
+      "timeWords": "Zeit in Worten",
+      "timeWordsPlaceholder": "z.B., drei Uhr",
+      "timeWordsHelp": "Wie die Zeit ausgesprochen werden soll",
+      "emojiSequence": "Emoji Reihenfolge (3 Emojis)",
+      "sequencePlaceholder": "\ud83c\udf4e\ud83c\udf4c\ud83c\udf4a",
+      "sequenceHelp": "Gib genau 3 Emojis ein, die nacheinander gezeigt werden",
+      "extraOptions": "Zus\u00e4tzliche Optionen (3+ Emojis)",
+      "extraOptionsPlaceholder": "\ud83c\udf47\ud83c\udf53\ud83e\udd5d\ud83e\udd6d\ud83c\udf49",
+      "extraOptionsHelp": "Gib mindestens 3 zus\u00e4tzliche Emojis als falsche Auswahlm\u00f6glichkeiten ein",
+      "difficulty": "Schwierigkeitsgrad",
+      "easy": "Einfach",
+      "medium": "Mittel",
+      "hard": "Schwer"
+    },
+    "showActive": "Aktive Anzeigen",
+    "showArchived": "Archivierte Anzeigen",
+    "allDifficulties": "Alle Schwierigkeitsgrade"
+  },
+  "modes": {
+    "practice": "\u00dcbung",
+    "test": "Test",
+    "question": "Frage",
+    "of": "von"
+  },
+  "session": {
+    "paused": "Sitzung pausiert",
+    "pausedMessage": "Sie waren eine Weile weg. Bereit fortzufahren?",
+    "resume": "Fortsetzen",
+    "endSession": "Sitzung beenden"
+  }
 }

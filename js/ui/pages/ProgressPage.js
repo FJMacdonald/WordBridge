@@ -1,65 +1,72 @@
-// ui/pages/ProgressPage.js - ENHANCED VERSION with exercise grid and test comparison
+// ui/pages/ProgressPage.js - Mirrors home page layout with exercise cards
 import { t } from '../../core/i18n.js';
-
 import assessmentService from '../../services/AssessmentService.js';
 import pdfService from '../../services/PDFService.js';
 import analyticsService from '../../services/AnalyticsService.js';
-import trackingService from '../../services/TrackingService.js';
-
+import storageService from '../../services/StorageService.js';
+import { i18n } from '../../core/i18n.js';
 
 class ProgressPage {
     constructor(container) {
         this.container = container;
-        this.selectedExercise = null;
-        this.selectedTests = []; // For comparison
+        this.selectedTests = [];
     }
     
-    // Exercise type definitions matching home page
-    getExerciseTypes() {
-        return {
-            words: [
-                { key: 'naming', name: 'Picture Naming', icon: '🖼️' },
-                { key: 'typing', name: 'Typing', icon: '⌨️' },
-                { key: 'sentenceTyping', name: 'Fill Blank', icon: '📝' },
-                { key: 'category', name: 'Categories', icon: '📁' }
-            ],
-            phonetics: [
-                { key: 'listening', name: 'Listening', icon: '👂' },
-                { key: 'speaking', name: 'Speaking', icon: '🎤' },
-                { key: 'firstSound', name: 'First Sounds', icon: '🔤' },
-                { key: 'rhyming', name: 'Rhyming', icon: '🎵' }
-            ],
-            meaning: [
-                { key: 'definitions', name: 'Definitions', icon: '📖' },
-                { key: 'association', name: 'Association', icon: '🔗' },
-                { key: 'synonyms', name: 'Synonyms', icon: '≈' },
-                { key: 'scramble', name: 'Unscramble', icon: '🔀' }
-            ],
-            time: [
-                { key: 'clockMatching', name: 'Clock Matching', icon: '🕐' },
-                { key: 'timeSequencing', name: 'Time Sequencing', icon: '📅' },
-                { key: 'timeOrdering', name: 'Time Ordering', icon: '⏰' },
-                { key: 'workingMemory', name: 'Working Memory', icon: '🧠' }
-            ]
-        };
-    }
-    
-    getAllExerciseTypes() {
-        const categories = this.getExerciseTypes();
-        return [
-            ...categories.words,
-            ...categories.phonetics,
-            ...categories.meaning,
-            ...categories.time
-        ];
+    /**
+     * Get language-specific storage key
+     */
+    getStorageKey(baseKey) {
+        const locale = i18n.getCurrentLocale();
+        return `${baseKey}_${locale}`;
     }
     
     render() {
+        const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
+        
         const categoryInfo = {
-            words: { name: t('home.categories.words'), icon: '📚' },
-            phonetics: { name: t('home.categories.phonetics'), icon: '🔊' },
-            meaning: { name: t('home.categories.meaning'), icon: '💡' },
-            time: { name: t('home.categories.time'), icon: '⏰' }
+            words: {
+                name: t('home.categories.words'),
+                icon: '📚'
+            },
+            phonetics: {
+                name: t('home.categories.phonetics'),
+                icon: '🔊'
+            },
+            meaning: {
+                name: t('home.categories.meaning'),
+                icon: '💡'
+            },
+            time: {
+                name: t('home.categories.time'),
+                icon: '⏰'
+            }
+        };
+        
+        const exercisesByCategory = {
+            words: [
+                { type: 'naming', icon: '🖼️' },
+                { type: 'typing', icon: '⌨️' },
+                { type: 'sentenceTyping', icon: '📝' },
+                { type: 'category', icon: '📁' }
+            ],
+            phonetics: [
+                { type: 'listening', icon: '👂' },
+                { type: 'speaking', icon: '🎤' },
+                { type: 'firstSound', icon: '🔤' },
+                { type: 'rhyming', icon: '🎵' }
+            ],
+            meaning: [
+                { type: 'definitions', icon: '📖' },
+                { type: 'association', icon: '🔗' },
+                { type: 'synonyms', icon: '≈' },
+                { type: 'scramble', icon: '🔀' }
+            ],
+            time: [
+                { type: 'clockMatching', icon: '🕐' },
+                { type: 'timeSequencing', icon: '📅' },
+                { type: 'timeOrdering', icon: '⏰' },
+                { type: 'workingMemory', icon: '🧠' }
+            ]
         };
         
         this.container.innerHTML = `
@@ -73,133 +80,82 @@ class ProgressPage {
                     </div>
                 </header>
                 
-                <!-- Summary Stats -->
+                <!-- Summary Stats Bar -->
                 <div class="progress-summary" id="progress-summary"></div>
                 
-                <!-- Tab Navigation -->
-                <div class="progress-tabs">
-                    <button class="tab-btn active" data-tab="exercises">
-                        📚 Exercises
-                    </button>
-                    <button class="tab-btn" data-tab="tests">
-                        📋 Test History
-                    </button>
-                    <button class="tab-btn" data-tab="recommendations">
-                        💡 Insights
-                    </button>
-                </div>
-                
-                <!-- Exercises Tab - Home page style grid -->
-                <div class="tab-content" id="exercises-tab">
-                    <div class="time-range-controls">
-                        <button class="time-btn active" data-range="today">${t('progress.timeRanges.day')}</button>
-                        <button class="time-btn" data-range="week">${t('progress.timeRanges.week')}</button>
-                        <button class="time-btn" data-range="month">${t('progress.timeRanges.month')}</button>
-                        <button class="time-btn" data-range="all">${t('progress.timeRanges.all')}</button>
-                    </div>
-                    
-                    <div class="exercise-progress-grid">
-                        ${Object.entries(this.getExerciseTypes()).map(([category, exercises]) => `
-                            <div class="category-card">
-                                <div class="category-header">
-                                    <h3 class="category-title">
-                                        <span class="category-icon">${categoryInfo[category].icon}</span>
-                                        ${categoryInfo[category].name}
-                                    </h3>
-                                </div>
-                                <div class="exercise-grid">
-                                    ${exercises.map(ex => `
-                                        <div class="exercise-progress-card" data-exercise="${ex.key}">
-                                            <div class="exercise-card-header">
-                                                <span class="exercise-icon">${ex.icon}</span>
-                                                <span class="exercise-name">${ex.name}</span>
-                                            </div>
-                                            <div class="exercise-stats" id="stats-${ex.key}">
-                                                <div class="stat-loading">Loading...</div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
+                <!-- Category Grid - Same layout as home page -->
+                <div class="category-grid">
+                    ${categoryOrder.map(category => {
+                        const exercises = exercisesByCategory[category];
+                        return `
+                        <div class="category-card">
+                            <div class="category-header">
+                                <h3 class="category-title">
+                                    <span class="category-icon">${categoryInfo[category].icon}</span>
+                                    ${categoryInfo[category].name}
+                                </h3>
                             </div>
-                        `).join('')}
-                    </div>
-                </div>
-                
-                <!-- Test History Tab -->
-                <div class="tab-content hidden" id="tests-tab">
-                    <div class="test-history-container">
-                        <div class="test-filter">
-                            <label>Exercise Type:</label>
-                            <select id="test-exercise-filter">
-                                <option value="all">All Exercises</option>
-                                ${this.getAllExerciseTypes().map(ex => 
-                                    `<option value="${ex.key}">${ex.name}</option>`
-                                ).join('')}
-                            </select>
-                            <button class="btn btn--secondary" id="compare-tests-btn" disabled>
-                                Compare Selected
-                            </button>
+                            <div class="exercise-grid">
+                                ${exercises.map(ex => `
+                                <button class="exercise-card progress-card" 
+                                        data-type="${ex.type}">
+                                    <span class="exercise-icon">${ex.icon}</span>
+                                    <span class="exercise-name">${t('exercises.' + ex.type + '.name')}</span>
+                                    <div class="exercise-mini-stats" id="mini-stats-${ex.type}">
+                                        <span class="loading-dots">...</span>
+                                    </div>
+                                </button>
+                                `).join('')}
+                            </div>
                         </div>
-                        <div id="test-history-list" class="test-history-list"></div>
-                        <div id="test-comparison" class="test-comparison hidden"></div>
-                    </div>
-                </div>
-                
-                <!-- Recommendations Tab -->
-                <div class="tab-content hidden" id="recommendations-tab">
-                    <div class="recommendations-section">
-                        <h3>${t('progress.recommendations.title')}</h3>
-                        <div id="recommendations"></div>
-                    </div>
-                    <div class="problem-words-section">
-                        <h3>Words Needing Practice</h3>
-                        <div id="problem-words"></div>
-                    </div>
-                    <div class="mastered-words-section">
-                        <h3>Mastered Words</h3>
-                        <div id="mastered-words"></div>
-                    </div>
+                        `;
+                    }).join('')}
                 </div>
                 
                 <!-- Exercise Detail Modal -->
-                <div class="exercise-detail-modal hidden" id="exercise-detail-modal">
+                <div class="modal-overlay hidden" id="exercise-modal">
                     <div class="modal-content">
                         <button class="modal-close" id="close-modal">&times;</button>
-                        <div id="exercise-detail-content"></div>
+                        <div id="modal-body"></div>
                     </div>
                 </div>
             </div>
         `;
         
-        // Render initial data
+        // Load data and render
         this.renderSummary();
-        this.renderExerciseStats('today');
-        this.renderTestHistory();
-        this.renderRecommendations();
-        this.renderProblemWords();
-        this.renderMasteredWords();
-        
+        this.renderExerciseCards();
         this.attachListeners();
     }
     
     renderSummary() {
         const container = document.getElementById('progress-summary');
-        const breakdown = trackingService.getExerciseBreakdown();
         
-        // Calculate totals
+        // Get all assessment history
+        const assessmentHistory = assessmentService.getAssessmentHistory();
+        const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
+        
+        // Calculate totals from session history
         let totalAttempts = 0;
         let totalCorrect = 0;
         let totalTime = 0;
-        let totalTests = 0;
-        let totalPracticeSessions = 0;
+        let testSessions = 0;
+        let practiceSessions = 0;
         
-        Object.values(breakdown).forEach(stats => {
-            totalAttempts += stats.totalAttempts;
-            totalCorrect += stats.totalCorrect;
-            totalTime += stats.totalTime;
-            totalTests += stats.testCount;
-            totalPracticeSessions += stats.practiceSessions;
+        sessionHistory.forEach(session => {
+            totalAttempts += session.total || 0;
+            totalCorrect += session.correct || 0;
+            totalTime += session.activeTime || session.duration || 0;
+            
+            if (session.mode === 'test') {
+                testSessions++;
+            } else {
+                practiceSessions++;
+            }
         });
+        
+        // Also count assessments
+        testSessions = Math.max(testSessions, assessmentHistory.length);
         
         const overallAccuracy = totalAttempts > 0 
             ? Math.round((totalCorrect / totalAttempts) * 100) 
@@ -209,511 +165,348 @@ class ProgressPage {
             <div class="summary-stats">
                 <div class="summary-stat">
                     <span class="stat-value">${totalAttempts}</span>
-                    <span class="stat-label">Total Questions</span>
+                    <span class="stat-label">${t('progress.totalQuestions')}</span>
                 </div>
                 <div class="summary-stat">
                     <span class="stat-value">${overallAccuracy}%</span>
-                    <span class="stat-label">Overall Accuracy</span>
+                    <span class="stat-label">${t('progress.accuracy')}</span>
                 </div>
                 <div class="summary-stat">
                     <span class="stat-value">${this.formatTime(totalTime)}</span>
-                    <span class="stat-label">Total Time</span>
+                    <span class="stat-label">${t('progress.totalTime')}</span>
                 </div>
                 <div class="summary-stat">
-                    <span class="stat-value">${totalTests}</span>
-                    <span class="stat-label">Tests Taken</span>
+                    <span class="stat-value">${testSessions}</span>
+                    <span class="stat-label">${t('progress.testsTaken')}</span>
                 </div>
                 <div class="summary-stat">
-                    <span class="stat-value">${totalPracticeSessions}</span>
-                    <span class="stat-label">Practice Sessions</span>
+                    <span class="stat-value">${practiceSessions}</span>
+                    <span class="stat-label">${t('progress.practiceSessions')}</span>
                 </div>
             </div>
         `;
     }
     
-    renderExerciseStats(timeRange = 'today') {
-        const breakdown = trackingService.getExerciseBreakdown();
-        const stats = analyticsService.getStatsForTimeRange(timeRange);
+    renderExerciseCards() {
+        const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
+        const assessmentHistory = assessmentService.getAssessmentHistory();
         
-        this.getAllExerciseTypes().forEach(exercise => {
-            const container = document.getElementById(`stats-${exercise.key}`);
+        // Group sessions by exercise type
+        const statsByType = {};
+        
+        sessionHistory.forEach(session => {
+            const type = session.exerciseType;
+            if (!statsByType[type]) {
+                statsByType[type] = {
+                    attempts: 0,
+                    correct: 0,
+                    time: 0,
+                    practiceSessions: 0,
+                    testSessions: 0,
+                    tests: []
+                };
+            }
+            
+            statsByType[type].attempts += session.total || 0;
+            statsByType[type].correct += session.correct || 0;
+            statsByType[type].time += session.activeTime || session.duration || 0;
+            
+            if (session.mode === 'test') {
+                statsByType[type].testSessions++;
+                statsByType[type].tests.push({
+                    id: session.id,
+                    date: session.date,
+                    correct: session.correct,
+                    total: session.total,
+                    accuracy: session.accuracy
+                });
+            } else {
+                statsByType[type].practiceSessions++;
+            }
+        });
+        
+        // Also include assessment history
+        assessmentHistory.forEach(assessment => {
+            const type = assessment.metadata?.exerciseType || assessment.results?.exerciseType;
+            if (type) {
+                if (!statsByType[type]) {
+                    statsByType[type] = {
+                        attempts: 0,
+                        correct: 0,
+                        time: 0,
+                        practiceSessions: 0,
+                        testSessions: 0,
+                        tests: []
+                    };
+                }
+                
+                statsByType[type].testSessions++;
+                statsByType[type].tests.push({
+                    id: assessment.id,
+                    date: assessment.date,
+                    correct: assessment.results?.overallScore || 0,
+                    total: assessment.results?.totalQuestions || 10,
+                    accuracy: assessment.results?.accuracy || 0
+                });
+            }
+        });
+        
+        // Update each card
+        const allTypes = [
+            'naming', 'typing', 'sentenceTyping', 'category',
+            'listening', 'speaking', 'firstSound', 'rhyming',
+            'definitions', 'association', 'synonyms', 'scramble',
+            'clockMatching', 'timeSequencing', 'timeOrdering', 'workingMemory'
+        ];
+        
+        allTypes.forEach(type => {
+            const container = document.getElementById(`mini-stats-${type}`);
             if (!container) return;
             
-            const exerciseBreakdown = breakdown[exercise.key] || {};
-            const dailyStats = stats?.exerciseTypes?.[exercise.key] || {};
+            const stats = statsByType[type];
             
-            // Use time-range specific data when available
-            const attempts = dailyStats.attempts || dailyStats.totalAttempts || exerciseBreakdown.totalAttempts || 0;
-            const correct = dailyStats.correct || exerciseBreakdown.totalCorrect || 0;
-            const accuracy = attempts > 0 ? Math.round((correct / attempts) * 100) : 0;
-            const time = dailyStats.time || dailyStats.totalTime || exerciseBreakdown.totalTime || 0;
-            const tests = exerciseBreakdown.testCount || 0;
-            
-            if (attempts === 0 && tests === 0) {
+            if (!stats || stats.attempts === 0) {
                 container.innerHTML = `
-                    <div class="no-data">
-                        <span class="no-data-text">No practice yet</span>
-                        <button class="btn btn--small start-practice" data-exercise="${exercise.key}">
-                            Start
-                        </button>
-                    </div>
+                    <span class="no-data">${t('progress.noData')}</span>
                 `;
             } else {
+                const accuracy = stats.attempts > 0 
+                    ? Math.round((stats.correct / stats.attempts) * 100) 
+                    : 0;
+                
+                const accuracyClass = accuracy >= 80 ? 'good' : accuracy >= 60 ? 'ok' : 'needs-work';
+                
                 container.innerHTML = `
-                    <div class="mini-stats">
-                        <div class="mini-stat">
-                            <span class="mini-value">${attempts}</span>
-                            <span class="mini-label">Q</span>
-                        </div>
-                        <div class="mini-stat">
-                            <span class="mini-value ${accuracy >= 80 ? 'good' : accuracy >= 60 ? 'ok' : 'needs-work'}">${accuracy}%</span>
-                            <span class="mini-label">Acc</span>
-                        </div>
-                        <div class="mini-stat">
-                            <span class="mini-value">${tests}</span>
-                            <span class="mini-label">Tests</span>
-                        </div>
-                    </div>
-                    <div class="accuracy-mini-bar">
-                        <div class="accuracy-fill ${accuracy >= 80 ? 'good' : accuracy >= 60 ? 'ok' : 'needs-work'}" 
-                             style="width: ${accuracy}%"></div>
-                    </div>
+                    <span class="mini-accuracy ${accuracyClass}">${accuracy}%</span>
+                    <span class="mini-count">${stats.attempts} ${t('progress.questions')}</span>
                 `;
             }
         });
-        
-        // Re-attach click listeners for start buttons
-        this.container.querySelectorAll('.start-practice').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const exerciseType = btn.dataset.exercise;
-                window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
-                // Could also directly start the exercise here
-            });
-        });
     }
     
-    renderTestHistory(filterExercise = 'all') {
-        const container = document.getElementById('test-history-list');
-        const allTests = trackingService.getTestHistory();
+    showExerciseDetail(exerciseType) {
+        const modal = document.getElementById('exercise-modal');
+        const modalBody = document.getElementById('modal-body');
         
-        let tests = [];
+        // Get stats for this exercise
+        const sessionHistory = storageService.get(this.getStorageKey('sessionHistory'), []);
+        const assessmentHistory = assessmentService.getAssessmentHistory();
         
-        if (filterExercise === 'all') {
-            // Combine all tests and sort by date
-            Object.entries(allTests).forEach(([exerciseType, exerciseTests]) => {
-                exerciseTests.forEach(test => {
-                    tests.push({ ...test, exerciseType });
+        // Filter for this exercise
+        const exerciseSessions = sessionHistory.filter(s => s.exerciseType === exerciseType);
+        const exerciseAssessments = assessmentHistory.filter(a => 
+            a.metadata?.exerciseType === exerciseType || 
+            a.results?.exerciseType === exerciseType
+        );
+        
+        // Calculate stats
+        let totalAttempts = 0;
+        let totalCorrect = 0;
+        let totalTime = 0;
+        let practiceSessions = 0;
+        let testSessions = 0;
+        const tests = [];
+        
+        exerciseSessions.forEach(session => {
+            totalAttempts += session.total || 0;
+            totalCorrect += session.correct || 0;
+            totalTime += session.activeTime || session.duration || 0;
+            
+            if (session.mode === 'test') {
+                testSessions++;
+                tests.push({
+                    id: session.id,
+                    date: session.date,
+                    correct: session.correct,
+                    total: session.total,
+                    accuracy: session.accuracy,
+                    wordList: session.wordList,
+                    attempts: session.attempts
                 });
+            } else {
+                practiceSessions++;
+            }
+        });
+        
+        // Add assessments as tests
+        exerciseAssessments.forEach(assessment => {
+            testSessions++;
+            tests.push({
+                id: assessment.id,
+                date: assessment.date,
+                correct: assessment.results?.overallScore || 0,
+                total: assessment.results?.totalQuestions || 10,
+                accuracy: assessment.results?.accuracy || 0
             });
-        } else {
-            tests = (allTests[filterExercise] || []).map(t => ({ ...t, exerciseType: filterExercise }));
-        }
+        });
         
-        // Sort by date, newest first
-        tests.sort((a, b) => b.date - a.date);
+        const accuracy = totalAttempts > 0 
+            ? Math.round((totalCorrect / totalAttempts) * 100) 
+            : 0;
         
-        if (tests.length === 0) {
-            container.innerHTML = `
+        // Sort tests by date (newest first)
+        tests.sort((a, b) => (b.date || 0) - (a.date || 0));
+        
+        modalBody.innerHTML = `
+            <h2>${t('exercises.' + exerciseType + '.name')}</h2>
+            
+            <div class="detail-stats-grid">
+                <div class="detail-stat">
+                    <span class="stat-value">${totalAttempts}</span>
+                    <span class="stat-label">${t('progress.totalQuestions')}</span>
+                </div>
+                <div class="detail-stat">
+                    <span class="stat-value">${accuracy}%</span>
+                    <span class="stat-label">${t('progress.accuracy')}</span>
+                </div>
+                <div class="detail-stat">
+                    <span class="stat-value">${this.formatTime(totalTime)}</span>
+                    <span class="stat-label">${t('progress.totalTime')}</span>
+                </div>
+                <div class="detail-stat">
+                    <span class="stat-value">${practiceSessions}</span>
+                    <span class="stat-label">${t('progress.practiceSessions')}</span>
+                </div>
+            </div>
+            
+            <h3>${t('progress.testHistory')} (${testSessions})</h3>
+            
+            ${tests.length === 0 ? `
                 <div class="empty-state">
-                    <h3>No Tests Taken Yet</h3>
-                    <p>Take a test to track your progress over time.</p>
-                    <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'assessment'}))">
-                        Take a Test
+                    <p>${t('progress.noTestsYet')}</p>
+                    <button class="btn btn--primary" id="take-test-btn" data-type="${exerciseType}">
+                        ${t('progress.takeTest')}
                     </button>
                 </div>
-            `;
-            return;
-        }
-        
-        const exerciseInfo = {};
-        this.getAllExerciseTypes().forEach(ex => {
-            exerciseInfo[ex.key] = ex;
-        });
-        
-        container.innerHTML = `
-            <table class="test-history-table">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="select-all-tests"></th>
-                        <th>Date</th>
-                        <th>Exercise</th>
-                        <th>Score</th>
-                        <th>Accuracy</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${tests.map(test => {
-                        const exercise = exerciseInfo[test.exerciseType] || { icon: '❓', name: test.exerciseType };
-                        const date = new Date(test.date).toLocaleDateString();
+            ` : `
+                <div class="test-list">
+                    ${tests.slice(0, 10).map((test, index) => {
+                        const dateStr = test.date ? new Date(test.date).toLocaleDateString() : t('progress.unknownDate');
+                        const accuracyClass = test.accuracy >= 80 ? 'good' : test.accuracy >= 60 ? 'ok' : 'needs-work';
+                        
                         return `
-                            <tr data-test-id="${test.id}" data-exercise="${test.exerciseType}">
-                                <td><input type="checkbox" class="test-select" data-test-id="${test.id}"></td>
-                                <td>${date}</td>
-                                <td>
-                                    <span class="exercise-icon">${exercise.icon}</span>
-                                    ${exercise.name}
-                                </td>
-                                <td>${test.correct}/${test.total}</td>
-                                <td>
-                                    <span class="accuracy-badge ${test.accuracy >= 80 ? 'good' : test.accuracy >= 60 ? 'ok' : 'needs-work'}">
-                                        ${test.accuracy}%
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn--small btn--ghost view-test" data-test-id="${test.id}">
-                                        View
+                            <div class="test-item" data-test-index="${index}">
+                                <div class="test-info">
+                                    <span class="test-date">${dateStr}</span>
+                                    <span class="test-score">${test.correct}/${test.total}</span>
+                                    <span class="test-accuracy ${accuracyClass}">${test.accuracy}%</span>
+                                </div>
+                                ${index > 0 ? `
+                                    <button class="btn btn--small btn--ghost compare-btn" 
+                                            data-test1="${index - 1}" data-test2="${index}">
+                                        ${t('progress.compare')}
                                     </button>
-                                    <button class="btn btn--small btn--ghost retry-test" data-test-id="${test.id}">
-                                        Retry
-                                    </button>
-                                </td>
-                            </tr>
+                                ` : ''}
+                            </div>
                         `;
                     }).join('')}
-                </tbody>
-            </table>
-        `;
-        
-        // Attach test action listeners
-        this.attachTestListeners();
-    }
-    
-    attachTestListeners() {
-        // Select all checkbox
-        const selectAll = document.getElementById('select-all-tests');
-        if (selectAll) {
-            selectAll.addEventListener('change', (e) => {
-                const checkboxes = this.container.querySelectorAll('.test-select');
-                checkboxes.forEach(cb => cb.checked = e.target.checked);
-                this.updateCompareButton();
-            });
-        }
-        
-        // Individual checkboxes
-        this.container.querySelectorAll('.test-select').forEach(cb => {
-            cb.addEventListener('change', () => this.updateCompareButton());
-        });
-        
-        // View test buttons
-        this.container.querySelectorAll('.view-test').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const testId = btn.dataset.testId;
-                this.showTestDetail(testId);
-            });
-        });
-        
-        // Retry test buttons
-        this.container.querySelectorAll('.retry-test').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const testId = btn.dataset.testId;
-                this.retryTest(testId);
-            });
-        });
-    }
-    
-    updateCompareButton() {
-        const selected = this.container.querySelectorAll('.test-select:checked');
-        const compareBtn = document.getElementById('compare-tests-btn');
-        
-        if (compareBtn) {
-            compareBtn.disabled = selected.length !== 2;
-            
-            if (selected.length === 2) {
-                // Check if same exercise type
-                const ids = Array.from(selected).map(cb => cb.dataset.testId);
-                const rows = ids.map(id => this.container.querySelector(`tr[data-test-id="${id}"]`));
-                const exercises = rows.map(r => r.dataset.exercise);
+                </div>
                 
-                if (exercises[0] !== exercises[1]) {
-                    compareBtn.disabled = true;
-                    compareBtn.title = 'Select tests from the same exercise type';
-                } else {
-                    compareBtn.title = '';
-                }
-            }
-        }
-    }
-    
-    showTestDetail(testId) {
-        const test = trackingService.getTestById(testId);
-        if (!test) return;
-        
-        const modal = document.getElementById('exercise-detail-modal');
-        const content = document.getElementById('exercise-detail-content');
-        
-        const exerciseInfo = this.getAllExerciseTypes().find(ex => ex.key === test.exerciseType) || { icon: '❓', name: test.exerciseType };
-        
-        content.innerHTML = `
-            <h3>${exerciseInfo.icon} ${exerciseInfo.name} Test</h3>
-            <p class="test-date">Taken on ${new Date(test.date).toLocaleString()}</p>
-            
-            <div class="test-summary">
-                <div class="test-stat">
-                    <span class="stat-value">${test.correct}/${test.total}</span>
-                    <span class="stat-label">Score</span>
-                </div>
-                <div class="test-stat">
-                    <span class="stat-value">${test.accuracy}%</span>
-                    <span class="stat-label">Accuracy</span>
-                </div>
-                <div class="test-stat">
-                    <span class="stat-value">${test.hintsUsed || 0}</span>
-                    <span class="stat-label">Hints Used</span>
-                </div>
-            </div>
-            
-            <h4>Question Details</h4>
-            <div class="question-details">
-                ${test.attempts.map((attempt, i) => `
-                    <div class="question-item ${attempt.correct ? 'correct' : 'incorrect'}">
-                        <span class="question-num">${i + 1}</span>
-                        <span class="question-word">${attempt.word}</span>
-                        <span class="question-result">${attempt.correct ? '✓' : '✗'}</span>
-                        ${attempt.hintsUsed > 0 ? `<span class="hints-used">💡${attempt.hintsUsed}</span>` : ''}
-                        ${attempt.responseTime ? `<span class="response-time">${(attempt.responseTime / 1000).toFixed(1)}s</span>` : ''}
-                    </div>
-                `).join('')}
-            </div>
+                <div class="comparison-area hidden" id="comparison-area"></div>
+            `}
             
             <div class="modal-actions">
-                <button class="btn btn--primary" id="retry-from-modal" data-test-id="${testId}">
-                    Retry This Test
+                <button class="btn btn--secondary" id="practice-btn" data-type="${exerciseType}">
+                    ${t('progress.practice')}
+                </button>
+                <button class="btn btn--primary" id="test-btn" data-type="${exerciseType}">
+                    ${t('progress.takeTest')}
                 </button>
             </div>
         `;
         
+        // Store tests data for comparison
+        this.currentTests = tests;
+        
+        // Attach modal listeners
+        this.attachModalListeners(exerciseType);
+        
         modal.classList.remove('hidden');
-        
-        // Retry button in modal
-        document.getElementById('retry-from-modal')?.addEventListener('click', () => {
-            modal.classList.add('hidden');
-            this.retryTest(testId);
-        });
     }
     
-    retryTest(testId) {
-        const test = trackingService.getTestById(testId);
-        if (!test) return;
+    attachModalListeners(exerciseType) {
+        // Practice button
+        const practiceBtn = document.getElementById('practice-btn');
+        if (practiceBtn) {
+            practiceBtn.addEventListener('click', () => {
+                document.getElementById('exercise-modal').classList.add('hidden');
+                window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
+            });
+        }
         
-        // Dispatch event to start test with same words
-        window.dispatchEvent(new CustomEvent('startTest', {
-            detail: {
-                exerciseType: test.exerciseType,
-                difficulty: test.testConfig?.difficulty || 'easy',
-                questions: test.total,
-                retryTestId: testId,
-                wordList: test.wordList
-            }
-        }));
-    }
-    
-    compareTests() {
-        const selected = Array.from(this.container.querySelectorAll('.test-select:checked'))
-            .map(cb => cb.dataset.testId);
-        
-        if (selected.length !== 2) return;
-        
-        const comparison = trackingService.compareTests(selected[0], selected[1]);
-        if (!comparison) return;
-        
-        const comparisonContainer = document.getElementById('test-comparison');
-        
-        comparisonContainer.innerHTML = `
-            <div class="comparison-header">
-                <h3>Test Comparison</h3>
-                <button class="btn btn--ghost close-comparison">&times;</button>
-            </div>
-            
-            <div class="comparison-summary">
-                <div class="comparison-test">
-                    <h4>Test 1</h4>
-                    <p class="test-date">${new Date(comparison.test1.date).toLocaleDateString()}</p>
-                    <p class="test-score">${comparison.test1.correct}/${comparison.test1.total} (${comparison.test1.accuracy}%)</p>
-                </div>
-                <div class="comparison-arrow">
-                    <span class="improvement ${comparison.improvement > 0 ? 'positive' : comparison.improvement < 0 ? 'negative' : ''}">
-                        ${comparison.improvement > 0 ? '↑' : comparison.improvement < 0 ? '↓' : '→'}
-                        ${Math.abs(comparison.improvement)}%
-                    </span>
-                </div>
-                <div class="comparison-test">
-                    <h4>Test 2</h4>
-                    <p class="test-date">${new Date(comparison.test2.date).toLocaleDateString()}</p>
-                    <p class="test-score">${comparison.test2.correct}/${comparison.test2.total} (${comparison.test2.accuracy}%)</p>
-                </div>
-            </div>
-            
-            <h4>Word by Word</h4>
-            <div class="word-comparison">
-                ${Object.entries(comparison.wordComparison).map(([wordId, data]) => {
-                    const t1 = data.test1;
-                    const t2 = data.test2;
-                    
-                    let changeIcon = '';
-                    if (t1 && t2) {
-                        if (!t1.correct && t2.correct) changeIcon = '📈'; // Improved
-                        else if (t1.correct && !t2.correct) changeIcon = '📉'; // Regressed
-                        else if (t1.correct && t2.correct) changeIcon = '✓'; // Consistent correct
-                        else changeIcon = '✗'; // Consistent incorrect
+        // Test button
+        const testBtn = document.getElementById('test-btn');
+        if (testBtn) {
+            testBtn.addEventListener('click', () => {
+                document.getElementById('exercise-modal').classList.add('hidden');
+                window.dispatchEvent(new CustomEvent('startTest', {
+                    detail: {
+                        exerciseType: exerciseType,
+                        difficulty: 'easy',
+                        questions: 10
                     }
-                    
-                    return `
-                        <div class="word-compare-row">
-                            <span class="word">${data.word}</span>
-                            <span class="result test1 ${t1?.correct ? 'correct' : 'incorrect'}">
-                                ${t1 ? (t1.correct ? '✓' : '✗') : '-'}
-                            </span>
-                            <span class="change-icon">${changeIcon}</span>
-                            <span class="result test2 ${t2?.correct ? 'correct' : 'incorrect'}">
-                                ${t2 ? (t2.correct ? '✓' : '✗') : '-'}
-                            </span>
-                        </div>
-                    `;
-                }).join('')}
-            </div>
-        `;
+                }));
+            });
+        }
         
-        comparisonContainer.classList.remove('hidden');
+        // Take test button (in empty state)
+        const takeTestBtn = document.getElementById('take-test-btn');
+        if (takeTestBtn) {
+            takeTestBtn.addEventListener('click', () => {
+                document.getElementById('exercise-modal').classList.add('hidden');
+                window.dispatchEvent(new CustomEvent('startTest', {
+                    detail: {
+                        exerciseType: exerciseType,
+                        difficulty: 'easy',
+                        questions: 10
+                    }
+                }));
+            });
+        }
         
-        comparisonContainer.querySelector('.close-comparison')?.addEventListener('click', () => {
-            comparisonContainer.classList.add('hidden');
+        // Compare buttons
+        document.querySelectorAll('.compare-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idx1 = parseInt(btn.dataset.test1);
+                const idx2 = parseInt(btn.dataset.test2);
+                this.showComparison(idx1, idx2);
+            });
         });
     }
     
-    renderRecommendations() {
-        const container = document.getElementById('recommendations');
-        const breakdown = trackingService.getExerciseBreakdown();
+    showComparison(idx1, idx2) {
+        const test1 = this.currentTests[idx1];
+        const test2 = this.currentTests[idx2];
         
-        const recommendations = [];
-        const exerciseTypes = this.getAllExerciseTypes();
+        if (!test1 || !test2) return;
         
-        // Find exercises that need work
-        const needsWork = [];
-        const notStarted = [];
+        const comparisonArea = document.getElementById('comparison-area');
         
-        exerciseTypes.forEach(ex => {
-            const stats = breakdown[ex.key];
-            if (!stats || stats.totalAttempts === 0) {
-                notStarted.push(ex);
-            } else if (stats.accuracy < 60) {
-                needsWork.push({ ...ex, accuracy: stats.accuracy });
-            }
-        });
+        const improvement = test1.accuracy - test2.accuracy;
+        const improvementClass = improvement > 0 ? 'positive' : improvement < 0 ? 'negative' : 'neutral';
+        const improvementIcon = improvement > 0 ? '↑' : improvement < 0 ? '↓' : '→';
         
-        // Add recommendations
-        if (notStarted.length > 0) {
-            recommendations.push({
-                icon: '🎯',
-                text: `Try these exercises you haven't started: ${notStarted.slice(0, 3).map(e => e.name).join(', ')}`,
-                priority: 'medium'
-            });
-        }
-        
-        if (needsWork.length > 0) {
-            needsWork.sort((a, b) => a.accuracy - b.accuracy);
-            recommendations.push({
-                icon: '📚',
-                text: `Focus on improving: ${needsWork.slice(0, 3).map(e => `${e.name} (${e.accuracy}%)`).join(', ')}`,
-                priority: 'high'
-            });
-        }
-        
-        // Check for consistency
-        const quality = assessmentService.calculatePracticeQuality(7);
-        if (quality) {
-            if (quality.breakdown.consistency < 70) {
-                recommendations.push({
-                    icon: '📅',
-                    text: t('progress.recommendations.consistency'),
-                    priority: 'high'
-                });
-            }
-            
-            if (quality.breakdown.duration < 50) {
-                recommendations.push({
-                    icon: '⏱️',
-                    text: t('progress.recommendations.duration'),
-                    priority: 'medium'
-                });
-            }
-            
-            if (quality.breakdown.variety < 40) {
-                recommendations.push({
-                    icon: '🎨',
-                    text: t('progress.recommendations.variety'),
-                    priority: 'medium'
-                });
-            }
-        }
-        
-        // Add positive feedback
-        const goodExercises = exerciseTypes.filter(ex => {
-            const stats = breakdown[ex.key];
-            return stats && stats.accuracy >= 80 && stats.totalAttempts >= 10;
-        });
-        
-        if (goodExercises.length > 0) {
-            recommendations.push({
-                icon: '⭐',
-                text: `Great job on: ${goodExercises.map(e => e.name).join(', ')}!`,
-                priority: 'positive'
-            });
-        }
-        
-        container.innerHTML = recommendations.length > 0
-            ? recommendations.map(r => `
-                <div class="recommendation-item ${r.priority}">
-                    <span class="rec-icon">${r.icon}</span>
-                    <span class="rec-text">${r.text}</span>
+        comparisonArea.innerHTML = `
+            <h4>${t('progress.comparison')}</h4>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <span class="compare-label">${t('progress.newer')}</span>
+                    <span class="compare-date">${new Date(test1.date).toLocaleDateString()}</span>
+                    <span class="compare-score">${test1.accuracy}%</span>
                 </div>
-            `).join('')
-            : `<p class="success">${t('progress.recommendations.goodJob')}</p>`;
-    }
-    
-    renderProblemWords() {
-        const container = document.getElementById('problem-words');
-        const problemWords = analyticsService.getProblemWords(10);
-        
-        if (problemWords.length === 0) {
-            container.innerHTML = '<p class="empty-message">No problem words identified yet.</p>';
-            return;
-        }
-        
-        container.innerHTML = `
-            <div class="word-list">
-                ${problemWords.map(w => `
-                    <div class="word-item problem">
-                        <span class="word">${w.word}</span>
-                        <span class="accuracy">${w.accuracy}%</span>
-                        <span class="attempts">(${w.correct}/${w.attempts})</span>
-                    </div>
-                `).join('')}
+                <div class="comparison-arrow ${improvementClass}">
+                    <span class="arrow">${improvementIcon}</span>
+                    <span class="diff">${Math.abs(improvement)}%</span>
+                </div>
+                <div class="comparison-item">
+                    <span class="compare-label">${t('progress.older')}</span>
+                    <span class="compare-date">${new Date(test2.date).toLocaleDateString()}</span>
+                    <span class="compare-score">${test2.accuracy}%</span>
+                </div>
             </div>
         `;
-    }
-    
-    renderMasteredWords() {
-        const container = document.getElementById('mastered-words');
-        const masteredWords = analyticsService.getMasteredWords(10);
         
-        if (masteredWords.length === 0) {
-            container.innerHTML = '<p class="empty-message">Keep practicing to master words!</p>';
-            return;
-        }
-        
-        container.innerHTML = `
-            <div class="word-list">
-                ${masteredWords.map(w => `
-                    <div class="word-item mastered">
-                        <span class="word">${w.word}</span>
-                        <span class="accuracy">${w.accuracy}%</span>
-                        <span class="streak">🔥${w.streak}</span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
+        comparisonArea.classList.remove('hidden');
     }
     
     formatTime(milliseconds) {
@@ -735,81 +528,24 @@ class ProgressPage {
     }
     
     attachListeners() {
-        // Tab switching
-        this.container.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const activeTab = btn.dataset.tab;
-                this.container.querySelectorAll('.tab-content').forEach(content => {
-                    if (content.id === `${activeTab}-tab`) {
-                        content.classList.remove('hidden');
-                    } else {
-                        content.classList.add('hidden');
-                    }
-                });
-                
-                // Refresh content
-                if (activeTab === 'tests') {
-                    this.renderTestHistory();
-                } else if (activeTab === 'recommendations') {
-                    this.renderRecommendations();
-                    this.renderProblemWords();
-                    this.renderMasteredWords();
-                }
-            });
-        });
-        
-        // Time range switching
-        this.container.querySelectorAll('.time-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.container.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                this.renderExerciseStats(btn.dataset.range);
-            });
-        });
-        
-        // Test filter
-        const testFilter = document.getElementById('test-exercise-filter');
-        if (testFilter) {
-            testFilter.addEventListener('change', () => {
-                this.renderTestHistory(testFilter.value);
-            });
-        }
-        
-        // Compare button
-        const compareBtn = document.getElementById('compare-tests-btn');
-        if (compareBtn) {
-            compareBtn.addEventListener('click', () => this.compareTests());
-        }
-        
-        // Export report button
-        const exportBtn = this.container.querySelector('#export-report-btn');
-        if (exportBtn) {
-            exportBtn.addEventListener('click', () => {
-                pdfService.generateProgressReport();
-            });
-        }
-        
-        // Exercise cards click
-        this.container.querySelectorAll('.exercise-progress-card').forEach(card => {
+        // Exercise cards - open detail modal
+        this.container.querySelectorAll('.progress-card').forEach(card => {
             card.addEventListener('click', () => {
-                const exerciseType = card.dataset.exercise;
+                const exerciseType = card.dataset.type;
                 this.showExerciseDetail(exerciseType);
             });
         });
         
-        // Modal close
-        const closeModal = document.getElementById('close-modal');
-        if (closeModal) {
-            closeModal.addEventListener('click', () => {
-                document.getElementById('exercise-detail-modal').classList.add('hidden');
+        // Close modal
+        const closeBtn = document.getElementById('close-modal');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                document.getElementById('exercise-modal').classList.add('hidden');
             });
         }
         
-        // Close modal on background click
-        const modal = document.getElementById('exercise-detail-modal');
+        // Close on overlay click
+        const modal = document.getElementById('exercise-modal');
         if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
@@ -817,81 +553,14 @@ class ProgressPage {
                 }
             });
         }
-    }
-    
-    showExerciseDetail(exerciseType) {
-        const breakdown = trackingService.getExerciseBreakdown();
-        const stats = breakdown[exerciseType] || {};
-        const exerciseInfo = this.getAllExerciseTypes().find(ex => ex.key === exerciseType) || { icon: '❓', name: exerciseType };
         
-        const modal = document.getElementById('exercise-detail-modal');
-        const content = document.getElementById('exercise-detail-content');
-        
-        content.innerHTML = `
-            <h3>${exerciseInfo.icon} ${exerciseInfo.name}</h3>
-            
-            <div class="detail-stats">
-                <div class="detail-stat">
-                    <span class="stat-value">${stats.totalAttempts || 0}</span>
-                    <span class="stat-label">Total Questions</span>
-                </div>
-                <div class="detail-stat">
-                    <span class="stat-value">${stats.accuracy || 0}%</span>
-                    <span class="stat-label">Accuracy</span>
-                </div>
-                <div class="detail-stat">
-                    <span class="stat-value">${this.formatTime(stats.totalTime || 0)}</span>
-                    <span class="stat-label">Practice Time</span>
-                </div>
-                <div class="detail-stat">
-                    <span class="stat-value">${stats.testCount || 0}</span>
-                    <span class="stat-label">Tests Taken</span>
-                </div>
-            </div>
-            
-            <h4>Difficulty Breakdown</h4>
-            <div class="difficulty-breakdown">
-                ${['easy', 'medium', 'hard'].map(diff => {
-                    const diffStats = stats.byDifficulty?.[diff] || { attempts: 0, correct: 0 };
-                    const diffAccuracy = diffStats.attempts > 0 
-                        ? Math.round((diffStats.correct / diffStats.attempts) * 100) 
-                        : 0;
-                    return `
-                        <div class="difficulty-row">
-                            <span class="diff-label">${diff.charAt(0).toUpperCase() + diff.slice(1)}</span>
-                            <div class="diff-bar-container">
-                                <div class="diff-bar" style="width: ${diffAccuracy}%"></div>
-                            </div>
-                            <span class="diff-value">${diffAccuracy}% (${diffStats.correct}/${diffStats.attempts})</span>
-                        </div>
-                    `;
-                }).join('')}
-            </div>
-            
-            ${stats.tests && stats.tests.length > 0 ? `
-                <h4>Recent Tests</h4>
-                <div class="recent-tests">
-                    ${stats.tests.map(test => `
-                        <div class="recent-test-item">
-                            <span class="test-date">${new Date(test.date).toLocaleDateString()}</span>
-                            <span class="test-score">${test.correct}/${test.total}</span>
-                            <span class="test-accuracy ${test.accuracy >= 80 ? 'good' : test.accuracy >= 60 ? 'ok' : 'needs-work'}">${test.accuracy}%</span>
-                        </div>
-                    `).join('')}
-                </div>
-            ` : ''}
-            
-            <div class="modal-actions">
-                <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'home'}))">
-                    Practice Now
-                </button>
-                <button class="btn btn--secondary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'assessment'}))">
-                    Take Test
-                </button>
-            </div>
-        `;
-        
-        modal.classList.remove('hidden');
+        // Export report button
+        const exportBtn = document.getElementById('export-report-btn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                pdfService.generateProgressReport();
+            });
+        }
     }
 }
 

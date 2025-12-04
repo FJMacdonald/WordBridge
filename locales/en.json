@@ -25,11 +25,11 @@
     "remaining": "{count} left"
   },
   "feedback": {
-    "correct": "✓ Correct!",
-    "incorrect": "✗ Not quite",
-    "perfect": "✓ Perfect!",
+    "correct": "\u2713 Correct!",
+    "incorrect": "\u2717 Not quite",
+    "perfect": "\u2713 Perfect!",
     "theAnswerWas": "The answer was: {answer}",
-    "withHints": "✓ Got it with help!"
+    "withHints": "\u2713 Got it with help!"
   },
   "exercises": {
     "naming": {
@@ -202,7 +202,7 @@
     "info": {
       "qualityScore": "Quality Score combines consistency (practice frequency), duration (session length), variety (different exercises), and accuracy into a single metric.",
       "accuracyTrend": "Shows your daily accuracy percentage over time. The dotted line is a 7-day moving average to show overall trends.",
-      "accuracyCalculation": "Accuracy for a given day is calculated as: (Correct Attempts / Total Attempts) × 100%. Only days with practice activity are shown.",
+      "accuracyCalculation": "Accuracy for a given day is calculated as: (Correct Attempts / Total Attempts) \u00d7 100%. Only days with practice activity are shown.",
       "heatmap": "Darker colors indicate better performance. Each cell shows accuracy for a specific exercise on a specific day.",
       "assessmentComparison": "Compares your performance between standardized assessments to measure objective progress."
     },
@@ -215,12 +215,28 @@
     },
     "performanceLegend": {
       "title": "Performance Levels",
-      "excellent": "Excellent (≥85%)",
+      "excellent": "Excellent (\u226585%)",
       "good": "Good (70-84%)",
       "needsPractice": "Needs Practice (50-69%)",
       "challenging": "Challenging (<50%)",
       "noData": "No Data"
-    }
+    },
+    "totalQuestions": "Questions",
+    "accuracy": "Accuracy",
+    "totalTime": "Time",
+    "testsTaken": "Tests",
+    "practiceSessions": "Practice",
+    "noData": "No data",
+    "questions": "Q",
+    "testHistory": "Test History",
+    "noTestsYet": "No tests taken yet for this exercise.",
+    "takeTest": "Take Test",
+    "practice": "Practice",
+    "compare": "Compare",
+    "comparison": "Comparison",
+    "newer": "Newer",
+    "older": "Older",
+    "unknownDate": "Unknown date"
   },
   "assessment": {
     "title": "Progress Assessment",
@@ -274,9 +290,6 @@
     "testInProgress": "Test in Progress",
     "question": "Question",
     "of": "of",
-    "easy": "Easy",
-    "medium": "Medium",
-    "hard": "Hard",
     "easy": "Easy",
     "medium": "Medium",
     "hard": "Hard"
@@ -377,13 +390,13 @@
       "step4": "Save as CSV file",
       "step5": "Upload the file here",
       "formatGuidelines": "CSV Format Guidelines:",
-      "headerNote": "⚠️ IMPORTANT: First row must be: exercise_type,difficulty,data1,data2,data3,data4,data5",
+      "headerNote": "\u26a0\ufe0f IMPORTANT: First row must be: exercise_type,difficulty,data1,data2,data3,data4,data5",
       "difficultyNote": "Difficulty is ALWAYS in column 2 (easy, medium, or hard)",
       "pictureFormat": "Picture Naming / Typing / Listening:",
       "sentenceFormat": "Sentence Completion:",
       "wordFormat": "Word Lists:",
       "pictureFormatCode": "exercise_type, difficulty, word, emoji_or_image_url, option1, option2, option3",
-      "pictureExample": "Example: picture/typing/listening, easy, apple, 🍎, banana, orange, pear",
+      "pictureExample": "Example: picture/typing/listening, easy, apple, \ud83c\udf4e, banana, orange, pear",
       "pictureUrlExample": "Or: apple, https://example.com/apple.jpg, banana, orange, pear, easy",
       "pictureNote": "Note: This creates exercises for all three types. Options are ignored for typing.",
       "categoryFormat": "Categories (category):",
@@ -393,7 +406,7 @@
       "sentenceExample": "Example: sentenceTyping, easy, I drink ? every morning, coffee (use ? or __ for blank)",
       "speakingFormat": "Speaking (speaking):",
       "speakingFormatCode": "exercise_type, difficulty, word, emoji, phrase1, phrase2",
-      "speakingExample": "Example: speaking, easy, apple, 🍎, An apple a day..., I eat an apple",
+      "speakingExample": "Example: speaking, easy, apple, \ud83c\udf4e, An apple a day..., I eat an apple",
       "firstSoundFormat": "First Sounds (firstSound):",
       "firstSoundFormatCode": "exercise_type, difficulty, sound, word_with_sound, words_without_sound",
       "firstSoundExample": "Example: firstSound, easy, b, ball, car|house|table",
@@ -425,7 +438,7 @@
       "timeOrderingNote": "Note: Add as many activities as needed in correct order",
       "workingMemoryFormat": "Working Memory (workingMemory):",
       "workingMemoryFormatCode": "exercise_type, difficulty, sequence (3 emojis), extra_options (3+ emojis)",
-      "workingMemoryExample": "Example: workingMemory, easy, 🍎🍌🍊, 🍇🍓🥝",
+      "workingMemoryExample": "Example: workingMemory, easy, \ud83c\udf4e\ud83c\udf4c\ud83c\udf4a, \ud83c\udf47\ud83c\udf53\ud83e\udd5d",
       "downloadTemplate": "Download Template",
       "uploadFile": "Upload the file here",
       "selectFile": "Select File...",
@@ -494,10 +507,10 @@
       "timeWordsPlaceholder": "e.g., three o'clock",
       "timeWordsHelp": "How the time should be spoken",
       "emojiSequence": "Emoji Sequence (3 emojis)",
-      "sequencePlaceholder": "🍎🍌🍊",
+      "sequencePlaceholder": "\ud83c\udf4e\ud83c\udf4c\ud83c\udf4a",
       "sequenceHelp": "Enter exactly 3 emojis that will be shown in sequence",
       "extraOptions": "Extra Options (3+ emojis)",
-      "extraOptionsPlaceholder": "🍇🍓🥝🥭🍉",
+      "extraOptionsPlaceholder": "\ud83c\udf47\ud83c\udf53\ud83e\udd5d\ud83e\udd6d\ud83c\udf49",
       "extraOptionsHelp": "Enter at least 3 additional emojis as wrong choices",
       "difficulty": "Difficulty Level",
       "easy": "Easy",
@@ -506,11 +519,7 @@
     },
     "showActive": "Show Active",
     "showArchived": "Show Archived",
-    "allDifficulties": "All Difficulties",
-    "status": {
-      "active": "Active",
-      "archived": "Archived"
-    }
+    "allDifficulties": "All Difficulties"
   },
   "modes": {
     "practice": "Practice",
