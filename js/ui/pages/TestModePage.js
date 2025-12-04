@@ -89,9 +89,10 @@ class TestModePage {
                         </option>
                     </select>
                     <select class="questions-select">
-                        <option value="10">10</option>
-                        <option value="20" selected>20</option>
-                        <option value="30">30</option>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
                     </select>
                     <button class="btn btn--primary btn--compact start-test-btn" 
                             data-type="${exercise.type}">
