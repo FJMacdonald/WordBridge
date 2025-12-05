@@ -34,7 +34,7 @@ class SettingsPage {
         this.container.innerHTML = `
             <div class="settings-page">
                 <header class="page-header">
-                    <h2>${t('settings.title')}</h2>
+                    <h2>⚙️ ${t('settings.title')}</h2>
                 </header>
                 
                 <!-- Display Settings -->
@@ -189,64 +189,55 @@ class SettingsPage {
                     </details>
                 </section>
                 
-                <!-- Translation Tools -->
-                <section class="settings-section">
-                    <h3>🌐 ${t('settings.sections.translation')}</h3>
-                    
-                    <div class="setting-item">
-                        <button class="btn btn--secondary full-width" id="export-translation-btn">
+                <!-- Actions Grid - Translation, Data Management, Danger Zone side by side -->
+                <div class="settings-actions-grid">
+                    <!-- Translation Tools -->
+                    <section class="settings-section">
+                        <h3>🌐 ${t('settings.sections.translation')}</h3>
+                        
+                        <button class="btn btn--secondary" id="export-translation-btn">
                             📤 ${t('settings.options.exportTranslation')}
                         </button>
                         <small>${t('settings.options.exportTranslationDesc')}</small>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <label class="btn btn--secondary full-width file-label">
+                        
+                        <label class="btn btn--secondary file-label">
                             📥 ${t('settings.options.importTranslation')}
                             <input type="file" id="import-translation-file" accept=".csv" hidden>
                         </label>
                         <small>${t('settings.options.importTranslationDesc')}</small>
-                    </div>
-                </section>
-                
-                <!-- Data Management -->
-                <section class="settings-section">
-                    <h3>💾 ${t('settings.sections.dataManagement')}</h3>
+                    </section>
                     
-                    <div class="setting-item">
-                        <button class="btn btn--secondary full-width" id="export-backup-btn">
-                            💾 ${t('settings.options.createBackup')}
+                    <!-- Data Management -->
+                    <section class="settings-section">
+                        <h3>💾 ${t('settings.sections.dataManagement')}</h3>
+                        
+                        <button class="btn btn--secondary" id="export-backup-btn">
+                            📦 ${t('settings.options.createBackup')}
                         </button>
                         <small>${t('settings.options.createBackupDesc')}</small>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <label class="btn btn--secondary full-width file-label">
+                        
+                        <label class="btn btn--secondary file-label">
                             📥 ${t('settings.options.restoreBackup')}
                             <input type="file" id="import-backup-file" accept=".json" hidden>
                         </label>
                         <small>${t('settings.options.restoreBackupDesc')}</small>
-                    </div>
-                </section>
-                
-                <!-- Danger Zone -->
-                <section class="settings-section danger-zone">
-                    <h3>⚠️ ${t('settings.sections.dangerZone')}</h3>
+                    </section>
                     
-                    <div class="setting-item">
-                        <button class="btn btn--error full-width" id="reset-progress-btn">
+                    <!-- Danger Zone -->
+                    <section class="settings-section danger-zone">
+                        <h3>⚠️ ${t('settings.sections.dangerZone')}</h3>
+                        
+                        <button class="btn btn--error" id="reset-progress-btn">
                             🗑️ ${t('settings.options.resetProgress')}
                         </button>
                         <small>${t('settings.options.resetProgressDesc')}</small>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <button class="btn btn--error full-width" id="reset-all-btn">
-                            ⚠️ ${t('settings.options.resetEverything')}
+                        
+                        <button class="btn btn--error" id="reset-all-btn">
+                            💥 ${t('settings.options.resetEverything')}
                         </button>
                         <small>${t('settings.options.resetEverythingDesc')}</small>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
             
             <!-- Confirmation Modal -->
