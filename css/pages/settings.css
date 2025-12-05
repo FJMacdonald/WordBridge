@@ -1,53 +1,59 @@
-/* Settings Page Styles */
+/* Settings Page Styles - Compact layout matching app style */
 
 .settings-page {
     padding-bottom: var(--space-xl);
-    /* Ensure body background is preserved */
-    background: transparent;
 }
 
-/* Ensure consistent background styling */
-body {
-    background-color: var(--color-background) !important;
-}
-
+/* Section styling - consistent with other pages */
 .settings-section {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     border: 1px solid var(--color-border);
 }
 
 .settings-section h3 {
     font-size: var(--font-size-base);
-    margin-bottom: var(--space-lg);
+    font-weight: 600;
+    margin: 0 0 var(--space-md) 0;
     padding-bottom: var(--space-sm);
     border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
 }
 
+/* Setting item - horizontal compact layout */
 .setting-item {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: var(--space-md) 0;
+    padding: var(--space-sm) 0;
     border-bottom: 1px solid var(--color-border);
+    gap: var(--space-sm);
 }
 
 .setting-item:last-child {
     border-bottom: none;
+    padding-bottom: 0;
+}
+
+.setting-item:first-of-type {
+    padding-top: 0;
 }
 
 .setting-label {
     font-weight: 500;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
 }
 
 .setting-description {
     width: 100%;
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
-    margin: var(--space-xs) 0;
+    margin: var(--space-xs) 0 0 0;
+    order: 3;
 }
 
 .setting-control {
@@ -57,35 +63,46 @@ body {
 }
 
 .setting-select {
-    padding: var(--space-sm) var(--space-md);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-base);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
     background: var(--color-surface);
+    min-width: 120px;
 }
 
+.setting-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* Range controls */
 .range-control {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
     width: 100%;
-    margin-top: var(--space-sm);
+    margin-top: var(--space-xs);
 }
 
 .range-control input[type="range"] {
     flex: 1;
-    margin-right: var(--space-md);
+    max-width: 200px;
 }
 
 .range-value {
     min-width: 40px;
     text-align: right;
     font-weight: 500;
+    font-size: var(--font-size-sm);
 }
 
 /* Toggle switch */
 .toggle {
     position: relative;
     display: inline-block;
-    width: 52px;
-    height: 28px;
+    width: 44px;
+    height: 24px;
 }
 
 .toggle input {
@@ -102,15 +119,15 @@ body {
     right: 0;
     bottom: 0;
     background-color: var(--color-border);
-    border-radius: 28px;
+    border-radius: 24px;
     transition: var(--transition-fast);
 }
 
 .toggle-slider:before {
     position: absolute;
     content: "";
-    height: 22px;
-    width: 22px;
+    height: 18px;
+    width: 18px;
     left: 3px;
     bottom: 3px;
     background-color: white;
@@ -123,10 +140,11 @@ body {
 }
 
 .toggle input:checked + .toggle-slider:before {
-    transform: translateX(24px);
+    transform: translateX(20px);
 }
 
-.full-width {
+/* Full width buttons */
+.settings-section .full-width {
     width: 100%;
     justify-content: center;
 }
@@ -135,6 +153,7 @@ body {
     cursor: pointer;
 }
 
+/* Danger zone */
 .danger-zone {
     border-color: var(--color-error);
 }
@@ -143,66 +162,33 @@ body {
     color: var(--color-error);
 }
 
-.btn--error {
-    background: var(--color-error);
-    color: white;
+/* Practice Difficulty Settings - collapsible */
+.difficulty-settings {
+    border-bottom: none;
+    padding-bottom: var(--space-sm);
 }
 
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-overlay[hidden] {
-    display: none;
-}
-
-.modal {
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    padding: var(--space-xl);
-    max-width: 400px;
-    width: 90%;
-}
-
-.modal h3 {
-    margin-bottom: var(--space-md);
-}
-
-.modal p {
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-xl);
-}
-
-.modal-actions {
-    display: flex;
-    gap: var(--space-md);
-    justify-content: flex-end;
-}
-/* Practice Difficulty Settings */
 .difficulty-settings summary {
     cursor: pointer;
     user-select: none;
+    list-style: none;
+}
+
+.difficulty-settings summary::-webkit-details-marker {
+    display: none;
 }
 
 .setting-label--collapsible {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .toggle-icon {
     transition: transform 0.2s;
     color: var(--color-primary);
+    font-size: var(--font-size-sm);
 }
 
 .difficulty-settings[open] .toggle-icon {
@@ -212,76 +198,102 @@ body {
 .difficulty-grid {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 1rem;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
 }
 
 .difficulty-category {
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 8px;
+    padding: var(--space-md);
+    background: var(--color-background);
+    border-radius: var(--radius-md);
 }
 
 .difficulty-category h4 {
-    margin: 0 0 1rem 0;
-    font-size: 1rem;
-    color: #495057;
+    margin: 0 0 var(--space-sm) 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-weight: 600;
 }
 
 .difficulty-item {
     display: grid;
-    grid-template-columns: 2rem 1fr auto;
-    gap: 1rem;
+    grid-template-columns: 1.5rem 1fr auto;
+    gap: var(--space-sm);
     align-items: center;
-    padding: 0.75rem;
-    background: white;
-    border-radius: 6px;
-    margin-bottom: 0.5rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-xs);
+    font-size: var(--font-size-sm);
 }
 
 .difficulty-item:last-child {
     margin-bottom: 0;
 }
 
+.difficulty-item .exercise-icon {
+    font-size: var(--font-size-base);
+}
+
+.difficulty-item .exercise-name {
+    font-size: var(--font-size-sm);
+}
+
 .difficulty-selector {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-xs);
 }
 
 .diff-btn {
-    padding: 0.35rem 0.75rem;
-    border: 1px solid #dee2e6;
-    background: white;
-    border-radius: 4px;
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s;
+    font-size: var(--font-size-xs);
+    transition: all var(--transition-fast);
 }
 
 .diff-btn:hover {
-    background: #e9ecef;
+    background: var(--color-background);
 }
 
 .diff-btn.active {
-    background: #007bff;
+    background: var(--color-primary);
     color: white;
-    border-color: #007bff;
+    border-color: var(--color-primary);
 }
 
+/* Responsive */
 @media (max-width: 768px) {
+    .setting-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+    }
+    
+    .setting-control {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .setting-select {
+        flex: 1;
+    }
+    
     .difficulty-item {
         grid-template-columns: 1.5rem 1fr;
-        gap: 0.5rem;
+        gap: var(--space-xs);
     }
     
     .difficulty-selector {
         grid-column: 1 / -1;
         justify-content: stretch;
+        margin-top: var(--space-xs);
     }
     
     .diff-btn {
         flex: 1;
-        font-size: 0.75rem;
-        padding: 0.3rem 0.5rem;
+        text-align: center;
     }
 }

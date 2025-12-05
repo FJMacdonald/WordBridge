@@ -3,29 +3,37 @@
     --color-primary: #4A90D9;
     --color-primary-dark: #357ABD;
     --color-primary-light: #E8F2FC;
+    --color-primary-alpha: rgba(74, 144, 217, 0.2);
     --color-success: #5CB85C;
     --color-success-light: #DFF0D8;
+    --color-success-alpha: rgba(92, 184, 92, 0.15);
     --color-error: #D9534F;
     --color-error-light: #F2DEDE;
+    --color-error-alpha: rgba(217, 83, 79, 0.15);
     --color-warning: #F0AD4E;
+    --color-warning-light: #FCF8E3;
     --color-background: #F5F7FA;
     --color-surface: #FFFFFF;
+    --color-surface-variant: #F8F9FA;
     --color-text: #333333;
     --color-text-muted: #666666;
     --color-text-light: #999999;
+    --color-text-alpha: rgba(51, 51, 51, 0.1);
     --color-border: #E0E0E0;
     --color-disabled: #CCCCCC;
     
     /* Typography */
     --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
     --font-size-lg: 1.25rem;
     --font-size-xl: 1.5rem;
     --font-size-2xl: 2rem;
     --font-size-3xl: 3rem;
+    --font-size-4xl: 4rem;
     
-    /* Spacing - Optimized for desktop */
+    /* Spacing */
     --space-xs: 0.25rem;
     --space-sm: 0.5rem;
     --space-md: 0.75rem;
@@ -55,8 +63,9 @@
     --header-height: 60px;
 }
 
-/* Small text mode - what was previously the default */
+/* Text size modes */
 .small-text {
+    --font-size-xs: 0.7rem;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
     --font-size-lg: 1.25rem;
@@ -65,8 +74,8 @@
     --font-size-3xl: 3rem;
 }
 
-/* Medium text mode - larger than previous default */
 .medium-text {
+    --font-size-xs: 0.85rem;
     --font-size-sm: 1rem;
     --font-size-base: 1.25rem;
     --font-size-lg: 1.5rem;
@@ -75,8 +84,8 @@
     --font-size-3xl: 3.5rem;
 }
 
-/* Large text mode - significantly larger */
 .large-text {
+    --font-size-xs: 1rem;
     --font-size-sm: 1.125rem;
     --font-size-base: 1.5rem;
     --font-size-lg: 1.875rem;
@@ -85,14 +94,12 @@
     --font-size-3xl: 4rem;
 }
 
-/* High contrast mode - keep background but improve contrast */
+/* High contrast mode */
 .high-contrast {
     --color-text: #000000;
-    /* Keep the light blue background */
     --color-background: #F5F7FA;
     --color-border: #000000;
     --color-surface: #FFFFFF;
-    /* Make buttons more defined */
     --color-primary: #2B5AA0;
     --color-primary-dark: #1E4080;
 }
@@ -100,7 +107,6 @@
 /* Desktop optimizations */
 @media (min-width: 1024px) {
     :root {
-        /* Even more compact spacing for desktop */
         --space-md: 0.625rem;
         --space-lg: 0.875rem;
         --space-xl: 1.25rem;
@@ -111,7 +117,6 @@
 /* Mobile adjustments */
 @media (max-width: 768px) {
     :root {
-        /* Slightly larger spacing for touch devices */
         --space-md: 1rem;
         --space-lg: 1.25rem;
         --space-xl: 1.75rem;

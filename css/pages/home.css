@@ -1,20 +1,4 @@
-/* Home Page Styles */
-
-/* Text size classes */
-.small-text { --font-size-base: 0.875rem; }
-.medium-text { --font-size-base: 1rem; }
-.large-text { --font-size-base: 1.25rem; }
-
-/* High contrast mode */
-.high-contrast {
-    --color-text: #000000;
-    --color-background: #ffffff;
-    --color-surface: #ffffff;
-    --color-border: #000000;
-    --color-primary: #0000cc;
-}
-
-/* Home Page & Test Mode Page - Consistent Card Styling */
+/* Home Page & Test Mode Page Styles */
 
 .home-page,
 .test-mode-page {
@@ -23,16 +7,17 @@
 
 .home-header {
     text-align: center;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
 }
 
 .home-title {
-    font-size: var(--font-size-2xl);
-    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-xs);
 }
 
 .home-subtitle {
     color: var(--color-text-muted);
+    font-size: var(--font-size-base);
 }
 
 /* Test Instructions - Collapsible */
@@ -40,14 +25,15 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
     overflow: hidden;
 }
 
 .test-instructions summary {
-    padding: var(--space-md) var(--space-lg);
+    padding: var(--space-sm) var(--space-md);
     cursor: pointer;
     user-select: none;
+    font-size: var(--font-size-sm);
 }
 
 .test-instructions summary:hover {
@@ -56,19 +42,21 @@
 
 .test-instructions ul {
     margin: 0;
-    padding: var(--space-sm) var(--space-lg) var(--space-lg) var(--space-2xl);
+    padding: var(--space-sm) var(--space-md) var(--space-md) var(--space-xl);
+    list-style: disc;
 }
 
 .test-instructions li {
     margin-bottom: var(--space-xs);
     color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
 }
 
 /* Category Grid */
 .category-grid {
     display: grid;
-    gap: var(--space-xl);
-    margin-bottom: var(--space-xl);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
 }
 
 @media (min-width: 768px) {
@@ -82,47 +70,47 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-lg);
+    padding: var(--space-md);
 }
 
 .category-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--space-md);
-    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    padding-bottom: var(--space-xs);
     border-bottom: 1px solid var(--color-border);
 }
 
 .category-title {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
     margin: 0;
 }
 
 .category-icon {
-    font-size: 1.5rem;
+    font-size: var(--font-size-lg);
 }
 
-/* Exercise Grid - Consistent Heights */
+/* Exercise Grid */
 .exercise-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
+    gap: var(--space-sm);
 }
 
-/* Exercise Card - Fixed Height */
+/* Exercise Card */
 .exercise-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: var(--space-xs);
-    padding: var(--space-md);
-    min-height: 100px; /* Ensure consistent height */
+    padding: var(--space-sm);
+    min-height: 90px;
     background: var(--color-background);
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -143,7 +131,7 @@
 }
 
 .exercise-icon {
-    font-size: 1.75rem;
+    font-size: var(--font-size-xl);
     flex-shrink: 0;
 }
 
@@ -159,3 +147,38 @@
     font-style: italic;
 }
 
+/* Desktop optimizations */
+@media (min-width: 1024px) {
+    .home-page,
+    .test-mode-page {
+        padding: var(--space-md) 0;
+    }
+    
+    .category-grid {
+        gap: var(--space-md);
+    }
+    
+    .exercise-card {
+        min-height: 85px;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .exercise-grid {
+        gap: var(--space-xs);
+    }
+    
+    .exercise-card {
+        padding: var(--space-xs);
+        min-height: 75px;
+    }
+    
+    .exercise-icon {
+        font-size: var(--font-size-lg);
+    }
+    
+    .exercise-name {
+        font-size: var(--font-size-xs);
+    }
+}

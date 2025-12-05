@@ -1,18 +1,4 @@
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
-    padding: var(--space-md) var(--space-lg);
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-    min-height: 44px;
-    min-width: 44px;
-    border: 2px solid transparent;
-    text-align: center;
-}
+/* Button component specific styles - base styles are in common.css */
 
 /* Desktop optimizations */
 @media (min-width: 1024px) {
@@ -27,47 +13,14 @@
     }
 }
 
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.btn--primary {
-    background: var(--color-primary);
-    color: white;
-}
-
-.btn--primary:hover:not(:disabled) {
-    background: var(--color-primary-dark);
-    transform: translateY(-1px);
-}
-
-.btn--secondary {
-    background: transparent;
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-}
-
-.btn--secondary:hover:not(:disabled) {
-    background: var(--color-primary-light);
-}
-
-.btn--ghost {
-    background: transparent;
-    color: var(--color-text-muted);
-}
-
-.btn--ghost:hover:not(:disabled) {
-    background: var(--color-border);
-    color: var(--color-text);
-}
-
+/* Icon button */
 .btn--icon {
     padding: var(--space-md);
     border-radius: var(--radius-full);
     font-size: var(--font-size-xl);
 }
 
+/* Large button */
 .btn--large {
     padding: var(--space-lg) var(--space-xl);
     font-size: var(--font-size-lg);
@@ -80,6 +33,9 @@
     padding: var(--space-sm);
     border-radius: var(--radius-full);
     transition: transform var(--transition-fast);
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .audio-btn-inline:hover {
@@ -102,7 +58,7 @@
 }
 
 .high-contrast .btn--primary {
-    border-color: var(--color-primary-dark);
+    border: 3px solid var(--color-primary-dark);
 }
 
 .high-contrast .btn--secondary {
@@ -119,15 +75,4 @@
 .high-contrast .btn--ghost:hover:not(:disabled) {
     background: var(--color-text);
     color: var(--color-surface);
-}
-
-/* Skip button styling */
-.skip-btn,
-.btn[data-action="skip"] {
-    border: 2px solid var(--color-border);
-}
-
-.high-contrast .skip-btn,
-.high-contrast .btn[data-action="skip"] {
-    border: 3px solid var(--color-border);
 }
