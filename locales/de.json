@@ -459,11 +459,13 @@
       "success": "{count} \u00dcbungen erfolgreich importiert!",
       "error": "Fehler beim Importieren der Datei: {message}"
     },
-    "existing": "Deine benutzerdefinierten \u00dcbungen",
-    "noCustom": "Noch keine benutzerdefinierten \u00dcbungen.",
-    "delete": "L\u00f6schen",
+    "existing": "Deine benutzerdefinierten Übungen",
+    "noCustom": "Noch keine benutzerdefinierten Übungen.",
+    "delete": "Löschen",
     "edit": "Bearbeiten",
-    "confirmDelete": "Diese \u00dcbung l\u00f6schen?",
+    "confirmDelete": "Diese Übung löschen?",
+    "expandAll": "Alle aufklappen",
+    "collapseAll": "Alle zuklappen",
     "status": {
       "active": "Aktiv",
       "archived": "Archiviert"
@@ -515,7 +517,8 @@
       "activities": "Aktivit\u00e4ten (eine pro Zeile)",
       "activitiesPlaceholder": "Aufwachen\nFr\u00fchst\u00fccken\nZur Arbeit gehen\nZu Abend essen\nSchlafen gehen",
       "activitiesHelp": "Gib die Aktivit\u00e4ten in der richtigen Reihenfolge ein, eine pro Zeile",
-      "digitalTime": "Digitale Zeit",
+      "digitalTime": "Digitale Zeit (HH:MM)",
+      "digitalTimeHelp": "Zeit als Stunden:Minuten eingeben (z.B. 3:00 oder 14:30)",
       "timeWords": "Zeit in Worten",
       "timeWordsPlaceholder": "z.B., drei Uhr",
       "timeWordsHelp": "Wie die Zeit ausgesprochen werden soll",

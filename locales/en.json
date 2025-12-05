@@ -464,6 +464,8 @@
     "delete": "Delete",
     "edit": "Edit",
     "confirmDelete": "Delete this exercise?",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All",
     "status": {
       "active": "Active",
       "archived": "Archived"
@@ -515,7 +517,8 @@
       "activities": "Activities (one per line)",
       "activitiesPlaceholder": "Wake up\nEat breakfast\nGo to work\nEat dinner\nGo to sleep",
       "activitiesHelp": "Enter activities in the correct order, one per line",
-      "digitalTime": "Digital Time",
+      "digitalTime": "Digital Time (HH:MM)",
+      "digitalTimeHelp": "Enter time as hours:minutes (e.g., 3:00 or 14:30)",
       "timeWords": "Time in Words",
       "timeWordsPlaceholder": "e.g., three o'clock",
       "timeWordsHelp": "How the time should be spoken",
