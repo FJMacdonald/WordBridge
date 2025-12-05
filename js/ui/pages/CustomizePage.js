@@ -69,7 +69,8 @@ class CustomizePage {
         this.container.innerHTML = `
             <div class="customize-page">
                 <header class="page-header">
-                    <h2>${t('customize.title')}</h2>
+                    <h1 class="page-title">📥 ${t('customize.title')}</h1>
+                    <p class="page-subtitle">${t('customize.subtitle') || 'Import personalized exercises'}</p>
                 </header>
                 
                 <!-- Mode Toggle -->

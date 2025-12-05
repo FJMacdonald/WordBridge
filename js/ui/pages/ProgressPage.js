@@ -72,13 +72,15 @@ class ProgressPage {
         this.container.innerHTML = `
             <div class="progress-page">
                 <header class="page-header">
-                    <h2>${t('progress.title') || 'Your Progress'}</h2>
-                    <div class="header-actions">
-                        <button class="btn btn--primary" id="export-report-btn">
-                            📊 ${t('progress.viewReport') || 'View Report'}
-                        </button>
-                    </div>
+                    <h1 class="page-title">📈 ${t('progress.title')}</h1>
+                    <p class="page-subtitle">${t('progress.subtitle') || 'See the progress you are making'}</p>
                 </header>
+                
+                <div class="header-actions">
+                    <button class="btn btn--primary" id="export-report-btn">
+                        📊 ${t('progress.viewReport') || 'View Report'}
+                    </button>
+                </div>
                 
                 <!-- Summary Stats Bar -->
                 <div class="progress-summary" id="progress-summary"></div>

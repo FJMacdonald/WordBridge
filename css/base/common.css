@@ -9,7 +9,22 @@
 }
 
 .page-header {
-    margin-bottom: var(--space-lg);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg) 0;
+}
+
+.page-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text);
+}
+
+.page-subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    margin: 0;
 }
 
 .page-header h1, 
@@ -20,11 +35,7 @@
     margin: 0 0 var(--space-xs) 0;
 }
 
-.page-subtitle {
-    font-size: var(--font-size-base);
-    color: var(--color-text-muted);
-    margin: 0;
-}
+
 
 /* Common button base - specific variants in buttons.css */
 .btn {

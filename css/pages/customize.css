@@ -3,6 +3,10 @@
 .customize-page {
     padding-bottom: calc(var(--space-2xl) + 70px);
 }
+/* Customize page specific */
+.customize-page .page-header {
+    margin-bottom: var(--space-lg);
+}
 
 /* Mode Toggle */
 .mode-toggle {

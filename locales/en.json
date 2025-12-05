@@ -166,6 +166,7 @@
   },
   "progress": {
     "title": "Your Progress",
+    "subtitle": "See the progress you are making",
     "viewReport": "View Report",
     "takeAssessment": "Take Assessment",
     "backToHome": "Back to Home",
@@ -316,6 +317,7 @@
   },
   "settings": {
     "title": "Settings",
+    "subtitle": "Personalize the interface and exercises",
     "language": "Language",
     "textSize": "Text Size",
     "highContrast": "High Contrast Mode",
@@ -378,6 +380,7 @@
   },
   "customize": {
     "title": "Add Custom Exercises",
+    "subtitle": "Import personalized exercises",
     "modes": {
       "individual": "Individual",
       "bulkUpload": "Bulk Upload"

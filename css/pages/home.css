@@ -5,6 +5,11 @@
     padding: var(--space-lg) 0;
 }
 
+.home-page .page-header {
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-lg);
+}
+
 .home-header {
     text-align: center;
     margin-bottom: var(--space-xl);

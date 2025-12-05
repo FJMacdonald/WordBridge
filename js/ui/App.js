@@ -156,7 +156,7 @@ class App {
         this.container.innerHTML = `
             <div class="home-page">
                 <div class="home-header">
-                    <h1 class="home-title">${t('home.speechTherapy')}</h1>
+                    <h1 class="home-title">🗣️ ${t('home.speechTherapy')}</h1>
                     <p class="home-subtitle">${t('home.chooseExercise')}</p>
                 </div>
                 

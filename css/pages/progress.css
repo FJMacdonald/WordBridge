@@ -3,6 +3,14 @@
 .progress-page {
     padding-bottom: var(--space-2xl);
 }
+.progress-page .page-header {
+    margin-bottom: var(--space-md);
+}
+
+.progress-page .header-actions {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
 
 /* Summary Stats Bar */
 .progress-summary {

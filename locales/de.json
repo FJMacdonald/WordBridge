@@ -165,6 +165,7 @@
   },
   "progress": {
     "title": "Dein Fortschritt",
+    "subtitle": "Sehe deinen Fortschritt",
     "viewReport": "Bericht Ansehen",
     "takeAssessment": "Test Machen",
     "backToHome": "Zur\u00fcck zur Startseite",
@@ -318,6 +319,7 @@
   },
   "settings": {
     "title": "Einstellungen",
+    "subtitle": "Personalisiere die Oberfläche und Übungen",
     "language": "Sprache",
     "textSize": "Textgr\u00f6\u00dfe",
     "highContrast": "Hoher Kontrast Modus",
@@ -378,6 +380,7 @@
   },
   "customize": {
     "title": "Benutzerdefinierte \u00dcbungen hinzuf\u00fcgen",
+    "subtitle": "Importiere personalisierte Übungen",
     "modes": {
       "individual": "Einzeln",
       "bulkUpload": "Massenupload"

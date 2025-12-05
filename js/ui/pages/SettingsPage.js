@@ -34,7 +34,8 @@ class SettingsPage {
         this.container.innerHTML = `
             <div class="settings-page">
                 <header class="page-header">
-                    <h2>⚙️ ${t('settings.title')}</h2>
+                    <h1 class="page-title">⚙️ ${t('settings.title')}</h1>
+                    <p class="page-subtitle">${t('settings.subtitle') || 'Personalize the interface and exercises'}</p>
                 </header>
                 
                 <!-- Display Settings -->
