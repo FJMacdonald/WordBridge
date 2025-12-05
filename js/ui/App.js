@@ -28,17 +28,17 @@ class App {
         this.currentExercise = null;
         this.currentPage = 'home'; // Track current page
     }
-    
+
     async init() {
         Config.init();
-        
+
         // Make app instance globally available for settings updates
         window.app = this;
-        
+
         // Load saved locale or default to 'en'
         const savedLocale = localStorage.getItem('locale') || Config.get('ui.language') || 'en';
         await i18n.init(savedLocale);
-        
+
         // Initialize wordbank service
         try {
             await wordbankService.init();
@@ -46,19 +46,19 @@ class App {
         } catch (error) {
             console.error('Failed to load wordbank:', error);
         }
-        
+
         await imageStorage.init();
-        
+
         this.container = document.getElementById('main-content');
-        
+
         this.setupNavigation();
         this.setupGlobalListeners();
         this.applySettings();
         this.updateNavigationLabels();
-        
+
         this.showHome();
     }
-    
+
     setupNavigation() {
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -66,48 +66,48 @@ class App {
                 this.navigate(page);
             });
         });
-        
+
         this.updateNavigationLabels();
     }
-    
+
     updateNavigationLabels() {
         const appTitle = document.querySelector('.app-title');
         if (appTitle) {
             appTitle.textContent = t('app.title');
         }
-        
+
         document.querySelectorAll('.nav-btn[data-i18n-aria]').forEach(btn => {
             const key = btn.getAttribute('data-i18n-aria');
             btn.setAttribute('aria-label', t(key));
         });
     }
-    
+
     setupGlobalListeners() {
         window.addEventListener('navigate', (e) => {
             this.navigate(e.detail);
         });
-        
+
         window.addEventListener('exercise:restart', (e) => {
             this.startExercise(e.detail);
         });
-        
+
         window.addEventListener('startTest', (e) => {
             this.startTestExercise(e.detail);
         });
     }
-    
+
     navigate(page) {
         if (this.currentExercise) {
             this.currentExercise.destroy();
             this.currentExercise = null;
         }
-        
+
         this.currentPage = page; // Track current page
-        
+
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.page === page);
         });
-        
+
         switch (page) {
             case 'home':
                 this.showHome();
@@ -128,12 +128,12 @@ class App {
                 this.showHome();
         }
     }
-    
+
     showHome() {
         const categories = exerciseFactory.getExercisesByCategory();
-        
+
         const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
-        
+
         const categoryInfo = {
             words: {
                 name: t('home.categories.words'),
@@ -152,7 +152,7 @@ class App {
                 icon: '⏰'
             }
         };
-        
+
         this.container.innerHTML = `
             <div class="home-page">
                 <div class="home-header">
@@ -162,9 +162,9 @@ class App {
                 
                 <div class="category-grid">
                     ${categoryOrder.map(category => {
-                        const exercises = categories[category];
-                        if (!exercises || exercises.length === 0) return '';
-                        return `
+            const exercises = categories[category];
+            if (!exercises || exercises.length === 0) return '';
+            return `
                         <div class="category-card">
                             <div class="category-header">
                                 <h3 class="category-title">
@@ -174,8 +174,8 @@ class App {
                             </div>
                             <div class="exercise-grid">
                                 ${exercises.map(ex => {
-                                    const available = this.isExerciseAvailable(ex.type);
-                                    return `
+                const available = this.isExerciseAvailable(ex.type);
+                return `
                                     <button class="exercise-card ${!available ? 'disabled' : ''}" 
                                             data-type="${ex.type}"
                                             ${!available ? 'disabled' : ''}>
@@ -184,15 +184,15 @@ class App {
                                         ${!available ? '<span class="exercise-unavailable">Coming soon</span>' : ''}
                                     </button>
                                     `;
-                                }).join('')}
+            }).join('')}
                             </div>
                         </div>
                         `;
-                    }).join('')}
+        }).join('')}
                 </div>
             </div>
         `;
-        
+
         this.container.querySelectorAll('.exercise-card:not(.disabled)').forEach(card => {
             card.addEventListener('click', () => {
                 const exerciseType = card.dataset.type;
@@ -202,7 +202,7 @@ class App {
             });
         });
     }
-    
+
     isExerciseAvailable(type) {
         const standaloneTypes = ['clockMatching', 'timeSequencing', 'timeOrdering', 'workingMemory'];
         if (standaloneTypes.includes(type)) {
@@ -210,109 +210,137 @@ class App {
         }
         return wordbankService.isExerciseAvailable(type);
     }
-    
+
     async getExerciseData(type) {
         const difficulty = this.getPracticeDifficulty(type);
         const filters = difficulty !== 'all' ? { difficulty } : {};
-        
+        const customFrequency = Config.get('exercises.customFrequency') || 'mixed';
+
         let data = [];
-        
-        switch (type) {
-            case 'naming':
-            case 'listening':
-            case 'typing':
-                data = wordbankService.buildNamingData(filters);
-                break;
-            case 'sentenceTyping':
-                data = wordbankService.buildSentenceData(filters);
-                break;
-            case 'category':
-                data = wordbankService.buildCategoryData(filters);
-                break;
-            case 'rhyming':
-                data = wordbankService.buildRhymingData(filters);
-                break;
-            case 'firstSound':
-                data = wordbankService.buildFirstSoundData(filters);
-                break;
-            case 'association':
-                data = wordbankService.buildAssociationData(filters);
-                break;
-            case 'synonyms':
-                data = wordbankService.buildSynonymData(filters);
-                break;
-            case 'definitions':
-                data = wordbankService.buildDefinitionData(filters);
-                break;
-            case 'speaking':
-                data = wordbankService.buildSpeakingData(filters);
-                break;
-            case 'scramble':
-                data = wordbankService.buildScrambleData(filters);
-                break;
-            case 'clockMatching':
-                data = this.filterByDifficulty(clockMatchingData, difficulty);
-                break;
-            case 'timeSequencing':
-                data = this.filterByDifficulty(timeSequencingData, difficulty);
-                break;
-            case 'timeOrdering':
-                data = this.filterByDifficulty(timeOrderingData, difficulty);
-                break;
-            case 'workingMemory':
-                data = this.filterByDifficulty(workingMemoryData, difficulty);
-                break;
-            default:
-                console.warn(`Unknown exercise type: ${type}`);
-                data = [];
+        let customData = [];
+
+        // Get custom exercises first
+        customData = await this.getCustomExerciseData(type, difficulty);
+
+        // Handle different custom frequency settings
+        if (customFrequency === 'only') {
+            // ONLY custom exercises
+            return customData;
         }
-        
-        const customData = await this.getCustomExerciseData(type, difficulty);
-        if (customData.length > 0) {
+
+        // Get wordbank data for non-standalone exercises
+        const standaloneTypes = ['clockMatching', 'timeSequencing', 'timeOrdering', 'workingMemory'];
+
+        if (!standaloneTypes.includes(type)) {
+            // Get data from wordbank
+            switch (type) {
+                case 'naming':
+                case 'listening':
+                case 'typing':
+                    data = wordbankService.buildNamingData(filters);
+                    break;
+                case 'sentenceTyping':
+                    data = wordbankService.buildSentenceData(filters);
+                    break;
+                case 'category':
+                    data = wordbankService.buildCategoryData(filters);
+                    break;
+                case 'rhyming':
+                    data = wordbankService.buildRhymingData(filters);
+                    break;
+                case 'firstSound':
+                    data = wordbankService.buildFirstSoundData(filters);
+                    break;
+                case 'association':
+                    data = wordbankService.buildAssociationData(filters);
+                    break;
+                case 'synonyms':
+                    data = wordbankService.buildSynonymData(filters);
+                    break;
+                case 'definitions':
+                    data = wordbankService.buildDefinitionData(filters);
+                    break;
+                case 'speaking':
+                    data = wordbankService.buildSpeakingData(filters);
+                    break;
+                case 'scramble':
+                    data = wordbankService.buildScrambleData(filters);
+                    break;
+                default:
+                    console.warn(`Unknown exercise type: ${type}`);
+                    data = [];
+            }
+        } else {
+            // Standalone exercises (time category)
+            switch (type) {
+                case 'clockMatching':
+                    data = this.filterByDifficulty(clockMatchingData, difficulty);
+                    break;
+                case 'timeSequencing':
+                    data = this.filterByDifficulty(timeSequencingData, difficulty);
+                    break;
+                case 'timeOrdering':
+                    data = this.filterByDifficulty(timeOrderingData, difficulty);
+                    break;
+                case 'workingMemory':
+                    data = this.filterByDifficulty(workingMemoryData, difficulty);
+                    break;
+            }
+        }
+
+        // Mix based on frequency setting
+        if (customFrequency === 'high' && customData.length > 0) {
+            // High frequency: 50% custom, 50% regular
+            const halfSize = Math.floor(data.length / 2);
+            const regularData = this.shuffleArray(data).slice(0, halfSize);
+            const customDataSized = this.shuffleArray(customData).slice(0, halfSize);
+            data = [...regularData, ...customDataSized];
+        } else if (customFrequency === 'mixed' && customData.length > 0) {
+            // Mixed: combine all and shuffle
             data = [...data, ...customData];
         }
-        
+
         return data;
     }
-    
+
     async getCustomExerciseData(type, difficulty) {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
         let customData = (customExercises[type] || []).filter(e => e.status !== 'archived');
-        
+
         if (difficulty && difficulty !== 'all') {
             customData = customData.filter(e => !e.difficulty || e.difficulty === difficulty);
         }
-        
+
         return customData;
     }
-    
+
     filterByDifficulty(data, difficulty) {
         if (!difficulty || difficulty === 'all') return [...data];
         return data.filter(item => !item.difficulty || item.difficulty === difficulty);
     }
-    
+
     async startExercise(type, mode = 'practice') {
         const data = await this.getExerciseData(type);
-        
+
         if (!data || data.length === 0) {
             this.showNoDataMessage(type);
             return;
         }
-        
+
         this.currentExercise = exerciseFactory.create(type);
         this.currentExercise.mode = mode;
-        await this.currentExercise.init(data, this.container, { 
-            originPage: this.currentPage 
+        await this.currentExercise.init(data, this.container, {
+            originPage: this.currentPage
         });
     }
-    
+
     async startTestExercise({ exerciseType, difficulty, questions, wordList, isRetake, originalTestId, originPage }) {
         let data = [];
-        
+
         // Track origin page - default to assessment if not specified
         const testOriginPage = originPage || this.currentPage || 'assessment';
-        
+
         // If this is a retake with a specific word list, use that
         if (isRetake && wordList && wordList.length > 0) {
             data = await this.rebuildTestDataFromWordList(exerciseType, wordList, difficulty);
@@ -320,7 +348,7 @@ class App {
         } else {
             // Normal test - get new data
             const filters = { difficulty };
-            
+
             switch (exerciseType) {
                 case 'naming':
                 case 'listening':
@@ -369,36 +397,36 @@ class App {
                 default:
                     data = [];
             }
-            
+
             // Randomize and limit to question count
             data = this.shuffleArray(data).slice(0, questions);
         }
-        
+
         if (!data || data.length === 0) {
             alert(`No data available for ${exerciseType} exercise at ${difficulty} difficulty`);
             return;
         }
-        
+
         const testContainer = document.getElementById('test-exercise-container');
         const exerciseContainer = testContainer || this.container;
-        
+
         this.currentExercise = exerciseFactory.create(exerciseType);
         this.currentExercise.mode = 'test';
-        
-        await this.currentExercise.init(data, exerciseContainer, { 
+
+        await this.currentExercise.init(data, exerciseContainer, {
             originPage: testOriginPage,
             isRetake,
-            originalTestId 
+            originalTestId
         });
     }
-    
+
     /**
      * Rebuild test data from a word list (for retakes)
      */
     async rebuildTestDataFromWordList(exerciseType, wordList, difficulty) {
         // Get all available data for this exercise type (no difficulty filter for retakes)
         let allData = [];
-        
+
         switch (exerciseType) {
             case 'naming':
             case 'listening':
@@ -445,7 +473,7 @@ class App {
                 allData = [...workingMemoryData];
                 break;
         }
-        
+
         // Filter to only include items from the word list, maintaining order
         const rebuiltData = [];
         for (const wordId of wordList) {
@@ -460,10 +488,10 @@ class App {
                 console.warn(`Could not find item for wordId: ${wordId}`);
             }
         }
-        
+
         return rebuiltData;
     }
-    
+
     showNoDataMessage(type) {
         this.container.innerHTML = `
             <div class="no-data-message">
@@ -475,12 +503,12 @@ class App {
             </div>
         `;
     }
-    
+
     getPracticeDifficulty(type) {
         const settings = storageService.get('practiceSettings', {});
         return settings[type] || storageService.get('defaultDifficulty', 'easy');
     }
-    
+
     shuffleArray(array) {
         const shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -489,31 +517,31 @@ class App {
         }
         return shuffled;
     }
-    
+
     showProgress() {
         const page = new ProgressPage(this.container);
         page.render();
     }
-    
+
     showSettings() {
         const page = new SettingsPage(this.container);
         page.render();
     }
-    
+
     showCustomize() {
         const page = new CustomizePage(this.container);
         page.render();
     }
-    
+
     showTestMode() {
         const page = new TestModePage(this.container);
         page.render();
     }
-    
+
     applySettings() {
         const textSize = Config.get('ui.textSize') || 'medium';
         const highContrast = Config.get('ui.highContrast') || false;
-        
+
         document.body.classList.remove('small-text', 'medium-text', 'large-text');
         document.body.classList.add(`${textSize}-text`);
         document.body.classList.toggle('high-contrast', highContrast);
