@@ -149,10 +149,10 @@ class CustomizePage {
                 <!-- Existing Custom Exercises Library -->
                 <section class="existing-section">
                     <div class="existing-header">
-                        <h3>📚 ${t('customize.existing')}</h3>
+                        <h3>${t('customize.existing')}</h3>
                         <div class="library-controls">
-                            <button class="btn btn--secondary" id="expand-all">▼ Expand All</button>
-                            <button class="btn btn--secondary" id="collapse-all">▲ Collapse All</button>
+                            <button class="btn btn--secondary btn--small" id="expand-all">${t('customize.expandAll')}</button>
+                            <button class="btn btn--secondary btn--small" id="collapse-all">${t('customize.collapseAll')}</button>
                         </div>
                     </div>
                     <div id="existing-items" class="spreadsheet-library">
@@ -856,14 +856,21 @@ class CustomizePage {
     
     renderClockMatchingForm(editItem = null, editIndex = null) {
         const isEditing = editItem !== null;
+        // Format existing time to HH:MM if it has seconds
+        let existingTime = editItem ? editItem.time || '' : '';
+        if (existingTime && existingTime.split(':').length > 2) {
+            existingTime = existingTime.split(':').slice(0, 2).join(':');
+        }
         return `
             <form class="add-form" id="add-clockmatching-form" data-edit-type="${editItem ? 'clockMatching' : ''}" data-edit-index="${editIndex || ''}">
                 <h3>${isEditing ? 'Edit Clock Matching Exercise' : t('customize.forms.addClockMatching')}</h3>
                 
                 <div class="form-group">
                     <label>${t('customize.forms.digitalTime')}</label>
-                    <input type="time" id="clock-time" 
-                           value="${editItem ? editItem.time || '' : ''}" required>
+                    <input type="text" id="clock-time" placeholder="HH:MM (e.g., 3:00 or 14:30)"
+                           pattern="[0-9]{1,2}:[0-9]{2}"
+                           value="${existingTime}" required>
+                    <small>${t('customize.forms.digitalTimeHelp')}</small>
                 </div>
                 
                 <div class="form-group">
@@ -1985,14 +1992,28 @@ class CustomizePage {
     }
     
     async handleAddClockMatching(isEdit = false, editType = null, editIndex = null) {
-        const timeValue = this.container.querySelector('#clock-time').value;
+        const timeValue = this.container.querySelector('#clock-time').value.trim();
         const timeWords = this.container.querySelector('#clock-words').value.trim();
         
         if (!timeValue || !timeWords) return;
         
-        const [hourStr, minuteStr] = timeValue.split(':');
-        const hour = parseInt(hourStr);
-        const minute = parseInt(minuteStr);
+        // Parse time value (supports H:MM, HH:MM formats)
+        const timeParts = timeValue.split(':');
+        if (timeParts.length < 2) {
+            alert('Please enter time in HH:MM format (e.g., 3:00 or 14:30)');
+            return;
+        }
+        
+        const hour = parseInt(timeParts[0]);
+        const minute = parseInt(timeParts[1]);
+        
+        if (isNaN(hour) || isNaN(minute) || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+            alert('Please enter a valid time (hours 0-23, minutes 0-59)');
+            return;
+        }
+        
+        // Format display time as H:MM (single digit hour) or HH:MM
+        const displayTime = `${hour}:${minute.toString().padStart(2, '0')}`;
         
         // Calculate analog data
         const minuteAngle = minute * 6; // 6 degrees per minute
@@ -2002,10 +2023,10 @@ class CustomizePage {
         
         const exercise = {
             id: isEdit ? null : `custom_${Date.now()}`,
-            time: timeValue,
+            time: displayTime,
             hour: hour,
             minute: minute,
-            digitalDisplay: timeValue,
+            digitalDisplay: displayTime,
             analogData: {
                 hourAngle: hourAngle,
                 minuteAngle: minuteAngle
@@ -2042,18 +2063,49 @@ class CustomizePage {
             return;
         }
         
-        // More flexible emoji parsing - split by spaces or extract emojis
+        // Parse emojis using segmenter or fallback to spread operator
         const parseEmojis = (text) => {
-            // Try splitting by spaces first
-            let parts = text.split(/\s+/).filter(p => p);
-            // If no spaces, try to extract individual emojis
-            if (parts.length === 1) {
-                // Match emoji sequences more broadly
-                const emojiRegex = /[\p{Emoji_Presentation}\p{Emoji}\uFE0F]/gu;
-                const matches = text.match(emojiRegex);
-                return matches || [];
+            // First try splitting by spaces
+            const spaceSplit = text.split(/\s+/).filter(p => p);
+            if (spaceSplit.length > 1) {
+                return spaceSplit;
             }
-            return parts;
+            
+            // Use Intl.Segmenter if available (handles multi-codepoint emojis better)
+            if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+                try {
+                    const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+                    const segments = [...segmenter.segment(text)];
+                    return segments
+                        .map(s => s.segment)
+                        .filter(s => /\p{Emoji}/u.test(s) && s.trim());
+                } catch (e) {
+                    // Fall through to spread operator
+                }
+            }
+            
+            // Fallback: use spread operator to split into graphemes
+            // Filter out variation selectors and zero-width joiners on their own
+            const chars = [...text].filter(char => 
+                char.trim() && 
+                char !== '\uFE0F' && // variation selector
+                char !== '\u200D'    // zero-width joiner
+            );
+            
+            // Try to detect emoji sequences by checking for emoji property
+            const emojis = [];
+            let current = '';
+            for (const char of chars) {
+                if (/\p{Emoji}/u.test(char)) {
+                    if (current) emojis.push(current);
+                    current = char;
+                } else {
+                    current += char;
+                }
+            }
+            if (current) emojis.push(current);
+            
+            return emojis.filter(e => /\p{Emoji}/u.test(e));
         };
         
         const sequenceArray = parseEmojis(sequence).slice(0, 3);

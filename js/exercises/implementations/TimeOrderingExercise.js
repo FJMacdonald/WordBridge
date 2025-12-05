@@ -10,12 +10,21 @@ import trackingService from '../../services/TrackingService.js';
 class TimeOrderingExercise extends SequenceOrderingExercise {
     constructor() {
         super({ type: 'timeOrdering' });
+        this.isCheckingOrder = false;
+        this.hasUserInteracted = false;
+    }
+    
+    resetState() {
+        super.resetState();
+        this.isCheckingOrder = false;
+        this.hasUserInteracted = false;
     }
     
     async render() {
         const item = this.currentItem;
         this.correctOrder = [...item.correctOrder];
         this.currentOrder = this.scrambleSequence(item.items);
+        this.hasUserInteracted = false;
         
         this.container.innerHTML = `
             <div class="exercise exercise--time-ordering">
@@ -56,6 +65,9 @@ class TimeOrderingExercise extends SequenceOrderingExercise {
     }
     
     handleItemTap(e) {
+        // Mark that user has interacted - prevents auto-completion on initial render
+        this.hasUserInteracted = true;
+        
         const tappedIndex = parseInt(e.currentTarget.dataset.index);
         const wasSelected = this.selectedIndex;
         super.handleItemTap(tappedIndex, '.time-ordering-item');
@@ -73,6 +85,8 @@ class TimeOrderingExercise extends SequenceOrderingExercise {
     
     reRenderItems() {
         const container = this.container.querySelector('#time-ordering-items');
+        if (!container) return;
+        
         container.innerHTML = this.renderItems();
         
         // Re-attach listeners
@@ -81,8 +95,9 @@ class TimeOrderingExercise extends SequenceOrderingExercise {
             item.addEventListener('click', (e) => this.handleItemTap(e));
         });
         
-        // Auto-check if correct order achieved
-        if (this.arraysEqual(this.currentOrder, this.correctOrder)) {
+        // Auto-check if correct order achieved - only if user has interacted and not already checking
+        if (this.hasUserInteracted && !this.isCheckingOrder && this.arraysEqual(this.currentOrder, this.correctOrder)) {
+            this.isCheckingOrder = true;
             setTimeout(() => this.checkOrder(), 500);
         }
     }
@@ -107,6 +122,8 @@ class TimeOrderingExercise extends SequenceOrderingExercise {
             items.forEach(item => {
                 item.classList.remove('correct-position', 'wrong-position');
             });
+            // Reset flag so user can try again
+            this.isCheckingOrder = false;
         }
     }
     
