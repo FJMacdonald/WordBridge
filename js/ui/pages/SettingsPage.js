@@ -33,211 +33,256 @@ class SettingsPage {
         
         this.container.innerHTML = `
             <div class="settings-page">
-                <header class="page-header">
-                    <h1 class="page-title">⚙️ ${t('settings.title')}</h1>
-                    <p class="page-subtitle">${t('settings.subtitle') || 'Personalize the interface and exercises'}</p>
+                <header class="home-header">
+                    <h1 class="home-title">⚙️ ${t('settings.title')}</h1>
+                    <p class="home-subtitle">${t('settings.subtitle') || 'Personalize your learning experience'}</p>
                 </header>
                 
-                <!-- Display Settings -->
-                <section class="settings-section">
-                    <h3>📱 ${t('settings.sections.display')}</h3>
-                    
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.textSize')}</label>
-                        <div class="setting-control">
-                            <select id="text-size" class="setting-select">
-                                <option value="small" ${settings.textSize === 'small' ? 'selected' : ''}>${t('settings.options.small')}</option>
-                                <option value="medium" ${settings.textSize === 'medium' ? 'selected' : ''}>${t('settings.options.medium')}</option>
-                                <option value="large" ${settings.textSize === 'large' ? 'selected' : ''}>${t('settings.options.large')}</option>
-                            </select>
+                <!-- Top 4 sections in 2x2 grid -->
+                <div class="settings-top-grid">
+                    <!-- Display Settings -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="card-icon">📱</span>
+                                ${t('settings.sections.display')}
+                            </h3>
+                        </div>
+                        <div class="settings-list">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.textSize')}</label>
+                                </div>
+                                <select id="text-size" class="setting-select">
+                                    <option value="small" ${settings.textSize === 'small' ? 'selected' : ''}>${t('settings.options.small')}</option>
+                                    <option value="medium" ${settings.textSize === 'medium' ? 'selected' : ''}>${t('settings.options.medium')}</option>
+                                    <option value="large" ${settings.textSize === 'large' ? 'selected' : ''}>${t('settings.options.large')}</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.highContrast')}</label>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="high-contrast" ${settings.highContrast ? 'checked' : ''}>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.language')}</label>
+                                </div>
+                                <select id="language-select" class="setting-select">
+                                    <option value="en" ${i18n.getCurrentLocale() === 'en' ? 'selected' : ''}>English</option>
+                                    <option value="de" ${i18n.getCurrentLocale() === 'de' ? 'selected' : ''}>Deutsch</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.highContrast')}</label>
-                        <div class="setting-control">
-                            <label class="toggle">
-                                <input type="checkbox" id="high-contrast" ${settings.highContrast ? 'checked' : ''}>
-                                <span class="toggle-slider"></span>
-                            </label>
+                    <!-- Audio Settings -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="card-icon">🔊</span>
+                                ${t('settings.sections.audio')}
+                            </h3>
+                        </div>
+                        <div class="settings-list">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.options.voiceSelection')}</label>
+                                </div>
+                                <select id="voice-select" class="setting-select voice-select">
+                                    ${this.availableVoices.map((voice, index) => `
+                                        <option value="${index}" ${settings.voiceIndex === index ? 'selected' : ''}>
+                                            ${voice.name}
+                                        </option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.options.autoPlayQuestions')}</label>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="auto-play" ${settings.autoPlay ? 'checked' : ''}>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item setting-item--vertical">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.options.speechSpeed')}</label>
+                                </div>
+                                <div class="range-control">
+                                    <input type="range" id="speech-rate" 
+                                           min="0.5" max="1.2" step="0.05" 
+                                           value="${settings.speechRate}">
+                                    <span class="range-value">${settings.speechRate.toFixed(2)}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item setting-item--action">
+                                <button class="btn btn--secondary btn--small" id="test-voice-btn">
+                                    🔊 ${t('settings.options.testVoice')}
+                                </button>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.language')}</label>
-                        <div class="setting-control">
-                            <select id="language-select" class="setting-select">
-                                <option value="en" ${i18n.getCurrentLocale() === 'en' ? 'selected' : ''}>English</option>
-                                <option value="de" ${i18n.getCurrentLocale() === 'de' ? 'selected' : ''}>Deutsch</option>
-                            </select>
+                    <!-- Custom Exercise Frequency -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="card-icon">➕</span>
+                                Custom Exercises
+                            </h3>
                         </div>
-                    </div>
-                </section>
-                
-                <!-- Audio Settings -->
-                <section class="settings-section">
-                    <h3>🔊 ${t('settings.sections.audio')}</h3>
-                    
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.options.voiceSelection')}</label>
-                        <div class="setting-control">
-                            <select id="voice-select" class="setting-select voice-select">
-                                ${this.availableVoices.map((voice, index) => `
-                                    <option value="${index}" ${settings.voiceIndex === index ? 'selected' : ''}>
-                                        ${voice.name} (${voice.lang})
+                        <div class="settings-list">
+                            <div class="setting-item setting-item--vertical">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.options.customExerciseFrequency')}</label>
+                                    <p class="setting-description">${t('settings.options.customFrequencyDesc')}</p>
+                                </div>
+                                <select id="custom-frequency" class="setting-select">
+                                    <option value="mixed" ${settings.customFrequency === 'mixed' ? 'selected' : ''}>
+                                        ${t('settings.frequencies.mixed')}
                                     </option>
-                                `).join('')}
-                            </select>
+                                    <option value="high" ${settings.customFrequency === 'high' ? 'selected' : ''}>
+                                        ${t('settings.frequencies.high')}
+                                    </option>
+                                    <option value="only" ${settings.customFrequency === 'only' ? 'selected' : ''}>
+                                        ${t('settings.frequencies.only')}
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item setting-item--vertical">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.options.problemWordFrequency')}</label>
+                                    <p class="setting-description">${t('settings.options.problemFrequencyDesc')}</p>
+                                </div>
+                                <div class="range-control">
+                                    <input type="range" id="problem-frequency" 
+                                           min="0.1" max="0.5" step="0.1" 
+                                           value="${settings.problemWordFrequency}">
+                                    <span class="range-value">
+                                        ${Math.round(settings.problemWordFrequency * 100)}%
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.options.autoPlayQuestions')}</label>
-                        <div class="setting-control">
-                            <label class="toggle">
-                                <input type="checkbox" id="auto-play" ${settings.autoPlay ? 'checked' : ''}>
-                                <span class="toggle-slider"></span>
-                            </label>
+                    <!-- Mastery Settings -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="card-icon">🎯</span>
+                                Mastery Tracking
+                            </h3>
+                        </div>
+                        <div class="settings-list">
+                            <div class="setting-item setting-item--vertical">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.options.masteryStreak')}</label>
+                                    <p class="setting-description">${t('settings.options.masteryStreakDesc')}</p>
+                                </div>
+                                <select id="mastery-threshold" class="setting-select">
+                                    <option value="2" ${settings.masteryThreshold === 2 ? 'selected' : ''}>${t('settings.times.2times')}</option>
+                                    <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>${t('settings.times.3times')}</option>
+                                    <option value="4" ${settings.masteryThreshold === 4 ? 'selected' : ''}>${t('settings.times.4times')}</option>
+                                    <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>${t('settings.times.5times')}</option>
+                                </select>
+                            </div>
+                            
+                            <div class="setting-item setting-item--vertical">
+                                <div class="setting-info">
+                                    <label class="setting-label">${t('settings.options.hideMasteredWords')}</label>
+                                    <p class="setting-description">${t('settings.options.hideMasteredDesc')}</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="remove-mastery" ${settings.removeAfterMastery ? 'checked' : ''}>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.options.speechSpeed')}</label>
-                        <div class="setting-control range-control">
-                            <input type="range" id="speech-rate" 
-                                   min="0.5" max="1.2" step="0.05" 
-                                   value="${settings.speechRate}">
-                            <span class="range-value" id="speech-rate-value">${settings.speechRate.toFixed(2)}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <button class="btn btn--secondary" id="test-voice-btn">
-                            🔊 ${t('settings.options.testVoice')}
-                        </button>
-                    </div>
-                </section>
+                </div>
                 
-                <!-- Practice Settings -->
-                <section class="settings-section">
-                    <h3>📚 ${t('settings.sections.practice')}</h3>
-                    
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.options.customExerciseFrequency')}</label>
-                        <p class="setting-description">${t('settings.options.customFrequencyDesc')}</p>
-                        <div class="setting-control">
-                            <select id="custom-frequency" class="setting-select">
-                                <option value="mixed" ${settings.customFrequency === 'mixed' ? 'selected' : ''}>
-                                    ${t('settings.frequencies.mixed')}
-                                </option>
-                                <option value="high" ${settings.customFrequency === 'high' ? 'selected' : ''}>
-                                    ${t('settings.frequencies.high')}
-                                </option>
-                                <option value="only" ${settings.customFrequency === 'only' ? 'selected' : ''}>
-                                    ${t('settings.frequencies.only')}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.options.problemWordFrequency')}</label>
-                        <p class="setting-description">${t('settings.options.problemFrequencyDesc')}</p>
-                        <div class="setting-control range-control">
-                            <input type="range" id="problem-frequency" 
-                                   min="0.1" max="0.5" step="0.1" 
-                                   value="${settings.problemWordFrequency}">
-                            <span class="range-value" id="problem-frequency-value">
-                                ${Math.round(settings.problemWordFrequency * 100)}%
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.options.masteryStreak')}</label>
-                        <p class="setting-description">${t('settings.options.masteryStreakDesc')}</p>
-                        <div class="setting-control">
-                            <select id="mastery-threshold" class="setting-select">
-                                <option value="2" ${settings.masteryThreshold === 2 ? 'selected' : ''}>${t('settings.times.2times')}</option>
-                                <option value="3" ${settings.masteryThreshold === 3 ? 'selected' : ''}>${t('settings.times.3times')}</option>
-                                <option value="4" ${settings.masteryThreshold === 4 ? 'selected' : ''}>${t('settings.times.4times')}</option>
-                                <option value="5" ${settings.masteryThreshold === 5 ? 'selected' : ''}>${t('settings.times.5times')}</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <label class="setting-label">${t('settings.options.hideMasteredWords')}</label>
-                        <p class="setting-description">${t('settings.options.hideMasteredDesc')}</p>
-                        <div class="setting-control">
-                            <label class="toggle">
-                                <input type="checkbox" id="remove-mastery" ${settings.removeAfterMastery ? 'checked' : ''}>
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <!-- Practice Difficulty Per Exercise Type -->
-                    <details class="setting-item difficulty-settings">
-                        <summary class="setting-label setting-label--collapsible">
+                <!-- Difficulty Settings - 4x4 Grid with Dropdowns -->
+                <details class="settings-card settings-card--full difficulty-card" open>
+                    <summary class="card-header card-header--collapsible">
+                        <h3 class="card-title">
+                            <span class="card-icon">🎯</span>
                             ${t('settings.practiceDifficulty')}
                             <span class="toggle-icon">▼</span>
-                        </summary>
-                        <p class="setting-description">${t('settings.practiceDifficultyDesc')}</p>
-                        <div class="difficulty-grid">
-                            ${this.renderDifficultySettings()}
-                        </div>
-                    </details>
-                </section>
+                        </h3>
+                    </summary>
+                    <p class="card-description">${t('settings.practiceDifficultyDesc')}</p>
+                    <div class="difficulty-grid-4x4">
+                        ${this.renderDifficultySettings()}
+                    </div>
+                </details>
                 
-                <!-- Actions Grid - Translation, Data Management, Danger Zone side by side -->
-                <div class="settings-actions-grid">
-                    <!-- Translation Tools -->
-                    <section class="settings-section">
-                        <h3>🌐 ${t('settings.sections.translation')}</h3>
-                        
-                        <button class="btn btn--secondary" id="export-translation-btn">
-                            📤 ${t('settings.options.exportTranslation')}
-                        </button>
-                        <small>${t('settings.options.exportTranslationDesc')}</small>
-                        
-                        <label class="btn btn--secondary file-label">
-                            📥 ${t('settings.options.importTranslation')}
-                            <input type="file" id="import-translation-file" accept=".csv" hidden>
-                        </label>
-                        <small>${t('settings.options.importTranslationDesc')}</small>
-                    </section>
+                <!-- Actions Section -->
+                <div class="settings-actions">
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="card-icon">🌐</span>
+                                ${t('settings.sections.translation')}
+                            </h3>
+                        </div>
+                        <div class="action-list">
+                            <button class="btn btn--secondary btn--full" id="export-translation-btn">
+                                📤 ${t('settings.options.exportTranslation')}
+                            </button>
+                            <label class="btn btn--secondary btn--full">
+                                📥 ${t('settings.options.importTranslation')}
+                                <input type="file" id="import-translation-file" accept=".csv" hidden>
+                            </label>
+                        </div>
+                    </div>
                     
-                    <!-- Data Management -->
-                    <section class="settings-section">
-                        <h3>💾 ${t('settings.sections.dataManagement')}</h3>
-                        
-                        <button class="btn btn--secondary" id="export-backup-btn">
-                            📦 ${t('settings.options.createBackup')}
-                        </button>
-                        <small>${t('settings.options.createBackupDesc')}</small>
-                        
-                        <label class="btn btn--secondary file-label">
-                            📥 ${t('settings.options.restoreBackup')}
-                            <input type="file" id="import-backup-file" accept=".json" hidden>
-                        </label>
-                        <small>${t('settings.options.restoreBackupDesc')}</small>
-                    </section>
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="card-icon">💾</span>
+                                ${t('settings.sections.dataManagement')}
+                            </h3>
+                        </div>
+                        <div class="action-list">
+                            <button class="btn btn--secondary btn--full" id="export-backup-btn">
+                                📦 ${t('settings.options.createBackup')}
+                            </button>
+                            <label class="btn btn--secondary btn--full">
+                                📥 ${t('settings.options.restoreBackup')}
+                                <input type="file" id="import-backup-file" accept=".json" hidden>
+                            </label>
+                        </div>
+                    </div>
                     
-                    <!-- Danger Zone -->
-                    <section class="settings-section danger-zone">
-                        <h3>⚠️ ${t('settings.sections.dangerZone')}</h3>
-                        
-                        <button class="btn btn--error" id="reset-progress-btn">
-                            🗑️ ${t('settings.options.resetProgress')}
-                        </button>
-                        <small>${t('settings.options.resetProgressDesc')}</small>
-                        
-                        <button class="btn btn--error" id="reset-all-btn">
-                            💥 ${t('settings.options.resetEverything')}
-                        </button>
-                        <small>${t('settings.options.resetEverythingDesc')}</small>
-                    </section>
+                    <div class="settings-card danger-zone">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span class="card-icon">⚠️</span>
+                                ${t('settings.sections.dangerZone')}
+                            </h3>
+                        </div>
+                        <div class="action-list">
+                            <button class="btn btn--error btn--full" id="reset-progress-btn">
+                                🗑️ ${t('settings.options.resetProgress')}
+                            </button>
+                            <button class="btn btn--error btn--full" id="reset-all-btn">
+                                💥 ${t('settings.options.resetEverything')}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -256,6 +301,38 @@ class SettingsPage {
         
         this.attachListeners();
         this.applySettings();
+    }
+    
+    renderDifficultySettings() {
+        const practiceSettings = storageService.get('practiceSettings', {});
+        const defaultDifficulty = storageService.get('defaultDifficulty', 'easy');
+        const categories = exerciseFactory.getExercisesByCategory();
+        const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
+        
+        // Generate all exercise cards with dropdowns
+        const exerciseCards = [];
+        
+        categoryOrder.forEach(category => {
+            const exercises = categories[category] || [];
+            exercises.forEach(ex => {
+                const currentDiff = practiceSettings[ex.type] || defaultDifficulty;
+                exerciseCards.push(`
+                    <div class="difficulty-exercise-card">
+                        <div class="exercise-info">
+                            <span class="exercise-icon">${ex.icon}</span>
+                            <span class="exercise-name">${t('exercises.' + ex.type + '.name')}</span>
+                        </div>
+                        <select class="difficulty-dropdown" data-type="${ex.type}">
+                            <option value="easy" ${currentDiff === 'easy' ? 'selected' : ''}>Easy</option>
+                            <option value="medium" ${currentDiff === 'medium' ? 'selected' : ''}>Medium</option>
+                            <option value="hard" ${currentDiff === 'hard' ? 'selected' : ''}>Hard</option>
+                        </select>
+                    </div>
+                `);
+            });
+        });
+        
+        return exerciseCards.join('');
     }
     
     async loadVoices() {
@@ -325,52 +402,6 @@ class SettingsPage {
         });
     }
     
-    renderDifficultySettings() {
-        const practiceSettings = storageService.get('practiceSettings', {});
-        const defaultDifficulty = storageService.get('defaultDifficulty', 'easy');
-        const categories = exerciseFactory.getExercisesByCategory();
-        const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
-        
-        return categoryOrder.map(category => {
-            const exercises = categories[category];
-            const categoryInfo = {
-                words: '📚 Words',
-                phonetics: '🔊 Phonetics',
-                meaning: '💡 Meaning',
-                time: '⏰ Time'
-            };
-            
-            return `
-                <div class="difficulty-category">
-                    <h4>${categoryInfo[category]}</h4>
-                    ${exercises.map(ex => {
-                        const currentDiff = practiceSettings[ex.type] || defaultDifficulty;
-                        return `
-                            <div class="difficulty-item">
-                                <span class="exercise-icon">${ex.icon}</span>
-                                <span class="exercise-name">${t('exercises.' + ex.type + '.name')}</span>
-                                <div class="difficulty-selector">
-                                    <button class="diff-btn ${currentDiff === 'easy' ? 'active' : ''}" 
-                                            data-type="${ex.type}" data-diff="easy">
-                                        Easy
-                                    </button>
-                                    <button class="diff-btn ${currentDiff === 'medium' ? 'active' : ''}" 
-                                            data-type="${ex.type}" data-diff="medium">
-                                        Medium
-                                    </button>
-                                    <button class="diff-btn ${currentDiff === 'hard' ? 'active' : ''}" 
-                                            data-type="${ex.type}" data-diff="hard">
-                                        Hard
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
-        }).join('');
-    }
-    
     attachListeners() {
         // Display settings
         this.container.querySelector('#text-size')?.addEventListener('change', (e) => {
@@ -438,6 +469,19 @@ class SettingsPage {
             Config.set('exercises.removeAfterMastery', e.target.checked);
         });
         
+        // Practice difficulty selectors - DROPDOWN VERSION
+        this.container.addEventListener('change', (e) => {
+            if (e.target.classList.contains('difficulty-dropdown')) {
+                const type = e.target.dataset.type;
+                const difficulty = e.target.value;
+                
+                // Update storage
+                const practiceSettings = storageService.get('practiceSettings', {});
+                practiceSettings[type] = difficulty;
+                storageService.set('practiceSettings', practiceSettings);
+            }
+        });
+        
         // Translation
         this.container.querySelector('#export-translation-btn')?.addEventListener('click', () => {
             importExportService.exportTranslationCSV();
@@ -470,24 +514,6 @@ class SettingsPage {
                 } catch (err) {
                     alert('Import failed: ' + err.message);
                 }
-            }
-        });
-        
-        // Practice difficulty selectors
-        this.container.addEventListener('click', (e) => {
-            if (e.target.classList.contains('diff-btn')) {
-                const type = e.target.dataset.type;
-                const difficulty = e.target.dataset.diff;
-                
-                // Update storage
-                const practiceSettings = storageService.get('practiceSettings', {});
-                practiceSettings[type] = difficulty;
-                storageService.set('practiceSettings', practiceSettings);
-                
-                // Update UI
-                const item = e.target.closest('.difficulty-item');
-                item.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
             }
         });
         

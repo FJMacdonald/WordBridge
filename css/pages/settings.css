@@ -1,67 +1,147 @@
-/* Settings Page Styles - Consistent with app style */
-
+/* Settings Page - Matching Home/Test page styles */
 .settings-page {
-    padding-bottom: var(--space-xl);
+    padding: var(--space-lg) 0;
 }
 
-/* Section styling - consistent with other pages */
-.settings-section {
+/* Settings Grid - Two column layout like home page */
+.settings-grid {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+    .settings-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Settings Card - Match category-card style */
+.settings-card {
     background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    margin-bottom: var(--space-md);
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
-.settings-section h3 {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin: 0 0 var(--space-md) 0;
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--color-border);
-    color: var(--color-text);
+.settings-card--full {
+    grid-column: 1 / -1;
 }
 
-/* Setting item - horizontal compact layout */
-.setting-item {
+/* Card Header - Match category-header */
+.card-header {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: var(--space-sm) 0;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
     border-bottom: 1px solid var(--color-border);
+}
+
+.card-header--collapsible {
+    cursor: pointer;
+    user-select: none;
+}
+
+.card-header--collapsible:hover {
+    background: var(--color-background);
+    margin: calc(var(--space-md) * -1);
+    margin-bottom: var(--space-md);
+    padding: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.card-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: 0;
+}
+
+.card-icon {
+    font-size: var(--font-size-lg);
+}
+
+.card-description {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin: 0 0 var(--space-md) 0;
+    padding: 0 var(--space-md);
+}
+
+/* Settings List */
+.settings-list {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-sm);
 }
 
-.setting-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+/* Setting Item - Clean card-like appearance */
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm);
+    background: var(--color-background);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    min-height: 48px;
 }
 
-.setting-item:first-of-type {
-    padding-top: 0;
+.setting-item--vertical {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+}
+
+.setting-item--action {
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: var(--space-xs) 0;
+}
+
+.setting-info {
+    flex: 1;
 }
 
 .setting-label {
     font-weight: 500;
     font-size: var(--font-size-sm);
     color: var(--color-text);
+    display: block;
 }
 
 .setting-description {
-    width: 100%;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     color: var(--color-text-muted);
-    margin: var(--space-xs) 0 0 0;
-    order: 3;
+    margin-top: var(--space-xs);
+    line-height: 1.4;
 }
 
-.setting-control {
+/* Practice settings grid */
+.practice-settings-grid {
+    display: grid;
+    gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+    .practice-settings-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.setting-group {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: var(--space-sm);
 }
 
+/* Controls styling */
 .setting-select {
     padding: var(--space-xs) var(--space-sm);
     border: 1px solid var(--color-border);
@@ -74,35 +154,35 @@
 .setting-select:focus {
     outline: none;
     border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
 }
 
 /* Range controls */
 .range-control {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
-    width: 100%;
-    margin-top: var(--space-xs);
+    gap: var(--space-md);
+    padding: var(--space-xs) 0;
 }
 
 .range-control input[type="range"] {
     flex: 1;
-    max-width: 200px;
 }
 
 .range-value {
-    min-width: 40px;
+    min-width: 45px;
     text-align: right;
-    font-weight: 500;
+    font-weight: 600;
     font-size: var(--font-size-sm);
+    color: var(--color-primary);
 }
 
-/* Toggle switch */
+/* Toggle switch - refined */
 .toggle {
     position: relative;
     display: inline-block;
-    width: 44px;
-    height: 24px;
+    width: 48px;
+    height: 26px;
 }
 
 .toggle input {
@@ -119,20 +199,21 @@
     right: 0;
     bottom: 0;
     background-color: var(--color-border);
-    border-radius: 24px;
+    border-radius: 26px;
     transition: var(--transition-fast);
 }
 
 .toggle-slider:before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
+    height: 20px;
+    width: 20px;
     left: 3px;
     bottom: 3px;
     background-color: white;
     border-radius: 50%;
     transition: var(--transition-fast);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .toggle input:checked + .toggle-slider {
@@ -140,143 +221,81 @@
 }
 
 .toggle input:checked + .toggle-slider:before {
-    transform: translateX(20px);
+    transform: translateX(22px);
 }
 
-/* Full width buttons */
-.settings-section .full-width {
-    width: 100%;
-    justify-content: center;
-}
-
-.file-label {
-    cursor: pointer;
-}
-
-/* Actions Grid - Translation, Data Management, Danger Zone side by side */
-.settings-actions-grid {
+/* Settings Actions Section */
+.settings-actions {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-md);
+    gap: var(--space-lg);
 }
 
-.settings-actions-grid .settings-section {
-    margin-bottom: 0;
+@media (min-width: 768px) {
+    .settings-actions {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Action list */
+.action-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
 }
 
-.settings-actions-grid .settings-section h3 {
-    margin-bottom: var(--space-sm);
-}
-
-.settings-actions-grid .btn {
+/* Buttons */
+.btn--full {
     width: 100%;
     justify-content: center;
 }
 
-.settings-actions-grid small {
-    display: block;
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-sm);
-}
-
-@media (max-width: 900px) {
-    .settings-actions-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .settings-actions-grid .settings-section {
-        margin-bottom: var(--space-md);
-    }
-}
-
-/* Danger zone */
-.danger-zone {
-    border-color: var(--color-error);
-}
-
-.danger-zone h3 {
-    color: var(--color-error);
-}
-
-/* Practice Difficulty Settings - collapsible */
-.difficulty-settings {
-    border-bottom: none;
-    padding-bottom: var(--space-sm);
-}
-
-.difficulty-settings summary {
-    cursor: pointer;
-    user-select: none;
-    list-style: none;
-}
-
-.difficulty-settings summary::-webkit-details-marker {
-    display: none;
-}
-
-.setting-label--collapsible {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.toggle-icon {
-    transition: transform 0.2s;
-    color: var(--color-primary);
+.btn--small {
+    padding: var(--space-xs) var(--space-sm);
     font-size: var(--font-size-sm);
 }
 
-.difficulty-settings[open] .toggle-icon {
-    transform: rotate(180deg);
+/* Danger zone styling */
+.danger-zone {
+    border-color: rgba(var(--color-error-rgb), 0.3);
 }
 
+.danger-zone .card-header {
+    border-bottom-color: rgba(var(--color-error-rgb), 0.3);
+}
+
+.danger-zone .card-title {
+    color: var(--color-error);
+}
+
+/* Difficulty Settings */
 .difficulty-grid {
+    padding: var(--space-md);
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    margin-top: var(--space-md);
 }
 
 .difficulty-category {
-    padding: var(--space-md);
     background: var(--color-background);
     border-radius: var(--radius-md);
+    padding: var(--space-md);
 }
 
 .difficulty-category h4 {
     margin: 0 0 var(--space-sm) 0;
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
-    font-weight: 600;
 }
 
 .difficulty-item {
     display: grid;
-    grid-template-columns: 1.5rem 1fr auto;
+    grid-template-columns: 2rem 1fr auto;
     gap: var(--space-sm);
     align-items: center;
     padding: var(--space-xs) var(--space-sm);
     background: var(--color-surface);
     border-radius: var(--radius-sm);
     margin-bottom: var(--space-xs);
-    font-size: var(--font-size-sm);
-}
-
-.difficulty-item:last-child {
-    margin-bottom: 0;
-}
-
-.difficulty-item .exercise-icon {
-    font-size: var(--font-size-base);
-}
-
-.difficulty-item .exercise-name {
-    font-size: var(--font-size-sm);
 }
 
 .difficulty-selector {
@@ -304,86 +323,182 @@
     border-color: var(--color-primary);
 }
 
-/* Responsive */
+/* Collapsible animation */
+details[open] .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.toggle-icon {
+    transition: transform 0.2s;
+    margin-left: auto;
+}
+
+/* Mobile responsive */
 @media (max-width: 768px) {
+    .settings-grid,
+    .practice-settings-grid,
+    .settings-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .settings-card {
+        margin-bottom: var(--space-md);
+    }
+    
     .setting-item {
         flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-xs);
+        align-items: stretch;
+        gap: var(--space-sm);
     }
     
-    .setting-control {
-        width: 100%;
-        justify-content: flex-end;
-    }
-    
-    .setting-select {
-        flex: 1;
+    .setting-select,
+    .toggle {
+        align-self: flex-end;
     }
     
     .difficulty-item {
-        grid-template-columns: 1.5rem 1fr;
-        gap: var(--space-xs);
+        grid-template-columns: 2rem 1fr;
     }
     
     .difficulty-selector {
         grid-column: 1 / -1;
         justify-content: stretch;
-        margin-top: var(--space-xs);
     }
     
     .diff-btn {
         flex: 1;
-        text-align: center;
     }
 }
-.settings-page .page-header {
-    border-bottom: 2px solid var(--color-border);
-    padding-bottom: var(--space-lg);
+
+/* Desktop optimization */
+@media (min-width: 1024px) {
+    .settings-page {
+        padding: var(--space-md) 0;
+    }
+    
+    .settings-grid,
+    .settings-actions {
+        gap: var(--space-md);
+    }
+    
+    .settings-card {
+        margin-bottom: var(--space-md);
+    }
 }
 
-.settings-section {
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    margin-bottom: var(--space-lg);
-    border: 1px solid var(--color-border);
-}
 
-.settings-section h3 {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin: 0 0 var(--space-md) 0;
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--color-border);
-}
-
-/* Settings grid for better organization */
-.settings-grid {
+/* Settings Page - Top Grid (2x2) */
+.settings-top-grid {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
 }
 
-@media (min-width: 768px) {
-    .settings-grid {
+@media (max-width: 900px) {
+    .settings-top-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Difficulty Settings - 4x4 Grid */
+.difficulty-card {
+    margin-bottom: var(--space-lg);
+}
+
+.difficulty-grid-4x4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-sm);
+    padding: var(--space-md);
+}
+
+@media (max-width: 1200px) {
+    .difficulty-grid-4x4 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .difficulty-grid-4x4 {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
+@media (max-width: 600px) {
+    .difficulty-grid-4x4 {
+        grid-template-columns: 1fr;
+    }
+}
 
+/* Difficulty Exercise Card */
+.difficulty-exercise-card {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    transition: all var(--transition-fast);
+}
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .page-title {
-        font-size: var(--font-size-lg);
-    }
-    
-    .page-subtitle {
-        font-size: var(--font-size-sm);
-    }
-    
-    .page-header {
-        padding: var(--space-md) 0;
-        margin-bottom: var(--space-md);
-    }
+.difficulty-exercise-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+.exercise-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.exercise-info .exercise-icon {
+    font-size: var(--font-size-lg);
+}
+
+.exercise-info .exercise-name {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    flex: 1;
+}
+
+.difficulty-dropdown {
+    width: 100%;
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    background: var(--color-surface);
+    cursor: pointer;
+}
+
+.difficulty-dropdown:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+}
+
+/* Setting Item Variants */
+.setting-item--vertical {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+}
+
+.setting-item--vertical .setting-info {
+    width: 100%;
+}
+
+.setting-item--vertical .setting-select,
+.setting-item--vertical .toggle {
+    align-self: flex-start;
+}
+
+.setting-item--action {
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
 }
