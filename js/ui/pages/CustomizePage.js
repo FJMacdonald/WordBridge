@@ -371,27 +371,17 @@ class CustomizePage {
     }
     
     renderIndividualForm(type, editItem = null, editIndex = null) {
+        // Word-based exercises use the unified form
+        const unifiedFormTypes = ['naming', 'typing', 'listening', 'sentenceTyping', 'category', 
+                                   'speaking', 'firstSound', 'rhyming', 'definitions', 
+                                   'association', 'synonyms'];
+        
+        if (unifiedFormTypes.includes(type)) {
+            return this.renderUnifiedWordForm(type, editItem, editIndex);
+        }
+        
+        // Non-word exercises use specific forms
         switch (type) {
-            case 'naming':
-            case 'typing':
-            case 'listening':
-                return this.renderImageWordForm(type, editItem, editIndex);
-            case 'sentenceTyping':
-                return this.renderSentenceForm(editItem, editIndex);
-            case 'category':
-                return this.renderCategoryForm(editItem, editIndex);
-            case 'speaking':
-                return this.renderSpeakingForm(editItem, editIndex);
-            case 'firstSound':
-                return this.renderFirstSoundForm(editItem, editIndex);
-            case 'rhyming':
-                return this.renderRhymingForm(editItem, editIndex);
-            case 'definitions':
-                return this.renderDefinitionsForm(editItem, editIndex);
-            case 'association':
-                return this.renderAssociationForm(editItem, editIndex);
-            case 'synonyms':
-                return this.renderSynonymsForm(editItem, editIndex);
             case 'scramble':
                 return this.renderScrambleForm(editItem, editIndex);
             case 'timeSequencing':
@@ -405,6 +395,261 @@ class CustomizePage {
             default:
                 return '';
         }
+    }
+    
+    /**
+     * Unified Word Form for all word-based exercises
+     * Fields are highlighted based on relevance to the selected exercise type
+     */
+    renderUnifiedWordForm(type, editItem = null, editIndex = null) {
+        const isEditing = editItem !== null;
+        
+        // Define which fields are relevant to which exercise types
+        const fieldRelevance = {
+            word: ['naming', 'typing', 'listening', 'speaking', 'rhyming', 'definitions', 'association', 'synonyms'],
+            image: ['naming', 'typing', 'listening', 'speaking'],
+            wrongOptions: ['naming', 'listening', 'category'],
+            sentence: ['sentenceTyping'],
+            category: ['category'],
+            definition: ['definitions'],
+            rhymes: ['rhyming'],
+            nonRhymes: ['rhyming'],
+            firstSound: ['firstSound'],
+            firstSoundWords: ['firstSound'],
+            associatedWords: ['association'],
+            unrelatedWords: ['association'],
+            synonyms: ['synonyms'],
+            antonyms: ['synonyms'],
+            phrases: ['speaking']
+        };
+        
+        const isRelevant = (field) => fieldRelevance[field]?.includes(type);
+        const relevantClass = (field) => isRelevant(field) ? 'field-relevant' : 'field-optional';
+        const requiredAttr = (field) => isRelevant(field) ? 'required' : '';
+        
+        // Get existing values for editing
+        const values = {
+            word: editItem?.answer || editItem?.word || '',
+            emoji: editItem?.emoji || '',
+            imageUrl: editItem?.imageUrl || '',
+            wrongOptions: editItem?.options ? editItem.options.slice(1).join(', ') : '',
+            sentence: editItem?.sentence || '',
+            sentenceAnswer: editItem?.answer || '',
+            category: editItem?.category || '',
+            categoryWord: editItem?.word || '',
+            definition: editItem?.definition || '',
+            rhymes: editItem?.rhymes?.join(', ') || '',
+            nonRhymes: editItem?.nonRhymes?.join(', ') || '',
+            firstSound: editItem?.sound || '',
+            firstSoundWords: editItem?.words?.join(', ') || '',
+            associatedWords: editItem?.associated?.join(', ') || '',
+            unrelatedWords: editItem?.unrelated?.join(', ') || '',
+            synonyms: editItem?.synonyms?.join(', ') || '',
+            antonyms: editItem?.antonyms?.join(', ') || '',
+            phrases: editItem?.phrases?.join('\n') || ''
+        };
+        
+        return `
+            <form class="add-form unified-word-form" id="add-unified-form" 
+                  data-type="${type}" 
+                  data-edit-type="${editItem ? type : ''}" 
+                  data-edit-index="${editIndex !== null ? editIndex : ''}">
+                <h3>${isEditing ? t('customize.forms.editExercise') || 'Edit Exercise' : t('customize.forms.addWordExercise')}</h3>
+                
+                <!-- Info about exercise applicability -->
+                <details class="info-box unified-form-info">
+                    <summary class="info-header">
+                        💡 ${t('customize.unifiedForm.aboutFields') || 'About this form'}
+                    </summary>
+                    <div class="info-content">
+                        <p>${t('customize.unifiedForm.fieldsExplanation') || 'Fields highlighted in blue are relevant for the selected exercise type. Optional fields allow your word to appear in additional exercises.'}</p>
+                        <ul>
+                            <li><strong class="field-highlight">${t('customize.unifiedForm.highlighted') || 'Highlighted fields'}</strong>: ${t('customize.unifiedForm.requiredDesc') || 'Required for the selected exercise'}</li>
+                            <li><strong>${t('customize.unifiedForm.otherFields') || 'Other fields'}</strong>: ${t('customize.unifiedForm.optionalDesc') || 'Fill these to use your word in other exercises too'}</li>
+                        </ul>
+                    </div>
+                </details>
+                
+                <!-- SECTION: Basic Word Info -->
+                <fieldset class="form-section ${isRelevant('word') ? 'section-relevant' : ''}">
+                    <legend>${t('customize.unifiedForm.basicInfo') || 'Basic Word Information'}</legend>
+                    
+                    <div class="form-group ${relevantClass('word')}">
+                        <label>${t('customize.forms.targetWord')}</label>
+                        <input type="text" id="unified-word" placeholder="${t('customize.forms.targetWordPlaceholder')}" 
+                               value="${values.word}" ${requiredAttr('word')}>
+                        <small>${t('customize.unifiedForm.wordHelp') || 'The main word for exercises like naming, typing, speaking, definitions, etc.'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Image/Visual -->
+                <fieldset class="form-section ${isRelevant('image') ? 'section-relevant' : ''}">
+                    <legend>🖼️ ${t('customize.unifiedForm.imageSection') || 'Image / Visual'}</legend>
+                    
+                    <div class="form-group ${relevantClass('image')}">
+                        <label>${t('customize.forms.imageFile') || 'Image (Upload, Emoji, or URL)'}</label>
+                        <div class="image-upload-area">
+                            <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                            <div class="upload-options">
+                                <button type="button" class="file-select-btn" id="file-select-btn">
+                                    📁 ${t('customize.forms.chooseFile') || 'Upload Image'}
+                                </button>
+                                <input type="text" id="emoji-input" placeholder="🍎 ${t('customize.unifiedForm.orEmoji') || 'or emoji'}" 
+                                       value="${values.emoji}">
+                                <input type="text" id="image-url" placeholder="${t('customize.forms.imageUrlPlaceholder')}" 
+                                       value="${values.imageUrl}">
+                            </div>
+                            <span class="file-status" id="file-status">${this.getImageStatus(editItem)}</span>
+                            <div class="image-preview" id="image-preview"></div>
+                        </div>
+                        <small>${t('customize.unifiedForm.imageHelp') || 'Used in Picture Naming, Typing, Listening, and Speaking exercises'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Multiple Choice Options -->
+                <fieldset class="form-section ${isRelevant('wrongOptions') ? 'section-relevant' : ''}">
+                    <legend>📋 ${t('customize.unifiedForm.optionsSection') || 'Multiple Choice Options'}</legend>
+                    
+                    <div class="form-group ${relevantClass('wrongOptions')}">
+                        <label>${t('customize.forms.wrongOptions')}</label>
+                        <input type="text" id="unified-wrong-options" placeholder="${t('customize.forms.wrongOptionsPlaceholder')}"
+                               value="${values.wrongOptions}">
+                        <small>${t('customize.unifiedForm.wrongOptionsHelp') || 'Wrong answers for Picture Naming, Listening, and Category exercises (comma-separated)'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Sentence Completion -->
+                <fieldset class="form-section ${isRelevant('sentence') ? 'section-relevant' : ''}">
+                    <legend>📝 ${t('customize.unifiedForm.sentenceSection') || 'Sentence Completion'}</legend>
+                    
+                    <div class="form-group ${relevantClass('sentence')}">
+                        <label>${t('customize.forms.sentenceWithBlank')}</label>
+                        <input type="text" id="unified-sentence" placeholder="${t('customize.forms.sentencePlaceholder')}"
+                               value="${values.sentence}" ${requiredAttr('sentence')}>
+                        <small>${t('customize.unifiedForm.sentenceHelp') || 'Use __ or ? for the blank'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Category -->
+                <fieldset class="form-section ${isRelevant('category') ? 'section-relevant' : ''}">
+                    <legend>📁 ${t('customize.unifiedForm.categorySection') || 'Category Exercise'}</legend>
+                    
+                    <div class="form-group ${relevantClass('category')}">
+                        <label>${t('customize.unifiedForm.categoryName') || 'Category Name'}</label>
+                        <input type="text" id="unified-category" placeholder="${t('customize.unifiedForm.categoryPlaceholder') || 'e.g., fruit, animal, color'}"
+                               value="${values.category}" ${requiredAttr('category')}>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Definition -->
+                <fieldset class="form-section ${isRelevant('definition') ? 'section-relevant' : ''}">
+                    <legend>📖 ${t('customize.unifiedForm.definitionSection') || 'Definition'}</legend>
+                    
+                    <div class="form-group ${relevantClass('definition')}">
+                        <label>${t('customize.unifiedForm.definition') || 'Definition'}</label>
+                        <textarea id="unified-definition" rows="2" 
+                                  placeholder="${t('customize.unifiedForm.definitionPlaceholder') || 'e.g., A piece of furniture for sitting'}"
+                                  ${requiredAttr('definition')}>${values.definition}</textarea>
+                        <small>${t('customize.unifiedForm.definitionHelp') || 'Used in Definition exercises'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Phonetics - First Sound -->
+                <fieldset class="form-section ${isRelevant('firstSound') ? 'section-relevant' : ''}">
+                    <legend>🔤 ${t('customize.unifiedForm.firstSoundSection') || 'First Sound Exercise'}</legend>
+                    
+                    <div class="form-group ${relevantClass('firstSound')}">
+                        <label>${t('customize.unifiedForm.targetSound') || 'Target Sound'}</label>
+                        <input type="text" id="unified-first-sound" placeholder="${t('customize.unifiedForm.soundPlaceholder') || 'e.g., b'}"
+                               value="${values.firstSound}" ${requiredAttr('firstSound')}>
+                    </div>
+                    
+                    <div class="form-group ${relevantClass('firstSoundWords')}">
+                        <label>${t('customize.unifiedForm.wordsWithSound') || 'Words with this sound (comma-separated)'}</label>
+                        <input type="text" id="unified-first-sound-words" placeholder="${t('customize.unifiedForm.soundWordsPlaceholder') || 'e.g., ball, book, bed, bird'}"
+                               value="${values.firstSoundWords}" ${requiredAttr('firstSoundWords')}>
+                        <small>${t('customize.unifiedForm.firstSoundHelp') || 'At least 4 words that start with this sound'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Rhyming -->
+                <fieldset class="form-section ${isRelevant('rhymes') ? 'section-relevant' : ''}">
+                    <legend>🎵 ${t('customize.unifiedForm.rhymingSection') || 'Rhyming Exercise'}</legend>
+                    
+                    <div class="form-group ${relevantClass('rhymes')}">
+                        <label>${t('customize.unifiedForm.rhymingWords') || 'Rhyming Words (comma-separated)'}</label>
+                        <input type="text" id="unified-rhymes" placeholder="${t('customize.unifiedForm.rhymesPlaceholder') || 'e.g., hat, bat, mat'}"
+                               value="${values.rhymes}" ${requiredAttr('rhymes')}>
+                        <small>${t('customize.unifiedForm.rhymesHelp') || 'At least 2 words that rhyme with the target word'}</small>
+                    </div>
+                    
+                    <div class="form-group ${relevantClass('nonRhymes')}">
+                        <label>${t('customize.unifiedForm.nonRhymingWords') || 'Non-Rhyming Words (comma-separated)'}</label>
+                        <input type="text" id="unified-non-rhymes" placeholder="${t('customize.unifiedForm.nonRhymesPlaceholder') || 'e.g., dog, cup, tree'}"
+                               value="${values.nonRhymes}" ${requiredAttr('nonRhymes')}>
+                        <small>${t('customize.unifiedForm.nonRhymesHelp') || 'At least 2 words that do NOT rhyme'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Association -->
+                <fieldset class="form-section ${isRelevant('associatedWords') ? 'section-relevant' : ''}">
+                    <legend>🔗 ${t('customize.unifiedForm.associationSection') || 'Word Association Exercise'}</legend>
+                    
+                    <div class="form-group ${relevantClass('associatedWords')}">
+                        <label>${t('customize.unifiedForm.associatedWords') || 'Associated Words (comma-separated)'}</label>
+                        <input type="text" id="unified-associated" placeholder="${t('customize.unifiedForm.associatedPlaceholder') || 'e.g., butter, toast (for bread)'}"
+                               value="${values.associatedWords}" ${requiredAttr('associatedWords')}>
+                        <small>${t('customize.unifiedForm.associatedHelp') || 'Words that go with the main word'}</small>
+                    </div>
+                    
+                    <div class="form-group ${relevantClass('unrelatedWords')}">
+                        <label>${t('customize.unifiedForm.unrelatedWords') || 'Unrelated Words (comma-separated)'}</label>
+                        <input type="text" id="unified-unrelated" placeholder="${t('customize.unifiedForm.unrelatedPlaceholder') || 'e.g., car, phone, tree'}"
+                               value="${values.unrelatedWords}" ${requiredAttr('unrelatedWords')}>
+                        <small>${t('customize.unifiedForm.unrelatedHelp') || 'Words that don\'t go with the main word'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Synonyms/Antonyms -->
+                <fieldset class="form-section ${isRelevant('synonyms') ? 'section-relevant' : ''}">
+                    <legend>≈ ${t('customize.unifiedForm.synonymsSection') || 'Synonyms & Antonyms Exercise'}</legend>
+                    
+                    <div class="form-group ${relevantClass('synonyms')}">
+                        <label>${t('customize.unifiedForm.synonyms') || 'Synonyms (comma-separated)'}</label>
+                        <input type="text" id="unified-synonyms" placeholder="${t('customize.unifiedForm.synonymsPlaceholder') || 'e.g., glad, joyful (for happy)'}"
+                               value="${values.synonyms}" ${requiredAttr('synonyms')}>
+                        <small>${t('customize.unifiedForm.synonymsHelp') || 'Words that mean the same'}</small>
+                    </div>
+                    
+                    <div class="form-group ${relevantClass('antonyms')}">
+                        <label>${t('customize.unifiedForm.antonyms') || 'Antonyms (comma-separated)'}</label>
+                        <input type="text" id="unified-antonyms" placeholder="${t('customize.unifiedForm.antonymsPlaceholder') || 'e.g., sad, unhappy'}"
+                               value="${values.antonyms}" ${requiredAttr('antonyms')}>
+                        <small>${t('customize.unifiedForm.antonymsHelp') || 'Words that mean the opposite'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- SECTION: Speaking Phrases -->
+                <fieldset class="form-section ${isRelevant('phrases') ? 'section-relevant' : ''}">
+                    <legend>🎤 ${t('customize.unifiedForm.phrasesSection') || 'Speaking Practice Phrases'}</legend>
+                    
+                    <div class="form-group ${relevantClass('phrases')}">
+                        <label>${t('customize.unifiedForm.phrases') || 'Practice Phrases (one per line)'}</label>
+                        <textarea id="unified-phrases" rows="3" 
+                                  placeholder="${t('customize.unifiedForm.phrasesPlaceholder') || 'An apple a day keeps the doctor away\nI eat an apple for snack'}">${values.phrases}</textarea>
+                        <small>${t('customize.unifiedForm.phrasesHelp') || 'Optional phrases to help practice pronunciation'}</small>
+                    </div>
+                </fieldset>
+                
+                <!-- Difficulty -->
+                ${this.renderDifficultyField(editItem?.difficulty)}
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
+                    <button type="submit" class="btn btn--primary">${isEditing ? t('customize.forms.updateExercise') || 'Update Exercise' : t('customize.forms.addExercise')}</button>
+                </div>
+            </form>
+        `;
     }
     
     renderImageWordForm(type, editItem = null, editIndex = null) {
@@ -1441,36 +1686,14 @@ class CustomizePage {
             const editIndex = form.dataset.editIndex;
             const isEdit = editType && editIndex !== '';
             
+            // Check if this is the unified form
+            if (form.classList.contains('unified-word-form')) {
+                await this.handleUnifiedFormSubmit(type, isEdit, editType, parseInt(editIndex));
+                return;
+            }
+            
+            // Legacy form handlers for non-unified forms
             switch (type) {
-                case 'naming':
-                case 'typing':
-                case 'listening':
-                    await this.handleAddImageWord(type, isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'sentenceTyping':
-                    await this.handleAddSentence(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'category':
-                    await this.handleAddCategory(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'speaking':
-                    await this.handleAddSpeaking(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'firstSound':
-                    await this.handleAddFirstSound(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'rhyming':
-                    await this.handleAddRhyming(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'definitions':
-                    await this.handleAddDefinitions(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'association':
-                    await this.handleAddAssociation(isEdit, editType, parseInt(editIndex));
-                    break;
-                case 'synonyms':
-                    await this.handleAddSynonyms(isEdit, editType, parseInt(editIndex));
-                    break;
                 case 'scramble':
                     await this.handleAddScramble(isEdit, editType, parseInt(editIndex));
                     break;
@@ -1488,6 +1711,208 @@ class CustomizePage {
                     break;
             }
         });
+    }
+    
+    /**
+     * Handle unified form submission - saves to all applicable exercise types
+     */
+    async handleUnifiedFormSubmit(formType, isEdit = false, editType = null, editIndex = null) {
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        
+        // Get all form values
+        const word = this.container.querySelector('#unified-word')?.value.trim().toLowerCase() || '';
+        const emojiInput = this.container.querySelector('#emoji-input')?.value.trim() || '';
+        const imageUrlInput = this.container.querySelector('#image-url')?.value.trim() || '';
+        const wrongOptions = this.container.querySelector('#unified-wrong-options')?.value.trim() || '';
+        const sentence = this.container.querySelector('#unified-sentence')?.value.trim() || '';
+        const category = this.container.querySelector('#unified-category')?.value.trim().toLowerCase() || '';
+        const definition = this.container.querySelector('#unified-definition')?.value.trim() || '';
+        const firstSound = this.container.querySelector('#unified-first-sound')?.value.trim().toLowerCase() || '';
+        const firstSoundWords = this.container.querySelector('#unified-first-sound-words')?.value.trim() || '';
+        const rhymes = this.container.querySelector('#unified-rhymes')?.value.trim() || '';
+        const nonRhymes = this.container.querySelector('#unified-non-rhymes')?.value.trim() || '';
+        const associatedWords = this.container.querySelector('#unified-associated')?.value.trim() || '';
+        const unrelatedWords = this.container.querySelector('#unified-unrelated')?.value.trim() || '';
+        const synonyms = this.container.querySelector('#unified-synonyms')?.value.trim() || '';
+        const antonyms = this.container.querySelector('#unified-antonyms')?.value.trim() || '';
+        const phrases = this.container.querySelector('#unified-phrases')?.value.trim() || '';
+        const difficulty = this.container.querySelector('#exercise-difficulty')?.value || 'medium';
+        
+        // Build image data
+        let imageData = {};
+        if (this.pendingImage) {
+            const imageId = await imageStorage.saveImage(this.pendingImage, { word, category: 'custom' });
+            imageData.localImageId = imageId;
+            this.pendingImage = null;
+        } else if (emojiInput) {
+            imageData.emoji = emojiInput;
+        } else if (imageUrlInput) {
+            imageData.imageUrl = imageUrlInput;
+        } else if (isEdit) {
+            // Keep existing image if editing
+            const existingExercise = customExercises[editType]?.[editIndex];
+            if (existingExercise?.localImageId) imageData.localImageId = existingExercise.localImageId;
+            else if (existingExercise?.emoji) imageData.emoji = existingExercise.emoji;
+            else if (existingExercise?.imageUrl) imageData.imageUrl = existingExercise.imageUrl;
+        }
+        
+        // Parse comma-separated lists
+        const parseList = (str) => str.split(',').map(s => s.trim().toLowerCase()).filter(s => s);
+        const parsedWrongOptions = parseList(wrongOptions);
+        const parsedFirstSoundWords = parseList(firstSoundWords);
+        const parsedRhymes = parseList(rhymes);
+        const parsedNonRhymes = parseList(nonRhymes);
+        const parsedAssociated = parseList(associatedWords);
+        const parsedUnrelated = parseList(unrelatedWords);
+        const parsedSynonyms = parseList(synonyms);
+        const parsedAntonyms = parseList(antonyms);
+        const parsedPhrases = phrases.split('\n').map(p => p.trim()).filter(p => p);
+        
+        // Save to the primary selected type
+        const saveToType = (type, exercise) => {
+            if (!customExercises[type]) customExercises[type] = [];
+            
+            if (isEdit && editType === type && editIndex !== null && editIndex < customExercises[type].length) {
+                customExercises[type][editIndex] = exercise;
+            } else if (!isEdit) {
+                customExercises[type].push(exercise);
+            }
+        };
+        
+        // Always save for the selected form type
+        let savedToTypes = new Set();
+        
+        // Handle image-based exercises (naming, typing, listening)
+        if (word && (imageData.localImageId || imageData.emoji || imageData.imageUrl)) {
+            const baseExercise = {
+                answer: word,
+                ...imageData,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            };
+            
+            if (parsedWrongOptions.length >= 3) {
+                baseExercise.options = [word, ...parsedWrongOptions];
+            }
+            
+            ['naming', 'typing', 'listening'].forEach(type => {
+                const ex = { ...baseExercise };
+                if (type === 'typing') delete ex.options; // Typing doesn't use options
+                saveToType(type, ex);
+                savedToTypes.add(type);
+            });
+        }
+        
+        // Handle sentence completion
+        if (sentence && word) {
+            saveToType('sentenceTyping', {
+                sentence: sentence.includes('__') || sentence.includes('?') ? sentence : sentence + ' __',
+                answer: word,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('sentenceTyping');
+        }
+        
+        // Handle category
+        if (category && word && parsedWrongOptions.length >= 3) {
+            saveToType('category', {
+                category,
+                word,
+                options: [word, ...parsedWrongOptions.slice(0, 3)],
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('category');
+        }
+        
+        // Handle speaking
+        if (word && (imageData.emoji || imageData.localImageId || imageData.imageUrl)) {
+            saveToType('speaking', {
+                answer: word,
+                ...imageData,
+                phrases: parsedPhrases.length > 0 ? parsedPhrases : undefined,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('speaking');
+        }
+        
+        // Handle first sound
+        if (firstSound && parsedFirstSoundWords.length >= 4) {
+            saveToType('firstSound', {
+                sound: firstSound,
+                words: parsedFirstSoundWords,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('firstSound');
+        }
+        
+        // Handle rhyming
+        if (word && parsedRhymes.length >= 2 && parsedNonRhymes.length >= 2) {
+            saveToType('rhyming', {
+                word,
+                rhymes: parsedRhymes,
+                nonRhymes: parsedNonRhymes,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('rhyming');
+        }
+        
+        // Handle definitions
+        if (word && definition) {
+            saveToType('definitions', {
+                word,
+                definition,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('definitions');
+        }
+        
+        // Handle association
+        if (word && parsedAssociated.length >= 2 && parsedUnrelated.length >= 2) {
+            saveToType('association', {
+                word,
+                associated: parsedAssociated,
+                unrelated: parsedUnrelated,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('association');
+        }
+        
+        // Handle synonyms
+        if (word && parsedSynonyms.length >= 2 && parsedAntonyms.length >= 2) {
+            saveToType('synonyms', {
+                word,
+                synonyms: parsedSynonyms,
+                antonyms: parsedAntonyms,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            savedToTypes.add('synonyms');
+        }
+        
+        // Save if anything was added
+        if (savedToTypes.size > 0) {
+            storageService.set(`customExercises_${locale}`, customExercises);
+            await this.render();
+        } else {
+            alert(t('customize.unifiedForm.noValidExercise') || 'Please fill in the required fields for at least one exercise type.');
+        }
     }
     
     async handleAddImageWord(formType, isEdit = false, editType = null, editIndex = null) {

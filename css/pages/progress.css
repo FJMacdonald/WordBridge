@@ -53,15 +53,30 @@
 .progress-card {
     position: relative;
     min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: var(--space-sm);
+}
+
+.progress-card .exercise-icon {
+    flex-shrink: 0;
+}
+
+.progress-card .exercise-name {
+    flex-shrink: 0;
+    margin-bottom: auto;
 }
 
 .progress-card .exercise-mini-stats {
-    margin-top: var(--space-xs);
+    margin-top: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2px;
     font-size: var(--font-size-xs);
+    padding-bottom: var(--space-xs);
 }
 
 .progress-card .mini-accuracy {

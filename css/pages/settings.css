@@ -233,6 +233,24 @@
 @media (min-width: 768px) {
     .settings-actions {
         grid-template-columns: repeat(3, 1fr);
+        align-items: stretch;
+    }
+    
+    .settings-actions .settings-card {
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .settings-actions .action-list {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .settings-actions .action-list .btn,
+    .settings-actions .action-list label.btn {
+        flex: 1;
     }
 }
 
@@ -243,10 +261,20 @@
     gap: var(--space-sm);
 }
 
+.action-list .btn,
+.action-list label.btn {
+    min-height: 56px;
+    text-align: left;
+    justify-content: flex-start;
+    padding: var(--space-md) var(--space-lg);
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
 /* Buttons */
 .btn--full {
     width: 100%;
-    justify-content: center;
 }
 
 .btn--small {
@@ -401,32 +429,59 @@ details[open] .toggle-icon {
     }
 }
 
-/* Difficulty Settings - 4x4 Grid */
+/* Difficulty Settings - 4x4 Grid with Category Sections */
 .difficulty-card {
     margin-bottom: var(--space-lg);
 }
 
-.difficulty-grid-4x4 {
+.difficulty-categories-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-sm);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
     padding: var(--space-md);
 }
 
-@media (max-width: 1200px) {
-    .difficulty-grid-4x4 {
-        grid-template-columns: repeat(3, 1fr);
+@media (max-width: 900px) {
+    .difficulty-categories-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 900px) {
-    .difficulty-grid-4x4 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.difficulty-category-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+}
+
+.difficulty-category-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.difficulty-category-icon {
+    font-size: var(--font-size-lg);
+}
+
+.difficulty-category-name {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin: 0;
+}
+
+.difficulty-exercises-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: var(--space-sm);
 }
 
 @media (max-width: 600px) {
-    .difficulty-grid-4x4 {
+    .difficulty-exercises-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -441,6 +496,7 @@ details[open] .toggle-icon {
     flex-direction: column;
     gap: var(--space-xs);
     transition: all var(--transition-fast);
+    min-height: 80px;
 }
 
 .difficulty-exercise-card:hover {
@@ -456,12 +512,14 @@ details[open] .toggle-icon {
 
 .exercise-info .exercise-icon {
     font-size: var(--font-size-lg);
+    flex-shrink: 0;
 }
 
 .exercise-info .exercise-name {
     font-size: var(--font-size-sm);
     font-weight: 500;
     flex: 1;
+    line-height: 1.2;
 }
 
 .difficulty-dropdown {
@@ -472,6 +530,7 @@ details[open] .toggle-icon {
     font-size: var(--font-size-sm);
     background: var(--color-surface);
     cursor: pointer;
+    margin-top: auto;
 }
 
 .difficulty-dropdown:focus {

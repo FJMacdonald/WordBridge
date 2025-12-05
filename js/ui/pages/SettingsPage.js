@@ -214,7 +214,7 @@ class SettingsPage {
                     </div>
                 </div>
                 
-                <!-- Difficulty Settings - 4x4 Grid with Dropdowns -->
+                <!-- Difficulty Settings - Category Grouped Grid -->
                 <details class="settings-card settings-card--full difficulty-card" open>
                     <summary class="card-header card-header--collapsible">
                         <h3 class="card-title">
@@ -224,9 +224,7 @@ class SettingsPage {
                         </h3>
                     </summary>
                     <p class="card-description">${t('settings.practiceDifficultyDesc')}</p>
-                    <div class="difficulty-grid-4x4">
-                        ${this.renderDifficultySettings()}
-                    </div>
+                    ${this.renderDifficultySettings()}
                 </details>
                 
                 <!-- Actions Section -->
@@ -309,30 +307,47 @@ class SettingsPage {
         const categories = exerciseFactory.getExercisesByCategory();
         const categoryOrder = ['words', 'phonetics', 'meaning', 'time'];
         
-        // Generate all exercise cards with dropdowns
-        const exerciseCards = [];
+        const categoryInfo = {
+            words: { name: t('home.categories.words'), icon: '📚' },
+            phonetics: { name: t('home.categories.phonetics'), icon: '🔊' },
+            meaning: { name: t('home.categories.meaning'), icon: '💡' },
+            time: { name: t('home.categories.time'), icon: '⏰' }
+        };
         
-        categoryOrder.forEach(category => {
+        // Generate category sections with 2x2 exercise grids inside
+        const categorySections = categoryOrder.map(category => {
             const exercises = categories[category] || [];
-            exercises.forEach(ex => {
+            const exerciseCards = exercises.map(ex => {
                 const currentDiff = practiceSettings[ex.type] || defaultDifficulty;
-                exerciseCards.push(`
+                return `
                     <div class="difficulty-exercise-card">
                         <div class="exercise-info">
                             <span class="exercise-icon">${ex.icon}</span>
                             <span class="exercise-name">${t('exercises.' + ex.type + '.name')}</span>
                         </div>
                         <select class="difficulty-dropdown" data-type="${ex.type}">
-                            <option value="easy" ${currentDiff === 'easy' ? 'selected' : ''}>Easy</option>
-                            <option value="medium" ${currentDiff === 'medium' ? 'selected' : ''}>Medium</option>
-                            <option value="hard" ${currentDiff === 'hard' ? 'selected' : ''}>Hard</option>
+                            <option value="easy" ${currentDiff === 'easy' ? 'selected' : ''}>${t('customize.forms.easy')}</option>
+                            <option value="medium" ${currentDiff === 'medium' ? 'selected' : ''}>${t('customize.forms.medium')}</option>
+                            <option value="hard" ${currentDiff === 'hard' ? 'selected' : ''}>${t('customize.forms.hard')}</option>
                         </select>
                     </div>
-                `);
-            });
-        });
+                `;
+            }).join('');
+            
+            return `
+                <div class="difficulty-category-section">
+                    <div class="difficulty-category-header">
+                        <span class="difficulty-category-icon">${categoryInfo[category].icon}</span>
+                        <h4 class="difficulty-category-name">${categoryInfo[category].name}</h4>
+                    </div>
+                    <div class="difficulty-exercises-grid">
+                        ${exerciseCards}
+                    </div>
+                </div>
+            `;
+        }).join('');
         
-        return exerciseCards.join('');
+        return `<div class="difficulty-categories-grid">${categorySections}</div>`;
     }
     
     async loadVoices() {

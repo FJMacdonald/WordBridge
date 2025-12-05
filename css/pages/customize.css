@@ -152,6 +152,83 @@
     margin-top: var(--space-lg);
 }
 
+/* Unified Word Form Styles */
+.unified-word-form {
+    max-width: 800px;
+}
+
+.unified-word-form .form-section {
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    background: var(--color-background);
+    transition: all var(--transition-fast);
+}
+
+.unified-word-form .form-section legend {
+    padding: 0 var(--space-sm);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Relevant/highlighted sections */
+.unified-word-form .section-relevant {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+
+.unified-word-form .section-relevant legend {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+/* Field relevance highlighting */
+.unified-word-form .field-relevant label {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.unified-word-form .field-relevant label::after {
+    content: " *";
+    color: var(--color-primary);
+}
+
+.unified-word-form .field-optional {
+    opacity: 0.75;
+}
+
+.unified-word-form .field-optional label {
+    color: var(--color-text-muted);
+}
+
+/* Info box styling for unified form */
+.unified-form-info {
+    margin-bottom: var(--space-md);
+}
+
+.unified-form-info .field-highlight {
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+}
+
+/* Collapse non-relevant sections by default */
+.unified-word-form .form-section:not(.section-relevant) {
+    opacity: 0.6;
+}
+
+.unified-word-form .form-section:not(.section-relevant):hover {
+    opacity: 1;
+}
+
+.unified-word-form .form-section:not(.section-relevant):focus-within {
+    opacity: 1;
+    border-color: var(--color-border);
+}
+
 /* Info Box - Collapsible */
 .info-box {
     margin: var(--space-md) 0;
@@ -574,15 +651,15 @@
     gap: var(--space-sm);
 }
 
-/* Category Section */
-.category-section {
+/* Category Section for Custom Exercises Library */
+.collapsible-categories .category-section {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--color-surface);
 }
 
-.category-header {
+.collapsible-categories .category-header {
     cursor: pointer;
     padding: var(--space-sm) var(--space-md);
     background: var(--color-background);
@@ -594,11 +671,11 @@
     user-select: none;
 }
 
-.category-header:hover {
+.collapsible-categories .category-header:hover {
     background: var(--color-surface-variant);
 }
 
-.category-section[open] > .category-header {
+.collapsible-categories .category-section[open] > .category-header {
     border-bottom: 1px solid var(--color-border);
 }
 
