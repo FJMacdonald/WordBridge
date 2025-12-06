@@ -49,7 +49,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Exercise Type Selector - Dropdown style */
+/* Exercise Type Selector - 2x2 Grid matching home page */
 .exercise-type-selector {
     margin-bottom: var(--space-lg);
 }
@@ -61,24 +61,33 @@
 
 .dropdown-selectors {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
-    padding: var(--space-md);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+}
+
+@media (max-width: 768px) {
+    .dropdown-selectors {
+        grid-template-columns: 1fr;
+    }
 }
 
 .category-dropdown {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--space-sm);
+    min-height: 100px;
 }
 
 .category-label {
     font-weight: 600;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
     color: var(--color-text);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .type-dropdown {
@@ -86,8 +95,9 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
-    background: var(--color-surface);
+    background: var(--color-background);
     color: var(--color-text);
+    flex: 1;
 }
 
 .type-dropdown:focus {
@@ -152,81 +162,196 @@
     margin-top: var(--space-lg);
 }
 
-/* Unified Word Form Styles */
-.unified-word-form {
-    max-width: 800px;
-}
-
-.unified-word-form .form-section {
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-md);
+/* Wordbank Form Styles - Compact layout */
+.wordbank-form {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: var(--space-md);
-    margin-bottom: var(--space-md);
+}
+
+.wordbank-form h3 {
+    margin: 0 0 var(--space-md) 0;
+    font-size: var(--font-size-base);
+}
+
+/* Two-column layout for form */
+.wordbank-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+@media (max-width: 768px) {
+    .wordbank-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Form sections */
+.wordbank-form .form-section {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
     background: var(--color-background);
-    transition: all var(--transition-fast);
+    margin-bottom: var(--space-sm);
 }
 
-.unified-word-form .form-section legend {
-    padding: 0 var(--space-sm);
+.wordbank-form .form-section legend {
+    padding: 0 var(--space-xs);
     font-weight: 600;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* Relevant/highlighted sections */
-.unified-word-form .section-relevant {
+/* Highlighted/relevant sections */
+.wordbank-form .form-section.section-relevant {
     border-color: var(--color-primary);
-    background: var(--color-primary-light);
+    background: rgba(var(--color-primary-rgb), 0.05);
 }
 
-.unified-word-form .section-relevant legend {
-    color: var(--color-primary);
-    font-weight: 700;
-}
-
-/* Field relevance highlighting */
-.unified-word-form .field-relevant label {
-    color: var(--color-primary);
-    font-weight: 600;
-}
-
-.unified-word-form .field-relevant label::after {
-    content: " *";
+.wordbank-form .form-section.section-relevant legend {
     color: var(--color-primary);
 }
 
-.unified-word-form .field-optional {
-    opacity: 0.75;
+/* Compact form groups */
+.wordbank-form .form-group {
+    margin-bottom: var(--space-xs);
 }
 
-.unified-word-form .field-optional label {
+.wordbank-form .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.wordbank-form .form-group label {
+    font-size: var(--font-size-xs);
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.wordbank-form .form-group input,
+.wordbank-form .form-group textarea,
+.wordbank-form .form-group select {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-sm);
+}
+
+.wordbank-form .form-group textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+.wordbank-form .form-group small {
+    font-size: var(--font-size-xs);
+    margin-top: 2px;
+    line-height: 1.2;
+}
+
+/* Inline field layout */
+.wordbank-form .inline-fields {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+}
+
+.wordbank-form .inline-fields .form-group {
+    flex: 1;
+}
+
+/* Field with indicator */
+.wordbank-form .field-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.wordbank-form .field-indicator.required {
+    background: var(--color-primary);
+    color: white;
+}
+
+.wordbank-form .field-indicator.optional {
+    background: var(--color-border);
     color: var(--color-text-muted);
 }
 
-/* Info box styling for unified form */
-.unified-form-info {
-    margin-bottom: var(--space-md);
+/* Image upload compact */
+.wordbank-form .image-upload-compact {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.unified-form-info .field-highlight {
-    color: var(--color-primary);
-    background: var(--color-primary-light);
+.wordbank-form .image-upload-compact input {
+    flex: 1;
+    min-width: 100px;
+}
+
+.wordbank-form .image-upload-compact .file-select-btn {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-xs);
+}
+
+.wordbank-form .image-preview-small {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 1.5rem;
+    background: var(--color-surface);
+}
+
+.wordbank-form .image-preview-small img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Full width section */
+.wordbank-form .form-section-full {
+    grid-column: 1 / -1;
+}
+
+/* Exercise type indicators */
+.exercise-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: var(--space-xs);
+}
+
+.exercise-indicator {
+    font-size: var(--font-size-xs);
     padding: 2px 6px;
     border-radius: var(--radius-sm);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
 }
 
-/* Collapse non-relevant sections by default */
-.unified-word-form .form-section:not(.section-relevant) {
-    opacity: 0.6;
+.exercise-indicator.active {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
 
-.unified-word-form .form-section:not(.section-relevant):hover {
-    opacity: 1;
-}
-
-.unified-word-form .form-section:not(.section-relevant):focus-within {
-    opacity: 1;
-    border-color: var(--color-border);
+/* Form actions */
+.wordbank-form .form-actions {
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
 }
 
 /* Info Box - Collapsible */
