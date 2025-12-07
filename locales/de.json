@@ -231,12 +231,25 @@
     "testHistory": "Testverlauf",
     "noTestsYet": "Noch keine Tests gemacht",
     "takeTest": "Test Starten",
+    "takeNewTest": "Neuer Test",
     "practice": "Üben",
     "compare": "Vergleichen",
+    "compareTests": "Tests vergleichen",
     "comparison": "Vergleich",
+    "testComparison": "Testvergleich",
     "newer": "Neuer",
     "older": "Älter",
-    "unknownDate": "Unbekanntes Datum"
+    "olderTest": "Älterer Test",
+    "newerTest": "Neuerer Test",
+    "unknownDate": "Unbekanntes Datum",
+    "retake": "Wiederholen",
+    "retakeTest": "Diesen Test wiederholen",
+    "retakeNewerTest": "Neueren Test wiederholen",
+    "cannotRetake": "Dieser Test kann nicht wiederholt werden - Wortliste nicht gespeichert.",
+    "improved": "Verbessert",
+    "declined": "Verschlechtert",
+    "noChange": "Keine Änderung",
+    "wordByWord": "Wort-für-Wort Vergleich"
   },
   "assessment": {
     "title": "Fortschrittstest",
@@ -386,6 +399,7 @@
       "bulkUpload": "Massenupload"
     },
     "chooseType": "\u00dcbungstyp w\u00e4hlen:",
+    "selectExerciseType": "Übungstyp auswählen...",
     "types": {
       "picture": "Bild",
       "sentence": "Satz",

@@ -181,8 +181,17 @@
     }
 }
 .test-option-card {
-    min-height: 140px;
+    min-height: 220px;
     padding: var(--space-sm);
+    height: 100%; /* Fill available space */
+}
+
+/* Ensure all test cards in the grid have uniform height */
+.test-mode-page .test-exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+    grid-auto-rows: 1fr; /* Force equal row heights */
 }
 
 .test-option-card .exercise-icon {

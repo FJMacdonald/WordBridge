@@ -386,6 +386,7 @@
       "bulkUpload": "Bulk Upload"
     },
     "chooseType": "Choose Exercise Type:",
+    "selectExerciseType": "Select exercise type...",
     "types": {
       "picture": "Picture",
       "sentence": "Sentence",

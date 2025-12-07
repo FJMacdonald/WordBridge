@@ -119,6 +119,83 @@
     margin: 0 0 var(--space-md) 0;
 }
 
+/* Compact form style for time exercises */
+.add-form.compact-form {
+    padding: var(--space-md);
+}
+
+.add-form.compact-form .form-section {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+    background: var(--color-background);
+    margin-bottom: var(--space-sm);
+}
+
+.add-form.compact-form .form-section legend {
+    padding: 0 var(--space-xs);
+    font-weight: 600;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.add-form.compact-form .form-group {
+    margin-bottom: var(--space-xs);
+}
+
+.add-form.compact-form .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.add-form.compact-form .form-group label {
+    font-size: var(--font-size-xs);
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.add-form.compact-form .form-group input,
+.add-form.compact-form .form-group textarea,
+.add-form.compact-form .form-group select {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-sm);
+}
+
+.add-form.compact-form .inline-fields {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+}
+
+.add-form.compact-form .inline-fields .form-group {
+    flex: 1;
+}
+
+.add-form.compact-form .field-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.add-form.compact-form .field-indicator.required {
+    background: var(--color-primary);
+    color: white;
+}
+
+.add-form.compact-form .form-actions {
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+}
+
 .form-group {
     margin-bottom: var(--space-md);
 }
@@ -214,6 +291,37 @@
 
 .wordbank-form .form-section.section-relevant legend {
     color: var(--color-primary);
+}
+
+/* Highlighted sections when exercise type is selected */
+.wordbank-form .form-section.section-highlighted {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.08);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.wordbank-form .form-section.section-highlighted legend {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+/* Highlighted individual fields */
+.wordbank-form .form-group.field-highlighted label {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.wordbank-form .form-group.field-highlighted input,
+.wordbank-form .form-group.field-highlighted textarea,
+.wordbank-form .form-group.field-highlighted select {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.03);
+}
+
+.wordbank-form .form-group.field-highlighted input:focus,
+.wordbank-form .form-group.field-highlighted textarea:focus,
+.wordbank-form .form-group.field-highlighted select:focus {
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.15);
 }
 
 /* Compact form groups */

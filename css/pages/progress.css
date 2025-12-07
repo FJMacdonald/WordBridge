@@ -60,6 +60,18 @@
     padding: var(--space-sm);
 }
 
+/* Ensure all progress cards in the grid have uniform height */
+.progress-page .category-card .exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+    grid-auto-rows: 1fr; /* Force equal row heights */
+}
+
+.progress-page .progress-card {
+    height: 100%; /* Fill available space */
+}
+
 .progress-card .exercise-icon {
     grid-row: 1;
 }

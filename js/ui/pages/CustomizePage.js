@@ -12,6 +12,7 @@ class CustomizePage {
         this.container = container;
         this.currentMode = 'individual';
         this.pendingImage = null;
+        this.selectedExerciseType = null;
     }
     
     renderDifficultyField(selectedDifficulty = 'medium') {
@@ -91,9 +92,9 @@ class CustomizePage {
                         <div class="dropdown-selectors">
                             <!-- Words Category Dropdown -->
                             <div class="category-dropdown">
-                                <label class="category-label">📚 Words</label>
+                                <label class="category-label">📚 ${t('home.categories.words')}</label>
                                 <select class="type-dropdown" data-category="words">
-                                    <option value="">Select exercise type...</option>
+                                    <option value="">${t('customize.selectExerciseType')}</option>
                                     <option value="naming">🖼️ ${t('exercises.naming.name')}</option>
                                     <option value="typing">⌨️ ${t('exercises.typing.name')}</option>
                                     <option value="sentenceTyping">📝 ${t('exercises.sentenceTyping.name')}</option>
@@ -103,9 +104,9 @@ class CustomizePage {
                             
                             <!-- Phonetics Category Dropdown -->
                             <div class="category-dropdown">
-                                <label class="category-label">🔊 Phonetics</label>
+                                <label class="category-label">🔊 ${t('home.categories.phonetics')}</label>
                                 <select class="type-dropdown" data-category="phonetics">
-                                    <option value="">Select exercise type...</option>
+                                    <option value="">${t('customize.selectExerciseType')}</option>
                                     <option value="listening">👂 ${t('exercises.listening.name')}</option>
                                     <option value="speaking">🎤 ${t('exercises.speaking.name')}</option>
                                     <option value="firstSound">🔤 ${t('exercises.firstSound.name')}</option>
@@ -115,9 +116,9 @@ class CustomizePage {
                             
                             <!-- Meaning Category Dropdown -->
                             <div class="category-dropdown">
-                                <label class="category-label">💡 Meaning</label>
+                                <label class="category-label">💡 ${t('home.categories.meaning')}</label>
                                 <select class="type-dropdown" data-category="meaning">
-                                    <option value="">Select exercise type...</option>
+                                    <option value="">${t('customize.selectExerciseType')}</option>
                                     <option value="definitions">📖 ${t('exercises.definitions.name')}</option>
                                     <option value="association">🔗 ${t('exercises.association.name')}</option>
                                     <option value="synonyms">≈ ${t('exercises.synonyms.name')}</option>
@@ -127,9 +128,9 @@ class CustomizePage {
                             
                             <!-- Time Category Dropdown -->
                             <div class="category-dropdown">
-                                <label class="category-label">⏰ Time</label>
+                                <label class="category-label">⏰ ${t('home.categories.time')}</label>
                                 <select class="type-dropdown" data-category="time">
-                                    <option value="">Select exercise type...</option>
+                                    <option value="">${t('customize.selectExerciseType')}</option>
                                     <option value="timeSequencing">📅 ${t('exercises.timeSequencing.name')}</option>
                                     <option value="clockMatching">🕐 ${t('exercises.clockMatching.name')}</option>
                                     <option value="timeOrdering">⏰ ${t('exercises.timeOrdering.name')}</option>
@@ -398,6 +399,60 @@ class CustomizePage {
     }
     
     /**
+     * Get the fields required for each exercise type
+     */
+    getRequiredFieldsForExercise(exerciseType) {
+        const fieldMappings = {
+            'typing': ['wb-word', 'wb-distractors'],
+            'naming': ['wb-word', 'wb-emoji', 'wb-image-url', 'wb-distractors'],
+            'listening': ['wb-word', 'wb-emoji', 'wb-image-url', 'wb-distractors'],
+            'speaking': ['wb-word', 'wb-emoji', 'wb-image-url', 'wb-phrases'],
+            'definitions': ['wb-word', 'wb-definition', 'wb-distractors'],
+            'category': ['wb-word', 'wb-category', 'wb-distractors'],
+            'rhyming': ['wb-word', 'wb-emoji', 'wb-image-url', 'wb-rhymes', 'wb-distractors'],
+            'association': ['wb-word', 'wb-associated', 'wb-distractors'],
+            'synonyms': ['wb-word', 'wb-synonyms', 'wb-antonyms', 'wb-distractors'],
+            'firstSound': ['wb-word', 'wb-sound-group', 'wb-distractors'],
+            'sentenceTyping': ['wb-word', 'wb-sentences']
+        };
+        return fieldMappings[exerciseType] || [];
+    }
+
+    /**
+     * Highlight form fields relevant to the selected exercise type
+     */
+    highlightFieldsForExercise(form, exerciseType) {
+        if (!form) return;
+        
+        // Remove all highlights first
+        form.querySelectorAll('.form-section').forEach(section => {
+            section.classList.remove('section-relevant', 'section-highlighted');
+        });
+        form.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('field-highlighted');
+        });
+        
+        if (!exerciseType) return;
+        
+        const requiredFields = this.getRequiredFieldsForExercise(exerciseType);
+        
+        // Highlight relevant fields
+        requiredFields.forEach(fieldId => {
+            const field = form.querySelector(`#${fieldId}`);
+            if (field) {
+                const formGroup = field.closest('.form-group');
+                const formSection = field.closest('.form-section');
+                if (formGroup) {
+                    formGroup.classList.add('field-highlighted');
+                }
+                if (formSection) {
+                    formSection.classList.add('section-relevant', 'section-highlighted');
+                }
+            }
+        });
+    }
+
+    /**
      * Update the exercise indicators based on current form values
      */
     updateExerciseIndicators(form) {
@@ -420,19 +475,19 @@ class CustomizePage {
         const hasImage = emoji || imageUrl || this.pendingImage;
         const hasDistractors = distractors && distractors.split(',').filter(d => d.trim()).length >= 3;
         
-        // Define which exercises are available
+        // Define which exercises are available based on filled fields
         const available = {
-            '⌨️': word && hasDistractors, // typing - always if word exists
+            '⌨️': word && hasDistractors, // typing
             '🖼️': word && hasImage && hasDistractors, // naming
             '👂': word && hasImage && hasDistractors, // listening
-            '🎤': word && hasImage, // speaking
+            '🎤': word && hasImage, // speaking (no distractors needed)
             '📖': word && definition && hasDistractors, // definitions
             '📁': word && category && hasDistractors, // category
             '🎵': word && rhymes && hasDistractors, // rhyming
             '🔗': word && associated && hasDistractors, // association
             '≈': word && (synonyms || antonyms) && hasDistractors, // synonyms
             '🔤': word && soundGroup && hasDistractors, // first sound
-            '📝': word && sentences // sentences
+            '📝': word && sentences // sentences (no distractors needed)
         };
         
         // Update indicator classes
@@ -455,19 +510,35 @@ class CustomizePage {
         const isEditing = editItem !== null;
         
         // Get existing values for editing - match wordbank structure
+        // Handle various field naming conventions from different exercise types
+        const getArrayValue = (item, ...paths) => {
+            for (const path of paths) {
+                const keys = path.split('.');
+                let val = item;
+                for (const key of keys) {
+                    val = val?.[key];
+                }
+                if (Array.isArray(val) && val.length > 0) {
+                    return val.join(', ');
+                }
+            }
+            return '';
+        };
+        
         const values = {
-            word: editItem?.answer || editItem?.word || '',
+            word: editItem?.word || editItem?.answer || '',
             partOfSpeech: editItem?.partOfSpeech || 'noun',
             category: editItem?.category || '',
-            soundGroup: editItem?.soundGroup || '',
+            soundGroup: editItem?.soundGroup || editItem?.sound || '',
             definition: editItem?.definition || '',
             emoji: editItem?.visual?.emoji || editItem?.emoji || '',
             imageUrl: editItem?.visual?.asset || editItem?.imageUrl || '',
-            rhymes: editItem?.relationships?.rhymes?.join(', ') || editItem?.rhymes?.join(', ') || '',
-            associated: editItem?.relationships?.associated?.join(', ') || editItem?.associated?.join(', ') || '',
-            synonyms: editItem?.relationships?.synonyms?.join(', ') || editItem?.synonyms?.join(', ') || '',
-            antonyms: editItem?.relationships?.antonyms?.join(', ') || editItem?.antonyms?.join(', ') || '',
-            distractors: editItem?.distractors?.join(', ') || '',
+            rhymes: getArrayValue(editItem, 'relationships.rhymes', 'rhymes'),
+            associated: getArrayValue(editItem, 'relationships.associated', 'associated'),
+            synonyms: getArrayValue(editItem, 'relationships.synonyms', 'synonyms'),
+            antonyms: getArrayValue(editItem, 'relationships.antonyms', 'antonyms'),
+            distractors: getArrayValue(editItem, 'distractors', 'nonRhymes', 'unrelated') || 
+                         (editItem?.options?.slice(1)?.join(', ') || ''),
             sentences: editItem?.sentences?.join('\n') || '',
             phrases: editItem?.phrases?.join('\n') || ''
         };
@@ -1007,22 +1078,27 @@ class CustomizePage {
     renderScrambleForm(editItem = null, editIndex = null) {
         const isEditing = editItem !== null;
         return `
-            <form class="add-form" id="add-scramble-form" data-edit-type="${editItem ? 'scramble' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Unscramble Exercise' : 'Add Unscramble Exercise'}</h3>
+            <form class="add-form compact-form" id="add-scramble-form" data-edit-type="${editItem ? 'scramble' : ''}" data-edit-index="${editIndex || ''}">
+                <h3>🔀 ${isEditing ? t('customize.forms.editExercise') : t('exercises.scramble.name')}</h3>
                 
-                <div class="form-group">
-                    <label>Sentence (space separated)</label>
-                    <input type="text" id="scramble-sentence" 
-                           placeholder="e.g., The cat is sleeping"
-                           value="${editItem && editItem.words ? editItem.words.join(' ') : ''}" required>
-                    <small>Enter the correct sentence - it will be scrambled for the user</small>
+                <fieldset class="form-section">
+                    <legend>${t('customize.forms.sentence') || 'SENTENCE'}</legend>
+                    <div class="form-group">
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.sentence')}</label>
+                        <input type="text" id="scramble-sentence" 
+                               placeholder="${t('customize.forms.sentencePlaceholder') || 'e.g., The cat is sleeping'}"
+                               value="${editItem && editItem.words ? editItem.words.join(' ') : ''}" required>
+                        <small>${t('customize.bulkUpload.scrambleExample') || 'Enter the correct sentence - it will be scrambled for the user'}</small>
+                    </div>
+                </fieldset>
+                
+                <div class="inline-fields">
+                    ${this.renderDifficultyField(editItem?.difficulty)}
                 </div>
-                
-                ${this.renderDifficultyField(editItem?.difficulty)}
                 
                 <div class="form-actions">
                     <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
+                    <button type="submit" class="btn btn--primary">${isEditing ? t('customize.forms.updateExercise') : t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -1033,34 +1109,41 @@ class CustomizePage {
         const wrongOptions = editItem && editItem.options ? 
             editItem.options.filter(o => o !== editItem.answer).join(', ') : '';
         return `
-            <form class="add-form" id="add-timesequencing-form" data-edit-type="${editItem ? 'timeSequencing' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Time Sequencing Exercise' : t('customize.forms.addTimeSequencing')}</h3>
+            <form class="add-form compact-form" id="add-timesequencing-form" data-edit-type="${editItem ? 'timeSequencing' : ''}" data-edit-index="${editIndex || ''}">
+                <h3>📅 ${isEditing ? t('customize.forms.editExercise') : t('exercises.timeSequencing.name')}</h3>
                 
-                <div class="form-group">
-                    <label>${t('customize.forms.question')}</label>
-                    <input type="text" id="time-question" placeholder="${t('customize.forms.timeQuestionPlaceholder')}" 
-                           value="${editItem ? editItem.question || '' : ''}" required>
+                <fieldset class="form-section">
+                    <legend>${t('customize.forms.question') || 'QUESTION'}</legend>
+                    <div class="form-group">
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.question')}</label>
+                        <input type="text" id="time-question" placeholder="${t('customize.forms.timeQuestionPlaceholder')}" 
+                               value="${editItem ? editItem.question || '' : ''}" required>
+                    </div>
+                    
+                    <div class="inline-fields">
+                        <div class="form-group">
+                            <label><span class="field-indicator required">*</span> ${t('customize.forms.correctAnswer')}</label>
+                            <input type="text" id="time-answer" placeholder="${t('customize.forms.timeAnswerPlaceholder')}" 
+                                   value="${editItem ? editItem.answer || '' : ''}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.wrongOptions')}</label>
+                        <input type="text" id="time-options" 
+                               placeholder="${t('customize.forms.timeOptionsPlaceholder')}" 
+                               value="${wrongOptions}" required>
+                        <small>${t('customize.forms.timeOptionsHelp')}</small>
+                    </div>
+                </fieldset>
+                
+                <div class="inline-fields">
+                    ${this.renderDifficultyField(editItem?.difficulty)}
                 </div>
-                
-                <div class="form-group">
-                    <label>${t('customize.forms.correctAnswer')}</label>
-                    <input type="text" id="time-answer" placeholder="${t('customize.forms.timeAnswerPlaceholder')}" 
-                           value="${editItem ? editItem.answer || '' : ''}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>${t('customize.forms.wrongOptions')}</label>
-                    <input type="text" id="time-options" 
-                           placeholder="${t('customize.forms.timeOptionsPlaceholder')}" 
-                           value="${wrongOptions}" required>
-                    <small>${t('customize.forms.timeOptionsHelp')}</small>
-                </div>
-                
-                ${this.renderDifficultyField(editItem?.difficulty)}
                 
                 <div class="form-actions">
                     <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
+                    <button type="submit" class="btn btn--primary">${isEditing ? t('customize.forms.updateExercise') : t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -1069,33 +1152,42 @@ class CustomizePage {
     renderTimeOrderingForm(editItem = null, editIndex = null) {
         const isEditing = editItem !== null;
         return `
-            <form class="add-form" id="add-timeordering-form" data-edit-type="${editItem ? 'timeOrdering' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Time Ordering Exercise' : t('customize.forms.addTimeOrdering')}</h3>
+            <form class="add-form compact-form" id="add-timeordering-form" data-edit-type="${editItem ? 'timeOrdering' : ''}" data-edit-index="${editIndex || ''}">
+                <h3>⏰ ${isEditing ? t('customize.forms.editExercise') : t('exercises.timeOrdering.name')}</h3>
                 
-                <div class="form-group">
-                    <label>${t('customize.forms.scenario')}</label>
-                    <input type="text" id="ordering-scenario" placeholder="${t('customize.forms.scenarioPlaceholder')}" 
-                           value="${editItem ? editItem.scenario || '' : ''}" required>
+                <fieldset class="form-section">
+                    <legend>${t('customize.forms.scenario') || 'SCENARIO'}</legend>
+                    <div class="inline-fields">
+                        <div class="form-group">
+                            <label><span class="field-indicator required">*</span> ${t('customize.forms.scenario')}</label>
+                            <input type="text" id="ordering-scenario" placeholder="${t('customize.forms.scenarioPlaceholder')}" 
+                                   value="${editItem ? editItem.scenario || '' : ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="field-indicator required">*</span> ${t('customize.forms.description')}</label>
+                            <input type="text" id="ordering-description" placeholder="${t('customize.forms.descriptionPlaceholder')}" 
+                                   value="${editItem ? editItem.description || '' : ''}" required>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="form-section">
+                    <legend>${t('customize.forms.activities') || 'ACTIVITIES'}</legend>
+                    <div class="form-group">
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.activities')}</label>
+                        <textarea id="ordering-items" rows="4" 
+                                  placeholder="${t('customize.forms.activitiesPlaceholder')}" required>${editItem && editItem.items ? editItem.items.join('\n') : ''}</textarea>
+                        <small>${t('customize.forms.activitiesHelp')}</small>
+                    </div>
+                </fieldset>
+                
+                <div class="inline-fields">
+                    ${this.renderDifficultyField(editItem?.difficulty)}
                 </div>
-                
-                <div class="form-group">
-                    <label>${t('customize.forms.description')}</label>
-                    <input type="text" id="ordering-description" placeholder="${t('customize.forms.descriptionPlaceholder')}" 
-                           value="${editItem ? editItem.description || '' : ''}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>${t('customize.forms.activities')}</label>
-                    <textarea id="ordering-items" rows="4" 
-                              placeholder="${t('customize.forms.activitiesPlaceholder')}" required>${editItem && editItem.items ? editItem.items.join('\n') : ''}</textarea>
-                    <small>${t('customize.forms.activitiesHelp')}</small>
-                </div>
-                
-                ${this.renderDifficultyField(editItem?.difficulty)}
                 
                 <div class="form-actions">
                     <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
+                    <button type="submit" class="btn btn--primary">${isEditing ? t('customize.forms.updateExercise') : t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -1109,29 +1201,35 @@ class CustomizePage {
             existingTime = existingTime.split(':').slice(0, 2).join(':');
         }
         return `
-            <form class="add-form" id="add-clockmatching-form" data-edit-type="${editItem ? 'clockMatching' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Clock Matching Exercise' : t('customize.forms.addClockMatching')}</h3>
+            <form class="add-form compact-form" id="add-clockmatching-form" data-edit-type="${editItem ? 'clockMatching' : ''}" data-edit-index="${editIndex || ''}">
+                <h3>🕐 ${isEditing ? t('customize.forms.editExercise') : t('exercises.clockMatching.name')}</h3>
                 
-                <div class="form-group">
-                    <label>${t('customize.forms.digitalTime')}</label>
-                    <input type="text" id="clock-time" placeholder="HH:MM (e.g., 3:00 or 14:30)"
-                           pattern="[0-9]{1,2}:[0-9]{2}"
-                           value="${existingTime}" required>
-                    <small>${t('customize.forms.digitalTimeHelp')}</small>
+                <fieldset class="form-section">
+                    <legend>${t('customize.forms.digitalTime') || 'TIME'}</legend>
+                    <div class="inline-fields">
+                        <div class="form-group">
+                            <label><span class="field-indicator required">*</span> ${t('customize.forms.digitalTime')}</label>
+                            <input type="text" id="clock-time" placeholder="HH:MM (e.g., 3:00 or 14:30)"
+                                   pattern="[0-9]{1,2}:[0-9]{2}"
+                                   value="${existingTime}" required>
+                            <small>${t('customize.forms.digitalTimeHelp')}</small>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="field-indicator required">*</span> ${t('customize.forms.timeWords')}</label>
+                            <input type="text" id="clock-words" placeholder="${t('customize.forms.timeWordsPlaceholder')}" 
+                                   value="${editItem ? editItem.timeWords || '' : ''}" required>
+                            <small>${t('customize.forms.timeWordsHelp')}</small>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <div class="inline-fields">
+                    ${this.renderDifficultyField(editItem?.difficulty)}
                 </div>
-                
-                <div class="form-group">
-                    <label>${t('customize.forms.timeWords')}</label>
-                    <input type="text" id="clock-words" placeholder="${t('customize.forms.timeWordsPlaceholder')}" 
-                           value="${editItem ? editItem.timeWords || '' : ''}" required>
-                    <small>${t('customize.forms.timeWordsHelp')}</small>
-                </div>
-                
-                ${this.renderDifficultyField(editItem?.difficulty)}
                 
                 <div class="form-actions">
                     <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
+                    <button type="submit" class="btn btn--primary">${isEditing ? t('customize.forms.updateExercise') : t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -1142,28 +1240,33 @@ class CustomizePage {
         const extraOptions = editItem && editItem.options && editItem.sequence ?
             editItem.options.filter(o => !editItem.sequence.includes(o)).join('') : '';
         return `
-            <form class="add-form" id="add-workingmemory-form" data-edit-type="${editItem ? 'workingMemory' : ''}" data-edit-index="${editIndex || ''}">
-                <h3>${isEditing ? 'Edit Working Memory Exercise' : t('customize.forms.addWorkingMemory')}</h3>
+            <form class="add-form compact-form" id="add-workingmemory-form" data-edit-type="${editItem ? 'workingMemory' : ''}" data-edit-index="${editIndex || ''}">
+                <h3>🧠 ${isEditing ? t('customize.forms.editExercise') : t('exercises.workingMemory.name')}</h3>
                 
-                <div class="form-group">
-                    <label>${t('customize.forms.emojiSequence')}</label>
-                    <input type="text" id="memory-sequence" placeholder="${t('customize.forms.sequencePlaceholder')}" 
-                           value="${editItem && editItem.sequence ? editItem.sequence.join('') : ''}" required>
-                    <small>${t('customize.forms.sequenceHelp')}</small>
+                <fieldset class="form-section">
+                    <legend>${t('customize.forms.emojiSequence') || 'SEQUENCE'}</legend>
+                    <div class="form-group">
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.emojiSequence')}</label>
+                        <input type="text" id="memory-sequence" placeholder="${t('customize.forms.sequencePlaceholder')}" 
+                               value="${editItem && editItem.sequence ? editItem.sequence.join('') : ''}" required>
+                        <small>${t('customize.forms.sequenceHelp')}</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.extraOptions')}</label>
+                        <input type="text" id="memory-options" placeholder="${t('customize.forms.extraOptionsPlaceholder')}" 
+                               value="${extraOptions}" required>
+                        <small>${t('customize.forms.extraOptionsHelp')}</small>
+                    </div>
+                </fieldset>
+                
+                <div class="inline-fields">
+                    ${this.renderDifficultyField(editItem?.difficulty)}
                 </div>
-                
-                <div class="form-group">
-                    <label>${t('customize.forms.extraOptions')}</label>
-                    <input type="text" id="memory-options" placeholder="${t('customize.forms.extraOptionsPlaceholder')}" 
-                           value="${extraOptions}" required>
-                    <small>${t('customize.forms.extraOptionsHelp')} (Minimum 3 additional emojis required)</small>
-                </div>
-                
-                ${this.renderDifficultyField(editItem?.difficulty)}
                 
                 <div class="form-actions">
                     <button type="button" class="btn btn--ghost" id="cancel-form">${t('common.cancel')}</button>
-                    <button type="submit" class="btn btn--primary">${isEditing ? 'Update Exercise' : t('customize.forms.addExercise')}</button>
+                    <button type="submit" class="btn btn--primary">${isEditing ? t('customize.forms.updateExercise') : t('customize.forms.addExercise')}</button>
                 </div>
             </form>
         `;
@@ -1185,10 +1288,10 @@ class CustomizePage {
         };
         
         const categoryNames = {
-            words: '📚 Words',
-            phonetics: '🔊 Phonetics',
-            meaning: '💡 Meaning',
-            time: '⏰ Time'
+            words: `📚 ${t('home.categories.words')}`,
+            phonetics: `🔊 ${t('home.categories.phonetics')}`,
+            meaning: `💡 ${t('home.categories.meaning')}`,
+            time: `⏰ ${t('home.categories.time')}`
         };
         
         const typeIcons = {
@@ -1349,33 +1452,33 @@ class CustomizePage {
             case 'naming':
             case 'typing':
             case 'listening':
-                return `<strong>${exercise.answer}</strong>`;
+                return `<strong>${exercise.answer || exercise.word || ''}</strong>`;
             case 'sentenceTyping':
-                return `${exercise.sentence} <span class="answer-preview">→ ${exercise.answer}</span>`;
+                return `${exercise.sentence || ''} <span class="answer-preview">→ ${exercise.answer || ''}</span>`;
             case 'timeSequencing':
-                return `${exercise.question} <span class="answer-preview">→ ${exercise.answer}</span>`;
+                return `${exercise.question || ''} <span class="answer-preview">→ ${exercise.answer || ''}</span>`;
             case 'timeOrdering':
-                return `<strong>${exercise.scenario}:</strong> ${exercise.description}`;
+                return `<strong>${exercise.scenario || ''}:</strong> ${exercise.description || ''}`;
             case 'clockMatching':
-                return `<strong>${exercise.digitalDisplay}</strong> (${exercise.timeWords})`;
+                return `<strong>${exercise.digitalDisplay || exercise.time || ''}</strong> (${exercise.timeWords || ''})`;
             case 'workingMemory':
-                return `Sequence: ${exercise.sequence.join('')}`;
+                return `${t('exercises.workingMemory.sequenceIs') || 'Sequence:'} ${exercise.sequence?.join('') || ''}`;
             case 'speaking':
-                return `<strong>${exercise.answer}</strong> (${exercise.phrases?.length || 0} phrases)`;
+                return `<strong>${exercise.answer || exercise.word || ''}</strong> (${exercise.phrases?.length || 0} ${t('customize.wordbank.phrases') || 'phrases'})`;
             case 'firstSound':
-                return `Sound: <strong>${exercise.sound}</strong> (${exercise.words?.length || 0} words)`;
+                return `${t('exercises.firstSound.startsWithSound') || 'Sound'}: <strong>${exercise.sound || exercise.soundGroup || ''}</strong> (${exercise.words?.length || 1} ${t('home.categories.words') || 'words'})`;
             case 'rhyming':
-                return `<strong>${exercise.word}</strong> (${exercise.rhymes?.length || 0} rhymes)`;
+                return `<strong>${exercise.word || ''}</strong> (${exercise.rhymes?.length || 0} ${t('customize.wordbank.rhymes') || 'rhymes'})`;
             case 'category':
-                return `${exercise.category}: <strong>${exercise.word}</strong>`;
+                return `${exercise.category || ''}: <strong>${exercise.word || ''}</strong>`;
             case 'definitions':
-                return `<strong>${exercise.word}</strong>: ${exercise.definition}`;
+                return `<strong>${exercise.word || ''}</strong>: ${(exercise.definition || '').substring(0, 40)}${exercise.definition?.length > 40 ? '...' : ''}`;
             case 'association':
-                return `<strong>${exercise.word}</strong> (${exercise.associated?.length || 0} related)`;
+                return `<strong>${exercise.word || ''}</strong> (${exercise.associated?.length || 0} ${t('customize.wordbank.associated') || 'related'})`;
             case 'synonyms':
-                return `<strong>${exercise.word}</strong> (${exercise.synonyms?.length || 0} synonyms)`;
+                return `<strong>${exercise.word || ''}</strong> (${exercise.synonyms?.length || 0} ${t('customize.wordbank.synonyms') || 'synonyms'})`;
             case 'scramble':
-                return `${exercise.words?.join(' ') || 'Sentence'}`;
+                return `${exercise.words?.join(' ') || t('customize.forms.sentence') || 'Sentence'}`;
             default:
                 return JSON.stringify(exercise).substring(0, 50) + '...';
         }
@@ -1490,11 +1593,21 @@ class CustomizePage {
                         if (d !== dropdown) d.value = '';
                     });
                     
+                    // Store selected type for highlighting
+                    this.selectedExerciseType = selectedType;
+                    
                     this.container.querySelector('#add-form-container').innerHTML = 
                         this.renderIndividualForm(selectedType);
                     await this.attachFormListeners(selectedType);
+                    
+                    // Highlight relevant fields for the selected exercise type
+                    const form = this.container.querySelector('.wordbank-form');
+                    if (form) {
+                        this.highlightFieldsForExercise(form, selectedType);
+                    }
                 } else {
                     this.container.querySelector('#add-form-container').innerHTML = '';
+                    this.selectedExerciseType = null;
                 }
             });
         });
@@ -1680,8 +1793,28 @@ class CustomizePage {
                     field.addEventListener('input', () => this.updateExerciseIndicators(form));
                 }
             });
+            
+            // Auto-complete first sound when word is entered
+            const wordField = form.querySelector('#wb-word');
+            const soundField = form.querySelector('#wb-sound-group');
+            if (wordField && soundField) {
+                wordField.addEventListener('input', () => {
+                    const word = wordField.value.trim().toLowerCase();
+                    // Only auto-fill if sound field is empty and word has content
+                    if (word && !soundField.value.trim()) {
+                        soundField.value = word.charAt(0);
+                        this.updateExerciseIndicators(form);
+                    }
+                });
+            }
+            
             // Initial update
             this.updateExerciseIndicators(form);
+            
+            // Apply highlighting if exercise type is selected
+            if (this.selectedExerciseType) {
+                this.highlightFieldsForExercise(form, this.selectedExerciseType);
+            }
         }
         
         // Form submission
@@ -2953,11 +3086,45 @@ class CustomizePage {
             console.warn('Item not found for editing:', type, index);
             return;
         }
+        
+        // Try to get enhanced data from custom wordbank if available
+        const customWordbank = storageService.get(`customWordbank_${locale}`, []);
+        const wordToMatch = item.answer || item.word;
+        const wordbankEntry = customWordbank.find(w => w.word === wordToMatch);
+        
+        // Merge wordbank data with exercise data for a complete edit
+        const editData = wordbankEntry ? {
+            ...item,
+            word: wordbankEntry.word,
+            category: wordbankEntry.category || item.category,
+            soundGroup: wordbankEntry.soundGroup || item.soundGroup || item.sound,
+            definition: wordbankEntry.definition || item.definition,
+            visual: wordbankEntry.visual || { emoji: item.emoji, asset: item.imageUrl },
+            emoji: wordbankEntry.visual?.emoji || item.emoji,
+            imageUrl: wordbankEntry.visual?.asset || item.imageUrl,
+            relationships: wordbankEntry.relationships || {
+                rhymes: item.rhymes,
+                associated: item.associated,
+                synonyms: item.synonyms,
+                antonyms: item.antonyms
+            },
+            rhymes: wordbankEntry.relationships?.rhymes || item.rhymes,
+            associated: wordbankEntry.relationships?.associated || item.associated,
+            synonyms: wordbankEntry.relationships?.synonyms || item.synonyms,
+            antonyms: wordbankEntry.relationships?.antonyms || item.antonyms,
+            distractors: wordbankEntry.distractors || item.distractors || item.nonRhymes || item.unrelated || item.options?.slice(1),
+            sentences: wordbankEntry.sentences || item.sentences,
+            phrases: wordbankEntry.phrases || item.phrases,
+            difficulty: item.difficulty
+        } : item;
+        
+        // Store selected type for highlighting
+        this.selectedExerciseType = type;
                 
         // Render the form with pre-filled data
         const formContainer = this.container.querySelector('#add-form-container');
         if (formContainer) {
-            formContainer.innerHTML = this.renderIndividualForm(type, item, index);
+            formContainer.innerHTML = this.renderIndividualForm(type, editData, index);
             await this.attachFormListeners(type);
             
             // Set the dropdown to show the correct type
@@ -2965,6 +3132,13 @@ class CustomizePage {
             const targetDropdown = this.container.querySelector(`[data-category] option[value="${type}"]`);
             if (targetDropdown) {
                 targetDropdown.closest('select').value = type;
+            }
+            
+            // Apply field highlighting for the exercise type
+            const form = this.container.querySelector('.wordbank-form');
+            if (form) {
+                this.highlightFieldsForExercise(form, type);
+                this.updateExerciseIndicators(form);
             }
         }
         

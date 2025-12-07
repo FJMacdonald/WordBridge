@@ -62,6 +62,8 @@
     display: grid;
     gap: var(--space-lg);
     margin-bottom: var(--space-lg);
+    /* Ensure all category cards align to stretch */
+    align-items: stretch;
 }
 
 @media (min-width: 768px) {
@@ -70,12 +72,24 @@
     }
 }
 
+/* Force all exercise cards across all categories to same height using subgrid or min-height */
+.category-grid .exercise-card {
+    min-height: var(--exercise-card-height, 100px);
+}
+
 /* Category Card */
 .category-card {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make all category cards in the same row equal height */
+.category-grid {
+    align-items: stretch;
 }
 
 .category-header {
@@ -105,6 +119,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-sm);
+    grid-auto-rows: 1fr; /* Force equal row heights within each grid */
 }
 
 /* Exercise Card */
@@ -115,7 +130,7 @@
     justify-content: center;
     gap: var(--space-xs);
     padding: var(--space-sm);
-    min-height: 100px;
+    min-height: 150px;
     background: var(--color-background);
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -129,10 +144,13 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-sm);
+    grid-auto-rows: 1fr;
+    flex: 1; /* Allow grid to fill available space */
 }
 
 .category-card .exercise-card {
     min-height: 100px;
+    height: 100%; /* Fill the grid cell */
 }
 
 .exercise-card:hover:not(.disabled) {
@@ -155,6 +173,9 @@
     font-size: var(--font-size-sm);
     font-weight: 500;
     line-height: 1.2;
+    text-align: center;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .exercise-unavailable {
