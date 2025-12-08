@@ -35,16 +35,21 @@ class TimeSequencingExercise extends SelectionExercise {
     showFeedback(correct, message = null) {
         if (correct && !message) {
             const sequence = this.currentItem.sequence;
-            const targetIndex = sequence.indexOf(this.currentItem.target);
-            const answerIndex = sequence.indexOf(this.currentItem.answer);
+            const target = this.currentItem.target;
             
-            let explanation = '';
-            if (this.currentItem.direction === 'after') {
-                explanation = `"${this.currentItem.answer}" comes after "${this.currentItem.target}" in the sequence.`;
+            // Only show detailed explanation if sequence and target are available
+            if (sequence && target) {
+                let explanation = '';
+                if (this.currentItem.direction === 'after') {
+                    explanation = `"${this.currentItem.answer}" comes after "${target}" in the sequence.`;
+                } else {
+                    explanation = `"${this.currentItem.answer}" comes before "${target}" in the sequence.`;
+                }
+                message = `✓ ${explanation}`;
             } else {
-                explanation = `"${this.currentItem.answer}" comes before "${this.currentItem.target}" in the sequence.`;
+                // Simple feedback for custom exercises without sequence data
+                message = `✓ ${this.currentItem.answer}`;
             }
-            message = `✓ ${explanation}`;
         }
         super.showFeedback(correct, message);
     }
