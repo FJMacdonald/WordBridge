@@ -152,10 +152,6 @@ class CustomizePage {
                 <section class="existing-section">
                     <div class="existing-header">
                         <h3>${t('customize.existing')}</h3>
-                        <div class="library-controls">
-                            <button class="btn btn--secondary btn--small" id="expand-all">${t('customize.expandAll')}</button>
-                            <button class="btn btn--secondary btn--small" id="collapse-all">${t('customize.collapseAll')}</button>
-                        </div>
                     </div>
                     <div id="existing-items" class="spreadsheet-library">
                         ${await this.renderExistingItemsSpreadsheet(customExercises)}
@@ -172,54 +168,8 @@ class CustomizePage {
             <div class="bulk-upload-section">
                 <h3>${t('customize.bulkUpload.title')}</h3>
                 
-                <!-- Exercise Type Selection -->
+                <!-- Template Download -->
                 <div class="template-selection">
-                    <h4>${t('customize.bulkUpload.selectExercises')}:</h4>
-                    <div class="exercise-type-checkboxes">
-                        <!-- Words -->
-                        <div class="checkbox-category">
-                            <strong>📚 ${t('home.categories.words')}:</strong>
-                            <div class="checkbox-grid">
-                                <label><input type="checkbox" value="naming" checked> 🖼️ ${t('exercises.naming.name')}</label>
-                                <label><input type="checkbox" value="typing" checked> ⌨️ ${t('exercises.typing.name')}</label>
-                                <label><input type="checkbox" value="sentenceTyping" checked> 📝 ${t('exercises.sentenceTyping.name')}</label>
-                                <label><input type="checkbox" value="category" checked> 📁 ${t('exercises.category.name')}</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Phonetics -->
-                        <div class="checkbox-category">
-                            <strong>🔊 ${t('home.categories.phonetics')}:</strong>
-                            <div class="checkbox-grid">
-                                <label><input type="checkbox" value="listening" checked> 👂 ${t('exercises.listening.name')}</label>
-                                <label><input type="checkbox" value="speaking" checked> 🎤 ${t('exercises.speaking.name')}</label>
-                                <label><input type="checkbox" value="firstSound" checked> 🔤 ${t('exercises.firstSound.name')}</label>
-                                <label><input type="checkbox" value="rhyming" checked> 🎵 ${t('exercises.rhyming.name')}</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Meaning -->
-                        <div class="checkbox-category">
-                            <strong>💡 ${t('home.categories.meaning')}:</strong>
-                            <div class="checkbox-grid">
-                                <label><input type="checkbox" value="definitions" checked> 📖 ${t('exercises.definitions.name')}</label>
-                                <label><input type="checkbox" value="association" checked> 🔗 ${t('exercises.association.name')}</label>
-                                <label><input type="checkbox" value="synonyms" checked> ≈ ${t('exercises.synonyms.name')}</label>
-                                <label><input type="checkbox" value="scramble" checked> 🔀 ${t('exercises.scramble.name')}</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Time -->
-                        <div class="checkbox-category">
-                            <strong>⏰ ${t('home.categories.time')}:</strong>
-                            <div class="checkbox-grid">
-                                <label><input type="checkbox" value="timeSequencing" checked> 📅 ${t('exercises.timeSequencing.name')}</label>
-                                <label><input type="checkbox" value="clockMatching" checked> 🕐 ${t('exercises.clockMatching.name')}</label>
-                                <label><input type="checkbox" value="timeOrdering" checked> ⏰ ${t('exercises.timeOrdering.name')}</label>
-                                <label><input type="checkbox" value="workingMemory" checked> 🧠 ${t('exercises.workingMemory.name')}</label>
-                            </div>
-                        </div>
-                    </div>
                     <button class="btn btn--secondary" id="download-template">
                         📥 ${t('customize.bulkUpload.downloadTemplate')}
                     </button>
@@ -233,97 +183,37 @@ class CustomizePage {
                     <div class="instructions-content">
                         <h4>${t('customize.bulkUpload.howTo')}</h4>
                         <ol>
-                            <li>${t('customize.bulkUpload.step1')}</li>
+                            <li>${t('customize.bulkUpload.newStep1')}</li>
                             <li>${t('customize.bulkUpload.step2')}</li>
-                            <li>${t('customize.bulkUpload.step3')}</li>
+                            <li>${t('customize.bulkUpload.newStep3')}</li>
                             <li>${t('customize.bulkUpload.step4')}</li>
                             <li>${t('customize.bulkUpload.step5')}</li>
                         </ol>
                         
                         <h4>${t('customize.bulkUpload.formatGuidelines')}</h4>
                         <div class="format-guide">
-                            <!-- Words Category -->
-                            <details class="format-category">
-                                <summary><strong>📚 ${t('home.categories.words')}</strong></summary>
+                            <!-- Wordbank Format -->
+                            <details class="format-category" open>
+                                <summary><strong>📚 ${t('customize.bulkUpload.wordbankFormat')}</strong></summary>
                                 <div class="format-items">
                                     <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.pictureFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.pictureFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.pictureExample')}</p>
-                                        <p>${t('customize.bulkUpload.pictureUrlExample')}</p>
-                                        <small>${t('customize.bulkUpload.pictureNote')}</small>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.categoryFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.categoryFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.categoryExample')}</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.sentenceFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.sentenceFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.sentenceExample')}</p>
+                                        <strong>${t('customize.bulkUpload.wordbankDesc')}</strong>
+                                        <code>${t('customize.bulkUpload.wordbankFormatCode')}</code>
+                                        <p>${t('customize.bulkUpload.wordbankExample')}</p>
+                                        <small>${t('customize.bulkUpload.wordbankNote')}</small>
                                     </div>
                                 </div>
                             </details>
                             
-                            <!-- Phonetics Category -->
+                            <!-- Other Exercise Types -->
                             <details class="format-category">
-                                <summary><strong>🔊 ${t('home.categories.phonetics')}</strong></summary>
+                                <summary><strong>⏰ ${t('customize.bulkUpload.otherExercises')}</strong></summary>
                                 <div class="format-items">
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.pictureFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.pictureFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.pictureNote')}</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.speakingFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.speakingFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.speakingExample')}</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.firstSoundFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.firstSoundFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.firstSoundExample')}</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.rhymingFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.rhymingFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.rhymingExample')}</p>
-                                    </div>
-                                </div>
-                            </details>
-                            
-                            <!-- Meaning Category -->
-                            <details class="format-category">
-                                <summary><strong>💡 ${t('home.categories.meaning')}</strong></summary>
-                                <div class="format-items">
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.definitionsFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.definitionsFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.definitionsExample')}</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.associationFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.associationFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.associationExample')}</p>
-                                    </div>
-                                    <div class="format-item">
-                                        <strong>${t('customize.bulkUpload.synonymsFormat')}</strong>
-                                        <code>${t('customize.bulkUpload.synonymsFormatCode')}</code>
-                                        <p>${t('customize.bulkUpload.synonymsExample')}</p>
-                                    </div>
                                     <div class="format-item">
                                         <strong>${t('customize.bulkUpload.scrambleFormat')}</strong>
                                         <code>${t('customize.bulkUpload.scrambleFormatCode')}</code>
                                         <p>${t('customize.bulkUpload.scrambleExample')}</p>
                                     </div>
-                                </div>
-                            </details>
-                            
-                            <!-- Time Category -->
-                            <details class="format-category">
-                                <summary><strong>⏰ ${t('home.categories.time')}</strong></summary>
-                                <div class="format-items">
                                     <div class="format-item">
                                         <strong>${t('customize.bulkUpload.timeSequencingFormat')}</strong>
                                         <code>${t('customize.bulkUpload.timeSequencingFormatCode')}</code>
@@ -606,7 +496,7 @@ class CustomizePage {
                             </div>
                             
                             <div class="form-group">
-                                <label>${t('customize.wordbank.definition') || 'Definition'}</label>
+                                <label>${t('customize.wordbank.definition') || 'P'}</label>
                                 <input type="text" id="wb-definition" placeholder="${t('customize.wordbank.definitionPlaceholder') || 'A short description of the word'}" 
                                        value="${values.definition}">
                             </div>
@@ -1322,21 +1212,7 @@ class CustomizePage {
             return `<p class="empty-state">${t('customize.noCustom')}</p>`;
         }
         
-        // Group exercises by category (words, phonetics, meaning, time)
-        const categories = {
-            words: ['naming', 'typing', 'sentenceTyping', 'category'],
-            phonetics: ['listening', 'speaking', 'firstSound', 'rhyming'],
-            meaning: ['definitions', 'association', 'synonyms', 'scramble'],
-            time: ['timeSequencing', 'clockMatching', 'timeOrdering', 'workingMemory']
-        };
-        
-        const categoryNames = {
-            words: `📚 ${t('home.categories.words')}`,
-            phonetics: `🔊 ${t('home.categories.phonetics')}`,
-            meaning: `💡 ${t('home.categories.meaning')}`,
-            time: `⏰ ${t('home.categories.time')}`
-        };
-        
+        // Type icons for exercise indicators
         const typeIcons = {
             naming: '🖼️', typing: '⌨️', sentenceTyping: '📝', category: '📁',
             listening: '👂', speaking: '🎤', firstSound: '🔤', rhyming: '🎵',
@@ -1344,40 +1220,260 @@ class CustomizePage {
             timeSequencing: '📅', clockMatching: '🕐', timeOrdering: '⏰', workingMemory: '🧠'
         };
         
-        let html = '<div class="collapsible-categories">';
+        // Wordbank exercise types (can share data)
+        const wordbankTypes = ['naming', 'typing', 'listening', 'speaking', 'definitions', 
+                               'category', 'rhyming', 'association', 'synonyms', 'firstSound', 'sentenceTyping'];
         
-        for (const [category, types] of Object.entries(categories)) {
-            // Count items in this category
-            const categoryCount = types.reduce((sum, type) => 
-                sum + (customExercises[type]?.length || 0), 0);
+        // Other exercise types (standalone)
+        const otherTypes = ['scramble', 'timeSequencing', 'clockMatching', 'timeOrdering', 'workingMemory'];
+        
+        // Collect all unique entries, consolidating wordbank entries by word
+        const consolidatedEntries = new Map(); // key = word or unique identifier
+        const otherEntries = []; // non-wordbank exercises
+        
+        // Process wordbank-style exercises - group by word
+        for (const type of wordbankTypes) {
+            const exercises = customExercises[type];
+            if (!exercises || exercises.length === 0) continue;
             
-            if (categoryCount === 0) continue;
-            
-            html += `
-                <details class="category-section" open>
-                    <summary class="category-header">
-                        <span class="category-name">${categoryNames[category]}</span>
-                        <span class="category-count">(${categoryCount} items)</span>
-                    </summary>
-                    <div class="category-content">
-            `;
-            
-            // Render each type in this category
-            for (const type of types) {
-                const exercises = customExercises[type];
-                if (!exercises || exercises.length === 0) continue;
+            exercises.forEach((exercise, index) => {
+                const word = exercise.answer || exercise.word || '';
+                if (!word) return;
                 
-                html += this.renderTypeTable(type, exercises, typeIcons[type]);
-            }
+                const key = word.toLowerCase();
+                if (!consolidatedEntries.has(key)) {
+                    consolidatedEntries.set(key, {
+                        word: word,
+                        difficulty: exercise.difficulty || 'medium',
+                        status: exercise.status || 'active',
+                        types: new Set(),
+                        originalType: type,
+                        originalIndex: index,
+                        exercise: exercise
+                    });
+                }
+                consolidatedEntries.get(key).types.add(type);
+                // Keep the most recent status
+                if (exercise.status === 'archived') {
+                    consolidatedEntries.get(key).status = 'archived';
+                }
+            });
+        }
+        
+        // Process other exercises
+        for (const type of otherTypes) {
+            const exercises = customExercises[type];
+            if (!exercises || exercises.length === 0) continue;
             
+            exercises.forEach((exercise, index) => {
+                otherEntries.push({
+                    type: type,
+                    index: index,
+                    exercise: exercise,
+                    displayName: this.getOtherExerciseDisplayName(type, exercise),
+                    difficulty: exercise.difficulty || 'medium',
+                    status: exercise.status || 'active'
+                });
+            });
+        }
+        
+        // Convert wordbank entries to array and sort alphabetically
+        const wordbankArray = Array.from(consolidatedEntries.values())
+            .sort((a, b) => a.word.localeCompare(b.word));
+        
+        // Sort other entries by display name
+        otherEntries.sort((a, b) => a.displayName.localeCompare(b.displayName));
+        
+        // Count active vs archived
+        const wordbankActiveCount = wordbankArray.filter(e => e.status !== 'archived').length;
+        const wordbankArchivedCount = wordbankArray.filter(e => e.status === 'archived').length;
+        const otherActiveCount = otherEntries.filter(e => e.status !== 'archived').length;
+        const otherArchivedCount = otherEntries.filter(e => e.status === 'archived').length;
+        
+        let html = '<div class="exercise-library-container">';
+        
+        // Wordbank entries section
+        if (wordbankArray.length > 0) {
             html += `
+                <div class="library-section">
+                    <div class="library-section-header">
+                        <span class="section-title">📚 ${t('customize.library.wordbankEntries')}</span>
+                        <span class="section-counts">
+                            <span class="count-active">${wordbankActiveCount} ${t('customize.status.active').toLowerCase()}</span>
+                            ${wordbankArchivedCount > 0 ? `<span class="count-archived">${wordbankArchivedCount} ${t('customize.status.archived').toLowerCase()}</span>` : ''}
+                        </span>
                     </div>
-                </details>
+                    <div class="library-list-container">
+                        <table class="library-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-difficulty">${t('customize.library.difficulty')}</th>
+                                    <th class="col-word">${t('customize.wordbank.word')}</th>
+                                    <th class="col-status">${t('customize.library.status')}</th>
+                                    <th class="col-actions">${t('customize.library.actions')}</th>
+                                    <th class="col-types">${t('customize.library.exerciseTypes')}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${wordbankArray.map(entry => this.renderWordbankRow(entry, typeIcons, wordbankTypes)).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Other exercises section
+        if (otherEntries.length > 0) {
+            html += `
+                <div class="library-section">
+                    <div class="library-section-header">
+                        <span class="section-title">⏰ ${t('customize.library.otherExercises')}</span>
+                        <span class="section-counts">
+                            <span class="count-active">${otherActiveCount} ${t('customize.status.active').toLowerCase()}</span>
+                            ${otherArchivedCount > 0 ? `<span class="count-archived">${otherArchivedCount} ${t('customize.status.archived').toLowerCase()}</span>` : ''}
+                        </span>
+                    </div>
+                    <div class="library-list-container">
+                        <table class="library-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-difficulty">${t('customize.library.difficulty')}</th>
+                                    <th class="col-content">${t('customize.library.content')}</th>
+                                    <th class="col-status">${t('customize.library.status')}</th>
+                                    <th class="col-actions">${t('customize.library.actions')}</th>
+                                    <th class="col-type">${t('customize.library.type')}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${otherEntries.map(entry => this.renderOtherExerciseRow(entry, typeIcons)).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             `;
         }
         
         html += '</div>';
         return html;
+    }
+    
+    renderWordbankRow(entry, typeIcons, wordbankTypes) {
+        const diffColors = {
+            easy: 'diff-easy',
+            medium: 'diff-medium',
+            hard: 'diff-hard'
+        };
+        
+        const diffLabels = {
+            easy: t('customize.forms.easy'),
+            medium: t('customize.library.med'),
+            hard: t('customize.forms.hard')
+        };
+        
+        const isArchived = entry.status === 'archived';
+        
+        // Build exercise type indicators
+        const typeIndicators = wordbankTypes.map(type => {
+            const isActive = entry.types.has(type);
+            return `<span class="type-indicator ${isActive ? 'active' : ''}" title="${this.getTypeName(type)}">${typeIcons[type]}</span>`;
+        }).join('');
+        
+        return `
+            <tr class="library-row ${isArchived ? 'archived-row' : ''}" 
+                data-type="${entry.originalType}" 
+                data-index="${entry.originalIndex}"
+                data-word="${entry.word}">
+                <td class="col-difficulty">
+                    <span class="difficulty-dot ${diffColors[entry.difficulty]}" title="${entry.difficulty}"></span>
+                    <span class="difficulty-label">${diffLabels[entry.difficulty]}</span>
+                </td>
+                <td class="col-word">
+                    <strong>${entry.word}</strong>
+                </td>
+                <td class="col-status">
+                    <span class="status-badge status-${entry.status}">${t('customize.status.' + entry.status)}</span>
+                </td>
+                <td class="col-actions">
+                    <select class="action-dropdown" data-type="${entry.originalType}" data-index="${entry.originalIndex}" data-word="${entry.word}">
+                        <option value="">...</option>
+                        <option value="edit">✏️ ${t('customize.edit')}</option>
+                        ${!isArchived ? 
+                            `<option value="archive">📦 ${t('customize.library.archive')}</option>` : 
+                            `<option value="unarchive">📂 ${t('customize.library.unarchive')}</option>`
+                        }
+                        <option value="delete">🗑️ ${t('customize.delete')}</option>
+                    </select>
+                </td>
+                <td class="col-types">
+                    <div class="type-indicators">${typeIndicators}</div>
+                </td>
+            </tr>
+        `;
+    }
+    
+    renderOtherExerciseRow(entry, typeIcons) {
+        const diffColors = {
+            easy: 'diff-easy',
+            medium: 'diff-medium',
+            hard: 'diff-hard'
+        };
+        
+        const diffLabels = {
+            easy: t('customize.forms.easy'),
+            medium: t('customize.library.med'),
+            hard: t('customize.forms.hard')
+        };
+        
+        const isArchived = entry.status === 'archived';
+        
+        return `
+            <tr class="library-row ${isArchived ? 'archived-row' : ''}" 
+                data-type="${entry.type}" 
+                data-index="${entry.index}">
+                <td class="col-difficulty">
+                    <span class="difficulty-dot ${diffColors[entry.difficulty]}" title="${entry.difficulty}"></span>
+                    <span class="difficulty-label">${diffLabels[entry.difficulty]}</span>
+                </td>
+                <td class="col-content">
+                    <span class="content-text">${entry.displayName}</span>
+                </td>
+                <td class="col-status">
+                    <span class="status-badge status-${entry.status}">${t('customize.status.' + entry.status)}</span>
+                </td>
+                <td class="col-actions">
+                    <select class="action-dropdown" data-type="${entry.type}" data-index="${entry.index}">
+                        <option value="">...</option>
+                        <option value="edit">✏️ ${t('customize.edit')}</option>
+                        ${!isArchived ? 
+                            `<option value="archive">📦 ${t('customize.library.archive')}</option>` : 
+                            `<option value="unarchive">📂 ${t('customize.library.unarchive')}</option>`
+                        }
+                        <option value="delete">🗑️ ${t('customize.delete')}</option>
+                    </select>
+                </td>
+                <td class="col-type">
+                    <span class="type-indicator active" title="${this.getTypeName(entry.type)}">${typeIcons[entry.type]}</span>
+                </td>
+            </tr>
+        `;
+    }
+    
+    getOtherExerciseDisplayName(type, exercise) {
+        switch (type) {
+            case 'scramble':
+                return exercise.words?.join(' ') || exercise.sentence || '';
+            case 'timeSequencing':
+                return exercise.question || '';
+            case 'clockMatching':
+                return `${exercise.time || exercise.digitalDisplay || ''} - ${exercise.timeWords || ''}`;
+            case 'timeOrdering':
+                return exercise.scenario || '';
+            case 'workingMemory':
+                return exercise.sequence?.join('') || '';
+            default:
+                return '';
+        }
     }
     
     renderTypeTable(type, exercises, icon) {
@@ -1693,23 +1789,7 @@ class CustomizePage {
             }
         });
         
-        // Spreadsheet-style library controls
-        const expandAll = this.container.querySelector('#expand-all');
-        const collapseAll = this.container.querySelector('#collapse-all');
-        
-        if (expandAll) {
-            expandAll.addEventListener('click', () => {
-                this.container.querySelectorAll('details').forEach(d => d.open = true);
-            });
-        }
-        
-        if (collapseAll) {
-            collapseAll.addEventListener('click', () => {
-                this.container.querySelectorAll('details').forEach(d => d.open = false);
-            });
-        }
-        
-        // Action dropdown in spreadsheet
+        // Action dropdown in library
         this.container.addEventListener('change', async (e) => {
             if (!e.target.classList.contains('action-dropdown')) return;
             
@@ -1717,6 +1797,7 @@ class CustomizePage {
             const action = dropdown.value;
             const type = dropdown.dataset.type;
             const index = parseInt(dropdown.dataset.index);
+            const word = dropdown.dataset.word; // For wordbank entries
             
             if (!action) return;
             
@@ -1726,11 +1807,11 @@ class CustomizePage {
             if (action === 'edit') {
                 await this.editItem(type, index);
             } else if (action === 'archive') {
-                await this.archiveItem(type, index);
+                await this.archiveItem(type, index, word);
             } else if (action === 'unarchive') {
-                await this.unarchiveItem(type, index);
+                await this.unarchiveItem(type, index, word);
             } else if (action === 'delete') {
-                await this.deleteItem(type, index);
+                await this.deleteItem(type, index, word);
             }
         });
     }
@@ -2983,6 +3064,7 @@ class CustomizePage {
     importCSVData(type, data) {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
+        const customWordbank = storageService.get(`customWordbank_${locale}`, []);
         let totalImported = 0;
         
         if (type === 'imageword') {
@@ -3002,7 +3084,17 @@ class CustomizePage {
         } else if (type === 'multi_type') {
             // Handle new format where each row specifies its own exercise type
             data.forEach(exercise => {
-                if (exercise.exerciseType === 'multiple') {
+                if (exercise.exerciseType === 'wordbank') {
+                    // Process wordbank entry into multiple exercise types
+                    const imported = this.processWordbankEntry(exercise, customExercises);
+                    totalImported += imported;
+                    
+                    // Also save to wordbank
+                    customWordbank.push({
+                        ...exercise,
+                        id: `custom_${exercise.word}_${Date.now()}`
+                    });
+                } else if (exercise.exerciseType === 'multiple') {
                     // Add to all applicable types
                     (exercise.applicableTypes || ['naming', 'typing', 'listening']).forEach(exerciseType => {
                         if (!customExercises[exerciseType]) customExercises[exerciseType] = [];
@@ -3041,128 +3133,221 @@ class CustomizePage {
         }
         
         storageService.set(`customExercises_${locale}`, customExercises);
+        storageService.set(`customWordbank_${locale}`, customWordbank);
         
         alert(t('customize.bulkUpload.success', { count: totalImported }));
         this.render();
     }
     
-    downloadTemplate() {
-        // Get selected exercise types
-        const checkboxes = this.container.querySelectorAll('.exercise-type-checkboxes input[type="checkbox"]:checked');
-        const selectedTypes = Array.from(checkboxes).map(cb => cb.value);
+    /**
+     * Process a wordbank entry into multiple exercise types
+     * Returns the number of exercises created
+     */
+    processWordbankEntry(entry, customExercises) {
+        const word = entry.word;
+        const difficulty = entry.difficulty || 'medium';
+        const distractors = entry.distractors || [];
+        let count = 0;
         
-        if (selectedTypes.length === 0) {
-            alert('Please select at least one exercise type');
-            return;
+        // Helper to add exercise
+        const addExercise = (type, exercise) => {
+            if (!customExercises[type]) customExercises[type] = [];
+            customExercises[type].push({
+                ...exercise,
+                difficulty,
+                isCustom: true,
+                status: 'active'
+            });
+            count++;
+        };
+        
+        // 1. Image-based exercises (if has visual)
+        if (entry.visual?.emoji || entry.visual?.imageUrl) {
+            const baseImageExercise = {
+                answer: word,
+                ...(entry.visual.emoji ? { emoji: entry.visual.emoji } : {}),
+                ...(entry.visual.imageUrl ? { imageUrl: entry.visual.imageUrl } : {}),
+                options: [word, ...distractors.slice(0, 3)]
+            };
+            
+            addExercise('naming', { ...baseImageExercise });
+            addExercise('listening', { ...baseImageExercise });
+            addExercise('typing', { answer: word, ...(entry.visual.emoji ? { emoji: entry.visual.emoji } : {}), ...(entry.visual.imageUrl ? { imageUrl: entry.visual.imageUrl } : {}) });
+            addExercise('speaking', { 
+                answer: word, 
+                ...(entry.visual.emoji ? { emoji: entry.visual.emoji } : {}),
+                ...(entry.visual.imageUrl ? { imageUrl: entry.visual.imageUrl } : {}),
+                phrases: entry.phrases || []
+            });
+        } else {
+            // Typing without image
+            addExercise('typing', { answer: word });
         }
         
+        // 2. Definition
+        if (entry.definition) {
+            addExercise('definitions', {
+                word: word,
+                definition: entry.definition,
+                options: [word, ...distractors.slice(0, 3)]
+            });
+        }
+        
+        // 3. Category
+        if (entry.category) {
+            addExercise('category', {
+                category: entry.category,
+                word: word,
+                options: [word, ...distractors.slice(0, 3)]
+            });
+        }
+        
+        // 4. First Sound
+        if (entry.soundGroup) {
+            addExercise('firstSound', {
+                sound: entry.soundGroup,
+                words: [word],
+                distractors: distractors
+            });
+        }
+        
+        // 5. Rhyming
+        if (entry.rhymes && entry.rhymes.length > 0) {
+            addExercise('rhyming', {
+                word: word,
+                rhymes: entry.rhymes,
+                nonRhymes: distractors.slice(0, 3)
+            });
+        }
+        
+        // 6. Association
+        if (entry.associated && entry.associated.length > 0) {
+            addExercise('association', {
+                word: word,
+                associated: entry.associated,
+                unrelated: distractors.slice(0, 3)
+            });
+        }
+        
+        // 7. Synonyms/Antonyms
+        if ((entry.synonyms && entry.synonyms.length > 0) || (entry.antonyms && entry.antonyms.length > 0)) {
+            addExercise('synonyms', {
+                word: word,
+                synonyms: entry.synonyms || [],
+                antonyms: entry.antonyms || [],
+                distractors: distractors.slice(0, 3)
+            });
+        }
+        
+        // 8. Sentence Typing
+        if (entry.sentences && entry.sentences.length > 0) {
+            entry.sentences.forEach(sentence => {
+                const blankSentence = sentence.replace(new RegExp(word, 'gi'), '__');
+                if (blankSentence !== sentence) {
+                    addExercise('sentenceTyping', {
+                        sentence: blankSentence,
+                        answer: word
+                    });
+                }
+            });
+        }
+        
+        return count;
+    }
+    
+    downloadTemplate() {
         // Get localized template examples
         const locale = i18n.getCurrentLocale();
         const isGerman = locale === 'de';
         
-        // Create combined template with all selected types - difficulty in second column
-        const headers = ['exercise_type', 'difficulty', 'data1', 'data2', 'data3', 'data4', 'data5'];
+        // New wordbank-based template format
+        // Headers for wordbank: exercise_type, difficulty, word, emoji, category, soundGroup, definition, distractors, rhymes, associated, synonyms, antonyms, sentences, phrases
+        const headers = ['exercise_type', 'difficulty', 'word', 'emoji_or_url', 'category', 'sound_group', 'definition', 'distractors', 'rhymes', 'associated', 'synonyms', 'antonyms', 'sentences', 'phrases'];
         const rows = [];
         
-        const addedTypes = new Set();
-        selectedTypes.forEach(type => {
-            switch (type) {
-                case 'naming':
-                case 'typing':  
-                case 'listening':
-                    // These three share the same data format - only add once
-                    if (!addedTypes.has('picture/typing/listening')) {
-                        rows.push(isGerman ? 
-                            ['picture/typing/listening', 'easy', 'Apfel', '🍎', 'Banane', 'Orange', 'Birne'] :
-                            ['picture/typing/listening', 'easy', 'apple', '🍎', 'banana', 'orange', 'pear']
-                        );
-                        addedTypes.add('picture/typing/listening');
-                    }
-                    break;
-                case 'category':
-                    rows.push(isGerman ?
-                        ['category', 'easy', 'Obst', 'Apfel', 'Karotte', 'Brot', 'Stuhl'] :
-                        ['category', 'easy', 'fruit', 'apple', 'carrot', 'bread', 'chair']
-                    );
-                    break;
-                case 'sentenceTyping':
-                    rows.push(isGerman ?
-                        ['sentenceTyping', 'easy', 'Ich trinke jeden Morgen __', 'Kaffee', '', ''] :
-                        ['sentenceTyping', 'easy', 'I drink __ every morning', 'coffee', '', '']
-                    );
-                    break;
-                case 'speaking':
-                    rows.push(isGerman ?
-                        ['speaking', 'easy', 'Apfel', '🍎', 'Ein Apfel am Tag', 'Ich esse einen Apfel'] :
-                        ['speaking', 'easy', 'apple', '🍎', 'An apple a day', 'I eat an apple']
-                    );
-                    break;
-                case 'firstSound':
-                    rows.push(isGerman ?
-                        ['firstSound', 'easy', 'b', 'Ball', 'Auto,Haus,Tisch', '', ''] :
-                        ['firstSound', 'easy', 'b', 'ball', 'car,house,table', '', '']
-                    );
-                    break;
-                case 'rhyming':
-                    rows.push(isGerman ?
-                        ['rhyming', 'easy', 'Katze', 'Tatze', 'Auto,Haus,Baum', '', ''] :
-                        ['rhyming', 'easy', 'cat', 'hat', 'dog,cup,tree', '', '']
-                    );
-                    break;
-                case 'association':
-                    rows.push(isGerman ?
-                        ['association', 'easy', 'Brot', 'Butter', 'Auto,Telefon,Baum', '', ''] :
-                        ['association', 'easy', 'bread', 'butter', 'car,phone,tree', '', '']
-                    );
-                    break;
-                case 'synonyms':
-                    rows.push(isGerman ?
-                        ['synonyms', 'easy', 'glücklich', 'true', 'froh', 'traurig,wütend,müde', ''] :
-                        ['synonyms', 'easy', 'happy', 'true', 'glad', 'sad,angry,tired', '']
-                    );
-                    rows.push(isGerman ?
-                        ['synonyms', 'easy', 'heiß', 'false', 'kalt', 'warm,lauwarm,kühl', ''] :
-                        ['synonyms', 'easy', 'hot', 'false', 'cold', 'warm,tepid,cool', '']
-                    );
-                    break;
-                case 'definitions':
-                    rows.push(isGerman ?
-                        ['definitions', 'easy', 'Stuhl', 'Ein Möbelstück zum Sitzen', 'Tisch,Auto,Baum', '', ''] :
-                        ['definitions', 'easy', 'chair', 'A piece of furniture for sitting', 'table,car,tree', '', '']
-                    );
-                    break;
-                case 'scramble':
-                    rows.push(isGerman ?
-                        ['scramble', 'easy', 'Die Katze schläft', '', '', '', ''] :
-                        ['scramble', 'easy', 'The cat is sleeping', '', '', '', '']
-                    );
-                    break;
-                case 'timeSequencing':
-                    rows.push(isGerman ?
-                        ['timeSequencing', 'easy', 'Was kommt nach Montag?', 'Dienstag', 'Mittwoch,Sonntag,Freitag', ''] :
-                        ['timeSequencing', 'easy', 'What day comes after Monday?', 'Tuesday', 'Wednesday,Sunday,Friday', '']
-                    );
-                    break;
-                case 'clockMatching':
-                    rows.push(isGerman ?
-                        ['clockMatching', 'easy', '3:00', 'drei Uhr', '4:00,5:00,6:00', '', ''] :
-                        ['clockMatching', 'easy', '3:00', 'three o\'clock', '4:00,5:00,6:00', '', '']
-                    );
-                    break;
-                case 'timeOrdering':
-                    rows.push(isGerman ?
-                        ['timeOrdering', 'easy', 'Morgenroutine', 'Aufwachen', 'Zähne putzen', 'Frühstück', 'Zur Arbeit gehen'] :
-                        ['timeOrdering', 'easy', 'Morning routine', 'Wake up', 'Brush teeth', 'Eat breakfast', 'Go to work']
-                    );
-                    break;
-                case 'workingMemory':
-                    rows.push(isGerman ?
-                        ['workingMemory', 'easy', '🍎🍌🍊', '🍇🍓🥝', '', '', ''] :
-                        ['workingMemory', 'easy', '🍎🍌🍊', '🍇🍓🥝', '', '', '']
-                    );
-                    break;
-            }
-        });
+        // Add fully-defined wordbank example (covers all 11 exercises)
+        if (isGerman) {
+            rows.push([
+                'wordbank', 'easy', 'apfel', '🍎', 'obst', 'a', 
+                'Eine runde Frucht die an Bäumen wächst',
+                'banane,orange,traube,kirsche,mango,pfirsich,pflaume,kiwi,birne,melone',
+                'stapel,gabel,tafel',
+                'baum,rot,saft,kuchen',
+                '',
+                '',
+                'Ich esse einen Apfel.|Der Apfel ist rot.',
+                'Ein Apfel am Tag hält den Doktor fern'
+            ]);
+        } else {
+            rows.push([
+                'wordbank', 'easy', 'apple', '🍎', 'fruit', 'a', 
+                'A round fruit that grows on trees',
+                'banana,orange,grape,cherry,mango,peach,plum,kiwi,pear,melon',
+                'dapple,grapple,chapel',
+                'tree,red,juice,pie',
+                '',
+                '',
+                'I eat an apple.|The apple is red.',
+                'An apple a day keeps the doctor away'
+            ]);
+        }
+        
+        // Add second wordbank example with synonyms/antonyms
+        if (isGerman) {
+            rows.push([
+                'wordbank', 'medium', 'glücklich', '😊', 'gefühl', 'g',
+                'Ein positives Gefühl der Freude',
+                'schnell,langsam,groß,klein,alt,neu,leicht,schwer,hell,dunkel',
+                '',
+                'lachen,lächeln,freude',
+                'froh,zufrieden,fröhlich',
+                'traurig,unglücklich',
+                'Ich bin glücklich.|Sie ist sehr glücklich heute.',
+                'Ich bin so glücklich dich zu sehen'
+            ]);
+        } else {
+            rows.push([
+                'wordbank', 'medium', 'happy', '😊', 'emotion', 'h',
+                'A positive feeling of joy',
+                'fast,slow,big,small,old,new,light,heavy,bright,dark',
+                'snappy,clappy,nappy',
+                'smile,laugh,joy',
+                'glad,pleased,cheerful',
+                'sad,unhappy',
+                'I am happy.|She is very happy today.',
+                'I am so happy to see you'
+            ]);
+        }
+        
+        // Add the 5 other exercise types
+        // Scramble
+        rows.push(isGerman ?
+            ['scramble', 'easy', 'Die Katze schläft auf dem Sofa', '', '', '', '', '', '', '', '', '', '', ''] :
+            ['scramble', 'easy', 'The cat is sleeping on the couch', '', '', '', '', '', '', '', '', '', '', '']
+        );
+        
+        // Time Sequencing
+        rows.push(isGerman ?
+            ['timeSequencing', 'easy', 'Was kommt nach Montag?', 'Dienstag', 'Mittwoch,Sonntag,Freitag', '', '', '', '', '', '', '', '', ''] :
+            ['timeSequencing', 'easy', 'What day comes after Monday?', 'Tuesday', 'Wednesday,Sunday,Friday', '', '', '', '', '', '', '', '', '']
+        );
+        
+        // Clock Matching
+        rows.push(isGerman ?
+            ['clockMatching', 'easy', '3:00', 'drei Uhr', '4:00,5:00,6:00', '', '', '', '', '', '', '', '', ''] :
+            ['clockMatching', 'easy', '3:00', 'three o\'clock', '4:00,5:00,6:00', '', '', '', '', '', '', '', '', '']
+        );
+        
+        // Time Ordering
+        rows.push(isGerman ?
+            ['timeOrdering', 'easy', 'Morgenroutine', 'Aufwachen', 'Zähne putzen', 'Frühstücken', 'Zur Arbeit gehen', '', '', '', '', '', '', ''] :
+            ['timeOrdering', 'easy', 'Morning routine', 'Wake up', 'Brush teeth', 'Eat breakfast', 'Go to work', '', '', '', '', '', '', '']
+        );
+        
+        // Working Memory
+        rows.push([
+            'workingMemory', 'easy', '🍎🍌🍊', '🍇🍓🥝', '', '', '', '', '', '', '', '', '', ''
+        ]);
         
         const template = { headers, rows };
         csvService.downloadCSV(template, 'exercises_template.csv');
@@ -3179,27 +3364,57 @@ class CustomizePage {
         this.container.querySelector('#bulk-mode').hidden = mode !== 'bulk';
     }
     
-    async archiveItem(type, index) {
+    async archiveItem(type, index, word = null) {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
         
-        if (customExercises[type] && customExercises[type][index]) {
+        // If word is provided, archive all exercises with this word across all types
+        if (word) {
+            const wordbankTypes = ['naming', 'typing', 'listening', 'speaking', 'definitions', 
+                                   'category', 'rhyming', 'association', 'synonyms', 'firstSound', 'sentenceTyping'];
+            
+            for (const exType of wordbankTypes) {
+                if (customExercises[exType]) {
+                    customExercises[exType].forEach(exercise => {
+                        const exWord = (exercise.answer || exercise.word || '').toLowerCase();
+                        if (exWord === word.toLowerCase()) {
+                            exercise.status = 'archived';
+                        }
+                    });
+                }
+            }
+        } else if (customExercises[type] && customExercises[type][index]) {
             customExercises[type][index].status = 'archived';
-            storageService.set(`customExercises_${locale}`, customExercises);
         }
         
+        storageService.set(`customExercises_${locale}`, customExercises);
         await this.render();
     }
     
-    async unarchiveItem(type, index) {
+    async unarchiveItem(type, index, word = null) {
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
         
-        if (customExercises[type] && customExercises[type][index]) {
+        // If word is provided, unarchive all exercises with this word across all types
+        if (word) {
+            const wordbankTypes = ['naming', 'typing', 'listening', 'speaking', 'definitions', 
+                                   'category', 'rhyming', 'association', 'synonyms', 'firstSound', 'sentenceTyping'];
+            
+            for (const exType of wordbankTypes) {
+                if (customExercises[exType]) {
+                    customExercises[exType].forEach(exercise => {
+                        const exWord = (exercise.answer || exercise.word || '').toLowerCase();
+                        if (exWord === word.toLowerCase()) {
+                            exercise.status = 'active';
+                        }
+                    });
+                }
+            }
+        } else if (customExercises[type] && customExercises[type][index]) {
             customExercises[type][index].status = 'active';
-            storageService.set(`customExercises_${locale}`, customExercises);
         }
         
+        storageService.set(`customExercises_${locale}`, customExercises);
         await this.render();
     }
     
@@ -3277,13 +3492,41 @@ class CustomizePage {
         formContainer?.scrollIntoView({ behavior: 'smooth' });
     }
     
-    async deleteItem(type, index) {
+    async deleteItem(type, index, word = null) {
         if (!confirm(t('customize.confirmDelete'))) return;
         
         const locale = i18n.getCurrentLocale();
         const customExercises = storageService.get(`customExercises_${locale}`, {});
         
-        if (customExercises[type] && customExercises[type][index]) {
+        // If word is provided, delete all exercises with this word across all types
+        if (word) {
+            const wordbankTypes = ['naming', 'typing', 'listening', 'speaking', 'definitions', 
+                                   'category', 'rhyming', 'association', 'synonyms', 'firstSound', 'sentenceTyping'];
+            
+            for (const exType of wordbankTypes) {
+                if (customExercises[exType]) {
+                    // Delete images first
+                    for (const exercise of customExercises[exType]) {
+                        const exWord = (exercise.answer || exercise.word || '').toLowerCase();
+                        if (exWord === word.toLowerCase() && exercise.localImageId) {
+                            await imageStorage.deleteImage(exercise.localImageId);
+                        }
+                    }
+                    
+                    // Filter out exercises with the word
+                    customExercises[exType] = customExercises[exType].filter(exercise => {
+                        const exWord = (exercise.answer || exercise.word || '').toLowerCase();
+                        return exWord !== word.toLowerCase();
+                    });
+                }
+            }
+            
+            // Also remove from wordbank
+            const customWordbank = storageService.get(`customWordbank_${locale}`, []);
+            const filteredWordbank = customWordbank.filter(w => w.word?.toLowerCase() !== word.toLowerCase());
+            storageService.set(`customWordbank_${locale}`, filteredWordbank);
+            
+        } else if (customExercises[type] && customExercises[type][index]) {
             const item = customExercises[type][index];
             if (item.localImageId) {
                 await imageStorage.deleteImage(item.localImageId);
@@ -3311,10 +3554,9 @@ class CustomizePage {
                     }
                 });
             }
-            
-            storageService.set(`customExercises_${locale}`, customExercises);
         }
         
+        storageService.set(`customExercises_${locale}`, customExercises);
         await this.render();
     }
 }

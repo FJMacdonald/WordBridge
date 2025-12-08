@@ -966,7 +966,205 @@
     gap: var(--space-xs);
 }
 
-/* Spreadsheet Library */
+/* New Exercise Library Container */
+.exercise-library-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.library-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.library-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+}
+
+.section-counts {
+    display: flex;
+    gap: var(--space-md);
+    font-size: var(--font-size-xs);
+}
+
+.count-active {
+    color: var(--color-success);
+}
+
+.count-archived {
+    color: var(--color-text-muted);
+}
+
+/* Scrollable list container */
+.library-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* Library Table - Compact single-line rows */
+.library-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    table-layout: fixed;
+}
+
+.library-table thead {
+    position: sticky;
+    top: 0;
+    background: var(--color-surface);
+    z-index: 10;
+}
+
+.library-table th {
+    padding: var(--space-xs) var(--space-sm);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-background);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+}
+
+.library-table td {
+    padding: var(--space-xs) var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.library-row:hover {
+    background: var(--color-background);
+}
+
+/* Column Widths for compact display */
+.library-table .col-difficulty { width: 55px; }
+.library-table .col-word { width: 120px; }
+.library-table .col-content { min-width: 150px; max-width: 200px; }
+.library-table .col-status { width: 60px; }
+.library-table .col-actions { width: 60px; }
+.library-table .col-types { width: 150px; }
+.library-table .col-type { width: 35px; }
+
+/* Difficulty display - compact */
+.difficulty-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.diff-easy { background-color: var(--color-success); }
+.diff-medium { background-color: var(--color-warning); }
+.diff-hard { background-color: var(--color-error); }
+
+.difficulty-label {
+    font-size: var(--font-size-xs);
+    text-transform: capitalize;
+}
+
+/* Content text */
+.content-text {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+/* Status Badge - compact */
+.status-badge {
+    padding: 1px 4px;
+    border-radius: var(--radius-sm);
+    font-size: 9px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-active {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+}
+
+.status-archived {
+    background-color: var(--color-error-light);
+    color: var(--color-error);
+}
+
+/* Archived Row */
+.archived-row {
+    opacity: 0.5;
+    background-color: var(--color-background) !important;
+}
+
+/* Action dropdown - compact */
+.action-dropdown {
+    padding: 2px 4px;
+    font-size: var(--font-size-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    cursor: pointer;
+    max-width: 55px;
+}
+
+/* Type indicators - compact inline display */
+.type-indicators {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1px;
+    overflow: hidden;
+}
+
+.type-indicator {
+    font-size: 10px;
+    padding: 0;
+    width: 13px;
+    height: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    opacity: 0.25;
+    flex-shrink: 0;
+}
+
+.type-indicator.active {
+    opacity: 1;
+    background: var(--color-primary-light);
+}
+
+/* Ensure single-line rows */
+.library-row td {
+    vertical-align: middle;
+    line-height: 1.2;
+}
+
+.library-row .col-word strong {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+}
+
+/* Legacy support */
 .spreadsheet-library {
     margin-top: var(--space-md);
 }
@@ -1063,15 +1261,7 @@
     font-size: var(--font-size-xs);
 }
 
-.count-active {
-    color: var(--color-success);
-}
-
-.count-archived {
-    color: var(--color-text-muted);
-}
-
-/* Exercise Table */
+/* Exercise Table - legacy */
 .type-table-container {
     overflow-x: auto;
     max-height: 300px;
@@ -1109,24 +1299,11 @@
     background: var(--color-background);
 }
 
-/* Column Widths */
-.col-difficulty { width: 80px; }
+/* Legacy Column Widths */
+.col-difficulty { width: 55px; }
 .col-content { min-width: 200px; }
-.col-status { width: 70px; }
-.col-actions { width: 100px; }
-
-/* Difficulty Indicators */
-.difficulty-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: var(--space-xs);
-}
-
-.diff-easy { background-color: var(--color-success); }
-.diff-medium { background-color: var(--color-warning); }
-.diff-hard { background-color: var(--color-error); }
+.col-status { width: 60px; }
+.col-actions { width: 60px; }
 
 .difficulty-text {
     text-transform: capitalize;
@@ -1142,31 +1319,6 @@
 .answer-preview {
     color: var(--color-text-muted);
     font-size: var(--font-size-xs);
-}
-
-/* Status Badge */
-.status-badge {
-    padding: 2px var(--space-xs);
-    border-radius: var(--radius-sm);
-    font-size: var(--font-size-xs);
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-.status-active {
-    background-color: var(--color-success-light);
-    color: var(--color-success);
-}
-
-.status-archived {
-    background-color: var(--color-error-light);
-    color: var(--color-error);
-}
-
-/* Archived Row */
-.archived-row {
-    opacity: 0.5;
-    background-color: var(--color-background) !important;
 }
 
 /* Action Buttons */
@@ -1218,12 +1370,37 @@
         padding: var(--space-xs) var(--space-sm);
     }
     
-    .difficulty-text {
+    .difficulty-text,
+    .difficulty-label {
         display: none;
     }
     
     .library-controls {
         flex-direction: column;
+    }
+    
+    /* Compact library table on mobile */
+    .library-table .col-status {
+        display: none;
+    }
+    
+    .library-table .col-difficulty {
+        width: 25px;
+    }
+    
+    .library-table .col-actions {
+        width: 45px;
+    }
+    
+    .action-dropdown {
+        max-width: 40px;
+        padding: 1px 2px;
+    }
+    
+    .library-section-header {
+        flex-direction: column;
+        gap: var(--space-xs);
+        align-items: flex-start;
     }
 }
 

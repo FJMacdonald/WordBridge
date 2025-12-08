@@ -113,6 +113,13 @@ class CSVService {
         
         let transformedData;
         
+        // Handle new wordbank format first
+        if (exerciseType === 'wordbank' || exerciseType === 'word') {
+            transformedData = this.transformWordbank(dataValues, difficulty);
+            transformedData.exerciseType = 'wordbank';
+            return transformedData;
+        }
+        
         // Check for sentenceTyping FIRST (must come before generic 'typing' check)
         if (exerciseType === 'sentencetyping' || exerciseType === 'sentence') {
             transformedData = this.transformSentence(dataValues, difficulty);
@@ -174,6 +181,77 @@ class CSVService {
         }
         
         return transformedData;
+    }
+    
+    /**
+     * Transform wordbank row into multiple exercise types
+     * Column order: word, emoji_or_url, category, sound_group, definition, distractors, rhymes, associated, synonyms, antonyms, sentences, phrases
+     */
+    transformWordbank(values, difficulty = 'easy') {
+        // Parse columns based on header order
+        const [word, emojiOrUrl, category, soundGroup, definition, distractors, rhymes, associated, synonyms, antonyms, sentences, phrases] = values;
+        
+        if (!word || !word.trim()) {
+            throw new Error('Word is required for wordbank entry');
+        }
+        
+        const wordLower = word.toLowerCase().trim();
+        
+        // Parse comma-separated or pipe-separated lists
+        const parseList = (str) => {
+            if (!str || !str.trim()) return [];
+            const separator = str.includes('|') ? '|' : ',';
+            return str.split(separator).map(s => s.trim().toLowerCase()).filter(s => s);
+        };
+        
+        // Parse sentences (pipe-separated)
+        const parseSentences = (str) => {
+            if (!str || !str.trim()) return [];
+            return str.split('|').map(s => s.trim()).filter(s => s);
+        };
+        
+        const parsedDistractors = parseList(distractors);
+        const parsedRhymes = parseList(rhymes);
+        const parsedAssociated = parseList(associated);
+        const parsedSynonyms = parseList(synonyms);
+        const parsedAntonyms = parseList(antonyms);
+        const parsedSentences = parseSentences(sentences);
+        const parsedPhrases = parseSentences(phrases);
+        
+        // Validate distractors
+        if (parsedDistractors.length < 3) {
+            throw new Error(`Wordbank entry "${word}" needs at least 3 distractors (found ${parsedDistractors.length})`);
+        }
+        
+        // Build image data
+        const imageData = {};
+        if (emojiOrUrl && emojiOrUrl.trim()) {
+            const visual = emojiOrUrl.trim();
+            if (visual.startsWith('http') || visual.startsWith('https')) {
+                imageData.imageUrl = visual;
+            } else {
+                imageData.emoji = visual;
+            }
+        }
+        
+        // Return consolidated wordbank entry
+        return {
+            word: wordLower,
+            category: category?.trim().toLowerCase() || '',
+            soundGroup: soundGroup?.trim().toLowerCase() || wordLower.charAt(0),
+            definition: definition?.trim() || '',
+            visual: imageData,
+            distractors: parsedDistractors,
+            rhymes: parsedRhymes,
+            associated: parsedAssociated,
+            synonyms: parsedSynonyms,
+            antonyms: parsedAntonyms,
+            sentences: parsedSentences,
+            phrases: parsedPhrases,
+            difficulty,
+            isCustom: true,
+            status: 'active'
+        };
     }
     
     transformImageWord(values, difficulty = 'easy') {
@@ -729,6 +807,12 @@ class CSVService {
         if (errorLower.includes('blank marker')) {
             return 'Use ? or __ to mark where the answer goes in the sentence';
         }
+        if (errorLower.includes('wordbank') && errorLower.includes('distractors')) {
+            return 'Wordbank entries need at least 3 distractor words (comma-separated in the distractors column)';
+        }
+        if (errorLower.includes('wordbank') || errorLower.includes('word is required')) {
+            return 'For wordbank entries, the word column (3rd column) is required';
+        }
         if (errorLower.includes('required')) {
             return 'Make sure all required fields are filled. Check the template for examples.';
         }
@@ -751,7 +835,7 @@ class CSVService {
             return 'Provide the time (HH:MM), the correct time description, and 3 wrong descriptions (separated by commas or |)';
         }
         if (errorLower.includes('exercise type')) {
-            return 'First column must contain the exercise type (e.g., sentenceTyping, naming, etc.)';
+            return 'First column must contain the exercise type (e.g., wordbank, scramble, timeSequencing, etc.)';
         }
         if (errorLower.includes('difficulty')) {
             return 'Second column must be: easy, medium, or hard';
