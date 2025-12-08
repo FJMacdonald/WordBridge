@@ -403,6 +403,7 @@ class CustomizePage {
      */
     getRequiredFieldsForExercise(exerciseType) {
         const fieldMappings = {
+            // Wordbank-based exercises
             'typing': ['wb-word', 'wb-distractors'],
             'naming': ['wb-word', 'wb-emoji', 'wb-image-url', 'wb-distractors'],
             'listening': ['wb-word', 'wb-emoji', 'wb-image-url', 'wb-distractors'],
@@ -413,7 +414,13 @@ class CustomizePage {
             'association': ['wb-word', 'wb-associated', 'wb-distractors'],
             'synonyms': ['wb-word', 'wb-synonyms', 'wb-antonyms', 'wb-distractors'],
             'firstSound': ['wb-word', 'wb-sound-group', 'wb-distractors'],
-            'sentenceTyping': ['wb-word', 'wb-sentences']
+            'sentenceTyping': ['wb-word', 'wb-sentences'],
+            // Time and other special exercises
+            'scramble': ['scramble-sentence'],
+            'timeSequencing': ['time-question', 'time-answer', 'time-options'],
+            'timeOrdering': ['ordering-scenario', 'ordering-description', 'ordering-items'],
+            'clockMatching': ['clock-time', 'clock-words'],
+            'workingMemory': ['memory-sequence', 'memory-options']
         };
         return fieldMappings[exerciseType] || [];
     }
@@ -1239,23 +1246,59 @@ class CustomizePage {
         const isEditing = editItem !== null;
         const extraOptions = editItem && editItem.options && editItem.sequence ?
             editItem.options.filter(o => !editItem.sequence.includes(o)).join('') : '';
+        
+        // Common emoji groups for working memory exercises
+        const emojiGroups = {
+            fruits: '🍎🍊🍋🍌🍉🍇🍓🫐🍑🍒🥝🍍🥭🍐',
+            animals: '🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐸',
+            objects: '⭐🌙☀️🌈💎🔔🎈🎁🏀⚽🎸🎺🚗✈️',
+            food: '🍕🍔🌭🍟🌮🍣🍩🍪🧁🍰🍫🍬🍭🍿',
+            nature: '🌸🌺🌻🌹🌷💐🌴🌵🍀🌲🌊⛰️🔥❄️',
+            faces: '😀😃😄😁😆🥰😍🤩😎🥳🤗🤔😴🤯'
+        };
+        
         return `
             <form class="add-form compact-form" id="add-workingmemory-form" data-edit-type="${editItem ? 'workingMemory' : ''}" data-edit-index="${editIndex || ''}">
                 <h3>🧠 ${isEditing ? t('customize.forms.editExercise') : t('exercises.workingMemory.name')}</h3>
                 
                 <fieldset class="form-section">
                     <legend>${t('customize.forms.emojiSequence') || 'SEQUENCE'}</legend>
+                    
+                    <div class="emoji-picker-section">
+                        <label>${t('customize.wordbank.emoji') || 'Emoji Picker'}:</label>
+                        <div class="emoji-picker-tabs">
+                            <button type="button" class="emoji-tab active" data-group="fruits">🍎</button>
+                            <button type="button" class="emoji-tab" data-group="animals">🐶</button>
+                            <button type="button" class="emoji-tab" data-group="objects">⭐</button>
+                            <button type="button" class="emoji-tab" data-group="food">🍕</button>
+                            <button type="button" class="emoji-tab" data-group="nature">🌸</button>
+                            <button type="button" class="emoji-tab" data-group="faces">😀</button>
+                        </div>
+                        <div class="emoji-picker-grid" id="emoji-picker-grid">
+                            ${[...emojiGroups.fruits].map(e => `<button type="button" class="emoji-btn" data-emoji="${e}">${e}</button>`).join('')}
+                        </div>
+                        <div class="emoji-groups-data" hidden>
+                            ${Object.entries(emojiGroups).map(([k, v]) => `<span data-group="${k}">${v}</span>`).join('')}
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.emojiSequence')}</label>
-                        <input type="text" id="memory-sequence" placeholder="${t('customize.forms.sequencePlaceholder')}" 
-                               value="${editItem && editItem.sequence ? editItem.sequence.join('') : ''}" required>
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.emojiSequence')} (3)</label>
+                        <div class="emoji-input-row">
+                            <input type="text" id="memory-sequence" placeholder="${t('customize.forms.sequencePlaceholder')}" 
+                                   value="${editItem && editItem.sequence ? editItem.sequence.join('') : ''}" required>
+                            <button type="button" class="btn btn--small btn--ghost clear-emoji-btn" data-target="memory-sequence">✕</button>
+                        </div>
                         <small>${t('customize.forms.sequenceHelp')}</small>
                     </div>
                     
                     <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.extraOptions')}</label>
-                        <input type="text" id="memory-options" placeholder="${t('customize.forms.extraOptionsPlaceholder')}" 
-                               value="${extraOptions}" required>
+                        <label><span class="field-indicator required">*</span> ${t('customize.forms.extraOptions')} (3+)</label>
+                        <div class="emoji-input-row">
+                            <input type="text" id="memory-options" placeholder="${t('customize.forms.extraOptionsPlaceholder')}" 
+                                   value="${extraOptions}" required>
+                            <button type="button" class="btn btn--small btn--ghost clear-emoji-btn" data-target="memory-options">✕</button>
+                        </div>
                         <small>${t('customize.forms.extraOptionsHelp')}</small>
                     </div>
                 </fieldset>
@@ -1599,12 +1642,6 @@ class CustomizePage {
                     this.container.querySelector('#add-form-container').innerHTML = 
                         this.renderIndividualForm(selectedType);
                     await this.attachFormListeners(selectedType);
-                    
-                    // Highlight relevant fields for the selected exercise type
-                    const form = this.container.querySelector('.wordbank-form');
-                    if (form) {
-                        this.highlightFieldsForExercise(form, selectedType);
-                    }
                 } else {
                     this.container.querySelector('#add-form-container').innerHTML = '';
                     this.selectedExerciseType = null;
@@ -1699,7 +1736,7 @@ class CustomizePage {
     }
     
     async attachFormListeners(type) {
-        const form = this.container.querySelector('.add-form');
+        const form = this.container.querySelector('.add-form') || this.container.querySelector('.wordbank-form');
         if (!form) return;
         
         // Populate image preview for editing
@@ -1810,11 +1847,92 @@ class CustomizePage {
             
             // Initial update
             this.updateExerciseIndicators(form);
+        }
+        
+        // Apply field highlighting for all form types
+        if (this.selectedExerciseType) {
+            this.highlightFieldsForExercise(form, this.selectedExerciseType);
+        }
+        
+        // Emoji picker for working memory form
+        const emojiPickerGrid = form.querySelector('#emoji-picker-grid');
+        const emojiTabs = form.querySelectorAll('.emoji-tab');
+        const emojiGroupsData = form.querySelector('.emoji-groups-data');
+        
+        if (emojiPickerGrid && emojiTabs.length > 0) {
+            // Track which input to add emojis to (sequence by default)
+            let activeEmojiTarget = 'memory-sequence';
             
-            // Apply highlighting if exercise type is selected
-            if (this.selectedExerciseType) {
-                this.highlightFieldsForExercise(form, this.selectedExerciseType);
+            // Tab switching
+            emojiTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    emojiTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const group = tab.dataset.group;
+                    const groupData = emojiGroupsData?.querySelector(`[data-group="${group}"]`);
+                    if (groupData) {
+                        const emojis = [...groupData.textContent];
+                        emojiPickerGrid.innerHTML = emojis.map(e => 
+                            `<button type="button" class="emoji-btn" data-emoji="${e}">${e}</button>`
+                        ).join('');
+                        
+                        // Re-attach emoji click handlers
+                        attachEmojiClickHandlers();
+                    }
+                });
+            });
+            
+            // Click on input to set target
+            const sequenceInput = form.querySelector('#memory-sequence');
+            const optionsInput = form.querySelector('#memory-options');
+            
+            if (sequenceInput) {
+                sequenceInput.addEventListener('focus', () => {
+                    activeEmojiTarget = 'memory-sequence';
+                });
             }
+            if (optionsInput) {
+                optionsInput.addEventListener('focus', () => {
+                    activeEmojiTarget = 'memory-options';
+                });
+            }
+            
+            // Emoji button click handler
+            const attachEmojiClickHandlers = () => {
+                form.querySelectorAll('.emoji-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const emoji = btn.dataset.emoji;
+                        const targetInput = form.querySelector(`#${activeEmojiTarget}`);
+                        if (targetInput) {
+                            // For sequence, limit to 3 emojis
+                            if (activeEmojiTarget === 'memory-sequence') {
+                                const currentEmojis = [...targetInput.value];
+                                if (currentEmojis.length < 3) {
+                                    targetInput.value += emoji;
+                                }
+                            } else {
+                                targetInput.value += emoji;
+                            }
+                            targetInput.focus();
+                        }
+                    });
+                });
+            };
+            
+            attachEmojiClickHandlers();
+            
+            // Clear buttons
+            form.querySelectorAll('.clear-emoji-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.dataset.target;
+                    const targetInput = form.querySelector(`#${targetId}`);
+                    if (targetInput) {
+                        targetInput.value = '';
+                        targetInput.focus();
+                    }
+                });
+            });
         }
         
         // Form submission
@@ -1955,7 +2073,7 @@ class CustomizePage {
         
         let savedToTypes = new Set();
         
-        // 1. Image-based exercises (naming, typing, listening, speaking)
+        // 1. Image-based exercises (naming, listening, speaking)
         if (imageData.emoji || imageData.imageUrl || imageData.localImageId) {
             const baseExercise = {
                 answer: word,
@@ -1971,7 +2089,7 @@ class CustomizePage {
                 savedToTypes.add(type);
             });
             
-            // Typing doesn't need options
+            // Typing with image
             saveToType('typing', {
                 answer: word,
                 ...imageData,
@@ -1991,6 +2109,17 @@ class CustomizePage {
                 status: 'active'
             });
             savedToTypes.add('speaking');
+        } else {
+            // Typing without image - just needs word and distractors
+            if (word && parsedDistractors.length >= 3) {
+                saveToType('typing', {
+                    answer: word,
+                    difficulty,
+                    isCustom: true,
+                    status: 'active'
+                });
+                savedToTypes.add('typing');
+            }
         }
         
         // 2. Sentence completion
@@ -3135,10 +3264,12 @@ class CustomizePage {
             }
             
             // Apply field highlighting for the exercise type
-            const form = this.container.querySelector('.wordbank-form');
+            const form = this.container.querySelector('.wordbank-form') || this.container.querySelector('.add-form');
             if (form) {
                 this.highlightFieldsForExercise(form, type);
-                this.updateExerciseIndicators(form);
+                if (form.classList.contains('wordbank-form')) {
+                    this.updateExerciseIndicators(form);
+                }
             }
         }
         
