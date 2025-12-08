@@ -1375,7 +1375,7 @@ class CustomizePage {
                         <table class="library-table">
                             <thead>
                                 <tr>
-                                    <th class="col-diff">${t('customize.library.diff')}</th>
+                                    <th class="col-diff">${t('customize.library.difficulty')}</th>
                                     <th class="col-content">${t('customize.library.content')}</th>
                                     <th class="col-status">${t('customize.library.status')}</th>
                                     <th class="col-actions">${t('customize.library.action')}</th>
@@ -1406,7 +1406,7 @@ class CustomizePage {
                         <table class="library-table">
                             <thead>
                                 <tr>
-                                    <th class="col-diff">${t('customize.library.diff')}</th>
+                                    <th class="col-diff">${t('customize.library.difficulty')}</th>
                                     <th class="col-content">${t('customize.library.content')}</th>
                                     <th class="col-status">${t('customize.library.status')}</th>
                                     <th class="col-actions">${t('customize.library.action')}</th>

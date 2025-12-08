@@ -487,14 +487,14 @@
     "library": {
       "wordbankEntries": "Worteinträge",
       "otherExercises": "Andere Übungen",
-      "diff": "Schw",
+      "difficulty": "Schwierigkeit",
       "status": "Status",
       "action": "Aktion",
       "exerciseTypes": "Übungstypen",
       "content": "Inhalt",
-      "diffEasy": "Einf",
-      "diffMed": "Mit",
-      "diffHard": "Schw",
+      "diffEasy": "Einfach",
+      "diffMed": "Mittel",
+      "diffHard": "Schwer",
       "archive": "Archivieren",
       "unarchive": "Wiederherstellen"
     },

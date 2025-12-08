@@ -1074,11 +1074,11 @@
 }
 
 /* Column Widths - uniform for both tables */
-.library-table .col-diff { width: 50px; }
-.library-table .col-content { width: auto; min-width: 120px; }
-.library-table .col-status { width: 65px; }
-.library-table .col-actions { width: 85px; }
-.library-table .col-types { width: 130px; }
+.library-table .col-diff { width: 60px; }
+.library-table .col-content { width: 130px; }
+.library-table .col-status { width: 50px; }
+.library-table .col-actions { width: 80px; }
+.library-table .col-types { width: 100px; }
 
 /* Difficulty display - compact */
 .difficulty-dot {

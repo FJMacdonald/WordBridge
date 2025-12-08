@@ -474,7 +474,7 @@
     "library": {
       "wordbankEntries": "Word Entries",
       "otherExercises": "Other Exercises",
-      "diff": "Diff",
+      "difficulty": "Difficulty",
       "status": "Status",
       "action": "Action",
       "exerciseTypes": "Exercise Types",
