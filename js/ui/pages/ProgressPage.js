@@ -515,12 +515,17 @@ class ProgressPage {
     }
     
     attachModalListeners(exerciseType) {
-        // Practice button
+        // Practice button - navigate directly to the exercise
         const practiceBtn = document.getElementById('practice-btn');
         if (practiceBtn) {
             practiceBtn.addEventListener('click', () => {
                 document.getElementById('exercise-modal').classList.add('hidden');
-                window.dispatchEvent(new CustomEvent('navigate', { detail: 'home' }));
+                window.dispatchEvent(new CustomEvent('startPractice', {
+                    detail: {
+                        exerciseType: exerciseType,
+                        difficulty: 'easy'
+                    }
+                }));
             });
         }
         

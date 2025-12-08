@@ -94,6 +94,18 @@ class App {
         window.addEventListener('startTest', (e) => {
             this.startTestExercise(e.detail);
         });
+
+        window.addEventListener('startPractice', (e) => {
+            this.startPracticeExercise(e.detail);
+        });
+    }
+
+    async startPracticeExercise({ exerciseType, difficulty }) {
+        // Start practice mode for the specific exercise type
+        modeService.startPracticeMode(exerciseType);
+        trackingService.startSession(exerciseType);
+        this.currentPage = 'home'; // Track that we're in practice mode from home
+        await this.startExercise(exerciseType, 'practice');
     }
 
     navigate(page) {

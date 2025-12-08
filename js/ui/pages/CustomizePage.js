@@ -15,12 +15,12 @@ class CustomizePage {
         this.selectedExerciseType = null;
     }
     
-    renderDifficultyField(selectedDifficulty = 'medium') {
+    renderDifficultyField(selectedDifficulty = 'easy') {
         return `
             <div class="form-group">
                 <label>${t('customize.forms.difficulty')}</label>
                 <select id="exercise-difficulty" required>
-                    <option value="easy" ${selectedDifficulty === 'easy' ? 'selected' : ''}>${t('customize.forms.easy')}</option>
+                    <option value="easy" ${selectedDifficulty === 'easy' || !selectedDifficulty ? 'selected' : ''}>${t('customize.forms.easy')}</option>
                     <option value="medium" ${selectedDifficulty === 'medium' ? 'selected' : ''}>${t('customize.forms.medium')}</option>
                     <option value="hard" ${selectedDifficulty === 'hard' ? 'selected' : ''}>${t('customize.forms.hard')}</option>
                 </select>
@@ -477,7 +477,7 @@ class CustomizePage {
                             <legend>${t('customize.wordbank.coreInfo') || 'CORE INFO'}</legend>
                             
                             <div class="form-group">
-                                <label><span class="field-indicator required">*</span> ${t('customize.wordbank.word') || 'Word'}</label>
+                                <label>${t('customize.wordbank.word') || 'Word'}</label>
                                 <input type="text" id="wb-word" placeholder="${t('customize.wordbank.wordPlaceholder') || 'e.g., apple'}" 
                                        value="${values.word}" required>
                             </div>
@@ -522,7 +522,7 @@ class CustomizePage {
                         <fieldset class="form-section section-relevant">
                             <legend>🎯 ${t('customize.wordbank.distractors') || 'DISTRACTORS'}</legend>
                             <div class="form-group">
-                                <label><span class="field-indicator required">*</span> ${t('customize.wordbank.distractorWords') || 'Distractor Words'}</label>
+                                <label>${t('customize.wordbank.distractorWords') || 'Distractor Words'}</label>
                                 <textarea id="wb-distractors" rows="2" placeholder="${t('customize.wordbank.distractorsPlaceholder') || 'banana, orange, grape, cherry, mango, peach, plum, kiwi, pear, melon'}">${values.distractors}</textarea>
                                 <small>${t('customize.wordbank.distractorsHelp') || 'Min 3, ideally 10 words of similar length. Used as wrong options. Must NOT be synonyms, antonyms, rhymes, or associated words.'}</small>
                             </div>
@@ -588,8 +588,8 @@ class CustomizePage {
                         <div class="form-group" style="flex: 0 0 auto;">
                             <label>${t('customize.forms.difficulty') || 'Difficulty'}</label>
                             <select id="exercise-difficulty">
-                                <option value="easy" ${editItem?.difficulty === 'easy' ? 'selected' : ''}>${t('customize.forms.easy') || 'Easy'}</option>
-                                <option value="medium" ${editItem?.difficulty === 'medium' || !editItem ? 'selected' : ''}>${t('customize.forms.medium') || 'Medium'}</option>
+                                <option value="easy" ${editItem?.difficulty === 'easy' || !editItem ? 'selected' : ''}>${t('customize.forms.easy') || 'Easy'}</option>
+                                <option value="medium" ${editItem?.difficulty === 'medium' ? 'selected' : ''}>${t('customize.forms.medium') || 'Medium'}</option>
                                 <option value="hard" ${editItem?.difficulty === 'hard' ? 'selected' : ''}>${t('customize.forms.hard') || 'Hard'}</option>
                             </select>
                         </div>
@@ -978,10 +978,10 @@ class CustomizePage {
             <form class="add-form compact-form" id="add-scramble-form" data-edit-type="${editItem ? 'scramble' : ''}" data-edit-index="${editIndex || ''}">
                 <h3>🔀 ${isEditing ? t('customize.forms.editExercise') : t('exercises.scramble.name')}</h3>
                 
-                <fieldset class="form-section">
+                <fieldset class="form-section section-highlighted">
                     <legend>${t('customize.forms.sentence') || 'SENTENCE'}</legend>
-                    <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.sentence')}</label>
+                    <div class="form-group field-highlighted">
+                        <label>${t('customize.forms.sentence')}</label>
                         <input type="text" id="scramble-sentence" 
                                placeholder="${t('customize.forms.sentencePlaceholder') || 'e.g., The cat is sleeping'}"
                                value="${editItem && editItem.words ? editItem.words.join(' ') : ''}" required>
@@ -1009,24 +1009,24 @@ class CustomizePage {
             <form class="add-form compact-form" id="add-timesequencing-form" data-edit-type="${editItem ? 'timeSequencing' : ''}" data-edit-index="${editIndex || ''}">
                 <h3>📅 ${isEditing ? t('customize.forms.editExercise') : t('exercises.timeSequencing.name')}</h3>
                 
-                <fieldset class="form-section">
+                <fieldset class="form-section section-highlighted">
                     <legend>${t('customize.forms.question') || 'QUESTION'}</legend>
-                    <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.question')}</label>
+                    <div class="form-group field-highlighted">
+                        <label>${t('customize.forms.question')}</label>
                         <input type="text" id="time-question" placeholder="${t('customize.forms.timeQuestionPlaceholder')}" 
                                value="${editItem ? editItem.question || '' : ''}" required>
                     </div>
                     
                     <div class="inline-fields">
-                        <div class="form-group">
-                            <label><span class="field-indicator required">*</span> ${t('customize.forms.correctAnswer')}</label>
+                        <div class="form-group field-highlighted">
+                            <label>${t('customize.forms.correctAnswer')}</label>
                             <input type="text" id="time-answer" placeholder="${t('customize.forms.timeAnswerPlaceholder')}" 
                                    value="${editItem ? editItem.answer || '' : ''}" required>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.wrongOptions')}</label>
+                    <div class="form-group field-highlighted">
+                        <label>${t('customize.forms.wrongOptions')}</label>
                         <input type="text" id="time-options" 
                                placeholder="${t('customize.forms.timeOptionsPlaceholder')}" 
                                value="${wrongOptions}" required>
@@ -1052,26 +1052,26 @@ class CustomizePage {
             <form class="add-form compact-form" id="add-timeordering-form" data-edit-type="${editItem ? 'timeOrdering' : ''}" data-edit-index="${editIndex || ''}">
                 <h3>⏰ ${isEditing ? t('customize.forms.editExercise') : t('exercises.timeOrdering.name')}</h3>
                 
-                <fieldset class="form-section">
+                <fieldset class="form-section section-highlighted">
                     <legend>${t('customize.forms.scenario') || 'SCENARIO'}</legend>
                     <div class="inline-fields">
-                        <div class="form-group">
-                            <label><span class="field-indicator required">*</span> ${t('customize.forms.scenario')}</label>
+                        <div class="form-group field-highlighted">
+                            <label>${t('customize.forms.scenario')}</label>
                             <input type="text" id="ordering-scenario" placeholder="${t('customize.forms.scenarioPlaceholder')}" 
                                    value="${editItem ? editItem.scenario || '' : ''}" required>
                         </div>
-                        <div class="form-group">
-                            <label><span class="field-indicator required">*</span> ${t('customize.forms.description')}</label>
+                        <div class="form-group field-highlighted">
+                            <label>${t('customize.forms.description')}</label>
                             <input type="text" id="ordering-description" placeholder="${t('customize.forms.descriptionPlaceholder')}" 
                                    value="${editItem ? editItem.description || '' : ''}" required>
                         </div>
                     </div>
                 </fieldset>
                 
-                <fieldset class="form-section">
+                <fieldset class="form-section section-highlighted">
                     <legend>${t('customize.forms.activities') || 'ACTIVITIES'}</legend>
-                    <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.activities')}</label>
+                    <div class="form-group field-highlighted">
+                        <label>${t('customize.forms.activities')}</label>
                         <textarea id="ordering-items" rows="4" 
                                   placeholder="${t('customize.forms.activitiesPlaceholder')}" required>${editItem && editItem.items ? editItem.items.join('\n') : ''}</textarea>
                         <small>${t('customize.forms.activitiesHelp')}</small>
@@ -1101,18 +1101,18 @@ class CustomizePage {
             <form class="add-form compact-form" id="add-clockmatching-form" data-edit-type="${editItem ? 'clockMatching' : ''}" data-edit-index="${editIndex || ''}">
                 <h3>🕐 ${isEditing ? t('customize.forms.editExercise') : t('exercises.clockMatching.name')}</h3>
                 
-                <fieldset class="form-section">
+                <fieldset class="form-section section-highlighted">
                     <legend>${t('customize.forms.digitalTime') || 'TIME'}</legend>
                     <div class="inline-fields">
-                        <div class="form-group">
-                            <label><span class="field-indicator required">*</span> ${t('customize.forms.digitalTime')}</label>
+                        <div class="form-group field-highlighted">
+                            <label>${t('customize.forms.digitalTime')}</label>
                             <input type="text" id="clock-time" placeholder="HH:MM (e.g., 3:00 or 14:30)"
                                    pattern="[0-9]{1,2}:[0-9]{2}"
                                    value="${existingTime}" required>
                             <small>${t('customize.forms.digitalTimeHelp')}</small>
                         </div>
-                        <div class="form-group">
-                            <label><span class="field-indicator required">*</span> ${t('customize.forms.timeWords')}</label>
+                        <div class="form-group field-highlighted">
+                            <label>${t('customize.forms.timeWords')}</label>
                             <input type="text" id="clock-words" placeholder="${t('customize.forms.timeWordsPlaceholder')}" 
                                    value="${editItem ? editItem.timeWords || '' : ''}" required>
                             <small>${t('customize.forms.timeWordsHelp')}</small>
@@ -1137,43 +1137,111 @@ class CustomizePage {
         const extraOptions = editItem && editItem.options && editItem.sequence ?
             editItem.options.filter(o => !editItem.sequence.includes(o)).join('') : '';
         
-        // Common emoji groups for working memory exercises
+        // Expanded emoji groups for working memory exercises (18 categories, 15+ each)
         const emojiGroups = {
-            fruits: '🍎🍊🍋🍌🍉🍇🍓🫐🍑🍒🥝🍍🥭🍐',
-            animals: '🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐸',
-            objects: '⭐🌙☀️🌈💎🔔🎈🎁🏀⚽🎸🎺🚗✈️',
-            food: '🍕🍔🌭🍟🌮🍣🍩🍪🧁🍰🍫🍬🍭🍿',
-            nature: '🌸🌺🌻🌹🌷💐🌴🌵🍀🌲🌊⛰️🔥❄️',
-            faces: '😀😃😄😁😆🥰😍🤩😎🥳🤗🤔😴🤯'
+            fruit: '🍎🍊🍋🍌🍉🍇🍓🫐🍑🍒🥝🍍🥭🍐🍈',
+            vegetables: '🥕🥦🥬🥒🌽🍆🧅🧄🥔🍠🌶️🫑🥗🥜🫘',
+            food: '🍕🍔🌭🍟🌮🍣🥪🥙🧆🌯🥘🍝🍜🍲🥟',
+            desserts: '🍩🍪🧁🍰🎂🍫🍬🍭🍮🍦🧇🥧🍡🍧🥮',
+            drinks: '☕🍵🧃🥤🍶🍺🍷🥂🧋🍹🫖🥛🍼🧊🫗',
+            animals: '🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐸🐵',
+            insects: '🐝🐛🦋🐌🐞🐜🪲🦗🪳🦟🪰🦠🕷️🦂🪱',
+            marine: '🐙🦑🦐🦞🦀🐠🐟🐡🐬🐳🦈🐋🦭🪸🐚',
+            weather: '☀️🌤️⛅🌦️🌧️⛈️🌩️❄️🌨️💨🌪️🌈🌊💧☁️',
+            nature: '🌸🌺🌻🌹🌷💐🌴🌵🍀🌲🌳🪴🍁🍂🌾',
+            vehicles: '🚗🚕🚙🚌🚎🏎️🚓🚑🚒🚐🛻🚚🚛🚜✈️',
+            music: '🎸🎹🎺🎷🪗🥁🎻🪕🎤🎧🎵🎶🎼🪘🎚️',
+            sports: '⚽🏀🏈⚾🎾🏐🏉🎱🏓🏸🥊🥋🏒🥅🎳',
+            furniture: '🛋️🪑🛏️🪞🚪🪟🛁🚿🧹🧺💡📺🖥️⏰🕰️',
+            tools: '🔨🪓🔧🪛🔩⚙️🗜️⛏️🪚🔪✂️🪡🧲🔌🪤',
+            office: '📝✏️🖊️📎📐📏🗂️📁📋📌🖇️📖📚🎒💻',
+            professions: '👨‍⚕️👩‍🏫👨‍🍳👩‍🔬👨‍🚒👩‍✈️👨‍🔧👩‍🎨👨‍🌾👩‍💼👨‍⚖️👩‍🚀🧑‍🎤👷‍♀️💂',
+            emotions: '😀😃😄😁😆🥰😍🤩😎🥳😢😭😡🤯🥺'
         };
+        
+        // Tab labels for emoji picker (translatable)
+        const tabLabels = {
+            fruit: t('customize.emojiCategories.fruit') || '🍎',
+            vegetables: t('customize.emojiCategories.vegetables') || '🥕',
+            food: t('customize.emojiCategories.food') || '🍕',
+            desserts: t('customize.emojiCategories.desserts') || '🍰',
+            drinks: t('customize.emojiCategories.drinks') || '☕',
+            animals: t('customize.emojiCategories.animals') || '🐶',
+            insects: t('customize.emojiCategories.insects') || '🐝',
+            marine: t('customize.emojiCategories.marine') || '🐙',
+            weather: t('customize.emojiCategories.weather') || '☀️',
+            nature: t('customize.emojiCategories.nature') || '🌸',
+            vehicles: t('customize.emojiCategories.vehicles') || '🚗',
+            music: t('customize.emojiCategories.music') || '🎸',
+            sports: t('customize.emojiCategories.sports') || '⚽',
+            furniture: t('customize.emojiCategories.furniture') || '🛋️',
+            tools: t('customize.emojiCategories.tools') || '🔧',
+            office: t('customize.emojiCategories.office') || '📝',
+            professions: t('customize.emojiCategories.professions') || '👨‍⚕️',
+            emotions: t('customize.emojiCategories.emotions') || '😀'
+        };
+        
+        // Category names for tooltips (translatable)
+        const categoryNames = {
+            fruit: t('customize.emojiCategoryNames.fruit') || 'Fruit',
+            vegetables: t('customize.emojiCategoryNames.vegetables') || 'Vegetables',
+            food: t('customize.emojiCategoryNames.food') || 'Food',
+            desserts: t('customize.emojiCategoryNames.desserts') || 'Desserts',
+            drinks: t('customize.emojiCategoryNames.drinks') || 'Drinks',
+            animals: t('customize.emojiCategoryNames.animals') || 'Animals',
+            insects: t('customize.emojiCategoryNames.insects') || 'Insects',
+            marine: t('customize.emojiCategoryNames.marine') || 'Marine Animals',
+            weather: t('customize.emojiCategoryNames.weather') || 'Weather',
+            nature: t('customize.emojiCategoryNames.nature') || 'Nature',
+            vehicles: t('customize.emojiCategoryNames.vehicles') || 'Vehicles',
+            music: t('customize.emojiCategoryNames.music') || 'Music',
+            sports: t('customize.emojiCategoryNames.sports') || 'Sports',
+            furniture: t('customize.emojiCategoryNames.furniture') || 'Furniture & Household',
+            tools: t('customize.emojiCategoryNames.tools') || 'Tools & Instruments',
+            office: t('customize.emojiCategoryNames.office') || 'Office/School Items',
+            professions: t('customize.emojiCategoryNames.professions') || 'Professions',
+            emotions: t('customize.emojiCategoryNames.emotions') || 'Emotions/Smilies'
+        };
+        
+        // Parse emojis properly using Intl.Segmenter
+        const parseEmojisFromString = (str) => {
+            if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+                try {
+                    const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+                    return [...segmenter.segment(str)].map(s => s.segment).filter(s => s.trim());
+                } catch (e) {
+                    return [...str];
+                }
+            }
+            return [...str];
+        };
+        
+        const fruitEmojis = parseEmojisFromString(emojiGroups.fruit);
         
         return `
             <form class="add-form compact-form" id="add-workingmemory-form" data-edit-type="${editItem ? 'workingMemory' : ''}" data-edit-index="${editIndex || ''}">
                 <h3>🧠 ${isEditing ? t('customize.forms.editExercise') : t('exercises.workingMemory.name')}</h3>
                 
-                <fieldset class="form-section">
+                <fieldset class="form-section section-highlighted">
                     <legend>${t('customize.forms.emojiSequence') || 'SEQUENCE'}</legend>
                     
                     <div class="emoji-picker-section">
-                        <label>${t('customize.wordbank.emoji') || 'Emoji Picker'}:</label>
+                        <label>${t('customize.emojiPicker') || 'Emoji Picker'}:</label>
                         <div class="emoji-picker-tabs">
-                            <button type="button" class="emoji-tab active" data-group="fruits">🍎</button>
-                            <button type="button" class="emoji-tab" data-group="animals">🐶</button>
-                            <button type="button" class="emoji-tab" data-group="objects">⭐</button>
-                            <button type="button" class="emoji-tab" data-group="food">🍕</button>
-                            <button type="button" class="emoji-tab" data-group="nature">🌸</button>
-                            <button type="button" class="emoji-tab" data-group="faces">😀</button>
+                            ${Object.entries(tabLabels).map(([key, label], idx) => 
+                                `<button type="button" class="emoji-tab ${idx === 0 ? 'active' : ''}" data-group="${key}" title="${categoryNames[key] || key}">${label}</button>`
+                            ).join('')}
                         </div>
                         <div class="emoji-picker-grid" id="emoji-picker-grid">
-                            ${[...emojiGroups.fruits].map(e => `<button type="button" class="emoji-btn" data-emoji="${e}">${e}</button>`).join('')}
+                            ${fruitEmojis.map(e => `<button type="button" class="emoji-btn" data-emoji="${e}">${e}</button>`).join('')}
                         </div>
                         <div class="emoji-groups-data" hidden>
                             ${Object.entries(emojiGroups).map(([k, v]) => `<span data-group="${k}">${v}</span>`).join('')}
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.emojiSequence')} (3)</label>
+                    <div class="form-group field-highlighted">
+                        <label>${t('customize.forms.emojiSequence')} (3)</label>
                         <div class="emoji-input-row">
                             <input type="text" id="memory-sequence" placeholder="${t('customize.forms.sequencePlaceholder')}" 
                                    value="${editItem && editItem.sequence ? editItem.sequence.join('') : ''}" required>
@@ -1182,8 +1250,8 @@ class CustomizePage {
                         <small>${t('customize.forms.sequenceHelp')}</small>
                     </div>
                     
-                    <div class="form-group">
-                        <label><span class="field-indicator required">*</span> ${t('customize.forms.extraOptions')} (3+)</label>
+                    <div class="form-group field-highlighted">
+                        <label>${t('customize.forms.extraOptions')} (3+)</label>
                         <div class="emoji-input-row">
                             <input type="text" id="memory-options" placeholder="${t('customize.forms.extraOptionsPlaceholder')}" 
                                    value="${extraOptions}" required>
@@ -1307,10 +1375,10 @@ class CustomizePage {
                         <table class="library-table">
                             <thead>
                                 <tr>
-                                    <th class="col-difficulty">${t('customize.library.difficulty')}</th>
-                                    <th class="col-word">${t('customize.wordbank.word')}</th>
+                                    <th class="col-diff">${t('customize.library.diff')}</th>
+                                    <th class="col-content">${t('customize.library.content')}</th>
                                     <th class="col-status">${t('customize.library.status')}</th>
-                                    <th class="col-actions">${t('customize.library.actions')}</th>
+                                    <th class="col-actions">${t('customize.library.action')}</th>
                                     <th class="col-types">${t('customize.library.exerciseTypes')}</th>
                                 </tr>
                             </thead>
@@ -1338,11 +1406,11 @@ class CustomizePage {
                         <table class="library-table">
                             <thead>
                                 <tr>
-                                    <th class="col-difficulty">${t('customize.library.difficulty')}</th>
+                                    <th class="col-diff">${t('customize.library.diff')}</th>
                                     <th class="col-content">${t('customize.library.content')}</th>
                                     <th class="col-status">${t('customize.library.status')}</th>
-                                    <th class="col-actions">${t('customize.library.actions')}</th>
-                                    <th class="col-type">${t('customize.library.type')}</th>
+                                    <th class="col-actions">${t('customize.library.action')}</th>
+                                    <th class="col-types">${t('customize.library.exerciseTypes')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1366,30 +1434,30 @@ class CustomizePage {
         };
         
         const diffLabels = {
-            easy: t('customize.forms.easy'),
-            medium: t('customize.library.med'),
-            hard: t('customize.forms.hard')
+            easy: t('customize.library.diffEasy'),
+            medium: t('customize.library.diffMed'),
+            hard: t('customize.library.diffHard')
         };
         
         const isArchived = entry.status === 'archived';
         
-        // Build exercise type indicators
-        const typeIndicators = wordbankTypes.map(type => {
-            const isActive = entry.types.has(type);
-            return `<span class="type-indicator ${isActive ? 'active' : ''}" title="${this.getTypeName(type)}">${typeIcons[type]}</span>`;
-        }).join('');
+        // Build exercise type indicators - only show active ones
+        const typeIndicators = wordbankTypes
+            .filter(type => entry.types.has(type))
+            .map(type => `<span class="type-indicator active" title="${this.getTypeName(type)}">${typeIcons[type]}</span>`)
+            .join('');
         
         return `
             <tr class="library-row ${isArchived ? 'archived-row' : ''}" 
                 data-type="${entry.originalType}" 
                 data-index="${entry.originalIndex}"
                 data-word="${entry.word}">
-                <td class="col-difficulty">
+                <td class="col-diff">
                     <span class="difficulty-dot ${diffColors[entry.difficulty]}" title="${entry.difficulty}"></span>
                     <span class="difficulty-label">${diffLabels[entry.difficulty]}</span>
                 </td>
-                <td class="col-word">
-                    <strong>${entry.word}</strong>
+                <td class="col-content">
+                    <span class="content-text">${entry.word}</span>
                 </td>
                 <td class="col-status">
                     <span class="status-badge status-${entry.status}">${t('customize.status.' + entry.status)}</span>
@@ -1420,9 +1488,9 @@ class CustomizePage {
         };
         
         const diffLabels = {
-            easy: t('customize.forms.easy'),
-            medium: t('customize.library.med'),
-            hard: t('customize.forms.hard')
+            easy: t('customize.library.diffEasy'),
+            medium: t('customize.library.diffMed'),
+            hard: t('customize.library.diffHard')
         };
         
         const isArchived = entry.status === 'archived';
@@ -1431,11 +1499,11 @@ class CustomizePage {
             <tr class="library-row ${isArchived ? 'archived-row' : ''}" 
                 data-type="${entry.type}" 
                 data-index="${entry.index}">
-                <td class="col-difficulty">
+                <td class="col-diff">
                     <span class="difficulty-dot ${diffColors[entry.difficulty]}" title="${entry.difficulty}"></span>
                     <span class="difficulty-label">${diffLabels[entry.difficulty]}</span>
                 </td>
-                <td class="col-content">
+                <td class="col-content" title="${entry.displayName}">
                     <span class="content-text">${entry.displayName}</span>
                 </td>
                 <td class="col-status">
@@ -1452,8 +1520,10 @@ class CustomizePage {
                         <option value="delete">🗑️ ${t('customize.delete')}</option>
                     </select>
                 </td>
-                <td class="col-type">
-                    <span class="type-indicator active" title="${this.getTypeName(entry.type)}">${typeIcons[entry.type]}</span>
+                <td class="col-types">
+                    <div class="type-indicators">
+                        <span class="type-indicator active" title="${this.getTypeName(entry.type)}">${typeIcons[entry.type]}</span>
+                    </div>
                 </td>
             </tr>
         `;
@@ -1944,6 +2014,19 @@ class CustomizePage {
             // Track which input to add emojis to (sequence by default)
             let activeEmojiTarget = 'memory-sequence';
             
+            // Helper to parse emojis properly using Intl.Segmenter
+            const parseEmojisFromString = (str) => {
+                if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+                    try {
+                        const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+                        return [...segmenter.segment(str)].map(s => s.segment).filter(s => s.trim());
+                    } catch (e) {
+                        return [...str].filter(c => c.trim());
+                    }
+                }
+                return [...str].filter(c => c.trim());
+            };
+            
             // Tab switching
             emojiTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -1953,10 +2036,11 @@ class CustomizePage {
                     const group = tab.dataset.group;
                     const groupData = emojiGroupsData?.querySelector(`[data-group="${group}"]`);
                     if (groupData) {
-                        const emojis = [...groupData.textContent];
-                        emojiPickerGrid.innerHTML = emojis.map(e => 
-                            `<button type="button" class="emoji-btn" data-emoji="${e}">${e}</button>`
-                        ).join('');
+                        const emojis = parseEmojisFromString(groupData.textContent);
+                        emojiPickerGrid.innerHTML = emojis
+                            .filter(e => e.trim()) // Remove empty entries
+                            .map(e => `<button type="button" class="emoji-btn" data-emoji="${e}">${e}</button>`)
+                            .join('');
                         
                         // Re-attach emoji click handlers
                         attachEmojiClickHandlers();
