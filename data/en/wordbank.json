@@ -105,7 +105,7 @@
       "word": "alien",
       "partOfSpeech": "noun",
       "soundGroup": "a",
-      "category": "mythical",
+      "category": "mythical being",
       "definition": "A creature from another planet",
       "visual": {
         "emoji": "👽",
@@ -199,7 +199,7 @@
       "word": "anchor",
       "partOfSpeech": "noun",
       "soundGroup": "a",
-      "category": "marine",
+      "category": "marine equipment",
       "definition": "A heavy object that keeps a boat from moving",
       "visual": {
         "emoji": "⚓",
@@ -251,7 +251,7 @@
       "id": "angel",
       "word": "angel",
       "partOfSpeech": "noun",
-      "category": "mythical",
+      "category": "mythical being",
       "soundGroup": "a",
       "definition": "A heavenly being with wings",
       "visual": {
@@ -459,7 +459,7 @@
       "id": "arm",
       "word": "arm",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "a",
       "definition": "The part of your body between your shoulder and hand",
       "visual": {
@@ -972,7 +972,7 @@
       "word": "bagel",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "carbs",
+      "category": "carbohydrate",
       "definition": "A round bread roll with a hole in the middle",
       "visual": {
         "emoji": "🥯",
@@ -1016,7 +1016,7 @@
       "id": "baguette",
       "word": "baguette",
       "partOfSpeech": "noun",
-      "category": "carbs",
+      "category": "carbohydrate",
       "soundGroup": "b",
       "definition": "A long thin loaf of French bread",
       "visual": {
@@ -1067,7 +1067,7 @@
       "id": "ball",
       "word": "ball",
       "partOfSpeech": "noun",
-      "category": "game",
+      "category": "game item",
       "soundGroup": "b",
       "definition": "A round object used in many games",
       "visual": {
@@ -1172,7 +1172,7 @@
       "id": "ballot",
       "word": "ballot",
       "partOfSpeech": "noun",
-      "category": "democracy",
+      "category": "voting item",
       "soundGroup": "b",
       "definition": "A paper used to vote",
       "visual": {
@@ -1266,7 +1266,7 @@
       "id": "bandage",
       "word": "bandage",
       "partOfSpeech": "noun",
-      "category": "medical",
+      "category": "medical item",
       "soundGroup": "b",
       "definition": "A strip of material used to cover a wound",
       "visual": {
@@ -1632,7 +1632,7 @@
       "id": "bathtub",
       "word": "bathtub",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom item",
       "soundGroup": "b",
       "definition": "A large container for bathing in",
       "visual": {
@@ -1898,7 +1898,7 @@
       "id": "bed",
       "word": "bed",
       "partOfSpeech": "noun",
-      "category": "furniture",
+      "category": "furniture item",
       "soundGroup": "b",
       "definition": "A piece of furniture for sleeping",
       "visual": {
@@ -2103,7 +2103,7 @@
       "id": "bell",
       "word": "bell",
       "partOfSpeech": "noun",
-      "category": "noise",
+      "category": "sound maker",
       "soundGroup": "b",
       "definition": "A hollow metal object that makes a ringing sound",
       "visual": {
@@ -2251,64 +2251,10 @@
       ]
     },
     {
-      "id": "bike",
-      "word": "bike",
-      "partOfSpeech": "verb",
-      "soundGroup": "b",
-      "category": "sport",
-      "definition": "To ride a bicycle",
-      "visual": {
-        "emoji": "🚴",
-        "asset": null
-      },
-      "relationships": {
-        "associated": [
-          "pedal",
-          "wheel",
-          "ride",
-          "helmet",
-          "road",
-          "exercise",
-          "path"
-        ],
-        "antonyms": [],
-        "rhymes": [
-          "like",
-          "hike",
-          "mike",
-          "strike",
-          "spike",
-          "pike"
-        ],
-        "synonyms": [
-          "cycle"
-        ]
-      },
-      "distractors": [
-        "cost",
-        "goes",
-        "saw",
-        "lay",
-        "joke",
-        "terry",
-        "mix",
-        "chill",
-        "risks",
-        "sandy"
-      ],
-      "sentences": [
-        "I bike to work every day.",
-        "We biked through the park.",
-        "I bike to work.",
-        "Let's bike around the park."
-      ],
-      "phrases": []
-    },
-    {
       "id": "bikini",
       "word": "bikini",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "b",
       "definition": "A two-piece swimsuit",
       "visual": {
@@ -2509,7 +2455,7 @@
       "id": "blouse",
       "word": "blouse",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "b",
       "definition": "A loose shirt worn by women",
       "visual": {
@@ -2709,7 +2655,7 @@
       "word": "bone",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "body",
+      "category": "body part",
       "definition": "A hard part inside your body that makes up your skeleton",
       "visual": {
         "emoji": "🦴",
@@ -2767,7 +2713,7 @@
       "word": "book",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "information",
+      "category": "information item",
       "definition": "A set of printed pages bound together for reading",
       "visual": {
         "emoji": "📕",
@@ -2822,7 +2768,7 @@
       "id": "bookmark",
       "word": "bookmark",
       "partOfSpeech": "noun",
-      "category": "reading",
+      "category": "reading accessory",
       "soundGroup": "b",
       "definition": "Something placed in a book to mark your page",
       "visual": {
@@ -2872,7 +2818,7 @@
       "word": "boot",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "footwear",
+      "category": "footwear item",
       "definition": "A shoe that covers the foot and ankle or leg",
       "visual": {
         "emoji": "🥾",
@@ -2930,7 +2876,7 @@
       "id": "bounce",
       "word": "bounce",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "b",
       "definition": "To spring back after hitting a surface",
       "visual": {
@@ -2979,7 +2925,7 @@
       "id": "bowl",
       "word": "bowl",
       "partOfSpeech": "noun",
-      "category": "tableware",
+      "category": "tableware item",
       "soundGroup": "b",
       "definition": "A round deep dish for food",
       "visual": {
@@ -3078,7 +3024,7 @@
       "word": "box",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "container",
+      "category": "combat sport",
       "definition": "A container with flat sides, usually made of cardboard",
       "visual": {
         "emoji": "📦",
@@ -3135,58 +3081,6 @@
       "canBeVerb": true,
       "verbForm": "boxing",
       "alternateDefinition": "to fight with fists or to put in a box"
-    },
-    {
-      "id": "box",
-      "word": "box",
-      "partOfSpeech": "verb",
-      "category": "sport",
-      "soundGroup": "b",
-      "definition": "To fight with your fists as a sport",
-      "visual": {
-        "emoji": "🥊",
-        "asset": null
-      },
-      "relationships": {
-        "rhymes": [
-          "fox",
-          "socks",
-          "rocks",
-          "locks",
-          "clocks",
-          "blocks"
-        ],
-        "associated": [
-          "punch",
-          "gloves",
-          "ring",
-          "fight",
-          "sport",
-          "knockout"
-        ],
-        "synonyms": [],
-        "antonyms": []
-      },
-      "distractors": [
-        "rear",
-        "calm",
-        "pack",
-        "poem",
-        "logo",
-        "meet",
-        "trip",
-        "gave",
-        "once",
-        "into"
-      ],
-      "sentences": [
-        "He boxes at the gym.",
-        "They box in the ring."
-      ],
-      "phrases": [
-        "Box someone in"
-      ],
-      "canBeNoun": true
     },
     {
       "id": "boy",
@@ -3250,7 +3144,7 @@
       "word": "brain",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "body",
+      "category": "body part",
       "definition": "The organ inside your head that controls your body and thoughts",
       "visual": {
         "emoji": "🧠",
@@ -3311,7 +3205,7 @@
       "word": "bread",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "carbs",
+      "category": "carbohydrate",
       "definition": "A baked food made from flour and water",
       "visual": {
         "emoji": "🍞",
@@ -3792,7 +3686,7 @@
       "word": "bubbles",
       "partOfSpeech": "noun",
       "soundGroup": "b",
-      "category": "clean",
+      "category": "cleaning item",
       "definition": "Balls of air in liquid or a thin film",
       "visual": {
         "emoji": "🫧",
@@ -3977,7 +3871,7 @@
       "id": "bulb",
       "word": "bulb",
       "partOfSpeech": "noun",
-      "category": "engineering",
+      "category": "mechanical part",
       "soundGroup": "b",
       "definition": "A glass object that produces electric light",
       "visual": {
@@ -4385,7 +4279,7 @@
       "word": "calendar",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "time",
+      "category": "timekeeping device",
       "definition": "A chart showing the days, weeks, and months of a year",
       "visual": {
         "emoji": "📆",
@@ -4477,7 +4371,7 @@
       "word": "camera",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A device used to take photographs",
       "visual": {
         "emoji": "📷",
@@ -4523,7 +4417,7 @@
       "id": "camp",
       "word": "camp",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "outdoor activity",
       "soundGroup": "k",
       "definition": "To stay outside in a tent",
       "visual": {
@@ -4576,7 +4470,7 @@
       "word": "candle",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "household",
+      "category": "household item",
       "definition": "A stick of wax with a string that burns to give light",
       "visual": {
         "emoji": "🕯️",
@@ -4682,7 +4576,7 @@
       "word": "canoe",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "marine",
+      "category": "marine vessel",
       "definition": "A narrow boat moved with paddles",
       "visual": {
         "emoji": "🛶",
@@ -4741,7 +4635,7 @@
       "word": "cap",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A soft flat hat with a peak at the front",
       "visual": {
         "emoji": "🧢",
@@ -4857,7 +4751,7 @@
       "word": "card",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "finance",
+      "category": "financial item",
       "definition": "A flat piece of plastic used to pay for things",
       "visual": {
         "emoji": "💳",
@@ -5114,7 +5008,7 @@
       "id": "catch",
       "word": "catch",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "k",
       "definition": "To grab something that is moving through the air",
       "visual": {
@@ -5215,7 +5109,7 @@
       "word": "chain",
       "partOfSpeech": "noun",
       "soundGroup": "ch",
-      "category": "engineering",
+      "category": "mechanical part",
       "definition": "A series of metal rings connected together",
       "visual": {
         "emoji": "⛓️",
@@ -5272,7 +5166,7 @@
       "id": "chair",
       "word": "chair",
       "partOfSpeech": "noun",
-      "category": "furniture",
+      "category": "furniture item",
       "soundGroup": "ch",
       "definition": "A seat with a back for one person",
       "visual": {
@@ -5372,7 +5266,7 @@
       "id": "chart",
       "word": "chart",
       "partOfSpeech": "noun",
-      "category": "information",
+      "category": "information item",
       "soundGroup": "ch",
       "definition": "A drawing that shows information",
       "visual": {
@@ -5729,7 +5623,7 @@
       "phrases": []
     },
     {
-      "id": "chicken",
+      "id": "chicken_animal",
       "word": "chicken",
       "partOfSpeech": "noun",
       "soundGroup": "ch",
@@ -5779,7 +5673,7 @@
       ]
     },
     {
-      "id": "chicken",
+      "id": "chicken_food",
       "word": "chicken",
       "partOfSpeech": "noun",
       "soundGroup": "ch",
@@ -5933,7 +5827,7 @@
       "id": "chopsticks",
       "word": "chopsticks",
       "partOfSpeech": "noun",
-      "category": "tableware",
+      "category": "tableware item",
       "soundGroup": "ch",
       "definition": "Two thin sticks used for eating Asian food",
       "visual": {
@@ -6033,7 +5927,7 @@
       "word": "cigarette",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "habbit",
+      "category": "bad habit",
       "definition": "A thin tube of tobacco for smoking",
       "visual": {
         "emoji": "🚬",
@@ -6083,7 +5977,7 @@
       "id": "circus",
       "word": "circus",
       "partOfSpeech": "noun",
-      "category": "entertainment",
+      "category": "entertainment event",
       "soundGroup": "s",
       "definition": "A show with performers, clowns, and animals in a big tent",
       "visual": {
@@ -6177,7 +6071,7 @@
       "word": "clap",
       "partOfSpeech": "verb",
       "soundGroup": "k",
-      "category": "action",
+      "category": "action word",
       "definition": "Hitting your hands together to show approval",
       "visual": {
         "emoji": "👏",
@@ -6237,7 +6131,7 @@
       "word": "climb",
       "partOfSpeech": "verb",
       "soundGroup": "k",
-      "category": "action",
+      "category": "action word",
       "definition": "To go up using your hands and feet",
       "visual": {
         "emoji": "🧗",
@@ -6299,7 +6193,7 @@
       "word": "clipboard",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A flat board with a clip to hold papers",
       "visual": {
         "emoji": "📋",
@@ -6347,7 +6241,7 @@
       "id": "clock",
       "word": "clock",
       "partOfSpeech": "noun",
-      "category": "time",
+      "category": "timekeeping device",
       "soundGroup": "k",
       "definition": "A device that shows the time",
       "visual": {
@@ -6402,7 +6296,7 @@
       "word": "cloud",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "weather",
+      "category": "weather type",
       "definition": "White or gray masses of water vapor in the sky",
       "visual": {
         "emoji": "☁️",
@@ -6516,7 +6410,7 @@
       "word": "coat",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A piece of clothing worn over other clothes for warmth",
       "visual": {
         "emoji": "🧥",
@@ -6731,7 +6625,7 @@
       "word": "coffin",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "death",
+      "category": "funeral item",
       "definition": "A box in which dead people are buried",
       "visual": {
         "emoji": "⚰️",
@@ -6777,7 +6671,7 @@
       "word": "coin",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "finance",
+      "category": "financial item",
       "definition": "A small round piece of metal used as money",
       "visual": {
         "emoji": "🪙",
@@ -6892,7 +6786,7 @@
       "id": "comb",
       "word": "comb",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom item",
       "soundGroup": "k",
       "definition": "A tool with teeth used to tidy hair",
       "visual": {
@@ -6941,7 +6835,7 @@
       "id": "comet",
       "word": "comet",
       "partOfSpeech": "noun",
-      "category": "space",
+      "category": "space object",
       "soundGroup": "k",
       "definition": "A space object with a bright tail",
       "visual": {
@@ -6984,7 +6878,7 @@
       "word": "compass",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "travel",
+      "category": "travel item",
       "definition": "A device that shows which direction is north",
       "visual": {
         "emoji": "🧭",
@@ -7030,7 +6924,7 @@
       "word": "computer",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "An electronic machine that stores and processes information",
       "visual": {
         "emoji": "🖥️",
@@ -7301,7 +7195,7 @@
       "id": "couch",
       "word": "couch",
       "partOfSpeech": "noun",
-      "category": "furniture",
+      "category": "furniture item",
       "soundGroup": "k",
       "definition": "A long soft seat for more than one person",
       "visual": {
@@ -7459,7 +7353,7 @@
       "word": "crayon",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "art",
+      "category": "art supply",
       "definition": "A colored wax stick used for drawing",
       "visual": {
         "emoji": "🖍️",
@@ -7658,7 +7552,7 @@
       "word": "croissant",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "carbs",
+      "category": "carbohydrate",
       "definition": "A flaky crescent-shaped pastry from France",
       "visual": {
         "emoji": "🥐",
@@ -7810,7 +7704,7 @@
       "word": "crying",
       "partOfSpeech": "verb",
       "soundGroup": "k",
-      "category": "action",
+      "category": "action word",
       "definition": "Shedding tears from being sad or hurt",
       "visual": {
         "emoji": "😭",
@@ -7864,7 +7758,7 @@
       "id": "crystal ball",
       "word": "crystal ball",
       "partOfSpeech": "noun",
-      "category": "entertainment",
+      "category": "fortune telling item",
       "soundGroup": "k",
       "definition": "A magic ball that tells the future",
       "visual": {
@@ -8051,7 +7945,7 @@
       "id": "dance",
       "word": "dance",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "d",
       "definition": "To move your body to music",
       "visual": {
@@ -8150,7 +8044,7 @@
       "word": "dancing",
       "partOfSpeech": "verb",
       "soundGroup": "d",
-      "category": "action",
+      "category": "action word",
       "definition": "Moving your body to music",
       "visual": {
         "emoji": null,
@@ -8195,7 +8089,7 @@
       "id": "dart",
       "word": "dart",
       "partOfSpeech": "noun",
-      "category": "sport",
+      "category": "throwing sport",
       "soundGroup": "d",
       "definition": "A small pointed object thrown at a target",
       "visual": {
@@ -8389,7 +8283,7 @@
       "word": "devil",
       "partOfSpeech": "noun",
       "soundGroup": "d",
-      "category": "mythical",
+      "category": "mythical being",
       "definition": "An evil spirit with horns",
       "visual": {
         "emoji": "😈",
@@ -8446,7 +8340,7 @@
       "id": "diamond",
       "word": "diamond",
       "partOfSpeech": "noun",
-      "category": "jewelry",
+      "category": "piece of jewelry",
       "soundGroup": "d",
       "definition": "A very hard clear stone used in jewelry",
       "visual": {
@@ -8600,7 +8494,7 @@
       "id": "disc",
       "word": "disc",
       "partOfSpeech": "noun",
-      "category": "electronics",
+      "category": "electronic device",
       "soundGroup": "d",
       "definition": "A flat circular object that stores information",
       "visual": {
@@ -8648,7 +8542,7 @@
       "word": "dive",
       "partOfSpeech": "verb",
       "soundGroup": "d",
-      "category": "sport",
+      "category": "water activity",
       "definition": "To jump head first into water",
       "visual": {
         "emoji": "🤿",
@@ -8812,7 +8706,7 @@
       "id": "dollar",
       "word": "dollar",
       "partOfSpeech": "noun",
-      "category": "finance",
+      "category": "financial item",
       "soundGroup": "d",
       "definition": "A unit of money in the United States",
       "visual": {
@@ -9102,7 +8996,7 @@
       "id": "dragon",
       "word": "dragon",
       "partOfSpeech": "noun",
-      "category": "mythical",
+      "category": "mythical being",
       "soundGroup": "d",
       "definition": "A mythical creature that breathes fire and has wings",
       "visual": {
@@ -9149,7 +9043,7 @@
       "id": "draw",
       "word": "draw",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "d",
       "definition": "To make a picture using a pen or pencil",
       "visual": {
@@ -9205,7 +9099,7 @@
       "word": "dress",
       "partOfSpeech": "noun",
       "soundGroup": "d",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A piece of clothing with a top and skirt in one piece",
       "visual": {
         "emoji": "👗",
@@ -9480,7 +9374,7 @@
       "word": "ear",
       "partOfSpeech": "noun",
       "soundGroup": "e",
-      "category": "body",
+      "category": "body part",
       "definition": "The part of your body used for hearing",
       "visual": {
         "emoji": "👂",
@@ -9535,7 +9429,7 @@
       "word": "earth",
       "partOfSpeech": "noun",
       "soundGroup": "e",
-      "category": "space",
+      "category": "space object",
       "definition": "The planet we live on",
       "visual": {
         "emoji": "🌎",
@@ -9837,7 +9731,7 @@
       "id": "elf",
       "word": "elf",
       "partOfSpeech": "noun",
-      "category": "mythical",
+      "category": "mythical being",
       "soundGroup": "e",
       "definition": "A small magical creature",
       "visual": {
@@ -9883,7 +9777,7 @@
       "word": "envelope",
       "partOfSpeech": "noun",
       "soundGroup": "e",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A paper container for letters",
       "visual": {
         "emoji": "✉️",
@@ -9929,7 +9823,7 @@
       "word": "eye",
       "partOfSpeech": "noun",
       "soundGroup": "i",
-      "category": "body",
+      "category": "body part",
       "definition": "The part of your body used for seeing",
       "visual": {
         "emoji": "👁️",
@@ -10134,7 +10028,7 @@
       "id": "fax",
       "word": "fax",
       "partOfSpeech": "noun",
-      "category": "electronics",
+      "category": "electronic device",
       "soundGroup": "f",
       "definition": "A machine that sends documents over phone lines",
       "visual": {
@@ -10182,7 +10076,7 @@
       "word": "fence",
       "partOfSpeech": "verb",
       "soundGroup": "f",
-      "category": "sport",
+      "category": "combat sport",
       "definition": "To fight with thin swords as a sport",
       "visual": {
         "emoji": "🤺",
@@ -10235,7 +10129,7 @@
       "id": "finger",
       "word": "finger",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "f",
       "definition": "One of the five long parts at the end of your hand",
       "visual": {
@@ -10285,7 +10179,7 @@
       "word": "fire",
       "partOfSpeech": "noun",
       "soundGroup": "f",
-      "category": "nature",
+      "category": "natural element",
       "definition": "Hot flames that burn and give off heat and light",
       "visual": {
         "emoji": "🔥",
@@ -10347,7 +10241,7 @@
       "id": "fire extinguisher",
       "word": "fire extinguisher",
       "partOfSpeech": "noun",
-      "category": "household",
+      "category": "household item",
       "soundGroup": "f",
       "definition": "a manually operated device for extinguishing small fires",
       "visual": {
@@ -10495,7 +10389,7 @@
       "id": "fireworks",
       "word": "fireworks",
       "partOfSpeech": "noun",
-      "category": "entertainment",
+      "category": "entertainment event",
       "soundGroup": "f",
       "definition": "Explosives that make colorful lights in the sky",
       "visual": {
@@ -10540,7 +10434,7 @@
       "word": "fish",
       "partOfSpeech": "noun",
       "soundGroup": "f",
-      "category": "sea animal",
+      "category": "outdoor activity",
       "definition": "An animal that lives in water and has fins",
       "visual": {
         "emoji": "🐟",
@@ -10591,64 +10485,10 @@
       "alternateDefinition": "to catch fish"
     },
     {
-      "id": "fish",
-      "word": "fish",
-      "partOfSpeech": "verb",
-      "soundGroup": "f",
-      "category": "action",
-      "definition": "To catch fish with a hook and line",
-      "visual": {
-        "emoji": "🎣",
-        "asset": null
-      },
-      "relationships": {
-        "associated": [
-          "rod",
-          "bait",
-          "hook",
-          "water",
-          "catch",
-          "lake",
-          "boat"
-        ],
-        "antonyms": [],
-        "rhymes": [
-          "dish",
-          "wish",
-          "swish"
-        ],
-        "synonyms": []
-      },
-      "distractors": [
-        "vista",
-        "novel",
-        "color",
-        "shot",
-        "best",
-        "stone",
-        "hero",
-        "dwell",
-        "dust",
-        "chart"
-      ],
-      "sentences": [
-        "I fish at the lake.",
-        "We went fishing this weekend.",
-        "We fish at the lake.",
-        "Dad taught me to fish."
-      ],
-      "phrases": [
-        "Fish for compliments",
-        "Plenty of fish in the sea",
-        "Bigger fish to fry"
-      ],
-      "canBeNoun": true
-    },
-    {
       "id": "fist",
       "word": "fist",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "f",
       "definition": "A hand with all the fingers closed tightly",
       "visual": {
@@ -10903,7 +10743,7 @@
       "word": "folder",
       "partOfSpeech": "noun",
       "soundGroup": "f",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A folded cover for holding papers",
       "visual": {
         "emoji": "📁",
@@ -10956,7 +10796,7 @@
       "word": "foot",
       "partOfSpeech": "noun",
       "soundGroup": "f",
-      "category": "body",
+      "category": "body part",
       "definition": "The part of your body at the end of your leg",
       "visual": {
         "emoji": "🦶",
@@ -11113,7 +10953,7 @@
       "id": "fork",
       "word": "fork",
       "partOfSpeech": "noun",
-      "category": "tableware",
+      "category": "tableware item",
       "soundGroup": "f",
       "definition": "A tool with prongs used for eating",
       "visual": {
@@ -11213,7 +11053,7 @@
       "word": "fountain pen",
       "partOfSpeech": "noun",
       "soundGroup": "f",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A pen that holds ink inside",
       "visual": {
         "emoji": "🖋️",
@@ -11570,7 +11410,7 @@
       "word": "gear",
       "partOfSpeech": "noun",
       "soundGroup": "g",
-      "category": "engineering",
+      "category": "mechanical part",
       "definition": "A wheel with teeth that turns other wheels",
       "visual": {
         "emoji": "⚙️",
@@ -11626,7 +11466,7 @@
       "id": "gem",
       "word": "gem",
       "partOfSpeech": "noun",
-      "category": "jewelry",
+      "category": "piece of jewelry",
       "soundGroup": "j",
       "definition": "A precious stone used in jewelry",
       "visual": {
@@ -11678,7 +11518,7 @@
       "id": "germ",
       "word": "germ",
       "partOfSpeech": "noun",
-      "category": "nature",
+      "category": "natural element",
       "soundGroup": "j",
       "definition": "A tiny living thing that can make you sick",
       "visual": {
@@ -11725,7 +11565,7 @@
       "word": "ghost",
       "partOfSpeech": "noun",
       "soundGroup": "g",
-      "category": "mythical",
+      "category": "mythical being",
       "definition": "The spirit of a dead person",
       "visual": {
         "emoji": "👻",
@@ -11783,7 +11623,7 @@
       "id": "gift",
       "word": "gift",
       "partOfSpeech": "noun",
-      "category": "celebration",
+      "category": "celebration item",
       "soundGroup": "g",
       "definition": "Something you give to someone",
       "visual": {
@@ -12033,7 +11873,7 @@
       "id": "globe",
       "word": "globe",
       "partOfSpeech": "noun",
-      "category": "travel",
+      "category": "travel item",
       "soundGroup": "g",
       "definition": "A round model of the earth",
       "visual": {
@@ -12130,7 +11970,7 @@
       "id": "gloves",
       "word": "gloves",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "g",
       "definition": "Coverings for the hands with separate parts for each finger",
       "visual": {
@@ -13055,7 +12895,7 @@
       "id": "hand",
       "word": "hand",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "h",
       "definition": "The part of your body at the end of your arm with fingers",
       "visual": {
@@ -13163,7 +13003,7 @@
       "word": "handshake",
       "partOfSpeech": "noun",
       "soundGroup": "h",
-      "category": "action",
+      "category": "action word",
       "definition": "When two people hold and shake hands as a greeting",
       "visual": {
         "emoji": "🤝",
@@ -13277,7 +13117,7 @@
       "word": "hat",
       "partOfSpeech": "noun",
       "soundGroup": "h",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A covering worn on the head",
       "visual": {
         "emoji": "👒",
@@ -13339,7 +13179,7 @@
       "word": "headphones",
       "partOfSpeech": "noun",
       "soundGroup": "h",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A device worn over the ears to listen to sound",
       "visual": {
         "emoji": "🎧",
@@ -13393,7 +13233,7 @@
       "word": "headstone",
       "partOfSpeech": "noun",
       "soundGroup": "h",
-      "category": "death",
+      "category": "funeral item",
       "definition": "A stone marker on a grave",
       "visual": {
         "emoji": "🪦",
@@ -13440,7 +13280,7 @@
       "word": "heart",
       "partOfSpeech": "noun",
       "soundGroup": "h",
-      "category": "body",
+      "category": "body part",
       "definition": "The organ that pumps blood through your body",
       "visual": {
         "emoji": "❤️",
@@ -13540,7 +13380,7 @@
       "id": "heel",
       "word": "heel",
       "partOfSpeech": "noun",
-      "category": "footwear",
+      "category": "footwear item",
       "soundGroup": "h",
       "definition": "A shoe with a raised back part",
       "visual": {
@@ -13645,7 +13485,7 @@
       "word": "helmet",
       "partOfSpeech": "noun",
       "soundGroup": "h",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A hard hat that protects the head",
       "visual": {
         "emoji": "⛑️",
@@ -13688,7 +13528,7 @@
       "id": "hike",
       "word": "hike",
       "partOfSpeech": "verb",
-      "category": "sport",
+      "category": "outdoor activity",
       "soundGroup": "h",
       "definition": "To take a long walk in nature",
       "visual": {
@@ -13782,7 +13622,7 @@
       "id": "hit",
       "word": "hit",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "h",
       "definition": "To strike something with force",
       "visual": {
@@ -14469,53 +14309,6 @@
       "phrases": []
     },
     {
-      "id": "ice cream",
-      "word": "ice cream",
-      "partOfSpeech": "noun",
-      "category": "dessert",
-      "soundGroup": "i",
-      "definition": "A frozen sweet dessert",
-      "visual": {
-        "emoji": "🍦",
-        "asset": null
-      },
-      "relationships": {
-        "rhymes": [
-          "cream",
-          "dream",
-          "stream",
-          "team"
-        ],
-        "associated": [
-          "cold",
-          "cone",
-          "vanilla",
-          "chocolate",
-          "scoop",
-          "summer"
-        ],
-        "synonyms": [],
-        "antonyms": []
-      },
-      "distractors": [
-        "nor",
-        "six",
-        "hit",
-        "key",
-        "cut",
-        "age",
-        "pin",
-        "led",
-        "try",
-        "via"
-      ],
-      "sentences": [
-        "I love chocolate ice cream.",
-        "The ice cream melted in the sun."
-      ],
-      "phrases": []
-    },
-    {
       "id": "island",
       "word": "island",
       "partOfSpeech": "noun",
@@ -14565,7 +14358,7 @@
       "id": "jacket",
       "word": "jacket",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "j",
       "definition": "A short coat that covers the upper body",
       "visual": {
@@ -14752,7 +14545,7 @@
       "word": "juggle",
       "partOfSpeech": "verb",
       "soundGroup": "j",
-      "category": "action",
+      "category": "action word",
       "definition": "To keep several objects in the air by throwing and catching them",
       "visual": {
         "emoji": "🤹",
@@ -14858,7 +14651,7 @@
       "id": "jump",
       "word": "jump",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "j",
       "definition": "To push yourself up into the air with your legs",
       "visual": {
@@ -14967,7 +14760,7 @@
       "word": "key",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "security",
+      "category": "security item",
       "definition": "A small metal object that opens locks",
       "visual": {
         "emoji": "🗝️",
@@ -15025,7 +14818,7 @@
       "word": "keyboard",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A board with buttons used for typing on a computer",
       "visual": {
         "emoji": "⌨️",
@@ -15075,7 +14868,7 @@
       "id": "kick",
       "word": "kick",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "k",
       "definition": "To strike with your foot",
       "visual": {
@@ -15129,7 +14922,7 @@
       "id": "kimono",
       "word": "kimono",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "k",
       "definition": "A traditional Japanese robe with wide sleeves",
       "visual": {
@@ -15172,7 +14965,7 @@
       "word": "kiss",
       "partOfSpeech": "noun",
       "soundGroup": "k",
-      "category": "action",
+      "category": "action word",
       "definition": "Touching someone with your lips to show love",
       "visual": {
         "emoji": "💋",
@@ -15336,7 +15129,7 @@
       "word": "kneel",
       "partOfSpeech": "verb",
       "soundGroup": "n",
-      "category": "action",
+      "category": "action word",
       "definition": "To go down on your knees",
       "visual": {
         "emoji": "🧎",
@@ -15390,7 +15183,7 @@
       "id": "knife",
       "word": "knife",
       "partOfSpeech": "noun",
-      "category": "tableware",
+      "category": "tableware item",
       "soundGroup": "n",
       "definition": "A sharp tool used for cutting",
       "visual": {
@@ -15441,7 +15234,7 @@
       "id": "knit",
       "word": "knit",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "n",
       "definition": "To make fabric by looping yarn with needles",
       "visual": {
@@ -15641,7 +15434,7 @@
       "word": "lamp",
       "partOfSpeech": "noun",
       "soundGroup": "l",
-      "category": "furniture",
+      "category": "furniture item",
       "definition": "A device that produces light, usually with a shade",
       "visual": {
         "emoji": "🪔",
@@ -15692,7 +15485,7 @@
       "word": "lantern",
       "partOfSpeech": "noun",
       "soundGroup": "l",
-      "category": "household",
+      "category": "household item",
       "definition": "A lamp with a protective case that can be carried",
       "visual": {
         "emoji": "🏮",
@@ -15741,7 +15534,7 @@
       "word": "laptop",
       "partOfSpeech": "noun",
       "soundGroup": "l",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A small computer you can carry and use on your lap",
       "visual": {
         "emoji": "💻",
@@ -15798,7 +15591,7 @@
       "word": "leg",
       "partOfSpeech": "noun",
       "soundGroup": "l",
-      "category": "body",
+      "category": "body part",
       "definition": "The part of your body used for standing and walking",
       "visual": {
         "emoji": "🦵",
@@ -15988,7 +15781,7 @@
       "word": "lift",
       "partOfSpeech": "verb",
       "soundGroup": "l",
-      "category": "action",
+      "category": "action word",
       "definition": "To raise something up",
       "visual": {
         "emoji": "🏋️",
@@ -16045,7 +15838,7 @@
       "id": "lightbulb",
       "word": "lightbulb",
       "partOfSpeech": "noun",
-      "category": "household",
+      "category": "household item",
       "soundGroup": "l",
       "definition": "A glass object that produces light when electricity passes through it",
       "visual": {
@@ -16092,7 +15885,7 @@
       "word": "lightning",
       "partOfSpeech": "noun",
       "soundGroup": "l",
-      "category": "weather",
+      "category": "weather type",
       "definition": "A bright flash of electricity in the sky during a storm",
       "visual": {
         "emoji": "⚡",
@@ -16239,7 +16032,7 @@
       "id": "lips",
       "word": "lips",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "l",
       "definition": "The soft edges of your mouth",
       "visual": {
@@ -16292,7 +16085,7 @@
       "id": "lipstick",
       "word": "lipstick",
       "partOfSpeech": "noun",
-      "category": "makeup",
+      "category": "makeup item",
       "soundGroup": "l",
       "definition": "A colored stick used to color the lips",
       "visual": {
@@ -16484,7 +16277,7 @@
       "word": "lock",
       "partOfSpeech": "noun",
       "soundGroup": "l",
-      "category": "security",
+      "category": "security item",
       "definition": "A device that keeps something closed and secure",
       "visual": {
         "emoji": "🔒",
@@ -16598,7 +16391,7 @@
       "id": "lose",
       "word": "lose",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "l",
       "definition": "To not win a game or contest",
       "visual": {
@@ -16652,7 +16445,7 @@
       "id": "lotion",
       "word": "lotion",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom item",
       "soundGroup": "l",
       "definition": "A liquid cream for the skin",
       "visual": {
@@ -16763,7 +16556,7 @@
       "id": "lungs",
       "word": "lungs",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "l",
       "definition": "The organs in your chest used for breathing",
       "visual": {
@@ -16809,7 +16602,7 @@
       "id": "magic",
       "word": "magic",
       "partOfSpeech": "noun",
-      "category": "entertainment",
+      "category": "performance art",
       "soundGroup": "m",
       "definition": "The power to do impossible things",
       "visual": {
@@ -16857,7 +16650,7 @@
       "word": "magnet",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "engineering",
+      "category": "mechanical part",
       "definition": "An object that attracts iron and steel",
       "visual": {
         "emoji": "🧲",
@@ -16947,7 +16740,7 @@
       "word": "mailbox",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "household",
+      "category": "household item",
       "definition": "A box where mail is delivered or sent",
       "visual": {
         "emoji": "📮",
@@ -17114,7 +16907,7 @@
       "word": "map",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "travel",
+      "category": "travel item",
       "definition": "A drawing that shows where places are",
       "visual": {
         "emoji": "🗺️",
@@ -17170,7 +16963,7 @@
       "id": "marker",
       "word": "marker",
       "partOfSpeech": "noun",
-      "category": "stationery",
+      "category": "stationery item",
       "soundGroup": "m",
       "definition": "A pen with a thick felt tip",
       "visual": {
@@ -17364,7 +17157,7 @@
       "id": "meditate",
       "word": "meditate",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "m",
       "definition": "To sit quietly and focus your mind",
       "visual": {
@@ -17406,7 +17199,7 @@
       "id": "megaphone",
       "word": "megaphone",
       "partOfSpeech": "noun",
-      "category": "noise",
+      "category": "sound maker",
       "soundGroup": "m",
       "definition": "A cone-shaped device that makes your voice louder",
       "visual": {
@@ -17505,7 +17298,7 @@
       "word": "microphone",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A device used to record or amplify sound",
       "visual": {
         "emoji": "🎤",
@@ -17666,7 +17459,7 @@
       "id": "mirror",
       "word": "mirror",
       "partOfSpeech": "noun",
-      "category": "furniture",
+      "category": "furniture item",
       "soundGroup": "m",
       "definition": "A glass surface that shows your reflection",
       "visual": {
@@ -17712,7 +17505,7 @@
       "word": "money",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "finance",
+      "category": "financial item",
       "definition": "Coins and bills used to buy things",
       "visual": {
         "emoji": "💵",
@@ -17818,7 +17611,7 @@
       "word": "moon",
       "partOfSpeech": "noun",
       "soundGroup": "m",
-      "category": "space",
+      "category": "space object",
       "definition": "The round object that shines in the night sky",
       "visual": {
         "emoji": "🌙",
@@ -18117,7 +17910,7 @@
       "id": "mouth",
       "word": "mouth",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "m",
       "definition": "The opening in your face for eating and speaking",
       "visual": {
@@ -18165,7 +17958,7 @@
       "id": "muscle",
       "word": "muscle",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "m",
       "definition": "Body tissue that helps you move and be strong",
       "visual": {
@@ -18313,7 +18106,7 @@
       "id": "music",
       "word": "music",
       "partOfSpeech": "noun",
-      "category": "art",
+      "category": "art form",
       "soundGroup": "m",
       "definition": "Sounds arranged in a pleasing way",
       "visual": {
@@ -18358,7 +18151,7 @@
       "id": "necklace",
       "word": "necklace",
       "partOfSpeech": "noun",
-      "category": "jewelry",
+      "category": "piece of jewelry",
       "soundGroup": "n",
       "definition": "A piece of jewelry worn around the neck",
       "visual": {
@@ -18401,7 +18194,7 @@
       "word": "newspaper",
       "partOfSpeech": "noun",
       "soundGroup": "n",
-      "category": "information",
+      "category": "information item",
       "definition": "Printed sheets of paper with news and articles",
       "visual": {
         "emoji": "📰",
@@ -18545,7 +18338,7 @@
       "word": "noodles",
       "partOfSpeech": "noun",
       "soundGroup": "n",
-      "category": "carbs",
+      "category": "carbohydrate",
       "definition": "Long thin strips of pasta",
       "visual": {
         "emoji": "🍜",
@@ -18597,7 +18390,7 @@
       "word": "nose",
       "partOfSpeech": "noun",
       "soundGroup": "n",
-      "category": "body",
+      "category": "body part",
       "definition": "The part of your face used for smelling and breathing",
       "visual": {
         "emoji": "👃",
@@ -18658,7 +18451,7 @@
       "word": "notebook",
       "partOfSpeech": "noun",
       "soundGroup": "n",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A book with blank pages for writing notes",
       "visual": {
         "emoji": "📓",
@@ -18704,7 +18497,7 @@
       "id": "ocean",
       "word": "ocean",
       "partOfSpeech": "noun",
-      "category": "nature",
+      "category": "natural element",
       "soundGroup": "o",
       "definition": "A very large body of salt water",
       "visual": {
@@ -18851,7 +18644,7 @@
       "word": "okay",
       "partOfSpeech": "adjective",
       "soundGroup": "o",
-      "category": "sinage",
+      "category": "hand gesture",
       "definition": "All right or acceptable",
       "visual": {
         "emoji": "👌",
@@ -19057,7 +18850,7 @@
       ]
     },
     {
-      "id": "orange",
+      "id": "orange_color",
       "word": "orange",
       "partOfSpeech": "adjective",
       "soundGroup": "o",
@@ -19102,7 +18895,7 @@
       "phrases": []
     },
     {
-      "id": "orange",
+      "id": "orange_fruit",
       "word": "orange",
       "partOfSpeech": "noun",
       "soundGroup": "o",
@@ -19298,7 +19091,7 @@
       "id": "paint",
       "word": "paint",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "p",
       "definition": "To create a picture using colors",
       "visual": {
@@ -19349,7 +19142,7 @@
       "word": "paintbrush",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "art",
+      "category": "art supply",
       "definition": "A brush used to apply paint",
       "visual": {
         "emoji": "🖌️",
@@ -19402,7 +19195,7 @@
       "word": "pancake",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "carbs",
+      "category": "carbohydrate",
       "definition": "A flat, round cake cooked on a griddle",
       "visual": {
         "emoji": "🥞",
@@ -19501,7 +19294,7 @@
       "word": "pants",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "Clothing worn on the lower body covering each leg",
       "visual": {
         "emoji": "👖",
@@ -19560,7 +19353,7 @@
       "word": "paperclip",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A bent piece of wire used to hold papers together",
       "visual": {
         "emoji": "🖇️",
@@ -19762,7 +19555,7 @@
       "id": "party",
       "word": "party",
       "partOfSpeech": "noun",
-      "category": "entertainment",
+      "category": "entertainment event",
       "soundGroup": "p",
       "definition": "A gathering of people to celebrate",
       "visual": {
@@ -19812,7 +19605,7 @@
       "id": "pasta",
       "word": "pasta",
       "partOfSpeech": "noun",
-      "category": "carbs",
+      "category": "carbohydrate",
       "soundGroup": "p",
       "definition": "Italian food made from flour and shaped in many ways",
       "visual": {
@@ -20125,7 +19918,7 @@
       "word": "pen",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A tool with ink used for writing",
       "visual": {
         "emoji": "🖊️",
@@ -20178,7 +19971,7 @@
       "word": "pencil",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A writing tool made of wood with graphite inside",
       "visual": {
         "emoji": "✏️",
@@ -20319,7 +20112,7 @@
       "word": "phone",
       "partOfSpeech": "noun",
       "soundGroup": "f",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A device used to talk to people far away",
       "visual": {
         "emoji": "☎️",
@@ -20471,7 +20264,7 @@
       "id": "picture",
       "word": "picture",
       "partOfSpeech": "noun",
-      "category": "art",
+      "category": "art supply",
       "soundGroup": "p",
       "definition": "An image or photograph",
       "visual": {
@@ -20635,7 +20428,7 @@
       "id": "pill",
       "word": "pill",
       "partOfSpeech": "noun",
-      "category": "medical",
+      "category": "medical item",
       "soundGroup": "p",
       "definition": "A small round piece of medicine that you swallow",
       "visual": {
@@ -20738,7 +20531,7 @@
       "word": "pin",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "stationary",
+      "category": "stationery item",
       "definition": "A thin pointed piece of metal",
       "visual": {
         "emoji": "📌",
@@ -20942,7 +20735,7 @@
       "id": "plate",
       "word": "plate",
       "partOfSpeech": "noun",
-      "category": "tableware",
+      "category": "tableware item",
       "soundGroup": "p",
       "definition": "A flat dish for serving food",
       "visual": {
@@ -20996,7 +20789,7 @@
       "id": "play",
       "word": "play",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "p",
       "definition": "To do something for fun",
       "visual": {
@@ -21053,7 +20846,7 @@
       "word": "plug",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A device that connects to an electrical socket",
       "visual": {
         "emoji": "🔌",
@@ -21107,7 +20900,7 @@
       "id": "plunger",
       "word": "plunger",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom item",
       "soundGroup": "p",
       "definition": "A tool with a rubber cup used to clear drains",
       "visual": {
@@ -21349,7 +21142,7 @@
       "word": "pray",
       "partOfSpeech": "verb",
       "soundGroup": "p",
-      "category": "action",
+      "category": "action word",
       "definition": "To speak to God or show respect with folded hands",
       "visual": {
         "emoji": "🙏",
@@ -21594,7 +21387,7 @@
       "word": "printer",
       "partOfSpeech": "noun",
       "soundGroup": "p",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A machine that puts text and images on paper",
       "visual": {
         "emoji": "🖨️",
@@ -21841,7 +21634,7 @@
       "id": "pushpin",
       "word": "pushpin",
       "partOfSpeech": "noun",
-      "category": "stationery",
+      "category": "stationery item",
       "soundGroup": "p",
       "definition": "A short pin with a round head",
       "visual": {
@@ -22032,7 +21825,7 @@
       "word": "radio",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A device for listening to broadcast programs",
       "visual": {
         "emoji": "📻",
@@ -22126,7 +21919,7 @@
       "word": "rain",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "weather",
+      "category": "weather type",
       "definition": "Water that falls from clouds in drops",
       "visual": {
         "emoji": "🌧️",
@@ -22187,7 +21980,7 @@
       "word": "rainbow",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "weather",
+      "category": "weather type",
       "definition": "A curved band of colors in the sky after rain",
       "visual": {
         "emoji": "🌈",
@@ -22284,7 +22077,7 @@
       "id": "razor",
       "word": "razor",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom item",
       "soundGroup": "r",
       "definition": "A tool with a sharp blade for shaving hair",
       "visual": {
@@ -22330,7 +22123,7 @@
       "word": "receipt",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "finance",
+      "category": "financial item",
       "definition": "A paper showing what was bought and paid for",
       "visual": {
         "emoji": "🧾",
@@ -22479,7 +22272,7 @@
       "word": "rice",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "carbs",
+      "category": "carbohydrate",
       "definition": "Small white grains that are cooked and eaten",
       "visual": {
         "emoji": "🍚",
@@ -22533,7 +22326,7 @@
       "word": "ride",
       "partOfSpeech": "verb",
       "soundGroup": "r",
-      "category": "action",
+      "category": "action word",
       "definition": "To sit on and control a moving vehicle or animal",
       "visual": {
         "emoji": "🏇",
@@ -22594,7 +22387,7 @@
       "word": "ring",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "jewelry",
+      "category": "piece of jewelry",
       "definition": "A small circular band worn on the finger",
       "visual": {
         "emoji": "💍",
@@ -22718,7 +22511,7 @@
       "word": "robot",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "technology",
+      "category": "technology item",
       "definition": "A machine that can do tasks automatically",
       "visual": {
         "emoji": "🤖",
@@ -22763,7 +22556,7 @@
       "id": "rock",
       "word": "rock",
       "partOfSpeech": "noun",
-      "category": "nature",
+      "category": "natural element",
       "soundGroup": "r",
       "definition": "A hard solid piece of stone",
       "visual": {
@@ -22879,7 +22672,7 @@
       "word": "row",
       "partOfSpeech": "verb",
       "soundGroup": "r",
-      "category": "sport",
+      "category": "water sport",
       "definition": "To move a boat using oars",
       "visual": {
         "emoji": "🚣",
@@ -22937,7 +22730,7 @@
       "word": "ruler",
       "partOfSpeech": "noun",
       "soundGroup": "r",
-      "category": "stationary",
+      "category": "stationery item",
       "definition": "A straight tool used for measuring length",
       "visual": {
         "emoji": "📏",
@@ -22984,7 +22777,7 @@
       "word": "run",
       "partOfSpeech": "verb",
       "soundGroup": "r",
-      "category": "action",
+      "category": "action word",
       "definition": "To move quickly on your feet",
       "visual": {
         "emoji": "🏃",
@@ -23108,7 +22901,7 @@
       "id": "safety pin",
       "word": "safety pin",
       "partOfSpeech": "noun",
-      "category": "household",
+      "category": "household item",
       "soundGroup": "s",
       "definition": "A pin with a clasp to protect the point",
       "visual": {
@@ -23156,7 +22949,7 @@
       "word": "sailboat",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "marine",
+      "category": "marine vessel",
       "definition": "A boat that moves using sails and wind",
       "visual": {
         "emoji": "⛵",
@@ -23308,7 +23101,7 @@
       "id": "sandal",
       "word": "sandal",
       "partOfSpeech": "noun",
-      "category": "footwear",
+      "category": "footwear item",
       "soundGroup": "s",
       "definition": "An open shoe with straps",
       "visual": {
@@ -23354,7 +23147,7 @@
       "id": "sandals",
       "word": "sandals",
       "partOfSpeech": "noun",
-      "category": "footwear",
+      "category": "footwear item",
       "soundGroup": "s",
       "definition": "Open shoes held on by straps",
       "visual": {
@@ -23450,7 +23243,7 @@
       "id": "santa",
       "word": "Santa",
       "partOfSpeech": "noun",
-      "category": "mythical",
+      "category": "holiday character",
       "soundGroup": "s",
       "definition": "A jolly man who brings gifts at Christmas",
       "visual": {
@@ -23495,7 +23288,7 @@
       "id": "satellite",
       "word": "satellite",
       "partOfSpeech": "noun",
-      "category": "space",
+      "category": "space object",
       "soundGroup": "s",
       "definition": "An object that orbits the earth in space",
       "visual": {
@@ -23767,7 +23560,7 @@
       "word": "scarf",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A long piece of cloth worn around the neck for warmth",
       "visual": {
         "emoji": "🧣",
@@ -23915,7 +23708,7 @@
       "word": "scissors",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "stationery",
+      "category": "stationery item",
       "definition": "A tool with two sharp blades for cutting",
       "visual": {
         "emoji": "✂️",
@@ -24257,7 +24050,7 @@
       "id": "sew",
       "word": "sew",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "s",
       "definition": "To join fabric using a needle and thread",
       "visual": {
@@ -24418,7 +24211,7 @@
       "word": "ship",
       "partOfSpeech": "noun",
       "soundGroup": "sh",
-      "category": "marine",
+      "category": "marine vessel",
       "definition": "A large boat that travels on the sea",
       "visual": {
         "emoji": "🚢",
@@ -24480,7 +24273,7 @@
       "word": "shirt",
       "partOfSpeech": "noun",
       "soundGroup": "sh",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A piece of clothing worn on the upper body",
       "visual": {
         "emoji": "👕",
@@ -24586,7 +24379,7 @@
       "word": "shoe",
       "partOfSpeech": "noun",
       "soundGroup": "sh",
-      "category": "footwear",
+      "category": "footwear item",
       "definition": "A covering worn on the foot",
       "visual": {
         "emoji": "👞",
@@ -24700,7 +24493,7 @@
       "id": "shopping cart",
       "word": "shopping cart",
       "partOfSpeech": "noun",
-      "category": "household",
+      "category": "household item",
       "soundGroup": "k",
       "definition": "A container on wheels for carrying things",
       "visual": {
@@ -24753,7 +24546,7 @@
       "id": "shorts",
       "word": "shorts",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "sh",
       "definition": "Short pants that end above the knee",
       "visual": {
@@ -24803,7 +24596,7 @@
       "id": "shower",
       "word": "shower",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom item",
       "soundGroup": "sh",
       "definition": "A device that sprays water for washing the body",
       "visual": {
@@ -24965,7 +24758,7 @@
       "id": "sign",
       "word": "sign",
       "partOfSpeech": "noun",
-      "category": "information",
+      "category": "information item",
       "soundGroup": "s",
       "definition": "A board with words or symbols giving information",
       "visual": {
@@ -25063,7 +24856,7 @@
       "id": "sing",
       "word": "sing",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "s",
       "definition": "To make music with your voice",
       "visual": {
@@ -25215,7 +25008,7 @@
       "id": "skate",
       "word": "skate",
       "partOfSpeech": "verb",
-      "category": "sport",
+      "category": "skating activity",
       "soundGroup": "s",
       "definition": "To glide on ice or wheels",
       "visual": {
@@ -25317,7 +25110,7 @@
       "id": "skates",
       "word": "skates",
       "partOfSpeech": "noun",
-      "category": "sport",
+      "category": "sporting equipment",
       "soundGroup": "s",
       "definition": "Boots with wheels or blades for gliding",
       "visual": {
@@ -25370,7 +25163,7 @@
       "word": "ski",
       "partOfSpeech": "verb",
       "soundGroup": "s",
-      "category": "sport",
+      "category": "winter sport",
       "definition": "To glide over snow on long flat runners",
       "visual": {
         "emoji": "⛷️",
@@ -25424,7 +25217,7 @@
       "word": "skull",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "body",
+      "category": "body part",
       "definition": "The bones of the head that protect the brain",
       "visual": {
         "emoji": "💀",
@@ -25780,7 +25573,7 @@
       "word": "sneaker",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "footwear",
+      "category": "footwear item",
       "definition": "A soft shoe worn for sports or casual wear",
       "visual": {
         "emoji": "👟",
@@ -25832,7 +25625,7 @@
       "word": "snow",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "weather",
+      "category": "weather type",
       "definition": "Soft white flakes of frozen water that fall from the sky",
       "visual": {
         "emoji": "❄️",
@@ -25935,7 +25728,7 @@
       "id": "snowflake",
       "word": "snowflake",
       "partOfSpeech": "noun",
-      "category": "weather",
+      "category": "weather type",
       "soundGroup": "s",
       "definition": "A single piece of snow",
       "visual": {
@@ -25987,7 +25780,7 @@
       "word": "snowman",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "winter",
+      "category": "winter item",
       "definition": "A figure made of snow shaped like a person",
       "visual": {
         "emoji": "⛄",
@@ -26041,7 +25834,7 @@
       "word": "soap",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "bathroom",
+      "category": "bathroom item",
       "definition": "A substance used with water for washing",
       "visual": {
         "emoji": "🧼",
@@ -26140,7 +25933,7 @@
       "id": "sock",
       "word": "sock",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "s",
       "definition": "A soft covering worn on the foot inside a shoe",
       "visual": {
@@ -26192,7 +25985,7 @@
       "id": "socks",
       "word": "socks",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "s",
       "definition": "Soft coverings worn on the feet inside shoes",
       "visual": {
@@ -26343,7 +26136,7 @@
       "word": "SOS",
       "partOfSpeech": "noun",
       "soundGroup": "e",
-      "category": "sinage",
+      "category": "hand gesture",
       "definition": "A signal asking for help",
       "visual": {
         "emoji": "🆘",
@@ -26483,7 +26276,7 @@
       "id": "sparkle",
       "word": "sparkle",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "s",
       "definition": "To shine with small bright flashes of light",
       "visual": {
@@ -26529,7 +26322,7 @@
       "id": "speaker",
       "word": "speaker",
       "partOfSpeech": "noun",
-      "category": "electronics",
+      "category": "electronic device",
       "soundGroup": "s",
       "definition": "A device that produces sound",
       "visual": {
@@ -26574,7 +26367,7 @@
       "id": "speedboat",
       "word": "speedboat",
       "partOfSpeech": "noun",
-      "category": "marine",
+      "category": "marine vessel",
       "soundGroup": "s",
       "definition": "A small fast boat with a motor",
       "visual": {
@@ -26671,7 +26464,7 @@
       "word": "sponge",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "household",
+      "category": "household item",
       "definition": "A soft material that absorbs water for cleaning",
       "visual": {
         "emoji": "🧽",
@@ -26720,7 +26513,7 @@
       "id": "spoon",
       "word": "spoon",
       "partOfSpeech": "noun",
-      "category": "tableware",
+      "category": "tableware item",
       "soundGroup": "s",
       "definition": "A tool with a round bowl used for eating soup",
       "visual": {
@@ -26910,7 +26703,7 @@
       "word": "stand",
       "partOfSpeech": "verb",
       "soundGroup": "s",
-      "category": "action",
+      "category": "action word",
       "definition": "To be on your feet in an upright position",
       "visual": {
         "emoji": "🧍",
@@ -26973,7 +26766,7 @@
       "word": "star",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "space",
+      "category": "space object",
       "definition": "A bright point of light in the night sky",
       "visual": {
         "emoji": "⭐",
@@ -27186,7 +26979,7 @@
       "word": "storm",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "weather",
+      "category": "weather type",
       "definition": "Very bad weather with strong wind and rain",
       "visual": {
         "emoji": "⛈️",
@@ -27292,7 +27085,7 @@
       "id": "stretch",
       "word": "stretch",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "s",
       "definition": "To extend your body or limbs",
       "visual": {
@@ -27453,7 +27246,7 @@
       "word": "sun",
       "partOfSpeech": "noun",
       "soundGroup": "s",
-      "category": "space",
+      "category": "space object",
       "definition": "The star that gives us light and heat during the day",
       "visual": {
         "emoji": "☀️",
@@ -27558,7 +27351,7 @@
       "id": "sunrise",
       "word": "sunrise",
       "partOfSpeech": "noun",
-      "category": "weather",
+      "category": "weather type",
       "soundGroup": "s",
       "definition": "The time when the sun comes up in the morning",
       "visual": {
@@ -27610,7 +27403,7 @@
       "id": "sunset",
       "word": "sunset",
       "partOfSpeech": "noun",
-      "category": "weather",
+      "category": "weather type",
       "soundGroup": "s",
       "definition": "The time when the sun goes down in the evening",
       "visual": {
@@ -27714,7 +27507,7 @@
       "word": "surf",
       "partOfSpeech": "verb",
       "soundGroup": "s",
-      "category": "sport",
+      "category": "water sport",
       "definition": "To ride on waves using a board",
       "visual": {
         "emoji": "🏄",
@@ -27914,7 +27707,7 @@
       "word": "swim",
       "partOfSpeech": "verb",
       "soundGroup": "s",
-      "category": "sport",
+      "category": "water activity",
       "definition": "To move through water using your arms and legs",
       "visual": {
         "emoji": "🏊",
@@ -27970,7 +27763,7 @@
       "id": "swimmer",
       "word": "swimmer",
       "partOfSpeech": "noun",
-      "category": "sport",
+      "category": "athlete",
       "soundGroup": "s",
       "definition": "A person who swims",
       "visual": {
@@ -28016,7 +27809,7 @@
       "id": "swimsuit",
       "word": "swimsuit",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "s",
       "definition": "Clothing worn for swimming",
       "visual": {
@@ -28065,7 +27858,7 @@
       "id": "syringe",
       "word": "syringe",
       "partOfSpeech": "noun",
-      "category": "medical",
+      "category": "medical item",
       "soundGroup": "s",
       "definition": "A medical tool with a needle for giving injections",
       "visual": {
@@ -28159,7 +27952,7 @@
       "id": "tag",
       "word": "tag",
       "partOfSpeech": "noun",
-      "category": "information",
+      "category": "information item",
       "soundGroup": "t",
       "definition": "A small label attached to something",
       "visual": {
@@ -28213,7 +28006,7 @@
       "id": "talk",
       "word": "talk",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "t",
       "definition": "To say words; to speak",
       "visual": {
@@ -28269,7 +28062,7 @@
       "id": "target",
       "word": "target",
       "partOfSpeech": "noun",
-      "category": "sport",
+      "category": "shooting sport",
       "soundGroup": "t",
       "definition": "Something you aim at",
       "visual": {
@@ -28536,7 +28329,7 @@
       "id": "telescope",
       "word": "telescope",
       "partOfSpeech": "noun",
-      "category": "space",
+      "category": "space object",
       "soundGroup": "t",
       "definition": "A device for seeing things far away, like stars",
       "visual": {
@@ -28584,7 +28377,7 @@
       "word": "television",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "electronics",
+      "category": "electronic device",
       "definition": "A device with a screen for watching programs",
       "visual": {
         "emoji": "📺",
@@ -28780,7 +28573,7 @@
       "word": "tent",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "camping",
+      "category": "camping item",
       "definition": "A portable shelter made of fabric",
       "visual": {
         "emoji": "⛺",
@@ -28884,7 +28677,7 @@
       "word": "thinking",
       "partOfSpeech": "verb",
       "soundGroup": "th",
-      "category": "action",
+      "category": "action word",
       "definition": "Using your mind to consider something",
       "visual": {
         "emoji": "🤔",
@@ -28989,7 +28782,7 @@
       "word": "throw",
       "partOfSpeech": "verb",
       "soundGroup": "th",
-      "category": "action",
+      "category": "action word",
       "definition": "To send something through the air with your hand",
       "visual": {
         "emoji": "🤾",
@@ -29054,7 +28847,7 @@
       "id": "thumb",
       "word": "thumb",
       "partOfSpeech": "noun",
-      "category": "body",
+      "category": "body part",
       "soundGroup": "th",
       "definition": "The short thick finger on your hand",
       "visual": {
@@ -29108,7 +28901,7 @@
       "id": "thumbs up",
       "word": "thumbs up",
       "partOfSpeech": "noun",
-      "category": "sinage",
+      "category": "hand gesture",
       "soundGroup": "th",
       "definition": "A gesture showing approval",
       "visual": {
@@ -29155,7 +28948,7 @@
       "word": "tie",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "clothing",
+      "category": "clothing item",
       "definition": "A piece of cloth worn around the neck with a shirt",
       "visual": {
         "emoji": "👔",
@@ -29321,7 +29114,7 @@
       "id": "toilet",
       "word": "toilet",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom item",
       "soundGroup": "t",
       "definition": "A fixture in the bathroom for human waste",
       "visual": {
@@ -29364,7 +29157,7 @@
       "word": "toilet paper",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "household",
+      "category": "household item",
       "definition": "Soft paper used in the bathroom",
       "visual": {
         "emoji": "🧻",
@@ -29460,7 +29253,7 @@
       "word": "tongue",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "body",
+      "category": "body part",
       "definition": "The soft part inside your mouth used for tasting and speaking",
       "visual": {
         "emoji": "👅",
@@ -29569,7 +29362,7 @@
       "word": "tooth",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "body",
+      "category": "body part",
       "definition": "One of the hard white parts in your mouth for biting",
       "visual": {
         "emoji": "🦷",
@@ -29623,7 +29416,7 @@
       "word": "toothbrush",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "bathroom",
+      "category": "bathroom item",
       "definition": "A small brush for cleaning teeth",
       "visual": {
         "emoji": "🪥",
@@ -29673,7 +29466,7 @@
       "word": "tornado",
       "partOfSpeech": "noun",
       "soundGroup": "t",
-      "category": "weather",
+      "category": "weather type",
       "definition": "A spinning column of air that causes damage",
       "visual": {
         "emoji": "🌪️",
@@ -29875,7 +29668,7 @@
       "id": "trash",
       "word": "trash",
       "partOfSpeech": "noun",
-      "category": "household",
+      "category": "household item",
       "soundGroup": "t",
       "definition": "Things that are thrown away",
       "visual": {
@@ -30278,7 +30071,7 @@
       "id": "unicorn",
       "word": "unicorn",
       "partOfSpeech": "noun",
-      "category": "mythical",
+      "category": "mythical being",
       "soundGroup": "y",
       "definition": "A magical horse with a single horn on its head",
       "visual": {
@@ -30371,7 +30164,7 @@
       "id": "vest",
       "word": "vest",
       "partOfSpeech": "noun",
-      "category": "clothing",
+      "category": "clothing item",
       "soundGroup": "v",
       "definition": "A sleeveless piece of clothing worn over a shirt",
       "visual": {
@@ -30575,7 +30368,7 @@
       "word": "waffle",
       "partOfSpeech": "noun",
       "soundGroup": "w",
-      "category": "carbs",
+      "category": "carbohydrate",
       "definition": "A crispy cake with a grid pattern cooked in a special iron",
       "visual": {
         "emoji": "🧇",
@@ -30620,7 +30413,7 @@
       "word": "walk",
       "partOfSpeech": "verb",
       "soundGroup": "w",
-      "category": "action",
+      "category": "action word",
       "definition": "To move by putting one foot in front of the other",
       "visual": {
         "emoji": "🚶",
@@ -30726,7 +30519,7 @@
       "id": "watch",
       "word": "watch",
       "partOfSpeech": "noun",
-      "category": "time",
+      "category": "timekeeping device",
       "soundGroup": "w",
       "definition": "A small clock worn on the wrist",
       "visual": {
@@ -30882,10 +30675,10 @@
       "phrases": []
     },
     {
-      "id": "wave",
+      "id": "wave_nature",
       "word": "wave",
       "partOfSpeech": "noun",
-      "category": "nature",
+      "category": "natural element",
       "soundGroup": "w",
       "definition": "A moving ridge of water in the sea",
       "visual": {
@@ -30937,11 +30730,11 @@
       "alternateDefinition": "to move back and forth as a greeting"
     },
     {
-      "id": "wave",
+      "id": "wave_action",
       "word": "wave",
       "partOfSpeech": "verb",
       "soundGroup": "w",
-      "category": "action",
+      "category": "action word",
       "definition": "To move your hand to say hello or goodbye",
       "visual": {
         "emoji": "👋",
@@ -30995,7 +30788,7 @@
       "id": "web",
       "word": "web",
       "partOfSpeech": "noun",
-      "category": "nature",
+      "category": "natural element",
       "soundGroup": "w",
       "definition": "A net made by a spider to catch insects",
       "visual": {
@@ -31095,7 +30888,7 @@
       "id": "wheel",
       "word": "wheel",
       "partOfSpeech": "noun",
-      "category": "engineering",
+      "category": "mechanical part",
       "soundGroup": "w",
       "definition": "A circular object that turns to move a vehicle",
       "visual": {
@@ -31210,7 +31003,7 @@
       "id": "win",
       "word": "win",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "w",
       "definition": "To be first or best in a game or contest",
       "visual": {
@@ -31683,7 +31476,7 @@
       "word": "wrestle",
       "partOfSpeech": "verb",
       "soundGroup": "r",
-      "category": "sport",
+      "category": "combat sport",
       "definition": "To fight by holding and trying to throw someone down",
       "visual": {
         "emoji": "🤼",
@@ -31964,7 +31757,7 @@
       "id": "laughing",
       "word": "laughing",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "l",
       "definition": "Making sounds and movements to show you find something funny",
       "visual": {
@@ -32075,7 +31868,7 @@
       "id": "holy",
       "word": "holy",
       "partOfSpeech": "adjective",
-      "category": "mythical",
+      "category": "religious concept",
       "soundGroup": "h",
       "definition": "Dedicated to God or religious purpose; sacred",
       "visual": {
@@ -32303,7 +32096,7 @@
       "id": "peek",
       "word": "peek",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "p",
       "definition": "To look quickly or secretly at something",
       "visual": {
@@ -32362,7 +32155,7 @@
       "id": "quiet",
       "word": "quiet",
       "partOfSpeech": "adjective",
-      "category": "noise",
+      "category": "sound level",
       "soundGroup": "k",
       "definition": "Making little or no noise; peaceful and calm",
       "visual": {
@@ -32420,7 +32213,7 @@
       "id": "agreed",
       "word": "agreed",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "a",
       "definition": "Having the same opinion; accepted as correct",
       "visual": {
@@ -32479,7 +32272,7 @@
       "id": "secret",
       "word": "secret",
       "partOfSpeech": "noun",
-      "category": "information",
+      "category": "information item",
       "soundGroup": "s",
       "definition": "Something kept hidden from others; not known by everyone",
       "visual": {
@@ -32584,7 +32377,7 @@
       "id": "foggy",
       "word": "foggy",
       "partOfSpeech": "adjective",
-      "category": "weather",
+      "category": "weather type",
       "soundGroup": "f",
       "definition": "Full of fog; unclear or confused",
       "visual": {
@@ -32642,7 +32435,7 @@
       "id": "smirk",
       "word": "smirk",
       "partOfSpeech": "noun",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "s",
       "definition": "A smile expressing satisfaction or amusement, often in an annoying way",
       "visual": {
@@ -32698,7 +32491,7 @@
       "id": "eyeroll",
       "word": "eyeroll",
       "partOfSpeech": "noun",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "i",
       "definition": "Rolling your eyes upward to show annoyance or disbelief",
       "visual": {
@@ -32746,7 +32539,7 @@
       "id": "sneeze",
       "word": "sneeze",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "s",
       "definition": "To suddenly force air out through your nose and mouth",
       "visual": {
@@ -32798,7 +32591,7 @@
       "id": "lie",
       "word": "lie",
       "partOfSpeech": "noun",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "l",
       "definition": "A statement that is not true; to tell an untruth",
       "visual": {
@@ -32862,7 +32655,7 @@
       "id": "drool",
       "word": "drool",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "d",
       "definition": "To let saliva flow from the mouth",
       "visual": {
@@ -32972,7 +32765,7 @@
       "id": "covid",
       "word": "covid",
       "partOfSpeech": "noun",
-      "category": "medical",
+      "category": "medical item",
       "soundGroup": "k",
       "definition": "A contagious respiratory illness caused by a coronavirus",
       "visual": {
@@ -33019,7 +32812,7 @@
       "id": "fever",
       "word": "fever",
       "partOfSpeech": "noun",
-      "category": "medical",
+      "category": "medical item",
       "soundGroup": "f",
       "definition": "An abnormally high body temperature, usually due to illness",
       "visual": {
@@ -33072,7 +32865,7 @@
       "id": "concussion",
       "word": "concussion",
       "partOfSpeech": "noun",
-      "category": "medical",
+      "category": "medical item",
       "soundGroup": "k",
       "definition": "A brain injury caused by a blow to the head",
       "visual": {
@@ -33119,7 +32912,7 @@
       "id": "vomit",
       "word": "vomit",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "v",
       "definition": "To throw up food from the stomach through the mouth",
       "visual": {
@@ -33282,7 +33075,7 @@
       "id": "adventure",
       "word": "adventure",
       "partOfSpeech": "noun",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "a",
       "definition": "An exciting or unusual experience, often involving risk",
       "visual": {
@@ -33439,7 +33232,7 @@
       "id": "yawn",
       "word": "yawn",
       "partOfSpeech": "verb",
-      "category": "action",
+      "category": "action word",
       "soundGroup": "y",
       "definition": "To open your mouth wide and breathe in when tired or bored",
       "visual": {
@@ -33490,7 +33283,7 @@
       "id": "bath",
       "word": "bath",
       "partOfSpeech": "noun",
-      "category": "bathroom",
+      "category": "bathroom activity",
       "soundGroup": "b",
       "definition": "The act of washing your body in a bathtub filled with water",
       "visual": {

@@ -13,13 +13,22 @@ class CategoryExercise extends SelectionExercise {
         super({ type: 'category' });
     }
     
+    /**
+     * Get the appropriate article (a/an) for a word
+     */
+    getArticle(word) {
+        if (!word) return 'a';
+        const firstLetter = word.trim().toLowerCase()[0];
+        return 'aeiou'.includes(firstLetter) ? 'an' : 'a';
+    }
+    
     renderPrompt() {
         const category = this.currentItem.category;
-        const isPlural = category.endsWith('s');
-        const article = isPlural ? '' : (/^[aeiou]/i.test(category) ? 'an' : 'a');
-        const questionText = isPlural 
-            ? `Which word belongs to ${category}?`
-            : `Which word is ${article} ${category}?`;
+        const article = this.getArticle(category);
+        const questionText = t('exercises.category.question', { 
+            article: article,
+            category: category 
+        });
         
         return `
             <p class="prompt-instruction">${questionText}</p>
@@ -29,8 +38,12 @@ class CategoryExercise extends SelectionExercise {
     
     async playPromptAudio() {
         const category = this.currentItem.category;
-        const article = /^[aeiou]/i.test(category) ? 'an' : 'a';
-        await audioService.speak(`Which word is ${article} ${category}?`);
+        const article = this.getArticle(category);
+        const questionText = t('exercises.category.questionAudio', {
+            article: article,
+            category: category
+        });
+        await audioService.speak(questionText);
     }
     
     async handlePlayAll() {
