@@ -1,5 +1,7 @@
 import storageService from './StorageService.js';
 import imageStorage from './ImageStorageService.js';
+import csvService from './CSVService.js';
+import { i18n, t } from '../core/i18n.js';
 
 /**
  * Import/Export service for data portability
@@ -8,6 +10,133 @@ import imageStorage from './ImageStorageService.js';
 class ImportExportService {
     constructor() {
         this.version = '1.0';
+    }
+    
+    // ==================== CSV EXPORT/IMPORT ====================
+    
+    /**
+     * Export wordbank to CSV for translation
+     */
+    async exportTranslationCSV() {
+        try {
+            const locale = i18n.getCurrentLocale();
+            
+            // Load the wordbank
+            const response = await fetch(`./data/${locale}/wordbank.json`);
+            if (!response.ok) {
+                throw new Error('Could not load wordbank');
+            }
+            const wordbank = await response.json();
+            
+            // Export for translation (includes source and target columns)
+            const csvContent = csvService.exportForTranslation(wordbank, 'xx');
+            
+            // Download the file
+            csvService.downloadCSV(csvContent, `wordbank_translation_${locale}_to_xx.csv`);
+            
+            return { success: true };
+        } catch (error) {
+            console.error('Export failed:', error);
+            throw error;
+        }
+    }
+    
+    /**
+     * Export full wordbank to CSV
+     */
+    async exportWordbankCSV() {
+        try {
+            const locale = i18n.getCurrentLocale();
+            
+            // Load the wordbank
+            const response = await fetch(`./data/${locale}/wordbank.json`);
+            if (!response.ok) {
+                throw new Error('Could not load wordbank');
+            }
+            const wordbank = await response.json();
+            
+            // Export full wordbank
+            const csvContent = csvService.exportWordbankToCSV(wordbank);
+            
+            // Download the file
+            csvService.downloadCSV(csvContent, `wordbank_${locale}.csv`);
+            
+            return { success: true };
+        } catch (error) {
+            console.error('Export failed:', error);
+            throw error;
+        }
+    }
+    
+    /**
+     * Import translation from CSV
+     */
+    async importTranslationCSV(file) {
+        try {
+            const result = await csvService.parseCSV(file);
+            
+            // Check for errors
+            if (result.errors.length > 0 && result.wordbank.length === 0) {
+                const errorRows = result.errors.map(e => e.row).join(', ');
+                throw new Error(`${t('csv.import.rowErrors', { rows: errorRows })}\n${result.errors[0].message}`);
+            }
+            
+            // Store the imported words as custom wordbank
+            if (result.wordbank.length > 0) {
+                const customWordbank = storageService.get('customWordbank', { words: [] });
+                
+                // Add new words, avoiding duplicates by ID
+                const existingIds = new Set(customWordbank.words.map(w => w.id));
+                for (const word of result.wordbank) {
+                    if (!existingIds.has(word.id)) {
+                        customWordbank.words.push(word);
+                        existingIds.add(word.id);
+                    } else {
+                        // Update existing word
+                        const index = customWordbank.words.findIndex(w => w.id === word.id);
+                        if (index !== -1) {
+                            customWordbank.words[index] = word;
+                        }
+                    }
+                }
+                
+                storageService.set('customWordbank', customWordbank);
+            }
+            
+            // Store other exercises
+            if (result.exercises.length > 0) {
+                const customExercises = storageService.get('customExercises', {});
+                
+                for (const exercise of result.exercises) {
+                    const type = exercise.exerciseType;
+                    if (!customExercises[type]) {
+                        customExercises[type] = [];
+                    }
+                    customExercises[type].push(exercise);
+                }
+                
+                storageService.set('customExercises', customExercises);
+            }
+            
+            return {
+                success: true,
+                wordCount: result.wordbank.length,
+                exerciseCount: result.exercises.length,
+                errorCount: result.errors.length,
+                warnings: result.warnings
+            };
+        } catch (error) {
+            console.error('Import failed:', error);
+            throw error;
+        }
+    }
+    
+    /**
+     * Download CSV template
+     */
+    downloadCSVTemplate(exerciseTypes = ['wordbank']) {
+        const template = csvService.exportTemplate(exerciseTypes);
+        csvService.downloadCSV(template, 'wordbridge_template.csv');
     }
     
     // ==================== EXPORT FUNCTIONS ====================

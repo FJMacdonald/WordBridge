@@ -497,20 +497,52 @@ class SettingsPage {
             }
         });
         
-        // Translation
-        this.container.querySelector('#export-translation-btn')?.addEventListener('click', () => {
-            importExportService.exportTranslationCSV();
+        // Translation Export
+        this.container.querySelector('#export-translation-btn')?.addEventListener('click', async () => {
+            try {
+                await importExportService.exportTranslationCSV();
+                this.showNotification(t('csv.export.success'), 'success');
+            } catch (err) {
+                this.showNotification(`${t('csv.import.failed')}: ${err.message}`, 'error');
+            }
         });
         
+        // Translation Import
         this.container.querySelector('#import-translation-file')?.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
                 try {
-                    await importExportService.importTranslationCSV(file);
-                    alert('Translation imported successfully! Please reload the app.');
+                    const result = await importExportService.importTranslationCSV(file);
+                    
+                    let message = t('csv.import.success', {
+                        wordCount: result.wordCount,
+                        exerciseCount: result.exerciseCount
+                    });
+                    
+                    if (result.errorCount > 0) {
+                        message = t('csv.import.partialSuccess', { errorCount: result.errorCount });
+                    }
+                    
+                    // Show warnings if any
+                    if (result.warnings && result.warnings.length > 0) {
+                        message += '\n\n' + t('csv.warnings.invalidDistractors') + ':\n';
+                        message += result.warnings.slice(0, 3).map(w => `Row ${w.row}: ${w.message}`).join('\n');
+                        if (result.warnings.length > 3) {
+                            message += `\n... and ${result.warnings.length - 3} more`;
+                        }
+                    }
+                    
+                    alert(message);
+                    
+                    if (result.wordCount > 0 || result.exerciseCount > 0) {
+                        window.location.reload();
+                    }
                 } catch (err) {
-                    alert('Import failed: ' + err.message);
+                    alert(`${t('csv.import.failed')}: ${err.message}`);
                 }
+                
+                // Reset the file input
+                e.target.value = '';
             }
         });
         
@@ -586,6 +618,45 @@ class SettingsPage {
     
     hideConfirmModal() {
         this.container.querySelector('#confirm-modal').hidden = true;
+    }
+    
+    /**
+     * Show a temporary notification toast
+     */
+    showNotification(message, type = 'info') {
+        // Remove existing notification if any
+        const existing = document.querySelector('.settings-notification');
+        if (existing) {
+            existing.remove();
+        }
+        
+        const notification = document.createElement('div');
+        notification.className = `settings-notification settings-notification--${type}`;
+        notification.textContent = message;
+        
+        // Style the notification
+        Object.assign(notification.style, {
+            position: 'fixed',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            backgroundColor: type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3',
+            color: 'white',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            zIndex: '10000',
+            fontWeight: '500',
+            animation: 'slideUp 0.3s ease-out'
+        });
+        
+        document.body.appendChild(notification);
+        
+        // Auto-remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideDown 0.3s ease-in';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
     }
     
     applySettings() {

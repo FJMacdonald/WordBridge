@@ -3096,19 +3096,29 @@ class CustomizePage {
         try {
             const result = await csvService.parseCSV(file);
             
-            if (result.errors.length > 0) {
+            // Calculate totals
+            const wordCount = result.wordbank?.length || 0;
+            const exerciseCount = result.exercises?.length || 0;
+            const totalCount = wordCount + exerciseCount;
+            const errorCount = result.errors?.length || 0;
+            const warningCount = result.warnings?.length || 0;
+            
+            // Show errors if any
+            if (errorCount > 0) {
                 errorPanel.innerHTML = `
-                    <h4>⚠️ Issues found:</h4>
+                    <h4>⚠️ ${t('csv.import.partialSuccess', { errorCount }) || `${errorCount} issues found`}:</h4>
                     <ul class="error-list">
-                        ${result.errors.map(err => `
+                        ${result.errors.slice(0, 10).map(err => `
                             <li class="error-item">
-                                <strong>Row ${err.row}:</strong> ${err.message}
-                                ${err.suggestion ? `<br><em>Suggestion: ${err.suggestion}</em>` : ''}
+                                <strong>${t('csv.import.rowErrors', { rows: err.row }) || `Row ${err.row}`}:</strong> ${err.message}
+                                ${err.suggestion ? `<br><em>${err.suggestion}</em>` : ''}
+                                ${err.data ? `<br><small>Data: ${err.data}</small>` : ''}
                             </li>
                         `).join('')}
+                        ${errorCount > 10 ? `<li class="error-more">... ${t('common.andMore', { count: errorCount - 10 }) || `and ${errorCount - 10} more`}</li>` : ''}
                     </ul>
-                    ${result.data.length > 0 ? `
-                        <p class="error-note">✓ ${result.data.length} valid exercises can still be imported</p>
+                    ${totalCount > 0 ? `
+                        <p class="error-note">✓ ${totalCount} valid items can still be imported</p>
                     ` : ''}
                 `;
                 errorPanel.hidden = false;
@@ -3116,33 +3126,143 @@ class CustomizePage {
                 errorPanel.hidden = true;
             }
             
-            if (result.data.length > 0) {
+            // Show warnings if any
+            if (warningCount > 0 && totalCount > 0) {
+                const warningHtml = `
+                    <div class="warning-panel">
+                        <h5>⚠️ ${t('csv.warnings.invalidDistractors') || 'Warnings'}:</h5>
+                        <ul class="warning-list">
+                            ${result.warnings.slice(0, 5).map(w => `
+                                <li>Row ${w.row}: ${w.message}</li>
+                            `).join('')}
+                            ${warningCount > 5 ? `<li>... and ${warningCount - 5} more</li>` : ''}
+                        </ul>
+                    </div>
+                `;
+                errorPanel.innerHTML = (errorPanel.hidden ? '' : errorPanel.innerHTML) + warningHtml;
+                errorPanel.hidden = false;
+            }
+            
+            // Show preview if we have valid data
+            if (totalCount > 0) {
+                let summaryHtml = `<h4>✓ ${t('csv.import.success', { wordCount, exerciseCount }) || `Ready to import ${wordCount} words and ${exerciseCount} exercises`}</h4>`;
+                
+                // Show breakdown
+                if (wordCount > 0) {
+                    summaryHtml += `<p>📚 ${wordCount} ${t('customize.library.wordbankEntries') || 'wordbank entries'}</p>`;
+                }
+                if (exerciseCount > 0) {
+                    // Group by type
+                    const byType = {};
+                    result.exercises.forEach(e => {
+                        const type = e.exerciseType || 'unknown';
+                        byType[type] = (byType[type] || 0) + 1;
+                    });
+                    summaryHtml += `<p>📝 ${exerciseCount} ${t('customize.library.otherExercises') || 'exercises'}: ${Object.entries(byType).map(([type, count]) => `${type} (${count})`).join(', ')}</p>`;
+                }
+                
                 previewPanel.innerHTML = `
-                    <h4>✓ Ready to import ${result.data.length} exercises</h4>
+                    ${summaryHtml}
                     <div class="preview-actions">
-                        <button class="btn btn--ghost" id="cancel-import">Cancel</button>
-                        <button class="btn btn--primary" id="confirm-import">Import All Valid</button>
+                        <button class="btn btn--ghost" id="cancel-import">${t('common.cancel') || 'Cancel'}</button>
+                        <button class="btn btn--primary" id="confirm-import">${t('customize.forms.addExercise') || 'Import All Valid'}</button>
                     </div>
                 `;
                 previewPanel.hidden = false;
                 
+                // Store result for import
+                this._pendingImport = result;
+                
                 this.container.querySelector('#cancel-import')?.addEventListener('click', () => {
                     previewPanel.hidden = true;
                     errorPanel.hidden = true;
+                    this._pendingImport = null;
                 });
                 
                 this.container.querySelector('#confirm-import')?.addEventListener('click', () => {
-                    this.importCSVData(result.type, result.data);
+                    this.importCSVDataNew(this._pendingImport);
+                    this._pendingImport = null;
                 });
+            } else if (errorCount > 0) {
+                previewPanel.hidden = true;
             }
             
         } catch (error) {
+            console.error('CSV upload error:', error);
             errorPanel.innerHTML = `
-                <h4>❌ Upload Failed</h4>
+                <h4>❌ ${t('csv.import.failed') || 'Upload Failed'}</h4>
                 <p>${error.message}</p>
             `;
             errorPanel.hidden = false;
+            previewPanel.hidden = true;
         }
+    }
+    
+    /**
+     * Import CSV data using new format (wordbank + exercises)
+     */
+    importCSVDataNew(result) {
+        const locale = i18n.getCurrentLocale();
+        const customExercises = storageService.get(`customExercises_${locale}`, {});
+        const customWordbank = storageService.get(`customWordbank_${locale}`, { words: [] });
+        
+        // Ensure customWordbank has words array
+        if (Array.isArray(customWordbank)) {
+            // Convert old format
+            customWordbank = { words: customWordbank };
+        }
+        if (!customWordbank.words) {
+            customWordbank.words = [];
+        }
+        
+        let totalImported = 0;
+        
+        // Import wordbank entries
+        if (result.wordbank && result.wordbank.length > 0) {
+            const existingIds = new Set(customWordbank.words.map(w => w.id));
+            
+            for (const word of result.wordbank) {
+                if (!existingIds.has(word.id)) {
+                    customWordbank.words.push(word);
+                    existingIds.add(word.id);
+                } else {
+                    // Update existing
+                    const index = customWordbank.words.findIndex(w => w.id === word.id);
+                    if (index !== -1) {
+                        customWordbank.words[index] = word;
+                    }
+                }
+                
+                // Also create exercises from wordbank entry
+                const count = this.processWordbankEntry(word, customExercises);
+                totalImported += count;
+            }
+        }
+        
+        // Import other exercises
+        if (result.exercises && result.exercises.length > 0) {
+            for (const exercise of result.exercises) {
+                const exerciseType = exercise.exerciseType;
+                if (!exerciseType) continue;
+                
+                if (!customExercises[exerciseType]) {
+                    customExercises[exerciseType] = [];
+                }
+                
+                const cleanExercise = { ...exercise };
+                delete cleanExercise.exerciseType;
+                
+                customExercises[exerciseType].push(cleanExercise);
+                totalImported++;
+            }
+        }
+        
+        // Save
+        storageService.set(`customExercises_${locale}`, customExercises);
+        storageService.set(`customWordbank_${locale}`, customWordbank);
+        
+        alert(t('customize.bulkUpload.success', { count: totalImported }) || `Successfully imported ${totalImported} exercises!`);
+        this.render();
     }
     
     importCSVData(type, data) {
@@ -3433,8 +3553,9 @@ class CustomizePage {
             'workingMemory', 'easy', '🍎🍌🍊', '🍇🍓🥝', '', '', '', '', '', '', '', '', '', ''
         ]);
         
-        const template = { headers, rows };
-        csvService.downloadCSV(template, 'exercises_template.csv');
+        // Generate CSV content
+        const csvContent = csvService.generateCSV(headers, rows);
+        csvService.downloadCSV(csvContent, 'exercises_template.csv');
     }
     
     switchMode(mode) {

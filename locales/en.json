@@ -12,7 +12,8 @@
     "back": "Back",
     "close": "Close",
     "continue": "Continue",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "andMore": "and {count} more"
   },
   "audio": {
     "playAll": "Hear all options",
@@ -62,7 +63,9 @@
     },
     "category": {
       "name": "Categories",
-      "instruction": "Which word is a {category}?"
+      "instruction": "Select the word that matches the category",
+      "question": "Which word is {article} {category}?",
+      "questionAudio": "Which word is {article} {category}?"
     },
     "rhyming": {
       "name": "Rhyming Words",
@@ -659,5 +662,66 @@
     "pausedMessage": "You've been away for a while. Ready to continue?",
     "resume": "Resume",
     "endSession": "End Session"
+  },
+  "csv": {
+    "errors": {
+      "wordRequired": "Word is required",
+      "distractorsRequired": "At least 3 distractors are required",
+      "sentenceRequired": "Sentence and answer are required",
+      "blankRequired": "Sentence must contain blank marker (? or _)",
+      "categoryRequired": "Category and correct word are required",
+      "optionsRequired": "At least 2 wrong options required",
+      "questionRequired": "Question and answer are required",
+      "wrongOptionsRequired": "At least 3 wrong options required",
+      "clockRequired": "Time and time words are required",
+      "wrongTimesRequired": "At least 3 wrong times required",
+      "invalidTimeFormat": "Time must be in HH:MM format",
+      "timeOrderingRequired": "Scenario and at least 3 activities required",
+      "workingMemoryRequired": "Sequence and extra options required",
+      "sequenceLength": "Sequence must have exactly 3 emojis",
+      "extraOptionsLength": "At least 3 extra option emojis required",
+      "rhymesRequired": "At least 1 rhyming word required",
+      "nonRhymesRequired": "At least 3 non-rhyming words required",
+      "associatedRequired": "At least 1 associated word required",
+      "unrelatedRequired": "At least 3 unrelated words required",
+      "synonymRequired": "Word and correct answer required",
+      "wrongWordsRequired": "At least 3 wrong words required",
+      "firstSoundRequired": "Sound and correct word required",
+      "definitionRequired": "Word and definition required",
+      "sentenceTooShort": "Sentence must have at least 3 words",
+      "exerciseTypeRequired": "Exercise type is required",
+      "invalidDifficulty": "Difficulty must be easy, medium, or hard",
+      "unknownType": "Unknown exercise type",
+      "readFailed": "Failed to read file"
+    },
+    "warnings": {
+      "invalidDistractors": "Some distractors may be invalid",
+      "noVisual": "No emoji or image - naming/listening exercises will be limited",
+      "noDefinition": "No definition - definition exercise will not be available",
+      "noRhymes": "No rhymes - rhyming exercise will not be available"
+    },
+    "suggestions": {
+      "distractors": "Add at least 3 distractor words separated by | (e.g., word1|word2|word3)",
+      "blank": "Use ? or __ to mark the blank in the sentence",
+      "exerciseType": "First column should be exercise type (e.g., sentenceTyping, category)",
+      "difficulty": "Difficulty must be: easy, medium, or hard",
+      "time": "Time format should be HH:MM (e.g., 3:00 or 14:30)"
+    },
+    "export": {
+      "wordbank": "Export Wordbank",
+      "template": "Download Template",
+      "forTranslation": "Export for Translation",
+      "success": "Export successful",
+      "filename": "wordbank_export"
+    },
+    "import": {
+      "title": "Import CSV",
+      "selectFile": "Select CSV file",
+      "processing": "Processing...",
+      "success": "Successfully imported {wordCount} words and {exerciseCount} exercises",
+      "partialSuccess": "Imported with {errorCount} errors",
+      "failed": "Import failed",
+      "rowErrors": "Errors in rows: {rows}"
+    }
   }
 }
