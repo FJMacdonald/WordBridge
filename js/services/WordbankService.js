@@ -78,7 +78,6 @@ class WordbankService {
      */
     buildIndexes() {
         this.wordsByCategory = {};
-        this.wordsBySubcategory = {};
         this.wordsByDifficulty = { easy: [], medium: [], hard: [] };
         this.wordsByFirstSound = {};
         this.wordsByPartOfSpeech = {};
@@ -93,15 +92,6 @@ class WordbankService {
                 this.wordsByCategory[word.category] = [];
             }
             this.wordsByCategory[word.category].push(word);
-            
-            // By subcategory
-            if (word.subcategory) {
-                const subKey = `${word.category}:${word.subcategory}`;
-                if (!this.wordsBySubcategory[subKey]) {
-                    this.wordsBySubcategory[subKey] = [];
-                }
-                this.wordsBySubcategory[subKey].push(word);
-            }
             
             // By difficulty
             this.wordsByDifficulty[difficulty].push(word);
@@ -133,10 +123,6 @@ class WordbankService {
         
         if (filters.category) {
             words = words.filter(w => w.category === filters.category);
-        }
-        
-        if (filters.subcategory) {
-            words = words.filter(w => w.subcategory === filters.subcategory);
         }
         
         if (filters.partOfSpeech) {
@@ -376,7 +362,7 @@ class WordbankService {
             const distractors = this.getDistractors(word, 'category', 3);
             return {
                 id: word.id,
-                category: word.subcategory || word.category,
+                category: word.category,
                 word: word.word,
                 options: this.shuffleArray([word.word, ...distractors]),
                 difficulty: word.difficulty
