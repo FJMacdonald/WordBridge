@@ -42,7 +42,7 @@ class App {
         // Initialize wordbank service
         try {
             await wordbankService.init();
-            console.log('Wordbank loaded:', wordbankService.wordbank.words.length, 'words');
+            console.log('Wordbank loaded:', wordbankService.wordbank.words.length, 'words', wordbankService.wordbank);
         } catch (error) {
             console.error('Failed to load wordbank:', error);
         }
