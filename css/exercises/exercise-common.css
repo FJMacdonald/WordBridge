@@ -69,6 +69,24 @@
     margin-bottom: var(--space-sm);
 }
 
+/* Speaking exercise buttons - centered under emoji */
+.speaking-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.speaking-actions .btn {
+    width: 100%;
+    justify-content: center;
+}
+
 .prompt-blank {
     display: inline-block;
     min-width: 100px;

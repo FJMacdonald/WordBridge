@@ -1,6 +1,7 @@
 // js/services/WordbankService.js
 
 import { i18n } from '../core/i18n.js';
+import dataValidationService from './DataValidationService.js';
 
 /**
  * Service for loading and querying the wordbank
@@ -62,15 +63,10 @@ class WordbankService {
     
     /**
      * Calculate difficulty based on word length
-     * Easy: 4 or less letters
-     * Medium: 5-6 letters
-     * Hard: 7+ letters
+     * Uses DataValidationService for locale-aware thresholds
      */
     calculateDifficulty(word) {
-        const length = word.length;
-        if (length <= 4) return 'easy';
-        if (length <= 6) return 'medium';
-        return 'hard';
+        return dataValidationService.calculateDifficulty(word);
     }
     
     /**
@@ -392,19 +388,31 @@ class WordbankService {
         const data = [];
         
         for (const word of words) {
-            // Validate: category should not be the same as the word
-            if (word.word.toLowerCase() === word.category.toLowerCase()) {
-                console.warn(`[WordbankService] Data issue: word "${word.word}" has same category name. Skipping.`);
-                this.logDataIssue('category_same_as_word', word.id, word.word, word.category);
-                continue;
+            // Validate using DataValidationService
+            const validation = dataValidationService.validateCategoryItem(word);
+            
+            if (!validation.valid) {
+                continue; // Skip invalid items (already logged by validator)
             }
             
             const distractors = this.getDistractors(word, 'category', 3);
+            
+            // Ensure distractors don't include the word or category
+            const validDistractors = distractors.filter(d => 
+                d && 
+                d.toLowerCase() !== word.word.toLowerCase() &&
+                d.toLowerCase() !== word.category.toLowerCase()
+            );
+            
+            if (validDistractors.length < 3) {
+                continue;
+            }
+            
             data.push({
                 id: word.id,
                 category: word.category,
                 word: word.word,
-                options: this.shuffleArray([word.word, ...distractors]),
+                options: this.shuffleArray([word.word, ...validDistractors.slice(0, 3)]),
                 difficulty: word.difficulty
             });
         }
@@ -412,27 +420,7 @@ class WordbankService {
         return data;
     }
     
-    /**
-     * Log data issues for later review
-     */
-    logDataIssue(issueType, wordId, word, detail) {
-        const issues = JSON.parse(localStorage.getItem('wordbank_data_issues') || '[]');
-        const issue = {
-            type: issueType,
-            wordId,
-            word,
-            detail,
-            timestamp: new Date().toISOString()
-        };
-        
-        // Avoid duplicate entries
-        const exists = issues.some(i => i.type === issueType && i.wordId === wordId);
-        if (!exists) {
-            issues.push(issue);
-            localStorage.setItem('wordbank_data_issues', JSON.stringify(issues));
-            console.warn(`[WordbankService] Logged data issue: ${issueType} for "${word}" (${wordId})`);
-        }
-    }
+
     
     /**
      * Build exercise data for rhyming exercise
@@ -533,14 +521,41 @@ class WordbankService {
     
     /**
      * Build exercise data for synonym/antonym exercise
+     * Validates that word is not in its own synonyms/antonyms
      */
     buildSynonymData(filters = {}) {
         const words = this.getWords(filters)
             .filter(w => w.relationships.synonyms.length > 0 || w.relationships.antonyms.length > 0);
         
-        return words.map(word => {
-            const hasSynonyms = word.relationships.synonyms.length > 0;
-            const hasAntonyms = word.relationships.antonyms.length > 0;
+        const data = [];
+        
+        for (const word of words) {
+            // Validate using DataValidationService
+            const validation = dataValidationService.validateSynonymItem({
+                word: word.word,
+                synonyms: word.relationships.synonyms,
+                antonyms: word.relationships.antonyms,
+                id: word.id
+            });
+            
+            if (!validation.valid) {
+                continue; // Skip invalid items (already logged by validator)
+            }
+            
+            // Filter out any synonyms/antonyms that equal the word itself
+            const validSynonyms = word.relationships.synonyms.filter(s => 
+                s && s.toLowerCase() !== word.word.toLowerCase()
+            );
+            const validAntonyms = word.relationships.antonyms.filter(a => 
+                a && a.toLowerCase() !== word.word.toLowerCase()
+            );
+            
+            const hasSynonyms = validSynonyms.length > 0;
+            const hasAntonyms = validAntonyms.length > 0;
+            
+            if (!hasSynonyms && !hasAntonyms) {
+                continue; // Skip if no valid synonyms or antonyms
+            }
             
             // Randomly choose synonym or antonym question
             let questionType = 'synonym';
@@ -554,9 +569,21 @@ class WordbankService {
             
             // Get correct answer
             if (questionType === 'synonym') {
-                correctAnswer = word.relationships.synonyms[0];
+                correctAnswer = validSynonyms[0];
             } else {
-                correctAnswer = word.relationships.antonyms[0];
+                correctAnswer = validAntonyms[0];
+            }
+            
+            // Ensure correct answer is valid
+            if (!correctAnswer || correctAnswer.toLowerCase() === word.word.toLowerCase()) {
+                dataValidationService.logIssue(
+                    'synonym_answer_equals_word',
+                    word.id,
+                    word.word,
+                    `Correct answer "${correctAnswer}" equals word`,
+                    'error'
+                );
+                continue;
             }
             
             // Build distractors
@@ -564,35 +591,51 @@ class WordbankService {
             
             // Add one from the opposite type if available
             if (questionType === 'synonym' && hasAntonyms) {
-                distractors.push(word.relationships.antonyms[0]);
+                distractors.push(validAntonyms[0]);
             } else if (questionType === 'antonym' && hasSynonyms) {
-                distractors.push(word.relationships.synonyms[0]);
+                distractors.push(validSynonyms[0]);
             }
             
             // Add unrelated words
             const unrelatedCount = 3 - distractors.length;
             if (word.distractors && word.distractors.length > 0) {
                 const unrelated = word.distractors
-                    .filter(d => this.calculateDifficulty(d) === word.difficulty)
+                    .filter(d => d && 
+                        d.toLowerCase() !== word.word.toLowerCase() &&
+                        d.toLowerCase() !== correctAnswer.toLowerCase() &&
+                        this.calculateDifficulty(d) === word.difficulty)
                     .slice(0, unrelatedCount);
                 distractors.push(...unrelated);
-            } else {
-                // Get random words as distractors
-                const randomWords = this.getRandomWords(unrelatedCount, {
+            }
+            
+            // If still need more distractors, get random words
+            if (distractors.length < 3) {
+                const randomWords = this.getRandomWords(3 - distractors.length, {
                     difficulty: word.difficulty
-                }, [word.id]).map(w => w.word);
+                }, [word.id])
+                    .map(w => w.word)
+                    .filter(w => w.toLowerCase() !== word.word.toLowerCase() &&
+                                w.toLowerCase() !== correctAnswer.toLowerCase());
                 distractors.push(...randomWords);
             }
             
-            return {
+            // Final validation: ensure we have enough distractors
+            distractors = distractors.filter(d => d && typeof d === 'string');
+            if (distractors.length < 3) {
+                continue;
+            }
+            
+            data.push({
                 id: word.id,
                 word: word.word,
                 questionType: questionType,
                 correctAnswer: correctAnswer,
                 options: this.shuffleArray([correctAnswer, ...distractors.slice(0, 3)]),
                 difficulty: word.difficulty
-            };
-        });
+            });
+        }
+        
+        return data;
     }
     
     /**

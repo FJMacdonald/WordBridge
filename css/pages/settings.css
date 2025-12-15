@@ -583,3 +583,116 @@ details[open] .toggle-icon {
     border: none;
     padding: 0;
 }
+
+/* Data Quality Section */
+.data-quality-card {
+    border-color: var(--color-warning);
+}
+
+.data-quality-content {
+    padding: var(--space-md);
+}
+
+.issue-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 var(--space-xs);
+    border-radius: 12px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    margin-left: var(--space-sm);
+}
+
+.issue-badge.error {
+    background: var(--color-error);
+    color: white;
+}
+
+.issue-badge.warning {
+    background: var(--color-warning);
+    color: var(--color-text);
+}
+
+.issue-summary {
+    display: flex;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+    padding: var(--space-md);
+    background: var(--color-background);
+    border-radius: var(--radius-md);
+}
+
+.issue-summary .summary-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.issue-summary .stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+.issue-summary .stat-value.error {
+    color: var(--color-error);
+}
+
+.issue-summary .stat-value.warning {
+    color: var(--color-warning);
+}
+
+.issue-summary .stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.issues-by-type {
+    margin-bottom: var(--space-md);
+}
+
+.issues-by-type h4 {
+    margin: 0 0 var(--space-sm) 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.issue-type-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-xs);
+    font-size: var(--font-size-sm);
+}
+
+.issue-type {
+    text-transform: capitalize;
+}
+
+.issue-count {
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--color-background);
+}
+
+.issue-count.high {
+    background: var(--color-error-light);
+    color: var(--color-error);
+}
+
+.data-quality-actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.data-quality-actions .btn {
+    flex: 1;
+    min-width: 150px;
+}

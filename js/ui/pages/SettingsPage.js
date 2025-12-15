@@ -3,6 +3,7 @@ import storageService from '../../services/StorageService.js';
 import importExportService from '../../services/ImportExportService.js';
 import pdfService from '../../services/PDFService.js';
 import exerciseFactory from '../../exercises/ExerciseFactory.js';
+import dataValidationService from '../../services/DataValidationService.js';
 import { i18n, t } from '../../core/i18n.js';
 
 /**
@@ -294,6 +295,9 @@ class SettingsPage {
                         </div>
                     </div>
                 </div>
+                
+                <!-- Data Quality Section -->
+                ${this.renderDataQualitySection()}
             </div>
             
             <!-- Confirmation Modal -->
@@ -311,6 +315,67 @@ class SettingsPage {
         
         this.attachListeners();
         this.applySettings();
+    }
+    
+    renderDataQualitySection() {
+        const report = dataValidationService.generateReport();
+        
+        if (report.totalIssues === 0) {
+            return ''; // Don't show section if no issues
+        }
+        
+        const issuesByType = Object.entries(report.byType)
+            .map(([type, data]) => `
+                <div class="issue-type-row">
+                    <span class="issue-type">${type.replace(/_/g, ' ')}</span>
+                    <span class="issue-count ${data.count > 5 ? 'high' : ''}">${data.count}</span>
+                </div>
+            `).join('');
+        
+        return `
+            <details class="settings-card settings-card--full data-quality-card">
+                <summary class="card-header card-header--collapsible">
+                    <h3 class="card-title">
+                        <span class="card-icon">🔍</span>
+                        ${t('settings.dataQuality.title') || 'Data Quality Issues'}
+                        <span class="issue-badge ${report.errorCount > 0 ? 'error' : 'warning'}">
+                            ${report.totalIssues}
+                        </span>
+                        <span class="toggle-icon">▼</span>
+                    </h3>
+                </summary>
+                <div class="data-quality-content">
+                    <p class="card-description">
+                        ${t('settings.dataQuality.description') || 'These issues were found in the wordbank data and may affect exercise quality.'}
+                    </p>
+                    
+                    <div class="issue-summary">
+                        <div class="summary-stat">
+                            <span class="stat-value error">${report.errorCount}</span>
+                            <span class="stat-label">${t('settings.dataQuality.errors') || 'Errors'}</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="stat-value warning">${report.warningCount}</span>
+                            <span class="stat-label">${t('settings.dataQuality.warnings') || 'Warnings'}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="issues-by-type">
+                        <h4>${t('settings.dataQuality.byType') || 'Issues by Type'}</h4>
+                        ${issuesByType}
+                    </div>
+                    
+                    <div class="data-quality-actions">
+                        <button class="btn btn--secondary" id="export-issues-btn">
+                            📥 ${t('settings.dataQuality.export') || 'Export Issues CSV'}
+                        </button>
+                        <button class="btn btn--ghost" id="clear-issues-btn">
+                            🗑️ ${t('settings.dataQuality.clear') || 'Clear Issues'}
+                        </button>
+                    </div>
+                </div>
+            </details>
+        `;
     }
     
     renderDifficultySettings() {
@@ -633,6 +698,32 @@ class SettingsPage {
         // Modal
         this.container.querySelector('#modal-cancel')?.addEventListener('click', () => {
             this.hideConfirmModal();
+        });
+        
+        // Data Quality buttons
+        this.container.querySelector('#export-issues-btn')?.addEventListener('click', () => {
+            const csv = dataValidationService.exportIssuesCSV();
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `wordbank_issues_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            this.showNotification(t('settings.dataQuality.exported') || 'Issues exported', 'success');
+        });
+        
+        this.container.querySelector('#clear-issues-btn')?.addEventListener('click', () => {
+            this.showConfirmModal(
+                t('settings.dataQuality.clearTitle') || 'Clear Issues',
+                t('settings.dataQuality.clearConfirm') || 'This will clear all logged data issues. Continue?',
+                () => {
+                    dataValidationService.clearIssues();
+                    this.showNotification(t('settings.dataQuality.cleared') || 'Issues cleared', 'success');
+                    // Re-render to update the section
+                    this.render();
+                }
+            );
         });
     }
     
