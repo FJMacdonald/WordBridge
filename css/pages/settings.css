@@ -434,6 +434,28 @@ details[open] .toggle-icon {
     margin-bottom: var(--space-lg);
 }
 
+/* Change All Difficulty Option */
+.change-all-difficulty {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    margin: 0 var(--space-md) var(--space-md);
+    background: var(--color-primary-light);
+    border-radius: var(--radius-md);
+    border: 2px dashed var(--color-primary);
+}
+
+.change-all-difficulty .setting-label {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.change-all-difficulty .setting-select {
+    min-width: 180px;
+}
+
 .difficulty-categories-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

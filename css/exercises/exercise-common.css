@@ -44,6 +44,31 @@
     border: 2px solid var(--color-border);
 }
 
+/* Definition exercise - make definition larger than instruction */
+.prompt-definition {
+    font-size: var(--font-size-xl);
+    line-height: 1.5;
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-primary);
+    font-style: italic;
+    color: var(--color-text);
+    margin: var(--space-md) 0;
+}
+
+/* Sentence exercise visual hint */
+.sentence-visual-hint {
+    font-size: 4rem;
+    margin-bottom: var(--space-sm);
+}
+
+.sentence-image-hint {
+    max-width: 120px;
+    max-height: 120px;
+    margin-bottom: var(--space-sm);
+}
+
 .prompt-blank {
     display: inline-block;
     min-width: 100px;
