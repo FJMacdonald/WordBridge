@@ -13,11 +13,22 @@ import SettingsPage from './pages/SettingsPage.js';
 import CustomizePage from './pages/CustomizePage.js';
 import TestModePage from './pages/TestModePage.js';
 
-// Keep standalone exercise data imports
-import { clockMatchingData } from '../../data/en/clockMatching.js';
-import { timeSequencingData } from '../../data/en/timeSequencing.js';
-import { timeOrderingData } from '../../data/en/timeOrdering.js';
-import { workingMemoryData } from '../../data/en/workingMemory.js';
+// Standalone exercise data - initialized as empty, loaded based on locale
+let clockMatchingData = [];
+let timeSequencingData = [];
+let timeOrderingData = [];
+let workingMemoryData = [];
+
+// Preload both locales' data (fallback strategy)
+import { clockMatchingData as clockMatchingDataEn } from '../../data/en/clockMatching.js';
+import { timeSequencingData as timeSequencingDataEn } from '../../data/en/timeSequencing.js';
+import { timeOrderingData as timeOrderingDataEn } from '../../data/en/timeOrdering.js';
+import { workingMemoryData as workingMemoryDataEn } from '../../data/en/workingMemory.js';
+
+import { clockMatchingData as clockMatchingDataDe } from '../../data/de/clockMatching.js';
+import { timeSequencingData as timeSequencingDataDe } from '../../data/de/timeSequencing.js';
+import { timeOrderingData as timeOrderingDataDe } from '../../data/de/timeOrdering.js';
+import { workingMemoryData as workingMemoryDataDe } from '../../data/de/workingMemory.js';
 
 /**
  * Main application controller
@@ -46,6 +57,9 @@ class App {
         } catch (error) {
             console.error('Failed to load wordbank:', error);
         }
+        
+        // Load locale-specific standalone exercise data
+        await this.loadStandaloneExerciseData();
 
         await imageStorage.init();
 
@@ -103,7 +117,7 @@ class App {
     async startPracticeExercise({ exerciseType, difficulty }) {
         // Start practice mode for the specific exercise type
         modeService.startPracticeMode(exerciseType);
-        trackingService.startSession(exerciseType);
+        // Note: trackingService.startSession is called in BaseExercise.init
         this.currentPage = 'home'; // Track that we're in practice mode from home
         await this.startExercise(exerciseType, 'practice');
     }
@@ -209,7 +223,7 @@ class App {
             card.addEventListener('click', () => {
                 const exerciseType = card.dataset.type;
                 modeService.startPracticeMode(exerciseType);
-                trackingService.startSession(exerciseType);
+                // Note: trackingService.startSession is called in BaseExercise.init
                 this.startExercise(exerciseType, 'practice');
             });
         });
@@ -415,7 +429,11 @@ class App {
         }
 
         if (!data || data.length === 0) {
-            alert(`No data available for ${exerciseType} exercise at ${difficulty} difficulty`);
+            const exerciseName = t(`exercises.${exerciseType}.name`) || exerciseType;
+            const difficultyName = t(`assessment.${difficulty}`) || difficulty;
+            const errorMsg = t('errors.noDataAvailable', { exercise: exerciseName, difficulty: difficultyName }) 
+                || `No data available for ${exerciseName} exercise at ${difficultyName} difficulty`;
+            alert(errorMsg);
             return;
         }
 
@@ -557,6 +575,28 @@ class App {
         document.body.classList.remove('small-text', 'medium-text', 'large-text');
         document.body.classList.add(`${textSize}-text`);
         document.body.classList.toggle('high-contrast', highContrast);
+    }
+    
+    /**
+     * Load locale-specific standalone exercise data (time exercises)
+     */
+    async loadStandaloneExerciseData() {
+        const locale = i18n.getCurrentLocale();
+        
+        // Select data based on locale
+        if (locale === 'de') {
+            clockMatchingData = clockMatchingDataDe;
+            timeSequencingData = timeSequencingDataDe;
+            timeOrderingData = timeOrderingDataDe;
+            workingMemoryData = workingMemoryDataDe;
+        } else {
+            clockMatchingData = clockMatchingDataEn;
+            timeSequencingData = timeSequencingDataEn;
+            timeOrderingData = timeOrderingDataEn;
+            workingMemoryData = workingMemoryDataEn;
+        }
+        
+        console.log(`Standalone exercise data loaded for locale: ${locale}`);
     }
 }
 

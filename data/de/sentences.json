@@ -1,86 +1,106 @@
 {
   "version": "1.0",
-  "language": "en",
+  "language": "de",
   "sentences": [
     {
       "id": "s001",
-      "sentence": "The cat sat",
+      "sentence": "Die Katze saß",
       "difficulty": "easy"
     },
     {
       "id": "s002",
-      "sentence": "I like apples",
+      "sentence": "Ich mag Äpfel",
       "difficulty": "easy"
     },
     {
       "id": "s003",
-      "sentence": "She is happy",
+      "sentence": "Sie ist glücklich",
       "difficulty": "easy"
     },
     {
       "id": "s004",
-      "sentence": "The dog runs",
+      "sentence": "Der Hund rennt",
       "difficulty": "easy"
     },
     {
       "id": "s005",
-      "sentence": "He drinks water",
+      "sentence": "Er trinkt Wasser",
       "difficulty": "easy"
     },
     {
       "id": "s006",
-      "sentence": "We eat bread",
+      "sentence": "Wir essen Brot",
       "difficulty": "easy"
     },
     {
       "id": "s007",
-      "sentence": "The bird sings",
+      "sentence": "Der Vogel singt",
       "difficulty": "easy"
     },
     {
       "id": "s008",
-      "sentence": "I see you",
+      "sentence": "Ich sehe dich",
       "difficulty": "easy"
     },
     {
       "id": "s009",
-      "sentence": "The cat sat on the mat",
+      "sentence": "Die Katze saß auf der Matte",
       "difficulty": "medium"
     },
     {
       "id": "s010",
-      "sentence": "I drink coffee every morning",
+      "sentence": "Ich trinke jeden Morgen Kaffee",
       "difficulty": "medium"
     },
     {
       "id": "s011",
-      "sentence": "She walks to school daily",
+      "sentence": "Sie geht täglich zur Schule",
       "difficulty": "medium"
     },
     {
       "id": "s012",
-      "sentence": "The dog runs in the park",
+      "sentence": "Der Hund rennt im Park",
       "difficulty": "medium"
     },
     {
       "id": "s013",
-      "sentence": "He reads a book at night",
+      "sentence": "Er liest nachts ein Buch",
       "difficulty": "medium"
     },
     {
       "id": "s014",
-      "sentence": "We had dinner with friends",
+      "sentence": "Wir haben mit Freunden gegessen",
       "difficulty": "medium"
     },
     {
       "id": "s015",
-      "sentence": "The baby is sleeping now",
+      "sentence": "Das Baby schläft jetzt",
       "difficulty": "medium"
     },
     {
       "id": "s016",
-      "sentence": "My mother makes great cake",
+      "sentence": "Meine Mutter backt guten Kuchen",
       "difficulty": "medium"
+    },
+    {
+      "id": "s017",
+      "sentence": "Der Lehrer erklärt die schwierige Aufgabe",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s018",
+      "sentence": "Die Kinder spielen fröhlich auf dem Spielplatz",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s019",
+      "sentence": "Meine Großmutter erzählt interessante Geschichten",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s020",
+      "sentence": "Der Zug fährt pünktlich am Bahnhof ab",
+      "difficulty": "hard"
     }
   ]
 }

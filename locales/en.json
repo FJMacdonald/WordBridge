@@ -379,7 +379,10 @@
       "areYouSure": "Are you sure?"
     },
     "practiceDifficulty": "Practice Difficulty Per Exercise",
-    "practiceDifficultyDesc": "Set the difficulty level for each exercise type in practice mode"
+    "practiceDifficultyDesc": "Set the difficulty level for each exercise type in practice mode",
+    "changeAllDifficulty": "Set all exercises to:",
+    "selectToChange": "Select to change all",
+    "allDifficultyChanged": "All exercises difficulty changed"
   },
   "customize": {
     "title": "Add Custom Exercises",
@@ -662,6 +665,9 @@
     "pausedMessage": "You've been away for a while. Ready to continue?",
     "resume": "Resume",
     "endSession": "End Session"
+  },
+  "errors": {
+    "noDataAvailable": "No data available for {exercise} exercise at {difficulty} difficulty"
   },
   "csv": {
     "errors": {

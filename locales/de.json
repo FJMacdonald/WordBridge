@@ -75,7 +75,8 @@
     "firstSound": {
       "name": "Erste Laute",
       "instruction": "Welches Wort beginnt mit demselben Laut wie:",
-      "bothStartWith": "Beide beginnen mit"
+      "bothStartWith": "Beide beginnen mit",
+      "startsWithSound": "beginnt mit dem Laut"
     },
     "association": {
       "name": "Wort-Assoziation",
@@ -339,6 +340,11 @@
     "language": "Sprache",
     "textSize": "Textgröße",
     "highContrast": "Hoher Kontrast Modus",
+    "practiceDifficulty": "Übungsschwierigkeit",
+    "practiceDifficultyDesc": "Wähle die Schwierigkeitsstufe für jeden Übungstyp",
+    "changeAllDifficulty": "Alle Übungen setzen auf:",
+    "selectToChange": "Auswählen um alle zu ändern",
+    "allDifficultyChanged": "Alle Übungen wurden geändert",
     "sections": {
       "display": "Anzeige",
       "audio": "Audio",
@@ -675,6 +681,9 @@
     "pausedMessage": "Sie waren eine Weile weg. Bereit fortzufahren?",
     "resume": "Fortsetzen",
     "endSession": "Sitzung beenden"
+  },
+  "errors": {
+    "noDataAvailable": "Keine Daten verfügbar für {exercise}-Übung bei {difficulty} Schwierigkeit"
   },
   "csv": {
     "errors": {
