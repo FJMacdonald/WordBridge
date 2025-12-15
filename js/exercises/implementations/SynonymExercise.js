@@ -12,16 +12,7 @@ class SynonymExercise extends SelectionExercise {
     constructor() {
         super({ type: 'synonyms' });
         this.correctAnswer = null;
-        
-        // 1. Randomly choose the question type
-        const types = ['synonym', 'antonym'];
-        this.questionType = types[Math.floor(Math.random() * types.length)];
-
-        // 2. Pass the chosen type to the superclass constructor
-        super({ type: this.questionType });
-
-        // 3. Initialize other properties
-        this.correctAnswer = null;
+        this.questionType = 'synonym'; // Will be set properly in prepareOptions
     }
     
     prepareOptions() {
