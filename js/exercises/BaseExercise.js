@@ -510,6 +510,23 @@ class BaseExercise {
     }
     
     destroy() {
+        // End the session if it's still active (user navigated away)
+        if (trackingService.currentSession && this.currentIndex > 0) {
+            // Calculate active time (excluding inactivity gaps)
+            const totalTime = Date.now() - this.state.startTime;
+            const inactiveTime = (this.state.inactivityGaps || []).reduce((sum, gap) => sum + gap.duration, 0);
+            const activeTime = totalTime - inactiveTime;
+            
+            trackingService.endSession({
+                totalTime,
+                activeTime,
+                inactivityGaps: (this.state.inactivityGaps || []).length,
+                incomplete: true // Mark as incomplete session
+            });
+            
+            console.log(`Session ended early (navigated away after ${this.currentIndex} items)`);
+        }
+        
         // Clean up activity monitoring
         if (this.activityTimer) {
             clearInterval(this.activityTimer);
