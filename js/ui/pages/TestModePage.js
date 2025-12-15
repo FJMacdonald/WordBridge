@@ -41,7 +41,7 @@ class TestModePage {
                 
                 <div class="test-instructions">
                     <details>
-                        <summary><strong>📖 ${t('assessment.instructions')}</strong></summary>
+                        <summary><strong>📖 ${t('assessment.howItWorks') || t('assessment.instructions.title') || 'How Test Mode Works'}</strong></summary>
                         <ul>
                             <li>${t('assessment.instruction1')}</li>
                             <li>${t('assessment.instruction2')}</li>

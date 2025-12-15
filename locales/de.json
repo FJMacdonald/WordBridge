@@ -112,13 +112,20 @@
       "daysBefore": "Welcher Tag kommt vor",
       "daysAfter": "Welcher Tag kommt nach",
       "monthsBefore": "Welcher Monat kommt vor",
-      "monthsAfter": "Welcher Monat kommt nach"
+      "monthsAfter": "Welcher Monat kommt nach",
+      "comesAfter": "kommt nach",
+      "comesBefore": "kommt vor",
+      "inSequence": "in der Reihenfolge"
     },
     "clockMatching": {
       "name": "Uhren Zuordnen",
       "instruction": "Ordne die digitale Zeit der analogen Uhr zu",
       "whatTimeIs": "Wie spät ist es?",
-      "selectClock": "Wähle die Uhr aus, die zeigt"
+      "selectClock": "Wähle die Uhr aus, die zeigt",
+      "correctMatch": "Richtig! Die Zeit {time} passt zur ausgewählten Uhr.",
+      "hourHandPoints": "Der Stundenzeiger zeigt auf {hour}",
+      "hourHandBetween": "Der Stundenzeiger steht zwischen {hour1} und {hour2}",
+      "minuteHandPoints": "der Minutenzeiger zeigt auf {minute}"
     },
     "timeOrdering": {
       "name": "Zeit Ordnen",
@@ -287,6 +294,7 @@
       ],
       "ready": "Ich bin bereit"
     },
+    "howItWorks": "So funktioniert der Testmodus",
     "progress": {
       "section": "Abschnitt {current} von {total}",
       "overall": "Gesamtfortschritt"
@@ -398,6 +406,19 @@
       "confirm": "Bestätigen",
       "cancel": "Abbrechen",
       "areYouSure": "Bist du sicher?"
+    },
+    "dataQuality": {
+      "title": "Datenqualitätsprobleme",
+      "description": "Diese Probleme wurden in den Wortbank-Daten gefunden und können die Übungsqualität beeinträchtigen.",
+      "errors": "Fehler",
+      "warnings": "Warnungen",
+      "byType": "Probleme nach Typ",
+      "export": "Probleme als CSV exportieren",
+      "clear": "Probleme löschen",
+      "exported": "Probleme exportiert",
+      "clearTitle": "Probleme löschen",
+      "clearConfirm": "Alle protokollierten Datenprobleme werden gelöscht. Fortfahren?",
+      "cleared": "Probleme gelöscht"
     }
   },
   "customize": {
@@ -683,7 +704,10 @@
     "endSession": "Sitzung beenden"
   },
   "errors": {
-    "noDataAvailable": "Keine Daten verfügbar für {exercise}-Übung bei {difficulty} Schwierigkeit"
+    "noDataAvailable": "Keine Daten verfügbar für {exercise}-Übung bei {difficulty} Schwierigkeit",
+    "noDataTitle": "Keine Daten verfügbar",
+    "noDataMessage": "Es gibt noch nicht genügend Daten für die {exercise}-Übung.",
+    "backToHome": "Zurück zur Startseite"
   },
   "csv": {
     "errors": {

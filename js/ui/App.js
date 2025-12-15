@@ -523,12 +523,18 @@ class App {
     }
 
     showNoDataMessage(type) {
+        const exerciseName = t(`exercises.${type}.name`) || type;
+        const title = t('errors.noDataTitle') || 'No Data Available';
+        const message = t('errors.noDataMessage', { exercise: exerciseName }) 
+            || `There isn't enough data for the ${exerciseName} exercise yet.`;
+        const backText = t('errors.backToHome') || 'Back to Home';
+        
         this.container.innerHTML = `
             <div class="no-data-message">
-                <h2>No Data Available</h2>
-                <p>There isn't enough data for the ${t(`exercises.${type}.name`)} exercise yet.</p>
+                <h2>${title}</h2>
+                <p>${message}</p>
                 <button class="btn btn--primary" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'home'}))">
-                    Back to Home
+                    ${backText}
                 </button>
             </div>
         `;

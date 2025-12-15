@@ -39,11 +39,17 @@ class TimeSequencingExercise extends SelectionExercise {
             
             // Only show detailed explanation if sequence and target are available
             if (sequence && target) {
+                const answer = this.currentItem.answer;
+                const direction = this.currentItem.direction;
+                const comesAfter = t('exercises.timeSequencing.comesAfter') || 'comes after';
+                const comesBefore = t('exercises.timeSequencing.comesBefore') || 'comes before';
+                const inSequence = t('exercises.timeSequencing.inSequence') || 'in the sequence';
+                
                 let explanation = '';
-                if (this.currentItem.direction === 'after') {
-                    explanation = `"${this.currentItem.answer}" comes after "${target}" in the sequence.`;
+                if (direction === 'after') {
+                    explanation = `"${answer}" ${comesAfter} "${target}" ${inSequence}.`;
                 } else {
-                    explanation = `"${this.currentItem.answer}" comes before "${target}" in the sequence.`;
+                    explanation = `"${answer}" ${comesBefore} "${target}" ${inSequence}.`;
                 }
                 message = `✓ ${explanation}`;
             } else {

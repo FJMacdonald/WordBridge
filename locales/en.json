@@ -112,13 +112,20 @@
       "daysBefore": "What day comes before",
       "daysAfter": "What day comes after",
       "monthsBefore": "What month comes before",
-      "monthsAfter": "What month comes after"
+      "monthsAfter": "What month comes after",
+      "comesAfter": "comes after",
+      "comesBefore": "comes before",
+      "inSequence": "in the sequence"
     },
     "clockMatching": {
       "name": "Clock Matching",
       "instruction": "Match the digital time with the analog clock",
       "whatTimeIs": "What time is shown?",
-      "selectClock": "Select the clock that shows"
+      "selectClock": "Select the clock that shows",
+      "correctMatch": "Correct! The time {time} matches the selected clock.",
+      "hourHandPoints": "The hour hand points to {hour}",
+      "hourHandBetween": "The hour hand is between {hour1} and {hour2}",
+      "minuteHandPoints": "the minute hand points to {minute}"
     },
     "timeOrdering": {
       "name": "Time Ordering",
@@ -276,6 +283,7 @@
     "start": "Start Assessment",
     "resume": "Resume Assessment",
     "instructions": "How Test Mode Works",
+    "howItWorks": "How Test Mode Works",
     "progress": {
       "section": "Section {current} of {total}",
       "overall": "Overall Progress"
@@ -377,6 +385,19 @@
       "confirm": "Confirm",
       "cancel": "Cancel",
       "areYouSure": "Are you sure?"
+    },
+    "dataQuality": {
+      "title": "Data Quality Issues",
+      "description": "These issues were found in the wordbank data and may affect exercise quality.",
+      "errors": "Errors",
+      "warnings": "Warnings",
+      "byType": "Issues by Type",
+      "export": "Export Issues CSV",
+      "clear": "Clear Issues",
+      "exported": "Issues exported",
+      "clearTitle": "Clear Issues",
+      "clearConfirm": "This will clear all logged data issues. Continue?",
+      "cleared": "Issues cleared"
     },
     "practiceDifficulty": "Practice Difficulty Per Exercise",
     "practiceDifficultyDesc": "Set the difficulty level for each exercise type in practice mode",
@@ -667,7 +688,10 @@
     "endSession": "End Session"
   },
   "errors": {
-    "noDataAvailable": "No data available for {exercise} exercise at {difficulty} difficulty"
+    "noDataAvailable": "No data available for {exercise} exercise at {difficulty} difficulty",
+    "noDataTitle": "No Data Available",
+    "noDataMessage": "There isn't enough data for the {exercise} exercise yet.",
+    "backToHome": "Back to Home"
   },
   "csv": {
     "errors": {

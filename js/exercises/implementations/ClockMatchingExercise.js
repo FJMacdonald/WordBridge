@@ -155,7 +155,10 @@ class ClockMatchingExercise extends SelectionExercise {
     
     showFeedback(correct, message = null) {
         if (correct && !message) {
-            message = `✓ Correct! The time ${this.currentItem.digitalDisplay} matches the selected clock.`;
+            const correctMatchText = t('exercises.clockMatching.correctMatch', { 
+                time: this.currentItem.digitalDisplay 
+            }) || `Correct! The time ${this.currentItem.digitalDisplay} matches the selected clock.`;
+            message = `✓ ${correctMatchText}`;
         }
         super.showFeedback(correct, message);
     }
@@ -205,11 +208,14 @@ class ClockMatchingExercise extends SelectionExercise {
         const nextHour = hour === 0 ? 1 : hour === 12 ? 1 : hour + 1;
         
         if (minute < 20) {
-            return `The hour hand points to ${displayHour}`;
+            return t('exercises.clockMatching.hourHandPoints', { hour: displayHour }) 
+                || `The hour hand points to ${displayHour}`;
         } else if (minute > 40) {
-            return `The hour hand points to ${nextHour}`;
+            return t('exercises.clockMatching.hourHandPoints', { hour: nextHour })
+                || `The hour hand points to ${nextHour}`;
         } else {
-            return `The hour hand is between ${displayHour} and ${nextHour}`;
+            return t('exercises.clockMatching.hourHandBetween', { hour1: displayHour, hour2: nextHour })
+                || `The hour hand is between ${displayHour} and ${nextHour}`;
         }
     }
     
@@ -220,19 +226,22 @@ class ClockMatchingExercise extends SelectionExercise {
         let hourDescription = this.getHourHandHint(timeItem);
         let minuteDescription;
         
+        let minuteNumber;
         if (minute === 0) {
-            minuteDescription = "the minute hand points to 12";
+            minuteNumber = 12;
         } else if (minute === 15) {
-            minuteDescription = "the minute hand points to 3";
+            minuteNumber = 3;
         } else if (minute === 30) {
-            minuteDescription = "the minute hand points to 6";
+            minuteNumber = 6;
         } else if (minute === 45) {
-            minuteDescription = "the minute hand points to 9";
+            minuteNumber = 9;
         } else {
             const minuteHour = Math.floor(minute / 5);
-            const minuteNumber = minuteHour === 0 ? 12 : minuteHour;
-            minuteDescription = `the minute hand points to ${minuteNumber}`;
+            minuteNumber = minuteHour === 0 ? 12 : minuteHour;
         }
+        
+        minuteDescription = t('exercises.clockMatching.minuteHandPoints', { minute: minuteNumber })
+            || `the minute hand points to ${minuteNumber}`;
         
         return `${hourDescription}, ${minuteDescription}`;
     }
