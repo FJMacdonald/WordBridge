@@ -219,11 +219,23 @@ class SettingsPage {
                     <summary class="card-header card-header--collapsible">
                         <h3 class="card-title">
                             <span class="card-icon">🎯</span>
-                            ${t('settings.practiceDifficulty')}
+                            ${t('settings.practiceDifficulty') || 'Practice Difficulty'}
                             <span class="toggle-icon">▼</span>
                         </h3>
                     </summary>
-                    <p class="card-description">${t('settings.practiceDifficultyDesc')}</p>
+                    <p class="card-description">${t('settings.practiceDifficultyDesc') || 'Set the difficulty level for each exercise type'}</p>
+                    
+                    <!-- Change All Option -->
+                    <div class="change-all-difficulty">
+                        <label class="setting-label">${t('settings.changeAllDifficulty') || 'Set all exercises to:'}</label>
+                        <select id="change-all-difficulty" class="setting-select">
+                            <option value="">-- ${t('settings.selectToChange') || 'Select to change all'} --</option>
+                            <option value="easy">${t('customize.forms.easy') || 'Easy'}</option>
+                            <option value="medium">${t('customize.forms.medium') || 'Medium'}</option>
+                            <option value="hard">${t('customize.forms.hard') || 'Hard'}</option>
+                        </select>
+                    </div>
+                    
                     ${this.renderDifficultySettings()}
                 </details>
                 
@@ -495,6 +507,31 @@ class SettingsPage {
                 practiceSettings[type] = difficulty;
                 storageService.set('practiceSettings', practiceSettings);
             }
+        });
+        
+        // Change all difficulty selector
+        this.container.querySelector('#change-all-difficulty')?.addEventListener('change', (e) => {
+            const newDifficulty = e.target.value;
+            if (!newDifficulty) return;
+            
+            // Update all dropdown values visually
+            this.container.querySelectorAll('.difficulty-dropdown').forEach(dropdown => {
+                dropdown.value = newDifficulty;
+            });
+            
+            // Update storage for all exercise types
+            const practiceSettings = storageService.get('practiceSettings', {});
+            this.container.querySelectorAll('.difficulty-dropdown').forEach(dropdown => {
+                const type = dropdown.dataset.type;
+                practiceSettings[type] = newDifficulty;
+            });
+            storageService.set('practiceSettings', practiceSettings);
+            
+            // Reset the change-all selector
+            e.target.value = '';
+            
+            // Show notification
+            this.showNotification(t('settings.allDifficultyChanged') || `All exercises set to ${newDifficulty}`, 'success');
         });
         
         // Translation Export
