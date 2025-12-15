@@ -322,6 +322,7 @@ class WordbankService {
     /**
      * Build exercise data for naming/listening/typing exercises
      * For easy difficulty, only include nouns (not verbs)
+     * Validates that we have proper distractors
      */
     buildNamingData(filters = {}) {
         // For easy exercises, focus on nouns only
@@ -336,38 +337,101 @@ class WordbankService {
         }
         
         const words = this.getWords(exerciseFilters);
+        const data = [];
         
-        return words.map(word => {
-            const distractors = this.getDistractors(word, 'naming', 3);
-            return {
+        for (const word of words) {
+            let distractors = this.getDistractors(word, 'naming', 3);
+            
+            // Filter out any undefined, null, or empty distractors
+            distractors = distractors.filter(d => d && typeof d === 'string' && d.trim() !== '');
+            
+            // If we don't have enough valid distractors, try to get more
+            if (distractors.length < 3) {
+                const additionalDistractors = this.getRandomWords(3 - distractors.length, {
+                    difficulty: word.difficulty
+                }, [word.id]).map(w => w.word);
+                distractors = [...distractors, ...additionalDistractors];
+            }
+            
+            // If we still don't have enough distractors, log and skip
+            if (distractors.length < 3) {
+                console.warn(`[WordbankService] Insufficient distractors for "${word.word}". Skipping.`);
+                this.logDataIssue('insufficient_distractors', word.id, word.word, `Only ${distractors.length} distractors`);
+                continue;
+            }
+            
+            // Filter out any distractor that matches the answer
+            distractors = distractors.filter(d => d.toLowerCase() !== word.word.toLowerCase());
+            
+            // Ensure we have at least 3 distractors
+            if (distractors.length < 3) {
+                continue;
+            }
+            
+            data.push({
                 id: word.id,
                 emoji: word.visual.emoji,
                 imageUrl: word.visual.imageUrl,
                 alt: word.visual.alt,
                 answer: word.word,
-                options: this.shuffleArray([word.word, ...distractors]),
+                options: this.shuffleArray([word.word, ...distractors.slice(0, 3)]),
                 difficulty: word.difficulty,
                 partOfSpeech: word.partOfSpeech
-            };
-        });
+            });
+        }
+        
+        return data;
     }
     
     /**
      * Build exercise data for category exercise
+     * Validates that word and category are not the same
      */
     buildCategoryData(filters = {}) {
         const words = this.getWords(filters);
+        const data = [];
         
-        return words.map(word => {
+        for (const word of words) {
+            // Validate: category should not be the same as the word
+            if (word.word.toLowerCase() === word.category.toLowerCase()) {
+                console.warn(`[WordbankService] Data issue: word "${word.word}" has same category name. Skipping.`);
+                this.logDataIssue('category_same_as_word', word.id, word.word, word.category);
+                continue;
+            }
+            
             const distractors = this.getDistractors(word, 'category', 3);
-            return {
+            data.push({
                 id: word.id,
                 category: word.category,
                 word: word.word,
                 options: this.shuffleArray([word.word, ...distractors]),
                 difficulty: word.difficulty
-            };
-        });
+            });
+        }
+        
+        return data;
+    }
+    
+    /**
+     * Log data issues for later review
+     */
+    logDataIssue(issueType, wordId, word, detail) {
+        const issues = JSON.parse(localStorage.getItem('wordbank_data_issues') || '[]');
+        const issue = {
+            type: issueType,
+            wordId,
+            word,
+            detail,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Avoid duplicate entries
+        const exists = issues.some(i => i.type === issueType && i.wordId === wordId);
+        if (!exists) {
+            issues.push(issue);
+            localStorage.setItem('wordbank_data_issues', JSON.stringify(issues));
+            console.warn(`[WordbankService] Logged data issue: ${issueType} for "${word}" (${wordId})`);
+        }
     }
     
     /**
@@ -425,19 +489,46 @@ class WordbankService {
     
     /**
      * Build exercise data for association exercise
+     * Validates that we have valid associated words and distractors
      */
     buildAssociationData(filters = {}) {
         const words = this.getWords({ ...filters, hasAssociated: true });
+        const data = [];
         
-        return words.map(word => ({
-            id: word.id,
-            word: word.word,
-            associated: word.relationships.associated.filter(a => 
-                this.calculateDifficulty(a) === word.difficulty
-            ),
-            unrelated: this.getDistractors(word, 'association', 4),
-            difficulty: word.difficulty
-        }));
+        for (const word of words) {
+            // Filter associated words - ensure they exist and are valid strings
+            const associated = (word.relationships.associated || [])
+                .filter(a => a && typeof a === 'string' && a.trim() !== '')
+                .filter(a => this.calculateDifficulty(a) === word.difficulty);
+            
+            // Skip if no valid associated words
+            if (associated.length === 0) {
+                console.warn(`[WordbankService] No valid associations for "${word.word}". Skipping.`);
+                continue;
+            }
+            
+            // Get distractors (unrelated words)
+            let unrelated = this.getDistractors(word, 'association', 4);
+            
+            // Filter out any undefined, null, or empty distractors
+            unrelated = unrelated.filter(u => u && typeof u === 'string' && u.trim() !== '');
+            
+            // Skip if we don't have enough unrelated words
+            if (unrelated.length < 3) {
+                console.warn(`[WordbankService] Insufficient distractors for association "${word.word}". Skipping.`);
+                continue;
+            }
+            
+            data.push({
+                id: word.id,
+                word: word.word,
+                associated: associated,
+                unrelated: unrelated,
+                difficulty: word.difficulty
+            });
+        }
+        
+        return data;
     }
     
     /**
@@ -541,6 +632,7 @@ class WordbankService {
     
     /**
      * Build exercise data for sentence fill-in-blank
+     * Now includes visual hint (emoji/image) to provide context
      */
     buildSentenceData(filters = {}) {
         const words = this.getWords({ ...filters, hasSentences: true });
@@ -556,7 +648,11 @@ class WordbankService {
                         sentence: blankSentence,
                         answer: word.word,
                         fullSentence: sentence,
-                        difficulty: word.difficulty
+                        difficulty: word.difficulty,
+                        // Include visual info for context
+                        emoji: word.visual?.emoji || null,
+                        imageUrl: word.visual?.imageUrl || null,
+                        alt: word.visual?.alt || word.word
                     });
                 }
             }
