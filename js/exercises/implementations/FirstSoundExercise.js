@@ -39,10 +39,11 @@ class FirstSoundExercise extends SelectionExercise {
     }
     
     renderPrompt() {
+        const startsWithSoundText = t('exercises.firstSound.startsWithSound') || 'Starts with sound';
         return `
             <p class="prompt-instruction">${t('exercises.firstSound.instruction')}</p>
             <div class="prompt-target-word">${this.targetWord}</div>
-            <p class="prompt-sound-hint">${t('exercises.firstSound.startsWithSound')} "${this.targetSound}"</p>
+            <p class="prompt-sound-hint">${startsWithSoundText} "${this.targetSound}"</p>
         `;
     }
     
