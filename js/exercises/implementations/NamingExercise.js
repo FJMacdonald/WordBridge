@@ -53,9 +53,9 @@ class NamingExercise extends SelectionExercise {
         const altInfo = item.alt ? `<p class="prompt-alt-hint">${item.alt}</p>` : '';
         
         return `
+            <p class="prompt-instruction">${t('exercises.naming.instruction')}</p>
             ${visual}
             ${altInfo}
-            <p class="prompt-instruction">${t('exercises.naming.instruction')}</p>
         `;
     }
     

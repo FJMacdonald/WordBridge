@@ -18,9 +18,15 @@ class TimeSequencingExercise extends SelectionExercise {
     
     renderPrompt() {
         const item = this.currentItem;
+        // Format the question to show the target word in uppercase without separate element
+        let question = item.question;
+        if (item.target) {
+            // Replace the target word in the question with uppercase version
+            const regex = new RegExp(`\\b${item.target}\\b`, 'gi');
+            question = question.replace(regex, `<strong>${item.target.toUpperCase()}</strong>`);
+        }
         return `
-            <p class="prompt-instruction">${item.question}</p>
-            ${item.target ? `<div class="prompt-target-word">${item.target}</div>` : ''}
+            <p class="prompt-instruction">${question}</p>
         `;
     }
     

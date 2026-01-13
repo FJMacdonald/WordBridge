@@ -18,7 +18,7 @@ class DefinitionExercise extends SelectionExercise {
     renderPrompt() {
         return `
             <p class="prompt-instruction">${t('exercises.definitions.instruction')}</p>
-            <div class="prompt-definition">"${this.currentItem.definition}"</div>
+            <div class="prompt-definition">${this.currentItem.definition}</div>
         `;
     }
     

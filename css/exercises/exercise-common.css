@@ -12,7 +12,7 @@
 
 .exercise__prompt {
     text-align: center;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-xs);
 }
 
 .prompt-instruction {
@@ -24,13 +24,13 @@
 .prompt-visual {
     font-size: 5rem;
     line-height: 1;
-    margin: var(--space-md) 0;
+    margin: var(--space-xs) 0;
 }
 
 .prompt-image {
     max-width: 180px;
     max-height: 180px;
-    margin: var(--space-md) auto;
+    margin: var(--space-xs) auto;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
 }

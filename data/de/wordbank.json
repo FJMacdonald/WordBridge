@@ -320,7 +320,9 @@
         "bruder",
         "dank"
       ],
-      "phrases": []
+      "phrases": [
+        "Streit, wieviel Engel auf eine Haarspitze passen"
+      ]
     },
     {
       "id": "angry",
@@ -487,9 +489,9 @@
         "jahr"
       ],
       "phrases": [
-        "Der Apfel fällt nicht weit vom Stamm",
         "In den sauren Apfel beißen",
-        "Für einen Apfel und ein Ei"
+        "Für einen Apfel und ein Ei",
+        "Der Apfel fällt nicht weit vom Stamm"
       ]
     },
     {
@@ -540,7 +542,9 @@
         "land",
         "vier"
       ],
-      "phrases": []
+      "phrases": [
+        "Arm wie eine Kirchenmaus"
+      ]
     },
     {
       "id": "artist",
@@ -738,7 +742,13 @@
         "büro",
         "ruf"
       ],
-      "phrases": []
+      "phrases": [
+        "sich wie die Axt im Walde benehmen",
+        "die Axt im Haus erspart den Zimmermann",
+        "die Axt an die Wurzel legen",
+        "Die Axt im Hause erspart den Zimmermann.\" - sprichwörtlich nach Friedrich Schiller, Wilhelm Tell",
+        "sich benehmen wie die Axt im Walde"
+      ]
     },
     {
       "id": "baby",
@@ -894,7 +904,10 @@
         "boden",
         "mund"
       ],
-      "phrases": []
+      "phrases": [
+        "mit Speck fängt man Mäuse",
+        "Mit Speck fängt man Mäuse."
+      ]
     },
     {
       "id": "badger",
@@ -939,7 +952,10 @@
         "nase",
         "fuß"
       ],
-      "phrases": []
+      "phrases": [
+        "ein Bad nehmen",
+        "Mancher reist gesund in's Bad // und kommt zurück malad."
+      ]
     },
     {
       "id": "bag",
@@ -991,7 +1007,13 @@
         "lügen",
         "preis"
       ],
-      "phrases": []
+      "phrases": [
+        "einem nackten Mann in die Tasche greifen",
+        "tief in die Tasche greifen müssen",
+        "jemandem geht das Messer in der Tasche auf",
+        "einem nackten Mann in die Tasche fassen, einem nackten Mann in die Tasche greifen",
+        "einem nackten Mann in die Tasche fassen"
+      ]
     },
     {
       "id": "bagel",
@@ -1042,7 +1064,11 @@
         "sonne",
         "küche"
       ],
-      "phrases": []
+      "phrases": [
+        "fette Küche macht mageren Beutel",
+        "viel Zehren und Gasten leert Beutel und Kasten",
+        "arm am Beutel, krank am Herzen"
+      ]
     },
     {
       "id": "baguette",
@@ -1192,7 +1218,9 @@
         "insel",
         "feind"
       ],
-      "phrases": []
+      "phrases": [
+        "den Ballon platzen lassen"
+      ]
     },
     {
       "id": "ballot",
@@ -1345,7 +1373,9 @@
         "funktion",
         "kartoffel"
       ],
-      "phrases": []
+      "phrases": [
+        "mit harten Bandagen kämpfen"
+      ]
     },
     {
       "id": "banjo",
@@ -1439,7 +1469,10 @@
         "ohren",
         "oma"
       ],
-      "phrases": []
+      "phrases": [
+        "zwischen Stuhl und Bank geraten",
+        "Des Teufels liebstes Möbelstück ist die lange Bank."
+      ]
     },
     {
       "id": "baseball",
@@ -1790,7 +1823,9 @@
         "magie",
         "trick"
       ],
-      "phrases": []
+      "phrases": [
+        "Bohnen in den Ohren haben"
+      ]
     },
     {
       "id": "bear",
@@ -1834,7 +1869,11 @@
         "opa",
         "sieg"
       ],
-      "phrases": []
+      "phrases": [
+        "Der Bär ist los",
+        "Einen Bärendienst erweisen",
+        "Jemandem einen Bären aufbinden"
+      ]
     },
     {
       "id": "beaver",
@@ -1934,7 +1973,10 @@
         "gas",
         "sturm"
       ],
-      "phrases": []
+      "phrases": [
+        "Das Bett hüten müssen",
+        "Mit dem linken Bein aufgestanden sein"
+      ]
     },
     {
       "id": "bee",
@@ -2037,7 +2079,12 @@
         "tasse",
         "markt"
       ],
-      "phrases": []
+      "phrases": [
+        "anbieten wie sauer Bier",
+        "Bier auf Wein, das lass sein; Wein auf Bier, das rat ich dir",
+        "das ist Ihr Bier",
+        "Bier ist Bier und Schnaps ist Schnaps"
+      ]
     },
     {
       "id": "beetle",
@@ -2137,7 +2184,9 @@
         "tiger",
         "dusche"
       ],
-      "phrases": []
+      "phrases": [
+        "etwas an die große Glocke hängen"
+      ]
     },
     {
       "id": "bicycle",
@@ -2327,8 +2376,8 @@
         "paket"
       ],
       "phrases": [
-        "Einen Vogel haben",
-        "Der frühe Vogel fängt den Wurm"
+        "Der frühe Vogel fängt den Wurm",
+        "Einen Vogel haben"
       ]
     },
     {
@@ -2378,7 +2427,9 @@
         "salz",
         "esel"
       ],
-      "phrases": []
+      "phrases": [
+        "Bis zum Hals in Schulden stecken"
+      ]
     },
     {
       "id": "black",
@@ -2431,7 +2482,12 @@
         "gefühle",
         "witzig"
       ],
-      "phrases": []
+      "phrases": [
+        "Schwarze Schafe",
+        "Ins Schwarze treffen",
+        "Schwarz sehen",
+        "Schwarz auf weiß"
+      ]
     },
     {
       "id": "blouse",
@@ -2528,7 +2584,12 @@
         "kurz",
         "lang"
       ],
-      "phrases": []
+      "phrases": [
+        "Das Blaue vom Himmel versprechen",
+        "Sein blaues Wunder erleben",
+        "Blauäugig sein",
+        "Blau machen"
+      ]
     },
     {
       "id": "blueberry",
@@ -2680,7 +2741,12 @@
         "orange",
         "löffel"
       ],
-      "phrases": []
+      "phrases": [
+        "Der Knochen kommt nicht zum Hund, sondern der Hund zum Knochen.",
+        "sich bis auf die Knochen blamieren",
+        "nur noch Haut und Knochen sein",
+        "nur Haut und Knochen sein"
+      ]
     },
     {
       "id": "book",
@@ -2731,7 +2797,13 @@
         "steak",
         "kälte"
       ],
-      "phrases": []
+      "phrases": [
+        "über etwas Buch führen",
+        "reden wie ein Buch",
+        "jemandem ein Buch mit sieben Siegeln sein",
+        "ein Buch mit sieben Siegel sein",
+        "für jemanden ein Buch mit sieben Siegeln sein"
+      ]
     },
     {
       "id": "bookmark",
@@ -2928,7 +3000,13 @@
         "statue",
         "dampf"
       ],
-      "phrases": []
+      "phrases": [
+        "in einer rauen Schale steckt oft ein guter Kern",
+        "sich in Schale werfen",
+        "Harte Schale und weicher Kern.",
+        "je bitterer die Schale, umso süßer der Kern",
+        "in einer rauen Schale steckt oft ein weicher Kern"
+      ]
     },
     {
       "id": "bowling",
@@ -3033,7 +3111,10 @@
         "wolke",
         "topf"
       ],
-      "phrases": []
+      "phrases": [
+        "das Feld räumen",
+        "ins Feld führen"
+      ]
     },
     {
       "id": "boy",
@@ -3087,7 +3168,11 @@
         "seide",
         "wachs"
       ],
-      "phrases": []
+      "phrases": [
+        "Eine große Kuh bringt selten mehr denn ein Kalb, eine kleine Meise brütet auf einmal wohl zehn Junge aus.",
+        "Am Abend noch Jungfrau, um Mitternacht eine junge Frau, beim Morgenrot schon ein Hausfrauchen.",
+        "Alte Leute, alte Ränke - junge Füchse, neue Schwänke."
+      ]
     },
     {
       "id": "brain",
@@ -3192,7 +3277,12 @@
         "yoga",
         "urin"
       ],
-      "phrases": []
+      "phrases": [
+        "Wes Brot ich ess, des Lied ich sing",
+        "Sein Brot verdienen",
+        "In Lohn und Brot stehen",
+        "Kleine Brötchen backen"
+      ]
     },
     {
       "id": "brick",
@@ -3296,7 +3386,9 @@
         "kürbis",
         "waffeln"
       ],
-      "phrases": []
+      "phrases": [
+        "aus Kindern werden Leute, aus Mädchen werden Bräute"
+      ]
     },
     {
       "id": "bridge",
@@ -3348,7 +3440,11 @@
         "pinguin",
         "pasta"
       ],
-      "phrases": []
+      "phrases": [
+        "Lachen ist eine Brücke.",
+        "eine Brücke schlagen",
+        "gehe erst über die Brücke, wenn du da bist"
+      ]
     },
     {
       "id": "briefcase",
@@ -3399,7 +3495,9 @@
         "ananas",
         "gurken"
       ],
-      "phrases": []
+      "phrases": [
+        "einen Koffer abstellen"
+      ]
     },
     {
       "id": "broccoli",
@@ -3546,7 +3644,13 @@
         "panda",
         "magnet"
       ],
-      "phrases": []
+      "phrases": [
+        "Neue Besen kehren gut.\" - nach Freidank: \"Der niuwe beseme kert vil wol.",
+        "neue Besen kehren gut",
+        "einen Besen fressen",
+        "viel Reiser machen einen Besen",
+        "es ist nicht alles Kehricht, was unter dem Besen liegt"
+      ]
     },
     {
       "id": "brown",
@@ -3644,7 +3748,13 @@
         "avocado",
         "oktopus"
       ],
-      "phrases": []
+      "phrases": [
+        "jemandem kann man das Vaterunser durch die Backen blasen, jemandem kann man das Vaterunser durch die Backen lesen",
+        "ins gleiche Horn blasen",
+        "jemandem kann man das Vaterunser durch die Backen blasen",
+        "zum Angriff auf jemanden blasen",
+        "jemandem einen blasen"
+      ]
     },
     {
       "id": "bucket",
@@ -3697,7 +3807,9 @@
         "brezel",
         "kalk"
       ],
-      "phrases": []
+      "phrases": [
+        "im Eimer sein"
+      ]
     },
     {
       "id": "builder",
@@ -4049,7 +4161,11 @@
         "ganze",
         "junge"
       ],
-      "phrases": []
+      "phrases": [
+        "Jemandem Honig um den Bart schmieren",
+        "Butter bei die Fische",
+        "Alles in Butter"
+      ]
     },
     {
       "id": "butterfly",
@@ -4197,7 +4313,10 @@
         "glück",
         "grund"
       ],
-      "phrases": []
+      "phrases": [
+        "Seinen Teil vom Kuchen abhaben wollen",
+        "Sich die Rosinen aus dem Kuchen picken"
+      ]
     },
     {
       "id": "calendar",
@@ -4297,7 +4416,9 @@
         "welt",
         "sohn"
       ],
-      "phrases": []
+      "phrases": [
+        "wenn man von der Wüste spricht, kommt das Kamel angelaufen"
+      ]
     },
     {
       "id": "camera",
@@ -4595,7 +4716,11 @@
         "hund",
         "schiff"
       ],
-      "phrases": []
+      "phrases": [
+        "etwas auf seine Kappe nehmen",
+        "jedem Narren gefällt seine Kappe",
+        "neben der Kappe sein"
+      ]
     },
     {
       "id": "car",
@@ -4647,7 +4772,10 @@
         "stück",
         "licht"
       ],
-      "phrases": []
+      "phrases": [
+        "Besser schlecht im Auto gefahren als gut zu Fuß gegangen.",
+        "zu Schrott fahren (z.B. ein Auto)"
+      ]
     },
     {
       "id": "credit card",
@@ -4751,7 +4879,10 @@
         "finger",
         "rolle"
       ],
-      "phrases": []
+      "phrases": [
+        "Mit offenen Karten spielen",
+        "Die Karten auf den Tisch legen"
+      ]
     },
     {
       "id": "carrot",
@@ -4908,9 +5039,9 @@
       ],
       "phrases": [
         "Die Katze im Sack kaufen",
+        "Die Katze lässt das Mausen nicht",
         "Wie Hund und Katze sein",
-        "Die Katze aus dem Sack lassen",
-        "Die Katze lässt das Mausen nicht"
+        "Die Katze aus dem Sack lassen"
       ]
     },
     {
@@ -5064,7 +5195,9 @@
         "gold",
         "wein"
       ],
-      "phrases": []
+      "phrases": [
+        "Keine Kette ist stärker als ihr schwächstes Glied."
+      ]
     },
     {
       "id": "chair",
@@ -5115,7 +5248,13 @@
         "hälfte",
         "erfolg"
       ],
-      "phrases": []
+      "phrases": [
+        "an jemandes Stuhl sägen",
+        "Der Frosch springt immer in den Pfuhl und säß' er auch auf gold'nem Stuhl.",
+        "jemanden vom Stuhl hauen",
+        "jemandem den Stuhl vor die Tür stellen",
+        "zwischen Stuhl und Bank geraten"
+      ]
     },
     {
       "id": "champagne",
@@ -5264,7 +5403,9 @@
         "insel",
         "feind"
       ],
-      "phrases": []
+      "phrases": [
+        "Käse schließt den Magen"
+      ]
     },
     {
       "id": "chef",
@@ -5317,7 +5458,10 @@
         "engel",
         "ohren"
       ],
-      "phrases": []
+      "phrases": [
+        "Hunger ist der beste Koch",
+        "Hunger ist der beste Koch."
+      ]
     },
     {
       "id": "cherry",
@@ -5367,7 +5511,9 @@
         "sandwich",
         "nachbar"
       ],
-      "phrases": []
+      "phrases": [
+        "mit jemandem ist nicht gut Kirschen essen"
+      ]
     },
     {
       "id": "chess",
@@ -5417,7 +5563,11 @@
         "karten",
         "küssen"
       ],
-      "phrases": []
+      "phrases": [
+        "jemanden in Schach halten",
+        "Ein Apfel am Tach [Tag] hält den Doktor in Schach.",
+        "in Schach halten"
+      ]
     },
     {
       "id": "chestnut",
@@ -5469,7 +5619,9 @@
         "spaghetti",
         "medaille"
       ],
-      "phrases": []
+      "phrases": [
+        "für jemanden die Kastanien aus dem Feuer holen"
+      ]
     },
     {
       "id": "chick",
@@ -5519,7 +5671,9 @@
         "strand",
         "soldat"
       ],
-      "phrases": []
+      "phrases": [
+        "Das Küken will klüger sein als die Henne."
+      ]
     },
     {
       "id": "chicken_animal",
@@ -5686,7 +5840,13 @@
         "knie",
         "opa"
       ],
-      "phrases": []
+      "phrases": [
+        "kein Kind von Traurigkeit sein",
+        "das Kind im Manne",
+        "ein gebranntes Kind scheut das Feuer",
+        "des Pfarrers Kind, des Lehrers Vieh gedeihen selten oder nie",
+        "mit Kind und Kegel"
+      ]
     },
     {
       "id": "chocolate",
@@ -5839,7 +5999,10 @@
         "jacke",
         "decke"
       ],
-      "phrases": []
+      "phrases": [
+        "die Kirche im Dorf lassen",
+        "Vor der Kirche (dem Rathaus) hieß es anders."
+      ]
     },
     {
       "id": "cigarette",
@@ -6236,7 +6399,10 @@
         "kette",
         "rauch"
       ],
-      "phrases": []
+      "phrases": [
+        "aus allen Wolken fallen",
+        "über den Wolken schweben"
+      ]
     },
     {
       "id": "clown",
@@ -6285,7 +6451,9 @@
         "hosen",
         "hass"
       ],
-      "phrases": []
+      "phrases": [
+        "einen Clown gefrühstückt haben"
+      ]
     },
     {
       "id": "coat",
@@ -6494,7 +6662,10 @@
         "blasen",
         "rakete"
       ],
-      "phrases": []
+      "phrases": [
+        "den Kaffee aufhaben",
+        "kalter Kaffee sein"
+      ]
     },
     {
       "id": "coffin",
@@ -6654,7 +6825,10 @@
         "wach",
         "müde"
       ],
-      "phrases": []
+      "phrases": [
+        "Der Reiter duldet Kalt und Nass, der Schreiber lobt sein Tintenfass.",
+        "den Kopf halt kalt, die Füße warm, das macht den besten Doktor arm"
+      ]
     },
     {
       "id": "comb",
@@ -6700,7 +6874,11 @@
         "bär",
         "satz"
       ],
-      "phrases": []
+      "phrases": [
+        "alles über einen Kamm scheren",
+        "über einen Kamm scheren",
+        "alle über einen Kamm scheren"
+      ]
     },
     {
       "id": "comet",
@@ -6956,7 +7134,9 @@
         "tomate",
         "verbot"
       ],
-      "phrases": []
+      "phrases": [
+        "Stellungnahme zu Cookies"
+      ]
     },
     {
       "id": "cool",
@@ -7011,7 +7191,9 @@
         "nah",
         "leise"
       ],
-      "phrases": []
+      "phrases": [
+        "ist der Mai kühl und nass, füllt's dem Bauern Scheun' und Fass"
+      ]
     },
     {
       "id": "corn",
@@ -7164,7 +7346,11 @@
         "obst",
         "topf"
       ],
-      "phrases": []
+      "phrases": [
+        "Die Kuh vom Eis holen",
+        "Heilige Kuh",
+        "Das geht auf keine Kuhhaut"
+      ]
     },
     {
       "id": "crab",
@@ -7322,7 +7508,12 @@
         "wertlos",
         "passend"
       ],
-      "phrases": []
+      "phrases": [
+        "da wird doch der Hund in der Pfanne verrückt",
+        "da wird der Hund in der Pfanne verrückt",
+        "Wer Arbeit kennt und danach rennt und sich nicht drückt, der ist verrückt.",
+        "da wird der Hund in der Pfanne verrückt, da wird doch der Hund in der Pfanne verrückt"
+      ]
     },
     {
       "id": "cricket",
@@ -7522,7 +7713,10 @@
         "neid",
         "seide"
       ],
-      "phrases": []
+      "phrases": [
+        "eine Krähe hackt der anderen kein Auge aus",
+        "Eine Krähe hackt der anderen kein Auge aus."
+      ]
     },
     {
       "id": "crown",
@@ -7574,7 +7768,11 @@
         "alien",
         "mais"
       ],
-      "phrases": []
+      "phrases": [
+        "einen in der Krone haben",
+        "sich einen Zacken aus der Krone brechen",
+        "sich keinen Zacken aus der Krone brechen"
+      ]
     },
     {
       "id": "crying",
@@ -7629,7 +7827,9 @@
         "altern",
         "fördern"
       ],
-      "phrases": []
+      "phrases": [
+        "Über vergossene Milch weinen"
+      ]
     },
     {
       "id": "crystal ball",
@@ -7730,7 +7930,9 @@
         "eagle",
         "ninja"
       ],
-      "phrases": []
+      "phrases": [
+        "Träum' süß von sauren Gurken."
+      ]
     },
     {
       "id": "cupcake",
@@ -7873,7 +8075,9 @@
         "dösen",
         "kauen"
       ],
-      "phrases": []
+      "phrases": [
+        "der Tanz beginnt"
+      ]
     },
     {
       "id": "dancer",
@@ -7921,7 +8125,9 @@
         "kamel",
         "ram"
       ],
-      "phrases": []
+      "phrases": [
+        "der Tanz beginnt"
+      ]
     },
     {
       "id": "dancing",
@@ -7969,7 +8175,9 @@
         "sagen",
         "gehen"
       ],
-      "phrases": []
+      "phrases": [
+        "der Tanz beginnt"
+      ]
     },
     {
       "id": "dart",
@@ -8119,7 +8327,12 @@
         "banjo",
         "otter"
       ],
-      "phrases": []
+      "phrases": [
+        "ein Prediger in der Wüste",
+        "jemanden in die Wüste schicken",
+        "wenn man von der Wüste spricht, kommt das Kamel angelaufen",
+        "ein Rufer in der Wüste"
+      ]
     },
     {
       "id": "detective",
@@ -8223,7 +8436,13 @@
         "oktopus",
         "roggen"
       ],
-      "phrases": []
+      "phrases": [
+        "weder Tod noch Teufel fürchten",
+        "den Teufel an die Wand malen",
+        "Wenn man vom Teufel spricht, dann kommt er gelaufen.",
+        "dem Teufel von der Schippe springen",
+        "wenn man dem Teufel den kleinen Finger gibt, so nimmt er die ganze Hand"
+      ]
     },
     {
       "id": "diamond",
@@ -8431,7 +8650,9 @@
         "freund",
         "arbeit"
       ],
-      "phrases": []
+      "phrases": [
+        "sich von jemandem eine Scheibe abschneiden können"
+      ]
     },
     {
       "id": "dive",
@@ -8533,7 +8754,13 @@
         "mann",
         "weg"
       ],
-      "phrases": []
+      "phrases": [
+        "Der beste Arzt ist jederzeit des eigenen Menschen Mässigkeit.",
+        "Die Zeit ist der beste Arzt.",
+        "Ein Glas Wein auf die Suppe ist dem Arzt einen Taler entzogen.",
+        "Ein junger Arzt muss drei Kirchhöfe haben.",
+        "Arbeit, Müßigkeit und Ruh, schließt dem Arzt die Türe zu."
+      ]
     },
     {
       "id": "dog",
@@ -8584,10 +8811,10 @@
         "geld"
       ],
       "phrases": [
+        "Bekannt wie ein bunter Hund",
+        "Wie Hund und Katze sein",
         "Auf den Hund kommen",
         "Da liegt der Hund begraben",
-        "Wie Hund und Katze sein",
-        "Bekannt wie ein bunter Hund",
         "Den letzten beißen die Hunde"
       ]
     },
@@ -8737,7 +8964,10 @@
         "stadt",
         "baby"
       ],
-      "phrases": []
+      "phrases": [
+        "Störrisch wie ein Esel",
+        "Wenn man vom Esel spricht"
+      ]
     },
     {
       "id": "donut",
@@ -8885,7 +9115,13 @@
         "herz",
         "platz"
       ],
-      "phrases": []
+      "phrases": [
+        "lieber den Spatz in der Hand als die Taube auf dem Dach",
+        "Ein Spatz in der Hand ist besser als die Taube auf dem Dach.",
+        "ein Spatz in der Hand ist besser als die Taube auf dem Dach",
+        "der Spatz in der Hand ist besser als die Taube auf dem Dach",
+        "eine taube Nuss sein"
+      ]
     },
     {
       "id": "dragon",
@@ -8987,7 +9223,13 @@
         "leben",
         "reden"
       ],
-      "phrases": []
+      "phrases": [
+        "den Zug nicht verpassen",
+        "ein schöner Zug von jemandem sein",
+        "zum Zug kommen, zum Zuge kommen",
+        "Zug durch die Gemeinde",
+        "auf den fahrenden Zug aufspringen"
+      ]
     },
     {
       "id": "dress",
@@ -9347,7 +9589,12 @@
         "haut",
         "karte"
       ],
-      "phrases": []
+      "phrases": [
+        "In Grund und Boden",
+        "Auf der Erde bleiben",
+        "Kein Bein auf die Erde bekommen",
+        "Unter der Erde liegen"
+      ]
     },
     {
       "id": "egg",
@@ -9505,7 +9752,9 @@
         "wald",
         "glas"
       ],
-      "phrases": []
+      "phrases": [
+        "wer das Kleine nicht acht't, dem wird das Große nicht gebracht"
+      ]
     },
     {
       "id": "elephant",
@@ -9555,7 +9804,9 @@
         "schokolade",
         "parkplatz"
       ],
-      "phrases": []
+      "phrases": [
+        "aus einer Mücke einen Elefanten machen"
+      ]
     },
     {
       "id": "elevator",
@@ -9761,10 +10012,10 @@
         "wand"
       ],
       "phrases": [
+        "Ins Auge springen",
         "Kein Auge zutun können",
         "Auge um Auge, Zahn um Zahn",
         "Unter vier Augen",
-        "Ins Auge springen",
         "Ein Auge auf etwas werfen"
       ]
     },
@@ -10011,7 +10262,12 @@
         "stand",
         "lesen"
       ],
-      "phrases": []
+      "phrases": [
+        "über den Zaun fressen",
+        "einen Streit vom Zaun brechen",
+        "nicht alle Latten am Zaun haben",
+        "etwas vom Zaun brechen"
+      ]
     },
     {
       "id": "finger",
@@ -10061,7 +10317,12 @@
         "vogel",
         "strand"
       ],
-      "phrases": []
+      "phrases": [
+        "Sich etwas an den fünf Fingern abzählen können",
+        "Lange Finger machen",
+        "Sich die Finger verbrennen",
+        "Keinen Finger krümmen"
+      ]
     },
     {
       "id": "fire",
@@ -10115,10 +10376,10 @@
         "stuhl"
       ],
       "phrases": [
+        "Feuer und Flamme sein",
         "Mit dem Feuer spielen",
-        "Für jemanden durchs Feuer gehen",
         "Öl ins Feuer gießen",
-        "Feuer und Flamme sein"
+        "Für jemanden durchs Feuer gehen"
       ]
     },
     {
@@ -10395,7 +10656,10 @@
         "jacke",
         "decke"
       ],
-      "phrases": []
+      "phrases": [
+        "Butter bei die Fische",
+        "Kleine Fische"
+      ]
     },
     {
       "id": "fist",
@@ -10490,7 +10754,9 @@
         "müll",
         "rock"
       ],
-      "phrases": []
+      "phrases": [
+        "Sich etwas an den fünf Fingern abzählen können"
+      ]
     },
     {
       "id": "flamingo",
@@ -10644,7 +10910,13 @@
         "roboter",
         "teller"
       ],
-      "phrases": []
+      "phrases": [
+        "unter dem Radar fliegen",
+        "bricht der Ast auf dem er sitzt, vergisst der Vogel, dass er fliegen kann",
+        "in der Not frisst der Teufel Fliegen",
+        "Fliegen und Freunde kommen im Sommer.",
+        "über den großen Teich fliegen"
+      ]
     },
     {
       "id": "folder",
@@ -10744,8 +11016,8 @@
         "holz"
       ],
       "phrases": [
-        "Kalte Füße bekommen",
         "Mit beiden Füßen auf dem Boden stehen",
+        "Kalte Füße bekommen",
         "Auf großem Fuß leben"
       ]
     },
@@ -10853,7 +11125,11 @@
         "bär",
         "satz"
       ],
-      "phrases": []
+      "phrases": [
+        "Auf dem Holzweg sein",
+        "Wie man in den Wald hineinruft, so schallt es heraus",
+        "Den Wald vor lauter Bäumen nicht sehen"
+      ]
     },
     {
       "id": "fork",
@@ -10903,7 +11179,11 @@
         "lärm",
         "rauch"
       ],
-      "phrases": []
+      "phrases": [
+        "Mit der Gabel ist es eine Ehr, mit dem Löffel erwischt man mehr.",
+        "Messer, Gabel, Schere, Licht, sind für kleine Kinder nicht.",
+        "mit der fünfzinkigen Gabel essen"
+      ]
     },
     {
       "id": "fountain",
@@ -10954,7 +11234,11 @@
         "platte",
         "schafe"
       ],
-      "phrases": []
+      "phrases": [
+        "der Krug geht so lange zum Brunnen, bis er bricht",
+        "Der Krug geht so lange zum Brunnen, bis er bricht.",
+        "Ist das Kind erst in den Brunnen gefallen und ertrunken, dann ist es zu spät, um diesen oben abzudecken."
+      ]
     },
     {
       "id": "fountain pen",
@@ -11100,7 +11384,13 @@
         "maus",
         "zelt"
       ],
-      "phrases": []
+      "phrases": [
+        "wie ein Fuchs im Hühnerstall hausen",
+        "wo sich Fuchs und Hase gute Nacht sagen",
+        "Wie gewonnen, so zerronnen.\" - nach Johann Wolfgang von Goethe, Reineke Fuchs 1, 160f",
+        "ein schlafender Fuchs fängt kein Huhn",
+        "Ein schlafender Fuchs fängt kein Huhn."
+      ]
     },
     {
       "id": "fries",
@@ -11205,7 +11495,13 @@
         "wolken",
         "apfel"
       ],
-      "phrases": []
+      "phrases": [
+        "Der Frosch springt immer in den Pfuhl und säß' er auch auf gold'nem Stuhl.",
+        "lebe glücklich, lebe froh, wie der Frosch im Mädchenklo",
+        "einen Frosch im Hals haben, einen Frosch im Halse haben",
+        "einen Frosch im Halse haben",
+        "einen Frosch im Hals haben"
+      ]
     },
     {
       "id": "garlic",
@@ -11308,7 +11604,9 @@
         "reis",
         "korb"
       ],
-      "phrases": []
+      "phrases": [
+        "jemandem das Gas abdrehen"
+      ]
     },
     {
       "id": "gear",
@@ -11516,9 +11814,11 @@
         "dose"
       ],
       "phrases": [
-        "Aufs Eis legen",
-        "Das Eis brechen",
-        "Sich auf dünnes Eis begeben"
+        "der Geist ist willig, aber das Fleisch ist schwach",
+        "seinen Geist aushauchen",
+        "auf den Geist gehen",
+        "den Geist aufgeben",
+        "seinen Geist aufgeben"
       ]
     },
     {
@@ -11725,7 +12025,13 @@
         "würfel",
         "gorilla"
       ],
-      "phrases": []
+      "phrases": [
+        "lange Fädchen, faule Mädchen",
+        "Langer Draht, faule Naht.\" - untergegangenes Sprichwort; heute sinnentstellt zu \"Langes Fädchen, faules Mädchen.",
+        "Mädchen für alles",
+        "aus Kindern werden Leute, aus Mädchen werden Bräute",
+        "Langes Fädchen, faules Mädchen."
+      ]
     },
     {
       "id": "glasses",
@@ -12042,7 +12348,11 @@
         "zebra",
         "ferkel"
       ],
-      "phrases": []
+      "phrases": [
+        "eine rosa Brille tragen",
+        "wer nicht sehen will, dem hilft keine Brille",
+        "eine rosarote Brille aufhaben"
+      ]
     },
     {
       "id": "gold",
@@ -12092,9 +12402,9 @@
         "fax"
       ],
       "phrases": [
+        "Es ist nicht alles Gold, was glänzt",
         "Morgenstund hat Gold im Mund",
-        "Reden ist Silber, Schweigen ist Gold",
-        "Es ist nicht alles Gold, was glänzt"
+        "Reden ist Silber, Schweigen ist Gold"
       ]
     },
     {
@@ -12186,7 +12496,10 @@
         "soja",
         "kalk"
       ],
-      "phrases": []
+      "phrases": [
+        "Die Gans lehrt den Schwan singen.",
+        "jede Gans hat ihren Martinstag"
+      ]
     },
     {
       "id": "gorilla",
@@ -12494,7 +12807,13 @@
         "dick",
         "teuer"
       ],
-      "phrases": []
+      "phrases": [
+        "nachts sind alle Katzen grau",
+        "bei Nacht sind alle Katzen grau",
+        "Nachts sind alle Katzen grau.",
+        "etwas grau in grau malen",
+        "in der Nacht sind alle Katzen grau"
+      ]
     },
     {
       "id": "green",
@@ -12536,7 +12855,12 @@
         "weich",
         "taub"
       ],
-      "phrases": []
+      "phrases": [
+        "Grünes Licht geben",
+        "Das ist dasselbe in Grün",
+        "Über den grünen Klee loben",
+        "Am grünen Tisch"
+      ]
     },
     {
       "id": "guitar",
@@ -12638,7 +12962,10 @@
         "nicht",
         "haben"
       ],
-      "phrases": []
+      "phrases": [
+        "jemandem die Pistole auf die Brust setzen",
+        "wie aus der Pistole geschossen"
+      ]
     },
     {
       "id": "gymnastics",
@@ -12738,7 +13065,12 @@
         "wenn",
         "dich"
       ],
-      "phrases": []
+      "phrases": [
+        "mit einem Hammer in der Hand sieht alles aus wie ein Nagel",
+        "zwischen Hammer und Amboss geraten",
+        "unter den Hammer bringen",
+        "unter den Hammer kommen"
+      ]
     },
     {
       "id": "hamster",
@@ -12839,11 +13171,7 @@
         "verstehe"
       ],
       "phrases": [
-        "Alle Hände voll zu tun haben",
-        "Eine Hand wäscht die andere",
-        "Aus erster Hand",
-        "Von der Hand in den Mund leben",
-        "Hand in Hand"
+        "aus dem Handgelenk"
       ]
     },
     {
@@ -13019,7 +13347,13 @@
         "verkrampft",
         "angespannt"
       ],
-      "phrases": []
+      "phrases": [
+        "lebe glücklich, lebe froh, wie der Frosch im Mädchenklo",
+        "Geld macht nicht glücklich, aber es beruhigt",
+        "glücklich ist, wer vergisst, was nicht mehr zu ändern ist",
+        "Geld allein macht nicht glücklich.",
+        "lebe glücklich, lebe froh, wie der Mops im Haferstroh"
+      ]
     },
     {
       "id": "hat",
@@ -13073,7 +13407,13 @@
         "es",
         "und"
       ],
-      "phrases": []
+      "phrases": [
+        "mit etwas nichts am Hut haben",
+        "den Hut aufhaben",
+        "den Hut aufhalten",
+        "mit jemandem nichts am Hut haben",
+        "soundso klein mit Hut sein"
+      ]
     },
     {
       "id": "headphones",
@@ -13240,10 +13580,10 @@
       ],
       "phrases": [
         "Sich ein Herz fassen",
-        "Mit Herz und Seele",
-        "Das Herz auf der Zunge tragen",
+        "Schweren Herzens",
         "Ins Herz schließen",
-        "Schweren Herzens"
+        "Mit Herz und Seele",
+        "Das Herz auf der Zunge tragen"
       ]
     },
     {
@@ -13586,7 +13926,10 @@
         "aber",
         "für"
       ],
-      "phrases": []
+      "phrases": [
+        "Jemandem Honig um den Bart schmieren",
+        "Das Land, wo Milch und Honig fließt"
+      ]
     },
     {
       "id": "hook",
@@ -13638,7 +13981,10 @@
         "sind",
         "war"
       ],
-      "phrases": []
+      "phrases": [
+        "einen Haken haben",
+        "Früh krümmt sich, was ein Haken werden will."
+      ]
     },
     {
       "id": "horn",
@@ -13739,9 +14085,11 @@
         "kann"
       ],
       "phrases": [
-        "Das beste Pferd im Stall",
-        "Das Pferd von hinten aufzäumen",
-        "Aufs falsche Pferd setzen"
+        "die wildesten Fohlen werden die besten Pferde",
+        "Man hat schon Pferde vor der Apotheke kotzen sehen.",
+        "man hat schon Pferde kotzen sehen",
+        "Wenn die Bauern besoffen sind, laufen die Pferde am besten.",
+        "das höchste Glück der Erde liegt auf dem Rücken der Pferde"
       ]
     },
     {
@@ -13846,7 +14194,13 @@
         "fit",
         "reif"
       ],
-      "phrases": []
+      "phrases": [
+        "Es wird nichts so heiß gegessen, wie es gekocht wird.",
+        "Man soll das Eisen schmieden, solange es heiß ist.",
+        "Fünf sind geladen, zehn sind gekommen. Tu' Wasser zur Suppe, heiß alle willkommen.",
+        "fünf sind geladen, zehn sind gekommen, schütt‘ Wasser hinein, heiß alle willkommen",
+        "zu heiß gebadet haben"
+      ]
     },
     {
       "id": "hotdog",
@@ -13999,7 +14353,12 @@
         "nur",
         "dir"
       ],
-      "phrases": []
+      "phrases": [
+        "Haus und Hof",
+        "Aus dem Häuschen sein",
+        "Mit der Tür ins Haus fallen",
+        "Von Haus aus"
+      ]
     },
     {
       "id": "hut",
@@ -14052,7 +14411,13 @@
         "nur",
         "dir"
       ],
-      "phrases": []
+      "phrases": [
+        "mit etwas nichts am Hut haben",
+        "den Hut aufhaben",
+        "den Hut aufhalten",
+        "mit jemandem nichts am Hut haben",
+        "soundso klein mit Hut sein"
+      ]
     },
     {
       "id": "ice",
@@ -14103,8 +14468,9 @@
         "dem"
       ],
       "phrases": [
-        "Das Eis brechen",
         "Sich auf dünnes Eis begeben",
+        "Die Kuh vom Eis holen",
+        "Das Eis brechen",
         "Aufs Eis legen"
       ]
     },
@@ -14157,8 +14523,9 @@
         "mal"
       ],
       "phrases": [
-        "Das Eis brechen",
         "Sich auf dünnes Eis begeben",
+        "Die Kuh vom Eis holen",
+        "Das Eis brechen",
         "Aufs Eis legen"
       ]
     },
@@ -14305,7 +14672,13 @@
         "mein",
         "bist"
       ],
-      "phrases": []
+      "phrases": [
+        "was nicht ist, kann ja noch werden",
+        "das kann ja kein Schwein lesen",
+        "da lachen ja die Hühner",
+        "das ist ja ein dickes Ei",
+        "das kann ja kein Schwein lesen!"
+      ]
     },
     {
       "id": "jellyfish",
@@ -14401,7 +14774,13 @@
         "diese",
         "deine"
       ],
-      "phrases": []
+      "phrases": [
+        "wo kein Kläger ist, ist auch kein Richter",
+        "ein Richter soll zwei gleiche Ohren haben",
+        "wo kein Kläger, da kein Richter",
+        "Wo kein Kläger, da kein Richter.",
+        "in eigener Sache kann niemand Richter sein"
+      ]
     },
     {
       "id": "juggle",
@@ -14505,7 +14884,10 @@
         "oder",
         "nach"
       ],
-      "phrases": []
+      "phrases": [
+        "im eigenen Saft schmoren",
+        "jemanden im eigenen Saft schmoren lassen"
+      ]
     },
     {
       "id": "jump",
@@ -14559,7 +14941,8 @@
         "tauchgang"
       ],
       "phrases": [
-        "Ins Auge springen"
+        "Ins Auge springen",
+        "Dem Tod von der Schippe springen"
       ]
     },
     {
@@ -15000,7 +15383,10 @@
         "ahnen",
         "boxen"
       ],
-      "phrases": []
+      "phrases": [
+        "jemanden in die Knie zwingen",
+        "jemanden übers Knie legen"
+      ]
     },
     {
       "id": "knife",
@@ -15052,7 +15438,11 @@
         "komm",
         "gibt"
       ],
-      "phrases": []
+      "phrases": [
+        "Auf Messers Schneide stehen",
+        "Ein zweischneidiges Schwert",
+        "Jemandem das Messer an die Kehle setzen"
+      ]
     },
     {
       "id": "knit",
@@ -15306,7 +15696,9 @@
         "euch",
         "einer"
       ],
-      "phrases": []
+      "phrases": [
+        "eine Lampe haben"
+      ]
     },
     {
       "id": "laptop",
@@ -15409,7 +15801,11 @@
         "soll"
       ],
       "phrases": [
-        "Stein und Bein schwören"
+        "Auf eigenen Beinen stehen",
+        "Beine machen",
+        "Mit dem linken Bein aufgestanden sein",
+        "Stein und Bein schwören",
+        "Kein Bein auf die Erde bekommen"
       ]
     },
     {
@@ -15561,7 +15957,9 @@
         "des",
         "weil"
       ],
-      "phrases": []
+      "phrases": [
+        "wie ein Storch im Salat"
+      ]
     },
     {
       "id": "lift",
@@ -15721,7 +16119,9 @@
         "wäre",
         "nun"
       ],
-      "phrases": []
+      "phrases": [
+        "wie ein geölter Blitz"
+      ]
     },
     {
       "id": "lime",
@@ -15814,7 +16214,13 @@
         "hätte",
         "könnte"
       ],
-      "phrases": []
+      "phrases": [
+        "den Löwen zum Frass vorwerfen",
+        "sich in die Höhle des Löwen wagen",
+        "an der Klaue erkennt man den Löwen",
+        "Begib dich nicht in die Höhle des Löwen.",
+        "sich in die Höhle des Löwen begeben"
+      ]
     },
     {
       "id": "lips",
@@ -15864,7 +16270,9 @@
         "glaube",
         "gerade"
       ],
-      "phrases": []
+      "phrases": [
+        "Kein Wort über die Lippen bringen"
+      ]
     },
     {
       "id": "lipstick",
@@ -16214,7 +16622,10 @@
         "aufstieg",
         "wanderung"
       ],
-      "phrases": []
+      "phrases": [
+        "Den Faden verlieren",
+        "Den roten Faden verlieren"
+      ]
     },
     {
       "id": "lotion",
@@ -16323,7 +16734,13 @@
         "sir",
         "dieses"
       ],
-      "phrases": []
+      "phrases": [
+        "In Liebe entbrannt",
+        "Aus Liebe zu",
+        "Liebe macht blind",
+        "Alte Liebe rostet nicht",
+        "Liebe geht durch den Magen"
+      ]
     },
     {
       "id": "lungs",
@@ -16636,7 +17053,9 @@
         "helfen",
         "finden"
       ],
-      "phrases": []
+      "phrases": [
+        "Mit Mann und Maus"
+      ]
     },
     {
       "id": "mango",
@@ -16730,7 +17149,11 @@
         "sei",
         "dort"
       ],
-      "phrases": []
+      "phrases": [
+        "Die Karten auf den Tisch legen",
+        "Alles auf eine Karte setzen",
+        "Mit offenen Karten spielen"
+      ]
     },
     {
       "id": "marker",
@@ -16780,7 +17203,11 @@
         "dort",
         "weiter"
       ],
-      "phrases": []
+      "phrases": [
+        "jemandem durch Mark und Bein gehen",
+        "jemandem durch Mark und Pfennig gehen",
+        "jemandem durch Mark und Bein gehen, jemandem durch Mark und Pfennig gehen"
+      ]
     },
     {
       "id": "meat",
@@ -16834,9 +17261,7 @@
         "diesem"
       ],
       "phrases": [
-        "Aufs Eis legen",
-        "Das Eis brechen",
-        "Sich auf dünnes Eis begeben"
+        "Weder Fisch noch Fleisch"
       ]
     },
     {
@@ -16936,7 +17361,9 @@
         "fragen",
         "familie"
       ],
-      "phrases": []
+      "phrases": [
+        "zwei Seiten einer Medaille sein"
+      ]
     },
     {
       "id": "meditate",
@@ -17244,7 +17671,11 @@
         "wegen",
         "hause"
       ],
-      "phrases": []
+      "phrases": [
+        "Das Land, wo Milch und Honig fließt",
+        "Über vergossene Milch weinen",
+        "Milchmädchenrechnung"
+      ]
     },
     {
       "id": "mirror",
@@ -17294,7 +17725,10 @@
         "machst",
         "essen"
       ],
-      "phrases": []
+      "phrases": [
+        "Der Mensch sah in den Spiegel und erkannte sich.",
+        "Ein Mensch ohne Bildung ist ein Spiegel ohne Politur."
+      ]
     },
     {
       "id": "money",
@@ -17348,10 +17782,11 @@
         "unter"
       ],
       "phrases": [
-        "Nicht für Geld und gute Worte",
+        "Geld stinkt nicht",
         "Geld regiert die Welt",
-        "Zeit ist Geld",
-        "Geld stinkt nicht"
+        "Nicht für Geld und gute Worte",
+        "Das Geld zum Fenster hinauswerfen",
+        "Zeit ist Geld"
       ]
     },
     {
@@ -17400,7 +17835,12 @@
         "tot",
         "getan"
       ],
-      "phrases": []
+      "phrases": [
+        "dem Affen Zucker geben",
+        "vom wilden Affen gebissen sein",
+        "für die Frankfurter Affen",
+        "sich zum Affen machen"
+      ]
     },
     {
       "id": "moon",
@@ -17453,7 +17893,11 @@
         "erst",
         "rein"
       ],
-      "phrases": []
+      "phrases": [
+        "Hinter dem Mond leben",
+        "Den Mond anbellen",
+        "Nach dem Mond greifen"
+      ]
     },
     {
       "id": "moose",
@@ -17651,7 +18095,12 @@
         "sonst",
         "seid"
       ],
-      "phrases": []
+      "phrases": [
+        "Goldene Berge versprechen",
+        "Über den Berg sein",
+        "Berge versetzen können",
+        "Über alle Berge sein"
+      ]
     },
     {
       "id": "mouse",
@@ -17702,7 +18151,11 @@
         "jahre",
         "wann"
       ],
-      "phrases": []
+      "phrases": [
+        "Da beißt die Maus keinen Faden ab",
+        "Mit Mann und Maus",
+        "Arm wie eine Kirchenmaus"
+      ]
     },
     {
       "id": "mouth",
@@ -17753,11 +18206,11 @@
         "halt"
       ],
       "phrases": [
+        "Von Mund zu Mund",
+        "Jemandem das Wort im Mund umdrehen",
         "Von der Hand in den Mund leben",
         "Morgenstund hat Gold im Mund",
-        "Kein Blatt vor den Mund nehmen",
-        "Den Mund halten",
-        "Von Mund zu Mund"
+        "Den Mund halten"
       ]
     },
     {
@@ -17860,7 +18313,11 @@
         "sache",
         "jeder"
       ],
-      "phrases": []
+      "phrases": [
+        "hinten Lyzeum, vorne Museum",
+        "Von hinten Lyzeum, von vorne Museum.",
+        "von hinten Lyzeum, von vorne Museum"
+      ]
     },
     {
       "id": "mushroom",
@@ -17912,7 +18369,9 @@
         "konnte",
         "siehst"
       ],
-      "phrases": []
+      "phrases": [
+        "wie Pilze aus dem Boden schießen"
+      ]
     },
     {
       "id": "music",
@@ -17961,7 +18420,11 @@
         "kam",
         "wusste"
       ],
-      "phrases": []
+      "phrases": [
+        "wer die Musik bestellt hat, muss sie auch bezahlen",
+        "wer die Musik bezahlt, bestimmt auch, was gespielt wird",
+        "der Ton macht die Musik"
+      ]
     },
     {
       "id": "necklace",
@@ -18065,10 +18528,8 @@
         "lieber"
       ],
       "phrases": [
-        "Im Laufe der Zeit",
-        "Kommt Zeit, kommt Rat",
-        "Zeit ist Geld",
-        "Die Zeit totschlagen"
+        "Nichts ist so alt wie die Zeitung von gestern.",
+        "Der Schnee von gestern ist der Matsch von morgen.\" Hannoversche Allgemeine Zeitung, Lüttje Lage, 7.Februar 2006, dort als Zitat bezeichnet."
       ]
     },
     {
@@ -18267,8 +18728,8 @@
         "sage"
       ],
       "phrases": [
-        "Die Nase in alles stecken",
         "Die Nase rümpfen",
+        "Die Nase in alles stecken",
         "Die Nase voll haben"
       ]
     },
@@ -18624,7 +19085,11 @@
         "all"
       ],
       "phrases": [
-        "Eine Hand wäscht die andere"
+        "Alles auf eine Karte setzen",
+        "Arm wie eine Kirchenmaus",
+        "Rot wie eine Tomate werden",
+        "Eine Hand wäscht die andere",
+        "Eine weiße Weste haben"
       ]
     },
     {
@@ -19193,7 +19658,13 @@
         "ruhig",
         "sah"
       ],
-      "phrases": []
+      "phrases": [
+        "Wer gegen den Wind pisst, bekommt nasse Hosen.",
+        "die Hosen herunterlassen",
+        "in die Hose gehen, in die Hosen gehen",
+        "die Hosen anhaben",
+        "in die Hosen gehen"
+      ]
     },
     {
       "id": "paperclip",
@@ -19963,7 +20434,13 @@
         "welche",
         "bestimmt"
       ],
-      "phrases": []
+      "phrases": [
+        "geh doch dort hin wo der Pfeffer wächst",
+        "Da liegt der Hase im Pfeffer.",
+        "da liegt der Hase im Pfeffer",
+        "wo der Pfeffer wächst",
+        "Pfeffer im Arsch haben"
+      ]
     },
     {
       "id": "phone",
@@ -20167,7 +20644,13 @@
         "nett",
         "hoch"
       ],
-      "phrases": []
+      "phrases": [
+        "ein Bild sagt mehr als tausend Worte",
+        "ein düsteres Bild zeichnen",
+        "ein Leben ohne Arbeit gilt nur was ein Rahmen ohne Bild",
+        "ein klares Bild zeichnen",
+        "ein verschwommenes Bild zeichnen"
+      ]
     },
     {
       "id": "pie",
@@ -20316,7 +20799,9 @@
         "ort",
         "bleibt"
       ],
-      "phrases": []
+      "phrases": [
+        "jemandem die bittere Pille versüßen"
+      ]
     },
     {
       "id": "pilot",
@@ -20517,7 +21002,9 @@
         "zart",
         "steil"
       ],
-      "phrases": []
+      "phrases": [
+        "eine rosa Brille tragen"
+      ]
     },
     {
       "id": "pizza",
@@ -20612,7 +21099,9 @@
         "erzählen",
         "anderes"
       ],
-      "phrases": []
+      "phrases": [
+        "die Platte putzen"
+      ]
     },
     {
       "id": "plug",
@@ -20979,7 +21468,13 @@
         "zeile",
         "rind"
       ],
-      "phrases": []
+      "phrases": [
+        "Beten ist kein Katzengeschrei.",
+        "Beten und düngen ist kein Aberglaube.",
+        "Not lehrt beten",
+        "die Not lehrt beten",
+        "bete, als hülfe kein Arbeiten, arbeite, als hülfe kein Beten"
+      ]
     },
     {
       "id": "pregnant",
@@ -21031,7 +21526,11 @@
         "hektisch",
         "feindlich"
       ],
-      "phrases": []
+      "phrases": [
+        "mit etwas schwanger gehen",
+        "ein bisschen schwanger gibt es nicht",
+        "mit einem Narren schwanger sein"
+      ]
     },
     {
       "id": "pretzel",
@@ -21291,7 +21790,12 @@
         "einige",
         "unseren"
       ],
-      "phrases": []
+      "phrases": [
+        "geteilter Pudding ist halber Pudding",
+        "um den Pudding gehen",
+        "um den Pudding laufen",
+        "Geteilter Pudding ist halber Pudding."
+      ]
     },
     {
       "id": "pumpkin",
@@ -21602,7 +22106,9 @@
         "überall",
         "wolltest"
       ],
-      "phrases": []
+      "phrases": [
+        "wie ein Kaninchen vor der Schlange stehen"
+      ]
     },
     {
       "id": "raccoon",
@@ -21751,9 +22257,7 @@
         "alleine"
       ],
       "phrases": [
-        "Aufs Eis legen",
-        "Das Eis brechen",
-        "Sich auf dünnes Eis begeben"
+        "es ist höchste Eisenbahn"
       ]
     },
     {
@@ -21806,7 +22310,11 @@
         "waffe",
         "kaum"
       ],
-      "phrases": []
+      "phrases": [
+        "Jemanden im Regen stehen lassen",
+        "Ein warmer Regen",
+        "Vom Regen in die Traufe kommen"
+      ]
     },
     {
       "id": "rainbow",
@@ -22060,7 +22568,12 @@
         "neu",
         "süß"
       ],
-      "phrases": []
+      "phrases": [
+        "Den roten Teppich ausrollen",
+        "Rot wie eine Tomate werden",
+        "Rot sehen",
+        "Den roten Faden verlieren"
+      ]
     },
     {
       "id": "rhino",
@@ -22264,7 +22777,10 @@
         "früh",
         "setzen"
       ],
-      "phrases": []
+      "phrases": [
+        "jemandem einen Ring durch die Nase ziehen",
+        "seinen Hut in den Ring werfen"
+      ]
     },
     {
       "id": "road",
@@ -22312,7 +22828,9 @@
         "arsch",
         "kennst"
       ],
-      "phrases": []
+      "phrases": [
+        "auf offener Straße"
+      ]
     },
     {
       "id": "robot",
@@ -22419,8 +22937,8 @@
       "phrases": [
         "Einen Stein im Brett haben",
         "Stein und Bein schwören",
-        "Mir fällt ein Stein vom Herzen",
-        "Den ersten Stein werfen"
+        "Den ersten Stein werfen",
+        "Mir fällt ein Stein vom Herzen"
       ]
     },
     {
@@ -22636,7 +23154,13 @@
         "dauern",
         "ärgern"
       ],
-      "phrases": []
+      "phrases": [
+        "die kleinen Diebe hängt man, die großen lässt man laufen",
+        "um den Pudding laufen",
+        "wie ein Tiger im Käfig hin und her laufen",
+        "über den großen Onkel laufen",
+        "etwas zum Laufen bringen"
+      ]
     },
     {
       "id": "sad",
@@ -22844,7 +23368,9 @@
         "wartet",
         "lieben"
       ],
-      "phrases": []
+      "phrases": [
+        "wie ein Storch im Salat"
+      ]
     },
     {
       "id": "salt",
@@ -22890,7 +23416,11 @@
         "gebe",
         "wochen"
       ],
-      "phrases": []
+      "phrases": [
+        "Nicht das Salz in der Suppe gönnen",
+        "Salz in die Wunde streuen",
+        "Das Salz in der Suppe"
+      ]
     },
     {
       "id": "sandal",
@@ -23138,7 +23668,9 @@
         "neues",
         "wem"
       ],
-      "phrases": []
+      "phrases": [
+        "Säge nicht an dem Ast, auf dem du sitzt."
+      ]
     },
     {
       "id": "saxophone",
@@ -23301,7 +23833,12 @@
         "simpel",
         "hastig"
       ],
-      "phrases": []
+      "phrases": [
+        "angst und bange sein",
+        "Angst verleiht Flügel.",
+        "sich vor Angst fast in die Hose machen",
+        "wer Angst hat, lebt länger"
+      ]
     },
     {
       "id": "scarf",
@@ -23352,7 +23889,13 @@
         "seht",
         "suche"
       ],
-      "phrases": []
+      "phrases": [
+        "in einer rauen Schale steckt oft ein guter Kern",
+        "sich in Schale werfen",
+        "Harte Schale und weicher Kern.",
+        "je bitterer die Schale, umso süßer der Kern",
+        "in einer rauen Schale steckt oft ein weicher Kern"
+      ]
     },
     {
       "id": "school",
@@ -23403,7 +23946,9 @@
         "krank",
         "jedes"
       ],
-      "phrases": []
+      "phrases": [
+        "Nicht für die Schule, sondern für das Leben lernen wir."
+      ]
     },
     {
       "id": "scientist",
@@ -23509,7 +24054,9 @@
         "froh",
         "rufen"
       ],
-      "phrases": []
+      "phrases": [
+        "Messer, Gabel, Schere, Licht, sind für kleine Kinder nicht."
+      ]
     },
     {
       "id": "scooter",
@@ -23664,7 +24211,9 @@
         "genauso",
         "genommen"
       ],
-      "phrases": []
+      "phrases": [
+        "eine Schraube locker haben"
+      ]
     },
     {
       "id": "screwdriver",
@@ -23815,7 +24364,13 @@
         "hält",
         "glaub"
       ],
-      "phrases": []
+      "phrases": [
+        "in sieben Sprachen schweigen",
+        "wie Pik sieben dastehen",
+        "auf Wolke Nummer sieben schweben",
+        "jemandem ein Buch mit sieben Siegeln sein",
+        "auf Wolke Numero sieben schweben"
+      ]
     },
     {
       "id": "sew",
@@ -23967,7 +24522,9 @@
         "kennt",
         "zukunft"
       ],
-      "phrases": []
+      "phrases": [
+        "Schwarze Schafe"
+      ]
     },
     {
       "id": "ship",
@@ -24020,7 +24577,11 @@
         "cool",
         "drüben"
       ],
-      "phrases": []
+      "phrases": [
+        "die Ratten verlassen das sinkende Schiff",
+        "der Kapitän verlässt das sinkende Schiff zuletzt",
+        "Die Ratten verlassen das sinkende Schiff."
+      ]
     },
     {
       "id": "shirt",
@@ -24065,7 +24626,13 @@
         "passt",
         "sagten"
       ],
-      "phrases": []
+      "phrases": [
+        "Das Hemd ist mir näher als der Rock.",
+        "jemandem ist das Hemd näher als der Rock",
+        "Das letzte Hemd hat keine Taschen.",
+        "sich ins Hemd machen",
+        "das letzte Hemd hat keine Taschen"
+      ]
     },
     {
       "id": "shocked",
@@ -24164,7 +24731,13 @@
         "daß",
         "großer"
       ],
-      "phrases": []
+      "phrases": [
+        "umgekehrt wird ein Schuh daraus",
+        "wem der Schuh passt, der zieht ihn sich an",
+        "anders herum wird ein Schuh draus",
+        "wo der Schuh drückt",
+        "sich den Schuh nicht anziehen"
+      ]
     },
     {
       "id": "shop",
@@ -24471,7 +25044,13 @@
         "lustig",
         "offen"
       ],
-      "phrases": []
+      "phrases": [
+        "arm am Beutel, krank am Herzen",
+        "lieber reich und gesund, als arm und krank",
+        "halt rechtes Maß in Speis‘ und Trank, so wirst du alt und selten krank",
+        "Scherzhafte Verdrehung: \"Lieber reich und gesund, als arm und krank.",
+        "Lieber arm und gesund, als reich und krank."
+      ]
     },
     {
       "id": "sign",
@@ -24523,7 +25102,10 @@
         "bringe",
         "klasse"
       ],
-      "phrases": []
+      "phrases": [
+        "Es geschehen noch Zeichen und Wunder.",
+        "Feigheit ist manchmal ein Zeichen von Klugheit."
+      ]
     },
     {
       "id": "silver",
@@ -24574,6 +25156,7 @@
         "worden"
       ],
       "phrases": [
+        "Silber im Haar haben",
         "Reden ist Silber, Schweigen ist Gold"
       ]
     },
@@ -24625,7 +25208,12 @@
         "fällt",
         "möchtest"
       ],
-      "phrases": []
+      "phrases": [
+        "das Lied vom Fisch singen",
+        "Raubvögel singen nicht.",
+        "die Englein singen hören",
+        "Die Gans lehrt den Schwan singen."
+      ]
     },
     {
       "id": "singer",
@@ -24719,7 +25307,9 @@
         "ähm",
         "joe"
       ],
-      "phrases": []
+      "phrases": [
+        "Eine Schwalbe macht noch keinen Sommer.\" - nach Aristoteles, Nikomachische Ethik I, Kap. 6, 1098a"
+      ]
     },
     {
       "id": "skate",
@@ -24967,7 +25557,9 @@
         "tragen",
         "daddy"
       ],
-      "phrases": []
+      "phrases": [
+        "und willst du nicht mein Bruder sein, so schlag ich dir den Schädel ein"
+      ]
     },
     {
       "id": "skunk",
@@ -25272,7 +25864,10 @@
         "führen",
         "gestorben"
       ],
-      "phrases": []
+      "phrases": [
+        "eine Schlange am Busen nähren",
+        "wie ein Kaninchen vor der Schlange stehen"
+      ]
     },
     {
       "id": "sneaker",
@@ -25377,7 +25972,11 @@
         "wärst",
         "meinung"
       ],
-      "phrases": []
+      "phrases": [
+        "Weiß wie Schnee",
+        "Schnee von gestern",
+        "Wie Schnee in der Sonne schmelzen"
+      ]
     },
     {
       "id": "snowboard",
@@ -25578,7 +26177,9 @@
         "schauen",
         "meinung"
       ],
-      "phrases": []
+      "phrases": [
+        "über Geschmack lässt sich nicht streiten, sagte der Affe und biss in die Seife hinein"
+      ]
     },
     {
       "id": "soccer",
@@ -25781,7 +26382,9 @@
         "schluss",
         "liebt"
       ],
-      "phrases": []
+      "phrases": [
+        "Die Hälfte seines Lebens, wartet der Soldat vergebens."
+      ]
     },
     {
       "id": "SOS",
@@ -25883,7 +26486,13 @@
         "monate",
         "fallen"
       ],
-      "phrases": []
+      "phrases": [
+        "Ein Haar in der Suppe finden",
+        "Jemandem die Suppe versalzen",
+        "Das Salz in der Suppe",
+        "Die Suppe auslöffeln müssen",
+        "Nicht das Salz in der Suppe gönnen"
+      ]
     },
     {
       "id": "spaghetti",
@@ -25981,7 +26590,9 @@
         "mord",
         "heraus"
       ],
-      "phrases": []
+      "phrases": [
+        "Wer ins Feuer bläst, dem stieben die Funken in die Augen."
+      ]
     },
     {
       "id": "speaker",
@@ -26133,7 +26744,11 @@
         "plötzlich",
         "lebens"
       ],
-      "phrases": []
+      "phrases": [
+        "zarte Fäden spinnen",
+        "Nachsatz: \"… wenn zwei spinnen, wird's schlimmer.",
+        "keinen guten Faden miteinander spinnen"
+      ]
     },
     {
       "id": "sponge",
@@ -26235,7 +26850,13 @@
         "arbeite",
         "hole"
       ],
-      "phrases": []
+      "phrases": [
+        "jemandem die Löffel langziehen",
+        "den Löffel abgeben",
+        "mit einem silbernen Löffel im Mund geboren sein",
+        "jemanden über den Löffel barbieren",
+        "jemanden über den Löffel balbieren, jemanden über den Löffel barbieren"
+      ]
     },
     {
       "id": "squid",
@@ -26329,7 +26950,12 @@
         "wunderschön",
         "interessant"
       ],
-      "phrases": []
+      "phrases": [
+        "Mühsam nährt sich das Eichhörnchen.",
+        "mühsam nährt sich das Eichhörnchen",
+        "der Teufel ist ein Eichhörnchen",
+        "Der Teufel ist ein Eichhörnchen."
+      ]
     },
     {
       "id": "stadium",
@@ -26436,7 +27062,9 @@
         "backen",
         "lecken"
       ],
-      "phrases": []
+      "phrases": [
+        "Ich bin ein angesehener Mann, sagte der Dieb, da er am Schandpfahl stand."
+      ]
     },
     {
       "id": "star",
@@ -26691,7 +27319,9 @@
         "dagegen",
         "seien"
       ],
-      "phrases": []
+      "phrases": [
+        "Die Ruhe vor dem Sturm"
+      ]
     },
     {
       "id": "strawberry",
@@ -26908,7 +27538,9 @@
         "gerettet",
         "agent"
       ],
-      "phrases": []
+      "phrases": [
+        "einen Koffer abstellen"
+      ]
     },
     {
       "id": "sun",
@@ -26959,7 +27591,11 @@
         "nimmt",
         "agent"
       ],
-      "phrases": []
+      "phrases": [
+        "Ein Platz an der Sonne",
+        "Wie Schnee in der Sonne schmelzen",
+        "Die Sonne bringt es an den Tag"
+      ]
     },
     {
       "id": "sunglasses",
@@ -27374,7 +28010,10 @@
         "gedanken",
         "benutzt"
       ],
-      "phrases": []
+      "phrases": [
+        "seine Schweine am Gang erkennen",
+        "Die Schweine von heute sind die Schinken von morgen."
+      ]
     },
     {
       "id": "swim",
@@ -27427,7 +28066,13 @@
         "jemandem",
         "wünschte"
       ],
-      "phrases": []
+      "phrases": [
+        "Wenn der Bauer nicht schwimmen kann, liegt's an der Badehose.",
+        "im Geld schwimmen",
+        "gegen den Strom schwimmen",
+        "mit dem Strom schwimmen",
+        "der Fisch will schwimmen"
+      ]
     },
     {
       "id": "swimmer",
@@ -27679,7 +28324,10 @@
         "fahr",
         "sitzt"
       ],
-      "phrases": []
+      "phrases": [
+        "Die Sonne bringt es an den Tag",
+        "Tag für Tag"
+      ]
     },
     {
       "id": "talk",
@@ -27784,7 +28432,13 @@
         "fahr",
         "sitzt"
       ],
-      "phrases": []
+      "phrases": [
+        "Wenn du schnell ans Ziel willst, gehe langsam.",
+        "Ziel und Zweck",
+        "über das Ziel hinausschießen",
+        "Schritt vor Schritt kommt auch ans Ziel",
+        "der Weg ist das Ziel"
+      ]
     },
     {
       "id": "taxi",
@@ -27883,7 +28537,10 @@
         "ließ",
         "max"
       ],
-      "phrases": []
+      "phrases": [
+        "abwarten und Tee trinken",
+        "einen im Tee haben"
+      ]
     },
     {
       "id": "teacher",
@@ -28195,7 +28852,13 @@
         "chef",
         "müsst"
       ],
-      "phrases": []
+      "phrases": [
+        "sich alle zehn Finger abschlecken können",
+        "Wo ein Adler nicht fort kann, findet eine Fliege noch zehn Wege.",
+        "Eine große Kuh bringt selten mehr denn ein Kalb, eine kleine Meise brütet auf einmal wohl zehn Junge aus.",
+        "Zehn mal Versagen ist besser als einmal Lügen.",
+        "Ein Narr fragt mehr, als zehn Weise beantworten können."
+      ]
     },
     {
       "id": "tennis",
@@ -28404,7 +29067,13 @@
         "tschüss",
         "raum"
       ],
-      "phrases": []
+      "phrases": [
+        "lieber breit grinsen als schmal denken",
+        "global denken, lokal handeln",
+        "Das Denken soll man den Pferden überlassen, die haben den größeren Kopf.\" als Antwort auf unsichere/falsche Annahme",
+        "das Denken soll man den Pferden überlassen, sie haben die größeren Köpfe",
+        "um die Ecke denken"
+      ]
     },
     {
       "id": "three",
@@ -28454,7 +29123,13 @@
         "kalt",
         "paul"
       ],
-      "phrases": []
+      "phrases": [
+        "drei Kreuze machen",
+        "aller guten Dinge sind drei",
+        "Freund in der Not, Freund im Tod, Freund hinterm Rücken: drei starke Brücken",
+        "Ein junger Arzt muss drei Kirchhöfe haben.",
+        "in drei Teufels Namen"
+      ]
     },
     {
       "id": "throw",
@@ -28557,6 +29232,9 @@
         "lady"
       ],
       "phrases": [
+        "Da beißt die Maus keinen Faden ab",
+        "Da ist guter Rat teuer",
+        "Kein Schwein war da",
         "Da liegt der Hund begraben"
       ]
     },
@@ -28661,7 +29339,9 @@
         "nen",
         "beweise"
       ],
-      "phrases": []
+      "phrases": [
+        "wie ein Tiger im Käfig hin und her laufen"
+      ]
     },
     {
       "id": "tired",
@@ -28866,7 +29546,9 @@
         "dauert",
         "magst"
       ],
-      "phrases": []
+      "phrases": [
+        "Tomaten auf den Augen haben"
+      ]
     },
     {
       "id": "tongue",
@@ -29024,6 +29706,9 @@
         "herzen"
       ],
       "phrases": [
+        "Die Zähne zusammenbeißen",
+        "Auf den Zahn fühlen",
+        "Einen Zahn zulegen",
         "Auge um Auge, Zahn um Zahn"
       ]
     },
@@ -29277,7 +29962,13 @@
         "bar",
         "leg"
       ],
-      "phrases": []
+      "phrases": [
+        "den Zug nicht verpassen",
+        "ein schöner Zug von jemandem sein",
+        "zum Zug kommen, zum Zuge kommen",
+        "Zug durch die Gemeinde",
+        "auf den fahrenden Zug aufspringen"
+      ]
     },
     {
       "id": "trash",
@@ -29624,7 +30315,13 @@
         "meinte",
         "liste"
       ],
-      "phrases": []
+      "phrases": [
+        "Nachsatz: \"… wenn zwei spinnen, wird's schlimmer.",
+        "zwei Seelen ruhen in jemandes Brust",
+        "Zwei Dumme, ein Gedanke",
+        "zwei Fliegen mit einer Klappe schlagen",
+        "zwei Seiten einer Medaille sein"
+      ]
     },
     {
       "id": "umbrella",
@@ -29774,7 +30471,11 @@
         "redet",
         "boot"
       ],
-      "phrases": []
+      "phrases": [
+        "etwas im Urin haben, etwas im Urin spüren",
+        "etwas im Urin haben",
+        "etwas im Urin spüren"
+      ]
     },
     {
       "id": "vest",
@@ -30240,10 +30941,11 @@
         "fährt"
       ],
       "phrases": [
-        "Ins Wasser fallen",
-        "Mit allen Wassern gewaschen sein",
         "Stille Wasser sind tief",
-        "Nahe am Wasser gebaut haben"
+        "Ins Wasser fallen",
+        "Nahe am Wasser gebaut haben",
+        "Mit allen Wassern gewaschen sein",
+        "Wein predigen und Wasser trinken"
       ]
     },
     {
@@ -30451,7 +31153,12 @@
         "james",
         "madame"
       ],
-      "phrases": []
+      "phrases": [
+        "da waren die Augen größer als der Magen",
+        "wo waren wir stehen geblieben",
+        "die Eier waren weg, bevor jemand mit dem Salz kam",
+        "die größten Kritiker der Elche waren früher selber welche"
+      ]
     },
     {
       "id": "whale",
@@ -30550,7 +31257,11 @@
         "ewig",
         "yeah"
       ],
-      "phrases": []
+      "phrases": [
+        "Unter die Räder kommen",
+        "Das fünfte Rad am Wagen sein",
+        "Das Rad neu erfinden"
+      ]
     },
     {
       "id": "white",
@@ -30599,7 +31310,11 @@
         "dicht",
         "grün"
       ],
-      "phrases": []
+      "phrases": [
+        "Weiß wie Schnee",
+        "Eine weiße Weste haben",
+        "Schwarz auf weiß"
+      ]
     },
     {
       "id": "win",
@@ -30653,7 +31368,11 @@
         "diesmal",
         "schade"
       ],
-      "phrases": []
+      "phrases": [
+        "keinen Blumentopf gewinnen können",
+        "Allzeit gewinnen macht verdächtlich, allzeit verlieren macht verächtlich.\"",
+        "von etwas Abstand gewinnen"
+      ]
     },
     {
       "id": "window",
@@ -30703,7 +31422,9 @@
         "anruf",
         "euren"
       ],
-      "phrases": []
+      "phrases": [
+        "Das Geld zum Fenster hinauswerfen"
+      ]
     },
     {
       "id": "wine",
@@ -30753,7 +31474,11 @@
         "bekam",
         "ruft"
       ],
-      "phrases": []
+      "phrases": [
+        "Jemandem reinen Wein einschenken",
+        "Im Wein liegt Wahrheit",
+        "Wein predigen und Wasser trinken"
+      ]
     },
     {
       "id": "wolf",
@@ -30796,7 +31521,9 @@
         "yeah",
         "toten"
       ],
-      "phrases": []
+      "phrases": [
+        "sich einen Wolf laufen"
+      ]
     },
     {
       "id": "woman",
@@ -30849,7 +31576,13 @@
         "toten",
         "naja"
       ],
-      "phrases": []
+      "phrases": [
+        "Man hat´s nicht leicht, Frau hat´s leichter.",
+        "Der Magen einer Sau, die Gedanken einer Frau und der Inhalt einer Worscht bleiben ewig unerforscht.",
+        "die Frau kann mit der Schürze mehr aus dem Hause tragen, als der Mann mit dem Erntewagen hineinfährt",
+        "Selbst ist die Frau!",
+        "Am Abend noch Jungfrau, um Mitternacht eine junge Frau, beim Morgenrot schon ein Hausfrauchen."
+      ]
     },
     {
       "id": "wood",
@@ -30897,7 +31630,11 @@
         "schlaf",
         "lust"
       ],
-      "phrases": []
+      "phrases": [
+        "Auf dem Holzweg sein",
+        "Aus demselben Holz geschnitzt sein",
+        "Auf Holz klopfen"
+      ]
     },
     {
       "id": "worried",
@@ -31101,7 +31838,9 @@
         "dünn",
         "aktiv"
       ],
-      "phrases": []
+      "phrases": [
+        "Nichts ist gelber als gelb selber."
+      ]
     },
     {
       "id": "yoga",
@@ -31282,7 +32021,9 @@
         "lebe",
         "rechts"
       ],
-      "phrases": []
+      "phrases": [
+        "null und nichtig"
+      ]
     },
     {
       "id": "laughing",
@@ -31339,7 +32080,13 @@
         "zerstört",
         "übrigens"
       ],
-      "phrases": []
+      "phrases": [
+        "sich einen Ast lachen",
+        "Lachen ist die beste Medizin",
+        "zum Lachen in den Keller gehen",
+        "auf den Stockzähnen lächeln/lachen",
+        "sich ausschütten vor Lachen"
+      ]
     },
     {
       "id": "funny",
@@ -31620,7 +32367,13 @@
         "welk",
         "zart"
       ],
-      "phrases": []
+      "phrases": [
+        "ins Reich der Fabel gehören",
+        "Der Gesunde weiß nicht, wie reich er ist.",
+        "lieber reich und gesund, als arm und krank",
+        "Scherzhafte Verdrehung: \"Lieber reich und gesund, als arm und krank.",
+        "Lieber arm und gesund, als reich und krank."
+      ]
     },
     {
       "id": "peek",
@@ -31737,7 +32490,12 @@
         "eisig",
         "flink"
       ],
-      "phrases": []
+      "phrases": [
+        "In aller Ruhe",
+        "Ruhe ist die erste Bürgerpflicht",
+        "Die Ruhe vor dem Sturm",
+        "Jemandem keine Ruhe gönnen"
+      ]
     },
     {
       "id": "agreed",
@@ -31968,7 +32726,11 @@
         "salzig",
         "listig"
       ],
-      "phrases": []
+      "phrases": [
+        "bei Nacht und Nebel",
+        "im Nebel herumstochern",
+        "im Nebel stochern"
+      ]
     },
     {
       "id": "smirk",
@@ -32126,7 +32888,9 @@
         "rechts",
         "meint"
       ],
-      "phrases": []
+      "phrases": [
+        "auf Herz und Nieren prüfen"
+      ]
     },
     {
       "id": "lie",
@@ -32182,7 +32946,9 @@
         "kümmere",
         "weder"
       ],
-      "phrases": []
+      "phrases": [
+        "Lügen haben kurze Beine"
+      ]
     },
     {
       "id": "drool",
@@ -32291,7 +33057,13 @@
         "frostig",
         "silbern"
       ],
-      "phrases": []
+      "phrases": [
+        "wer sich mit Hunden schlafen legt, braucht sich nicht wundern, wenn er mit Flöhen aufwacht",
+        "den Schlaf des Gerechten schlafen",
+        "den Schlaf der Gerechten schlafen",
+        "schlafen wie ein Stein",
+        "den Schlaf des Gerechten schlafen, den Schlaf der Gerechten schlafen"
+      ]
     },
     {
       "id": "covid",
@@ -32868,7 +33640,10 @@
         "lief",
         "volk"
       ],
-      "phrases": []
+      "phrases": [
+        "ein Bad nehmen",
+        "Mancher reist gesund in's Bad // und kommt zurück malad."
+      ]
     }
   ]
 }

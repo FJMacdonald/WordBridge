@@ -1,85 +1,7021 @@
 {
   "version": "1.0",
   "language": "en",
+  "description": "Sentences sourced from wordbank, categorized by word count and punctuation",
   "sentences": [
     {
-      "id": "s001",
-      "sentence": "The cat sat",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s002",
-      "sentence": "I like apples",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s003",
-      "sentence": "She is happy",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s004",
-      "sentence": "The dog runs",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s005",
-      "sentence": "He drinks water",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s006",
-      "sentence": "We eat bread",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s007",
-      "sentence": "The bird sings",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s008",
-      "sentence": "I see you",
-      "difficulty": "easy"
-    },
-    {
-      "id": "s009",
-      "sentence": "The cat sat on the mat",
+      "id": "accordion_0",
+      "sentence": "She played the accordion at the party.",
       "difficulty": "medium"
     },
     {
-      "id": "s010",
-      "sentence": "I drink coffee every morning",
+      "id": "accordion_1",
+      "sentence": "The accordion made cheerful music.",
       "difficulty": "medium"
     },
     {
-      "id": "s011",
-      "sentence": "She walks to school daily",
+      "id": "airplane_0",
+      "sentence": "The airplane flew above the clouds.",
       "difficulty": "medium"
     },
     {
-      "id": "s012",
-      "sentence": "The dog runs in the park",
+      "id": "airplane_1",
+      "sentence": "We took an airplane to Paris.",
       "difficulty": "medium"
     },
     {
-      "id": "s013",
-      "sentence": "He reads a book at night",
+      "id": "alien_0",
+      "sentence": "The alien came from outer space.",
       "difficulty": "medium"
     },
     {
-      "id": "s014",
-      "sentence": "We had dinner with friends",
+      "id": "alien_1",
+      "sentence": "The alien had big eyes.",
       "difficulty": "medium"
     },
     {
-      "id": "s015",
-      "sentence": "The baby is sleeping now",
+      "id": "ambulance_0",
+      "sentence": "The ambulance rushed to the hospital.",
       "difficulty": "medium"
     },
     {
-      "id": "s016",
-      "sentence": "My mother makes great cake",
+      "id": "ambulance_1",
+      "sentence": "Call an ambulance in an emergency.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "anchor_0",
+      "sentence": "The anchor held the boat in place.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "anchor_1",
+      "sentence": "The ship dropped its anchor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "angel_0",
+      "sentence": "She looked like an angel.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "angel_1",
+      "sentence": "The angel had white wings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "angry_0",
+      "sentence": "She was angry about the mess.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "angry_1",
+      "sentence": "Don't make him angry.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ant_0",
+      "sentence": "The ant carried a crumb.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ant_1",
+      "sentence": "The ant went back to its colony.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "apple_0",
+      "sentence": "I ate an apple for lunch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "apple_1",
+      "sentence": "The apple fell from the tree.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arm_0",
+      "sentence": "I hurt my arm playing sports.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "arm_1",
+      "sentence": "She got an injection in her right arm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "artist_0",
+      "sentence": "The artist painted a beautiful picture.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "artist_1",
+      "sentence": "She is a talented artist.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "astronaut_0",
+      "sentence": "The astronaut went to the moon.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "astronaut_1",
+      "sentence": "The astronaut floated in space.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avocado_0",
+      "sentence": "I spread avocado on my toast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "avocado_1",
+      "sentence": "The avocado was green inside.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "axe_0",
+      "sentence": "He chopped wood with an axe.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "axe_1",
+      "sentence": "The axe has a sharp blade.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "baby_0",
+      "sentence": "The baby is sleeping.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "baby_1",
+      "sentence": "She had a baby last month.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "backpack_0",
+      "sentence": "I put my books in my backpack.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "backpack_1",
+      "sentence": "The backpack was heavy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bacon_0",
+      "sentence": "I ate bacon and eggs for breakfast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bacon_1",
+      "sentence": "The bacon sizzled in the pan.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "badger_0",
+      "sentence": "The badger dug a hole.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "badger_1",
+      "sentence": "The Badger lives underground.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bag_0",
+      "sentence": "I carried groceries in a bag.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bag_1",
+      "sentence": "The bag was too heavy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bagel_0",
+      "sentence": "I had a bagel with cream cheese.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bagel_1",
+      "sentence": "The bagel has a hole in the middle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "baguette_0",
+      "sentence": "I bought a fresh baguette.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "baguette_1",
+      "sentence": "The baguette had a crispy crust.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ball_0",
+      "sentence": "Throw the ball to me.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ball_1",
+      "sentence": "The ball is round.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "balloon_0",
+      "sentence": "The balloon floated up.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "balloon_1",
+      "sentence": "I got a balloon at the party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ballot_0",
+      "sentence": "I marked my ballot.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ballot_1",
+      "sentence": "Put the ballot in the box.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "banana_0",
+      "sentence": "The monkey ate a banana.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "banana_1",
+      "sentence": "I slipped on a banana peel.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bandage_0",
+      "sentence": "I put a bandage on my cut.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bandage_1",
+      "sentence": "The bandage keeps the wound clean.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "banjo_0",
+      "sentence": "He played folk songs on the banjo.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "banjo_1",
+      "sentence": "The banjo has a unique sound.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bank_0",
+      "sentence": "I put my money in the bank.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bank_1",
+      "sentence": "The bank is open until five.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "baseball_0",
+      "sentence": "I play baseball in summer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "baseball_1",
+      "sentence": "He hit the baseball hard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "basket_0",
+      "sentence": "I put the laundry in the basket.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "basket_1",
+      "sentence": "The basket is made of wicker.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "basketball_0",
+      "sentence": "I play basketball at the gym.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "basketball_1",
+      "sentence": "Basketball is played on a court.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bat_0",
+      "sentence": "The bat flew out of the cave.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bat_1",
+      "sentence": "A bat sleeps during the day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bathtub_0",
+      "sentence": "I filled the bathtub with water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bathtub_1",
+      "sentence": "The bathtub has warm bubbles.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beach_0",
+      "sentence": "We played on the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beach_1",
+      "sentence": "The beach has soft sand.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beans_0",
+      "sentence": "I had beans on toast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beans_1",
+      "sentence": "Beans are full of protein.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bear_0",
+      "sentence": "The bear caught a fish.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bear_1",
+      "sentence": "The bear sleeps all winter.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beaver_0",
+      "sentence": "The beaver built a dam.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beaver_1",
+      "sentence": "A beaver has a flat tail.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bed_0",
+      "sentence": "I went to bed early.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bed_1",
+      "sentence": "The bed is very comfortable.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bee_0",
+      "sentence": "The bee made honey.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bee_1",
+      "sentence": "The bee flew from flower to flower.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beer_0",
+      "sentence": "He ordered a cold beer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beer_1",
+      "sentence": "The beer had a foamy head.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beetle_0",
+      "sentence": "The beetle crawled across the ground.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "beetle_1",
+      "sentence": "The Beetle had a hard shell.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bell_0",
+      "sentence": "The bell rang loudly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bell_1",
+      "sentence": "I heard the church bell.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bicycle_0",
+      "sentence": "I ride my bicycle to school.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bicycle_1",
+      "sentence": "The bicycle has two wheels.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bike_0",
+      "sentence": "I ride my bike to school.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bike_1",
+      "sentence": "The bike has two wheels.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bikini_0",
+      "sentence": "She wore a bikini at the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bikini_1",
+      "sentence": "I bought a new bikini for vacation.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bird_0",
+      "sentence": "The bird flew to its nest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bird_1",
+      "sentence": "I heard a bird singing.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bird_2",
+      "sentence": "The bird flew away.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bird_3",
+      "sentence": "Birds build nests.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bison_0",
+      "sentence": "The bison grazed on the plains.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bison_1",
+      "sentence": "Bison are very large animals.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "black_0",
+      "sentence": "The night sky is black.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "black_1",
+      "sentence": "She wore a black dress.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "blouse_0",
+      "sentence": "She wore a silk blouse.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "blouse_1",
+      "sentence": "The blouse had pretty buttons.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "blue_0",
+      "sentence": "The sky is blue.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "blue_1",
+      "sentence": "She has blue eyes.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "blue_2",
+      "sentence": "I have blue eyes.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "blueberry_0",
+      "sentence": "I put blueberries in my cereal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "blueberry_1",
+      "sentence": "Blueberry muffins are my favorite.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "blueberry_2",
+      "sentence": "I added blueberries to my cereal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "blueberry_3",
+      "sentence": "Blueberry muffins are delicious.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bolt_0",
+      "sentence": "Tighten the bolt with a wrench.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bolt_1",
+      "sentence": "The bolt holds the pieces together.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bone_0",
+      "sentence": "Dogs like to chew bones.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bone_1",
+      "sentence": "You have many bones in your body.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bone_2",
+      "sentence": "I broke a bone in my arm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "book_0",
+      "sentence": "I read a good book.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "book_1",
+      "sentence": "The book has many pages.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bookmark_0",
+      "sentence": "I used a bookmark to save my page.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bookmark_1",
+      "sentence": "The bookmark has a pretty design.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boot_0",
+      "sentence": "I wore boots in the rain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boot_1",
+      "sentence": "The hiking boots were sturdy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boot_2",
+      "sentence": "I wore boots in the snow.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boot_3",
+      "sentence": "The boots kept my feet dry.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bounce_0",
+      "sentence": "The ball bounces high.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bounce_1",
+      "sentence": "I bounce the basketball.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bowl_0",
+      "sentence": "I ate cereal from a bowl.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bowl_1",
+      "sentence": "The bowl was full of soup.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bowling_0",
+      "sentence": "We went bowling last night.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bowling_1",
+      "sentence": "I got a strike in bowling.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "box_0",
+      "sentence": "I packed my things in a box.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "box_1",
+      "sentence": "The box was heavy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "box_2",
+      "sentence": "I put toys in the box.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "box_3",
+      "sentence": "The box is made of cardboard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boy_0",
+      "sentence": "The boy played with his toys.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boy_1",
+      "sentence": "The boy is my neighbor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boy_2",
+      "sentence": "The boy kicked the ball.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "boy_3",
+      "sentence": "He is a good boy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brain_0",
+      "sentence": "Your brain controls your body.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brain_1",
+      "sentence": "Use your brain to solve problems.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brain_2",
+      "sentence": "We think with our brain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brain_3",
+      "sentence": "The brain controls the body.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bread_0",
+      "sentence": "I made toast from bread.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bread_1",
+      "sentence": "The bread was fresh from the oven.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bread_2",
+      "sentence": "I bought a loaf of bread.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bread_3",
+      "sentence": "She spread butter on the bread.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brick_0",
+      "sentence": "The house is made of brick.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brick_1",
+      "sentence": "He laid bricks to build the wall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brick_2",
+      "sentence": "The house is made of bricks.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brick_3",
+      "sentence": "Red bricks make strong walls.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bride_0",
+      "sentence": "The bride wore a white dress.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bride_1",
+      "sentence": "The bride walked down the aisle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bride_2",
+      "sentence": "She was a beautiful bride.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bridge_0",
+      "sentence": "We walked across the bridge.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bridge_1",
+      "sentence": "The bridge goes over the river.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bridge_2",
+      "sentence": "We crossed the bridge.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "briefcase_0",
+      "sentence": "He carried his briefcase to work.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "briefcase_1",
+      "sentence": "The briefcase was full of papers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "broccoli_0",
+      "sentence": "Broccoli is good for you.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "broccoli_1",
+      "sentence": "I steamed the broccoli for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bronze_0",
+      "sentence": "She won the bronze medal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bronze_1",
+      "sentence": "The statue is made of bronze.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "broom_0",
+      "sentence": "I swept the floor with a broom.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "broom_1",
+      "sentence": "The broom is in the closet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "brown_0",
+      "sentence": "The bear is brown.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "brown_1",
+      "sentence": "I have brown hair.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bubbles_0",
+      "sentence": "The child blew bubbles.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bubbles_1",
+      "sentence": "Bubbles float in the air.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bucket_0",
+      "sentence": "I filled the bucket with water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bucket_1",
+      "sentence": "The bucket has a handle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "builder_0",
+      "sentence": "The builder made a new house.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "builder_1",
+      "sentence": "The builder wore a hard hat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "building_0",
+      "sentence": "The building is very tall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "building_1",
+      "sentence": "I work in that building.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "light bulb_0",
+      "sentence": "I changed the light bulb.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "light bulb_1",
+      "sentence": "The light bulb is 60 watts.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "burger_0",
+      "sentence": "I ordered a burger and fries.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "burger_1",
+      "sentence": "The burger was juicy and delicious.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "burrito_0",
+      "sentence": "I ate a big burrito for lunch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "burrito_1",
+      "sentence": "The burrito was stuffed with rice and beans.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bus_0",
+      "sentence": "I take the bus to school.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bus_1",
+      "sentence": "The bus stopped at my corner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "butter_0",
+      "sentence": "I spread butter on my toast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "butter_1",
+      "sentence": "Butter melts when it gets hot.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "butterfly_0",
+      "sentence": "The butterfly landed on a flower.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "butterfly_1",
+      "sentence": "The butterfly has colorful wings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cable car_0",
+      "sentence": "We took the cable car up the mountain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cable car_1",
+      "sentence": "The cable car offered amazing views.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cake_0",
+      "sentence": "We had cake at the birthday party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cake_1",
+      "sentence": "I blew out the candles on my cake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "calendar_0",
+      "sentence": "I checked the calendar for the date.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "calendar_1",
+      "sentence": "The calendar hangs on the wall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "camel_0",
+      "sentence": "The camel walked through the desert.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "camel_1",
+      "sentence": "A camel can go days without water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "camera_0",
+      "sentence": "I took a picture with my camera.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "camera_1",
+      "sentence": "The camera has a zoom lens.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "camp_0",
+      "sentence": "We camp in the forest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "camp_1",
+      "sentence": "I love to camp under the stars.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "candle_0",
+      "sentence": "I lit a candle for light.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "candle_1",
+      "sentence": "The candle burned slowly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "candy_0",
+      "sentence": "I got candy on Halloween.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "candy_1",
+      "sentence": "The candy was sweet and sticky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "canoe_0",
+      "sentence": "We paddled the canoe down the river.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "canoe_1",
+      "sentence": "The canoe held two people.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cap_0",
+      "sentence": "I put on my cap before going out.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cap_1",
+      "sentence": "The cap kept the sun out of his eyes.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "car_0",
+      "sentence": "I drove the car to work.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "car_1",
+      "sentence": "The car is parked outside.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "credit card_0",
+      "sentence": "I paid with my credit card.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "credit card_1",
+      "sentence": "The credit card has a chip in it.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cards_0",
+      "sentence": "Let's play cards.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "cards_1",
+      "sentence": "Shuffle the cards.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "carrot_0",
+      "sentence": "The rabbit ate a carrot.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "carrot_1",
+      "sentence": "A carrot is good for your eyes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "castle_0",
+      "sentence": "The castle has tall towers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "castle_1",
+      "sentence": "The king lived in a castle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cat_0",
+      "sentence": "The cat sat on the mat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cat_1",
+      "sentence": "My cat likes to sleep in the sun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "catch_0",
+      "sentence": "Catch the ball!",
+      "difficulty": "easy"
+    },
+    {
+      "id": "catch_1",
+      "sentence": "I play catch with my dog.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "caterpillar_0",
+      "sentence": "The caterpillar ate a leaf.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "caterpillar_1",
+      "sentence": "A caterpillar will become a butterfly.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chain_0",
+      "sentence": "The chain held the gate closed.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chain_1",
+      "sentence": "The chain is made of metal links.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chair_0",
+      "sentence": "I sat down on the chair.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chair_1",
+      "sentence": "The chair is at the desk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "champagne_0",
+      "sentence": "We toasted with champagne.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "champagne_1",
+      "sentence": "The champagne cork popped.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "chart_0",
+      "sentence": "The chart shows sales data.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chart_1",
+      "sentence": "I made a chart of the results.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cheese_0",
+      "sentence": "I put cheese on my sandwich.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cheese_1",
+      "sentence": "Mice love to eat cheese.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chef_0",
+      "sentence": "The chef made a delicious meal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chef_1",
+      "sentence": "The chef wore a tall white hat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cherry_0",
+      "sentence": "The cherry pie was delicious.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cherry_1",
+      "sentence": "The cherry has a pit inside.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chess_0",
+      "sentence": "I play chess with my friend.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chess_1",
+      "sentence": "Chess requires strategy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "chestnut_0",
+      "sentence": "I ate a roasted chestnut.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chestnut_1",
+      "sentence": "The chestnuts fell from the tree.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chick_0",
+      "sentence": "The chick hatched from an egg.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chick_1",
+      "sentence": "The baby chick was soft and yellow.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chicken_animal_0",
+      "sentence": "The chicken laid an egg.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chicken_animal_1",
+      "sentence": "We will have a chicken for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chicken_food_0",
+      "sentence": "I had fried chicken for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chicken_food_1",
+      "sentence": "The chicken was crispy and delicious.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "child_0",
+      "sentence": "The child is playing.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "child_1",
+      "sentence": "I was a happy child.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chocolate_0",
+      "sentence": "I love eating chocolate.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "chocolate_1",
+      "sentence": "The chocolate bar was delicious.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chopsticks_0",
+      "sentence": "I ate sushi with chopsticks.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "chopsticks_1",
+      "sentence": "Chopsticks are used in pairs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "church_0",
+      "sentence": "We went to church on Sunday.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "church_1",
+      "sentence": "The church bells rang.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "cigarette_0",
+      "sentence": "Smoking a cigarette isn't good for you.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "cigarette_1",
+      "sentence": "He put out the cigarette.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "circus_0",
+      "sentence": "We saw clowns at the circus.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "circus_1",
+      "sentence": "The circus came to town.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "city_0",
+      "sentence": "The city has tall buildings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "city_1",
+      "sentence": "Many people live in the city.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "clap_0",
+      "sentence": "Clap your hands together.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "clap_1",
+      "sentence": "Everyone should clap after the show.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "climb_0",
+      "sentence": "I climb the ladder.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "climb_1",
+      "sentence": "I climb the tree.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "clipboard_0",
+      "sentence": "She wrote notes on her clipboard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "clipboard_1",
+      "sentence": "The clipboard holds the papers in place.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "clock_0",
+      "sentence": "The clock shows the time.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "clock_1",
+      "sentence": "I looked at the clock on the wall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_0",
+      "sentence": "The cloud looked like a bunny.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cloud_1",
+      "sentence": "A cloud covered the sun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "clown_0",
+      "sentence": "The clown made everyone laugh.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "clown_1",
+      "sentence": "The clown had a big red nose.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coat_0",
+      "sentence": "I put on my coat before going outside.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coat_1",
+      "sentence": "The coat has a warm lining.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cocktail_0",
+      "sentence": "She ordered a cocktail at the bar.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cocktail_1",
+      "sentence": "The cocktail had fruit in it.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coconut_0",
+      "sentence": "We cracked open a coconut.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coconut_1",
+      "sentence": "Coconut milk is used in many recipes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coffee_0",
+      "sentence": "I drink coffee in the morning.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coffee_1",
+      "sentence": "The coffee was hot and strong.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coffin_0",
+      "sentence": "The coffin was made of wood.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coffin_1",
+      "sentence": "They lowered the coffin into the ground.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coin_0",
+      "sentence": "I found a coin on the ground.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "coin_1",
+      "sentence": "She flipped a coin.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "cold_0",
+      "sentence": "It is cold in winter.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cold_1",
+      "sentence": "My hands are cold.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "comb_0",
+      "sentence": "I used a comb to fix my hair.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "comb_1",
+      "sentence": "The comb has fine teeth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "comet_0",
+      "sentence": "We saw a comet in the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "comet_1",
+      "sentence": "The comet has a long tail.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "compass_0",
+      "sentence": "The compass pointed north.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "compass_1",
+      "sentence": "I used a compass to find my way.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "computer_0",
+      "sentence": "I use the computer every day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "computer_1",
+      "sentence": "The computer is on the desk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "confused_0",
+      "sentence": "I was confused by the directions.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "confused_1",
+      "sentence": "The confused student asked for help.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cookie_0",
+      "sentence": "The cookie was warm from the oven.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cookie_1",
+      "sentence": "The cookie jar is empty.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cool_0",
+      "sentence": "That's really cool!",
+      "difficulty": "easy"
+    },
+    {
+      "id": "cool_1",
+      "sentence": "He always stays cool under pressure.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "corn_0",
+      "sentence": "We ate corn on the cob.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "corn_1",
+      "sentence": "Corn grows in fields.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "couch_0",
+      "sentence": "I sat on the couch to watch TV.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "couch_1",
+      "sentence": "The couch is very comfortable.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cow_0",
+      "sentence": "The cow gives us milk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cow_1",
+      "sentence": "The farmer milked the cow.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crab_0",
+      "sentence": "The crab walked sideways.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "crab_1",
+      "sentence": "The Crab had big claws.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crayon_0",
+      "sentence": "The child drew with a green crayon.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crayon_1",
+      "sentence": "I need a red crayon.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crazy_0",
+      "sentence": "That's a crazy idea!",
+      "difficulty": "easy"
+    },
+    {
+      "id": "crazy_1",
+      "sentence": "The party was crazy fun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cricket_0",
+      "sentence": "The cricket chirped at night.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cricket_1",
+      "sentence": "The cricket jumped very high.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crocodile_0",
+      "sentence": "The crocodile lay in the sun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crocodile_1",
+      "sentence": "The crocodile swam in the river.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "croissant_0",
+      "sentence": "I had a croissant for breakfast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "croissant_1",
+      "sentence": "The croissant was warm and flaky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crow_0",
+      "sentence": "The crow sat on the fence.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crow_1",
+      "sentence": "A crow is a very smart bird.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crown_0",
+      "sentence": "The queen wore a golden crown.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crown_1",
+      "sentence": "The crown had many jewels.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crying_0",
+      "sentence": "The baby is crying.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "crying_1",
+      "sentence": "She was crying because she was sad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "crystal ball_0",
+      "sentence": "The crystal ball shined.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "crystal ball_1",
+      "sentence": "She could see the future in her crystal ball.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "cucumber_0",
+      "sentence": "I put cucumber in my salad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cucumber_1",
+      "sentence": "I sliced cucumber for the salad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cupcake_0",
+      "sentence": "I decorated the cupcake with frosting.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "cupcake_1",
+      "sentence": "Each child got a cupcake at the party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "curry_0",
+      "sentence": "The curry was very spicy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "curry_1",
+      "sentence": "We ordered chicken curry.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dance_0",
+      "sentence": "I love to dance to music.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dance_1",
+      "sentence": "We went to a dance party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dancer_0",
+      "sentence": "The dancer moved gracefully.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dancer_1",
+      "sentence": "She is a talented dancer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dancing_0",
+      "sentence": "She loves dancing.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dancing_1",
+      "sentence": "We went dancing last night.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dart_0",
+      "sentence": "He threw the dart at the board.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dart_1",
+      "sentence": "The dart hit the center.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "deer_0",
+      "sentence": "A deer ran through the forest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "deer_1",
+      "sentence": "I saw a deer in my yard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "desert_0",
+      "sentence": "The desert is very hot and dry.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "desert_1",
+      "sentence": "Camels live in the desert.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "detective_0",
+      "sentence": "The detective solved the mystery.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "detective_1",
+      "sentence": "The detective looked for clues.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "devil_0",
+      "sentence": "The devil is a symbol of evil.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "devil_1",
+      "sentence": "Don't be a little devil!",
+      "difficulty": "hard"
+    },
+    {
+      "id": "diamond_0",
+      "sentence": "The diamond sparkled in the light.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "diamond_1",
+      "sentence": "The diamond is very hard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dice_0",
+      "sentence": "Roll the dice.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dice_1",
+      "sentence": "The dice has six sides.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dinosaur_0",
+      "sentence": "We saw dinosaur bones at the museum.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dinosaur_1",
+      "sentence": "The dinosaur was very big.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "disc_0",
+      "sentence": "I put the disc in the player.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "disc_1",
+      "sentence": "The disc has music on it.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dive_0",
+      "sentence": "We dive to see the fish.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dive_1",
+      "sentence": "I dive into the pool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "doctor_0",
+      "sentence": "The doctor helped me feel better.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "doctor_1",
+      "sentence": "I went to see the doctor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dog_0",
+      "sentence": "The dog ran across the yard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dog_1",
+      "sentence": "I took the dog for a walk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dollar_0",
+      "sentence": "This costs one dollar.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dollar_1",
+      "sentence": "I have a dollar bill.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dolphin_0",
+      "sentence": "The dolphin jumped through the hoop.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dolphin_1",
+      "sentence": "The dolphin jumped high.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "donkey_0",
+      "sentence": "The donkey carried heavy bags.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "donkey_1",
+      "sentence": "The donkey had very long ears.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "donut_0",
+      "sentence": "I ate a chocolate donut.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "donut_1",
+      "sentence": "I had a donut with my coffee.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "door_0",
+      "sentence": "I opened the door.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "door_1",
+      "sentence": "Someone knocked on the door.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dove_0",
+      "sentence": "A dove flew overhead.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dove_1",
+      "sentence": "The dove is a symbol of peace.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dragon_0",
+      "sentence": "The dragon breathed fire.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dragon_1",
+      "sentence": "The dragon had big wings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "draw_0",
+      "sentence": "I draw pictures of animals.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "draw_1",
+      "sentence": "She can really draw.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dress_0",
+      "sentence": "She wore a beautiful dress.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dress_1",
+      "sentence": "The dress was long and elegant.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "drum_0",
+      "sentence": "The drum has a loud beat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "drum_1",
+      "sentence": "The drum kept the rhythm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "duck_0",
+      "sentence": "The duck swam in the pond.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "duck_1",
+      "sentence": "The duck said quack.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "dumpling_0",
+      "sentence": "The dumpling was steamed and delicious.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "dumpling_1",
+      "sentence": "I love a pork dumpling.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eagle_0",
+      "sentence": "The eagle soared in the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eagle_1",
+      "sentence": "The eagle has very sharp eyes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ear_0",
+      "sentence": "The earring hurt my ear.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ear_1",
+      "sentence": "She whispered in my ear.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "earth_0",
+      "sentence": "Earth is our home planet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "earth_1",
+      "sentence": "The earth goes around the sun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "egg_0",
+      "sentence": "The egg has a yellow yolk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "egg_1",
+      "sentence": "I cracked an egg into the pan.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eggplant_0",
+      "sentence": "We grilled the eggplant.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "eggplant_1",
+      "sentence": "Eggplant is purple on the outside.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eight_0",
+      "sentence": "A spider has eight legs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eight_1",
+      "sentence": "Eight comes after seven.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "elephant_0",
+      "sentence": "The elephant sprayed water with its trunk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elephant_1",
+      "sentence": "The elephant has an excellent memory.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elevator_0",
+      "sentence": "I took the elevator to the top floor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elevator_1",
+      "sentence": "The elevator stopped at every floor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elf_0",
+      "sentence": "The elf lived in the forest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "elf_1",
+      "sentence": "Santa's elves make toys.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "envelope_0",
+      "sentence": "I put the letter in the envelope.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "envelope_1",
+      "sentence": "The envelope needs a stamp.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "envelope_2",
+      "sentence": "I put the letter in an envelope.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eye_0",
+      "sentence": "I see with my eyes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eye_1",
+      "sentence": "She has blue eyes.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "factory_0",
+      "sentence": "Cars are made in a factory.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "factory_1",
+      "sentence": "The factory has many workers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "factory_2",
+      "sentence": "Cars are made in the factory.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fan_0",
+      "sentence": "She waved the fan to stay cool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fan_1",
+      "sentence": "The paper fan was very pretty.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fan_2",
+      "sentence": "I used a fan to cool down.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fan_3",
+      "sentence": "The fan created a nice breeze.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "farmer_0",
+      "sentence": "The farmer grew vegetables.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "farmer_1",
+      "sentence": "The farmer fed the chickens.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "farmer_2",
+      "sentence": "The farmer planted seeds.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "farmer_3",
+      "sentence": "Farmers grow our food.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fax_0",
+      "sentence": "I sent the document by fax.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fax_1",
+      "sentence": "The fax machine is in the office.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fence_0",
+      "sentence": "She learned to fence at camp.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fence_1",
+      "sentence": "They fence with thin swords.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fence_2",
+      "sentence": "They fence with swords.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fence_3",
+      "sentence": "I learned to fence.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "finger_0",
+      "sentence": "I pointed with my finger.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "finger_1",
+      "sentence": "I have five fingers on each hand.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fire_0",
+      "sentence": "The fire kept us warm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fire_1",
+      "sentence": "We sat around the fire.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fire_2",
+      "sentence": "The fire is hot.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fire_3",
+      "sentence": "Fire gives us warmth and light.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fire extinguisher_0",
+      "sentence": "Use the fire extinguisher in emergencies.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fire extinguisher_1",
+      "sentence": "The fire extinguisher is red.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "firefighter_0",
+      "sentence": "The firefighter put out the fire.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "firefighter_1",
+      "sentence": "The firefighter saved the cat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "firefighter_2",
+      "sentence": "Firefighters are brave.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "firetruck_0",
+      "sentence": "The firetruck has a loud siren.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "firetruck_1",
+      "sentence": "The firetruck rushed to the fire.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "firetruck_2",
+      "sentence": "Firetrucks are usually red.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fireworks_0",
+      "sentence": "We watched the fireworks.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fireworks_1",
+      "sentence": "The fireworks lit up the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fish_0",
+      "sentence": "The fish swam in the tank.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fish_1",
+      "sentence": "I caught a big fish.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fish_2",
+      "sentence": "The fish swam quickly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fish_3",
+      "sentence": "Fish live in water.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fist_0",
+      "sentence": "He made a fist with his hand.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fist_1",
+      "sentence": "We gave each other a fist bump.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "five_0",
+      "sentence": "I have five fingers on each hand.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "five_1",
+      "sentence": "Five is half of ten.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "flamingo_0",
+      "sentence": "The flamingo stood on one leg.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "flamingo_1",
+      "sentence": "Flamingos are bright pink.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "flamingo_2",
+      "sentence": "Flamingos are pink birds.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "flashlight_0",
+      "sentence": "I used a flashlight in the dark.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "flashlight_1",
+      "sentence": "The flashlight needs new batteries.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fly_0",
+      "sentence": "A fly buzzed around the room.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fly_1",
+      "sentence": "The fly landed on the food.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "folder_0",
+      "sentence": "I put the papers in a folder.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "folder_1",
+      "sentence": "The folder is on my desk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "folder_2",
+      "sentence": "The folder is labeled.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "foot_0",
+      "sentence": "I stepped on something with my foot.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "foot_1",
+      "sentence": "I have two feet.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "foot_2",
+      "sentence": "My foot hurts.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "football_0",
+      "sentence": "I watch football on Sunday.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "football_1",
+      "sentence": "Football is a popular sport.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "football_2",
+      "sentence": "He threw the football far.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "football_3",
+      "sentence": "Football players wear helmets.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "forest_0",
+      "sentence": "We hiked through the forest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "forest_1",
+      "sentence": "The forest is full of tall trees.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fork_0",
+      "sentence": "I ate with a fork and knife.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fork_1",
+      "sentence": "The fork has four prongs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fountain_0",
+      "sentence": "The fountain sprays water high.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fountain_1",
+      "sentence": "People throw coins in the fountain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fountain_2",
+      "sentence": "I threw a coin in the fountain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fountain_3",
+      "sentence": "Water sprays from the fountain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fountain pen_0",
+      "sentence": "He wrote with a fountain pen.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fountain pen_1",
+      "sentence": "The fountain pen needs ink.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "four_0",
+      "sentence": "A car has four wheels.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "four_1",
+      "sentence": "There are four seasons.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fox_0",
+      "sentence": "The fox ran into the forest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fox_1",
+      "sentence": "A fox has a bushy tail.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fox_2",
+      "sentence": "The fox ran into the woods.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fries_0",
+      "sentence": "I dipped my fries in ketchup.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fries_1",
+      "sentence": "The fries were hot and salty.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fries_2",
+      "sentence": "The fries were hot and crispy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "frog_0",
+      "sentence": "The frog jumped into the pond.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "frog_1",
+      "sentence": "Frogs say ribbit.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "frog_2",
+      "sentence": "Frogs eat flies.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "garlic_0",
+      "sentence": "I added garlic to the sauce.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "garlic_1",
+      "sentence": "Garlic has a strong smell.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gas_0",
+      "sentence": "The car needs more gas.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gas_1",
+      "sentence": "I filled the tank with gas.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gear_0",
+      "sentence": "The gears turn the machine.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gear_1",
+      "sentence": "One gear connects to another.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gear_2",
+      "sentence": "One gear moves another.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gem_0",
+      "sentence": "The ring had a beautiful gem.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gem_1",
+      "sentence": "Gems are very valuable.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "germ_0",
+      "sentence": "Wash your hands to kill germs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "germ_1",
+      "sentence": "Germs can make you sick.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ghost_0",
+      "sentence": "The ghost said boo.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ghost_1",
+      "sentence": "I dressed as a ghost for Halloween.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ghost_2",
+      "sentence": "They saw a ghost in the house.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ghost_3",
+      "sentence": "Ghosts say 'boo!'",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gift_0",
+      "sentence": "I got a gift for my birthday.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gift_1",
+      "sentence": "The gift was wrapped in paper.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ginger_0",
+      "sentence": "I added ginger to the stir fry.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ginger_1",
+      "sentence": "Ginger tea helps when you feel sick.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "giraffe_0",
+      "sentence": "The giraffe ate leaves from the tall tree.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "giraffe_1",
+      "sentence": "Giraffes have very long necks.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "girl_0",
+      "sentence": "The girl rode her bike.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "girl_1",
+      "sentence": "The girl has long hair.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "girl_2",
+      "sentence": "The girl wore a dress.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "girl_3",
+      "sentence": "She is a smart girl.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "glasses_0",
+      "sentence": "I wear glasses to read.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "glasses_1",
+      "sentence": "She put on her glasses.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "glasses_2",
+      "sentence": "I need glasses to read.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "glasses_3",
+      "sentence": "He cleaned his glasses.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "globe_0",
+      "sentence": "I spun the globe to find Italy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "globe_1",
+      "sentence": "The globe shows all the countries.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "glove_0",
+      "sentence": "I wore gloves in the snow.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "glove_1",
+      "sentence": "The gloves kept my hands warm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gloves_0",
+      "sentence": "I wore gloves in the snow.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gloves_1",
+      "sentence": "The gloves keep my hands warm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "goat_0",
+      "sentence": "The goat climbed the rocky hill.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "goat_1",
+      "sentence": "Goats like to eat grass.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "goat_2",
+      "sentence": "The goat climbed the hill.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "goat_3",
+      "sentence": "Goats eat almost anything.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "goggles_0",
+      "sentence": "I wear goggles when I swim.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "goggles_1",
+      "sentence": "The scientist wore safety goggles.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "goggles_2",
+      "sentence": "Safety goggles protect your eyes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gold_0",
+      "sentence": "She won the gold medal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gold_1",
+      "sentence": "Gold is very valuable.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "golf_0",
+      "sentence": "I play golf with my dad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "golf_1",
+      "sentence": "Golf is played on a course.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "golf_2",
+      "sentence": "Dad plays golf on weekends.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "golf_3",
+      "sentence": "Golf is a quiet sport.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "goose_0",
+      "sentence": "The goose honked loudly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "goose_1",
+      "sentence": "Geese fly south in winter.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gorilla_0",
+      "sentence": "The gorilla beat its chest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gorilla_1",
+      "sentence": "Gorillas live in family groups.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandfather_0",
+      "sentence": "My grandfather tells great stories.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandfather_1",
+      "sentence": "I visit my grandfather on weekends.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandfather_2",
+      "sentence": "My grandfather is very wise.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandfather_3",
+      "sentence": "Grandfather taught me to fish.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandmother_0",
+      "sentence": "My grandmother bakes the best cookies.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandmother_1",
+      "sentence": "I love visiting my grandmother.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandmother_2",
+      "sentence": "My grandmother tells great stories.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grandmother_3",
+      "sentence": "I love my grandmother.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "grape_0",
+      "sentence": "I ate a bunch of grapes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grape_1",
+      "sentence": "Grapes grow on vines.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "grapes_0",
+      "sentence": "I ate some grapes for a snack.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "grapes_1",
+      "sentence": "Grapes grow on vines.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gray_0",
+      "sentence": "The elephant is gray.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "gray_1",
+      "sentence": "The sky looks gray today.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "green_0",
+      "sentence": "The grass is green.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "green_1",
+      "sentence": "Green means go.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "green_2",
+      "sentence": "Grass is green.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "green_3",
+      "sentence": "The traffic light turned green.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "guitar_0",
+      "sentence": "I learned to play the guitar.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "guitar_1",
+      "sentence": "The guitar has six strings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "guitar_2",
+      "sentence": "He played the guitar by the campfire.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "guitar_3",
+      "sentence": "I'm learning to play guitar.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "gun_0",
+      "sentence": "The police officer has a gun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gun_1",
+      "sentence": "The toy gun shoots water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gymnastics_0",
+      "sentence": "She does gymnastics after school.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "gymnastics_1",
+      "sentence": "Gymnastics requires balance.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hammer_0",
+      "sentence": "I hit the nail with a hammer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hammer_1",
+      "sentence": "The hammer is in the toolbox.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hammer_2",
+      "sentence": "The hammer is heavy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hamster_0",
+      "sentence": "The hamster ran on its wheel.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hamster_1",
+      "sentence": "My hamster stores food in its cheeks.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hand_0",
+      "sentence": "I held the cup in my hand.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hand_1",
+      "sentence": "Wash your hands before eating.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "handbag_0",
+      "sentence": "She carried a leather handbag.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "handbag_1",
+      "sentence": "My keys are in my handbag.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "handshake_0",
+      "sentence": "We greeted each other with a handshake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "handshake_1",
+      "sentence": "A firm handshake is important.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "handshake_2",
+      "sentence": "We greeted with a handshake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "happy_0",
+      "sentence": "She feels happy today.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "happy_1",
+      "sentence": "The happy child laughed.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "happy_2",
+      "sentence": "I am happy today.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "happy_3",
+      "sentence": "She looks very happy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hat_0",
+      "sentence": "She wore a hat in the sun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hat_1",
+      "sentence": "The hat kept my head warm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hat_2",
+      "sentence": "I wore a hat in the sun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hat_3",
+      "sentence": "The hat protected my head.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "headphones_0",
+      "sentence": "I put on my headphones to listen to music.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "headphones_1",
+      "sentence": "The headphones block outside noise.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "headphones_2",
+      "sentence": "I wear headphones to listen to music.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "headphones_3",
+      "sentence": "The headphones blocked the noise.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "headstone_0",
+      "sentence": "The headstone had her name on it.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "headstone_1",
+      "sentence": "Flowers were place by the headstone.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "heart_0",
+      "sentence": "My heart beats fast when I run.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "heart_1",
+      "sentence": "I love you with all my heart.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "heart_2",
+      "sentence": "My heart is beating fast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "heart_3",
+      "sentence": "The heart pumps blood.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hedgehog_0",
+      "sentence": "The hedgehog curled into a ball.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hedgehog_1",
+      "sentence": "Hedgehogs have sharp spines.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "heel_0",
+      "sentence": "She wore high heels to the party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "heel_1",
+      "sentence": "The heels made her taller.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "helicopter_0",
+      "sentence": "The helicopter hovered in the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "helicopter_1",
+      "sentence": "We heard the helicopter overhead.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "helicopter_2",
+      "sentence": "The helicopter landed on the roof.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "helicopter_3",
+      "sentence": "Helicopters can hover in the air.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "helmet_0",
+      "sentence": "I always wear a helmet when I ride my bike.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "helmet_1",
+      "sentence": "The helmet protected his head.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "helmet_2",
+      "sentence": "Wear a helmet when you ride a bike.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hike_0",
+      "sentence": "We hike in the mountains.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hike_1",
+      "sentence": "I like to hike on weekends.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hippo_0",
+      "sentence": "The hippo swam in the river.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hippo_1",
+      "sentence": "Hippos have very big mouths.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hit_0",
+      "sentence": "Hit the ball with the bat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hit_1",
+      "sentence": "She hit a home run.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "honey_0",
+      "sentence": "I put honey in my tea.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "honey_1",
+      "sentence": "Bees make honey.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hook_0",
+      "sentence": "I hung my coat on the hook.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hook_1",
+      "sentence": "The hook is on the wall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hook_2",
+      "sentence": "The fish caught the hook.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "horn_0",
+      "sentence": "He blew the horn loudly.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "horn_1",
+      "sentence": "The car horn honked.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "horse_0",
+      "sentence": "She rode the horse across the field.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "horse_1",
+      "sentence": "The horse ate hay from the barn.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "horse_2",
+      "sentence": "She rode the horse.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "horse_3",
+      "sentence": "The horse ate hay.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hospital_0",
+      "sentence": "She went to the hospital when she was sick.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "hospital_1",
+      "sentence": "The hospital has many doctors.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hospital_2",
+      "sentence": "She went to the hospital.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hospital_3",
+      "sentence": "Doctors work at the hospital.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hot_0",
+      "sentence": "It is hot outside today.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hot_1",
+      "sentence": "The soup is too hot to eat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hot_2",
+      "sentence": "The soup is hot.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hot_3",
+      "sentence": "It's hot outside today.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "hotdog_0",
+      "sentence": "I ate a hotdog at the game.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hotdog_1",
+      "sentence": "I put mustard on my hotdog.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hotdog_2",
+      "sentence": "I had a hotdog at the baseball game.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hotdog_3",
+      "sentence": "He put mustard on his hotdog.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hotel_0",
+      "sentence": "We stayed at a hotel by the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hotel_1",
+      "sentence": "The hotel has a swimming pool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hotel_2",
+      "sentence": "We stayed at a hotel.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hotel_3",
+      "sentence": "The hotel has a pool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "house_0",
+      "sentence": "I live in a small house.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "house_1",
+      "sentence": "The house has a red roof.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "house_2",
+      "sentence": "I live in a house.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "house_3",
+      "sentence": "The house has three bedrooms.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hut_0",
+      "sentence": "The hut had a thatched roof.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "hut_1",
+      "sentence": "We stayed in a small hut.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ice_0",
+      "sentence": "I put ice in my drink.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ice_1",
+      "sentence": "The ice melted in the sun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ice cream_0",
+      "sentence": "I had ice cream on a hot day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ice cream_1",
+      "sentence": "My favorite ice cream is chocolate.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "island_0",
+      "sentence": "The island was surrounded by blue water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "island_1",
+      "sentence": "We took a boat to the island.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "island_2",
+      "sentence": "The island is surrounded by water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "jacket_0",
+      "sentence": "I zipped up my jacket.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "jacket_1",
+      "sentence": "The jacket has many pockets.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "jar_0",
+      "sentence": "I opened a jar of jam.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "jar_1",
+      "sentence": "The cookies are in the jar.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "jellyfish_0",
+      "sentence": "The jellyfish floated in the water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "jellyfish_1",
+      "sentence": "Be careful of jellyfish stings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "judge_0",
+      "sentence": "The judge made a decision.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "judge_1",
+      "sentence": "The judge wore a black robe.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "judge_2",
+      "sentence": "She is a fair judge.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "juggle_0",
+      "sentence": "The clown can juggle five balls.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "juggle_1",
+      "sentence": "I learned to juggle.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "juggle_2",
+      "sentence": "He can juggle three balls.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "juice_0",
+      "sentence": "I drank orange juice for breakfast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "juice_1",
+      "sentence": "The juice was fresh and cold.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "juice_2",
+      "sentence": "I drank orange juice with breakfast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "juice_3",
+      "sentence": "Fresh juice is very healthy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "jump_0",
+      "sentence": "Jump over the puddle.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "jump_1",
+      "sentence": "The frog jumped high.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "kangaroo_0",
+      "sentence": "The kangaroo hopped across the field.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kangaroo_1",
+      "sentence": "A baby kangaroo lives in its mother's pouch.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "kangaroo_2",
+      "sentence": "The kangaroo hopped away.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "kangaroo_3",
+      "sentence": "Kangaroos have pouches.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "key_0",
+      "sentence": "I used the key to open the door.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "key_1",
+      "sentence": "The key is on the table.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "key_2",
+      "sentence": "The key is on my keychain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "keyboard_0",
+      "sentence": "I typed on the keyboard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "keyboard_1",
+      "sentence": "The keyboard has many keys.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "keyboard_2",
+      "sentence": "I type on the keyboard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kick_0",
+      "sentence": "I kick the ball.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "kick_1",
+      "sentence": "She kicked the door open.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kimono_0",
+      "sentence": "She wore a beautiful kimono.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kimono_1",
+      "sentence": "The kimono was made of silk.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiss_0",
+      "sentence": "She gave him a kiss on the cheek.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiss_1",
+      "sentence": "A kiss goodnight helps me sleep.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiss_2",
+      "sentence": "She gave him a kiss.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiss_3",
+      "sentence": "A kiss on the cheek.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kite_0",
+      "sentence": "I fly a kite at the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kite_1",
+      "sentence": "The kite goes high in the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kite_2",
+      "sentence": "The kite flew high in the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kite_3",
+      "sentence": "We fly kites at the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiwi_0",
+      "sentence": "I cut the kiwi in half.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiwi_1",
+      "sentence": "Kiwis have green flesh and tiny seeds.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiwi_2",
+      "sentence": "The kiwi has fuzzy skin.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kiwi_3",
+      "sentence": "Kiwis are full of vitamin C.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kneel_0",
+      "sentence": "He kneels to tie his shoe.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kneel_1",
+      "sentence": "She kneeled on the ground.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kneel_2",
+      "sentence": "I kneel to tie my shoe.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "kneel_3",
+      "sentence": "They kneel when they pray.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "knife_0",
+      "sentence": "I cut the bread with a knife.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "knife_1",
+      "sentence": "Be careful with the sharp knife.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "knit_0",
+      "sentence": "I knit a scarf for winter.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "knit_1",
+      "sentence": "Grandma knits every day.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "koala_0",
+      "sentence": "The koala sat in the tree.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "koala_1",
+      "sentence": "Koalas sleep most of the day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "koala_2",
+      "sentence": "The koala ate eucalyptus leaves.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "koala_3",
+      "sentence": "Koalas sleep in trees.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ladder_0",
+      "sentence": "I climbed the ladder to the roof.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ladder_1",
+      "sentence": "Hold the ladder steady.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ladder_2",
+      "sentence": "I climbed the ladder.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ladder_3",
+      "sentence": "The ladder reaches the roof.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ladybug_0",
+      "sentence": "A ladybug landed on my hand.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ladybug_1",
+      "sentence": "Ladybugs have red shells with spots.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lamp_0",
+      "sentence": "I turned on the lamp.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lamp_1",
+      "sentence": "The lamp is on the table.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lantern_0",
+      "sentence": "We hung a lantern outside.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lantern_1",
+      "sentence": "The paper lantern glowed softly.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lantern_2",
+      "sentence": "We hung lanterns at the party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lantern_3",
+      "sentence": "The lantern glowed in the dark.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "laptop_0",
+      "sentence": "I work on my laptop.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "laptop_1",
+      "sentence": "The laptop is light and easy to carry.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "leg_0",
+      "sentence": "My leg hurts from running.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "leg_1",
+      "sentence": "I hurt my leg.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lemon_0",
+      "sentence": "I squeezed lemon on my fish.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lemon_1",
+      "sentence": "I put lemon in my tea.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "leopard_0",
+      "sentence": "The leopard climbed the tree.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "leopard_1",
+      "sentence": "The leopard has spotted fur.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lettuce_0",
+      "sentence": "I made a salad with lettuce.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lettuce_1",
+      "sentence": "Lettuce leaves are crispy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lift_0",
+      "sentence": "I lift weights at the gym.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lift_1",
+      "sentence": "Can you lift this box?",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lightbulb_0",
+      "sentence": "I changed the lightbulb.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lightbulb_1",
+      "sentence": "The lightbulb lit up the room.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lightning_0",
+      "sentence": "Lightning flashed across the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lightning_1",
+      "sentence": "I saw lightning during the storm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lime_0",
+      "sentence": "I added lime to my drink.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lime_1",
+      "sentence": "I squeezed lime on my tacos.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lion_0",
+      "sentence": "The lion roared loudly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lion_1",
+      "sentence": "The lion lived in Africa.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lips_0",
+      "sentence": "She put lipstick on her lips.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lips_1",
+      "sentence": "His lips were dry.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lipstick_0",
+      "sentence": "She put on red lipstick.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lipstick_1",
+      "sentence": "The lipstick matched her dress.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lizard_0",
+      "sentence": "The lizard sat on the warm rock.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lizard_1",
+      "sentence": "The lizard likes warm places.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "llama_0",
+      "sentence": "The llama has soft fur.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "llama_1",
+      "sentence": "The llama  lived in the mountains.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lobster_0",
+      "sentence": "The lobster has big claws.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lobster_1",
+      "sentence": "We ate lobster for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lock_0",
+      "sentence": "I put a lock on the door.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lock_1",
+      "sentence": "The lock needs a key.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lollipop_0",
+      "sentence": "I licked the lollipop.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lollipop_1",
+      "sentence": "The lollipop was cherry flavored.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lose_0",
+      "sentence": "I don't want to lose the game.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "lose_1",
+      "sentence": "To lose is to be sad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lotion_0",
+      "sentence": "I put lotion on my hands.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lotion_1",
+      "sentence": "The lotion made my skin soft.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "love_0",
+      "sentence": "I feel love for my family.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "love_1",
+      "sentence": "Love makes people happy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lungs_0",
+      "sentence": "We breathe with our lungs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lungs_1",
+      "sentence": "Smoking hurts your lungs.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "magic_0",
+      "sentence": "The wizard used magic.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "magic_1",
+      "sentence": "The magic trick amazed everyone.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "magnet_0",
+      "sentence": "The magnet stuck to the fridge.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "magnet_1",
+      "sentence": "The magnet attracted metal objects.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "magnifier_0",
+      "sentence": "I used a magnifier to read the small print.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "magnifier_1",
+      "sentence": "The magnifier made the bug look huge.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mailbox_0",
+      "sentence": "I checked the mailbox for letters.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mailbox_1",
+      "sentence": "The mailbox is at the end of the driveway.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "man_0",
+      "sentence": "The man walked his dog.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "man_1",
+      "sentence": "He is a kind man.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mango_0",
+      "sentence": "The mango was perfectly ripe.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mango_1",
+      "sentence": "I love mango smoothies.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "map_0",
+      "sentence": "I looked at the map to find my way.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "map_1",
+      "sentence": "The map shows all the streets.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "marker_0",
+      "sentence": "I used a marker on the board.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "marker_1",
+      "sentence": "The marker is bright red.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "meat_0",
+      "sentence": "We cooked meat on the grill.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "meat_1",
+      "sentence": "Meat is a good source of protein.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mechanic_0",
+      "sentence": "The mechanic fixed my car.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mechanic_1",
+      "sentence": "He works as a mechanic.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "medal_0",
+      "sentence": "She won a gold medal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "medal_1",
+      "sentence": "The medal hangs around his neck.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "meditate_0",
+      "sentence": "I meditate every morning.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "meditate_1",
+      "sentence": "I meditate to relax.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "megaphone_0",
+      "sentence": "He used a megaphone to speak to the crowd.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "megaphone_1",
+      "sentence": "The megaphone made his voice louder.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "melon_0",
+      "sentence": "We cut the melon into slices.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "melon_1",
+      "sentence": "We ate melon for dessert.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "microphone_0",
+      "sentence": "She sang into the microphone.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "microphone_1",
+      "sentence": "The microphone was on a stand.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "microscope_0",
+      "sentence": "I looked at cells under the microscope.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "microscope_1",
+      "sentence": "The microscope makes things look bigger.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "milk_0",
+      "sentence": "I drink milk every day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "milk_1",
+      "sentence": "Milk helps build strong bones.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mirror_0",
+      "sentence": "I looked in the mirror.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mirror_1",
+      "sentence": "The mirror is on the wall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "money_0",
+      "sentence": "I saved my money in the bank.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "money_1",
+      "sentence": "Money can buy many things.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "monkey_0",
+      "sentence": "The monkey swung from branch to branch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "monkey_1",
+      "sentence": "I saw a monkey at the zoo.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "moon_0",
+      "sentence": "The moon is bright tonight.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "moon_1",
+      "sentence": "We can see the moon at night.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "moose_0",
+      "sentence": "The moose stood by the lake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "moose_1",
+      "sentence": "A moose has very large antlers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mosque_0",
+      "sentence": "The mosque has a beautiful dome.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mosque_1",
+      "sentence": "Muslims pray at the mosque.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "motorcycle_0",
+      "sentence": "He rode a motorcycle.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "motorcycle_1",
+      "sentence": "The motorcycle is very fast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mountain_0",
+      "sentence": "We climbed to the top of the mountain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mountain_1",
+      "sentence": "Snow covered the mountain top.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mouse_0",
+      "sentence": "The mouse ran into its hole.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mouse_1",
+      "sentence": "I saw a mouse in the kitchen.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mouth_0",
+      "sentence": "I eat with my mouth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mouth_1",
+      "sentence": "Open your mouth wide.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "muscle_0",
+      "sentence": "The heart is a muscle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "muscle_1",
+      "sentence": "Exercise builds muscle.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "museum_0",
+      "sentence": "We saw dinosaur bones at the museum.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "museum_1",
+      "sentence": "The museum has beautiful paintings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mushroom_0",
+      "sentence": "There was mushroom on my pizza.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mushroom_1",
+      "sentence": "This mushroom is poisonous.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "music_0",
+      "sentence": "I love listening to music.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "music_1",
+      "sentence": "The music was loud.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "necklace_0",
+      "sentence": "She wore a pearl necklace.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "necklace_1",
+      "sentence": "The necklace had a gold chain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "newspaper_0",
+      "sentence": "I read the newspaper every morning.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "newspaper_1",
+      "sentence": "The newspaper had interesting articles.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "nine_0",
+      "sentence": "Cats have nine lives.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "nine_1",
+      "sentence": "Nine is almost ten.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ninja_0",
+      "sentence": "The ninja moved silently.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ninja_1",
+      "sentence": "The ninja wore all black.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "noodles_0",
+      "sentence": "I ate a bowl of noodles.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "noodles_1",
+      "sentence": "The noodles were in a hot broth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "nose_0",
+      "sentence": "I smell with my nose.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "nose_1",
+      "sentence": "His nose is red from the cold.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "notebook_0",
+      "sentence": "I wrote my ideas in a notebook.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "notebook_1",
+      "sentence": "The notebook is full of notes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ocean_0",
+      "sentence": "The ocean is very deep.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ocean_1",
+      "sentence": "Whales live in the ocean.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "octopus_0",
+      "sentence": "The octopus has eight arms.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "octopus_1",
+      "sentence": "An octopus can change color.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "office_0",
+      "sentence": "I work in an office downtown.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "office_1",
+      "sentence": "The office has many desks.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "okay_0",
+      "sentence": "Everything is okay.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "okay_1",
+      "sentence": "Is it okay if I sit here?",
+      "difficulty": "medium"
+    },
+    {
+      "id": "olive_0",
+      "sentence": "I ate the olive on my pizza.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "olive_1",
+      "sentence": "Olive oil is healthy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "one_0",
+      "sentence": "I have one apple.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "one_1",
+      "sentence": "One is the first number.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "onion_0",
+      "sentence": "Cutting the onion made me cry.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "onion_1",
+      "sentence": "The onion has many layers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "orange_color_0",
+      "sentence": "The sunset is orange.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "orange_color_1",
+      "sentence": "I like orange juice.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "orange_fruit_0",
+      "sentence": "I peeled an orange for breakfast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "orange_fruit_1",
+      "sentence": "Orange juice is my favorite drink.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "otter_0",
+      "sentence": "The otter floated on its back.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "otter_1",
+      "sentence": "The otter swam in the river.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "owl_0",
+      "sentence": "The owl hooted at night.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "owl_1",
+      "sentence": "An owl can turn its heads almost all the way around.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "package_0",
+      "sentence": "I received a package in the mail.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "package_1",
+      "sentence": "The package was heavy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "paint_0",
+      "sentence": "I paint pictures of flowers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paint_1",
+      "sentence": "She bought some red paint.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paintbrush_0",
+      "sentence": "The artist used a small paintbrush.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paintbrush_1",
+      "sentence": "I cleaned the paintbrush.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pancakes_0",
+      "sentence": "I put syrup on my pancakes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pancakes_1",
+      "sentence": "We made pancakes for breakfast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "panda_0",
+      "sentence": "The panda ate bamboo.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "panda_1",
+      "sentence": "The panda is black and white.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pants_0",
+      "sentence": "I wore blue pants today.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pants_1",
+      "sentence": "My pants have two pockets.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paperclip_0",
+      "sentence": "I used a paperclip to hold the pages together.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "paperclip_1",
+      "sentence": "The paperclip is bent.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "park_0",
+      "sentence": "We played in the park.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "park_1",
+      "sentence": "The park has a playground.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "parking_0",
+      "sentence": "I found a parking space.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "parking_1",
+      "sentence": "The parking lot is full.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "parrot_0",
+      "sentence": "The parrot said hello.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "parrot_1",
+      "sentence": "The parrot repeated my words.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "party_0",
+      "sentence": "We had a party for her birthday.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "party_1",
+      "sentence": "The party was so much fun.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pasta_0",
+      "sentence": "I had pasta with tomato sauce.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pasta_1",
+      "sentence": "Pasta is popular in Italy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peach_0",
+      "sentence": "The peach was soft and sweet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peach_1",
+      "sentence": "The peach was perfectly ripe.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peacock_0",
+      "sentence": "The peacock spread its colorful tail.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peacock_1",
+      "sentence": "The peacock spread its feathers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peanut_0",
+      "sentence": "Peanut butter is made from peanuts.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peanut_1",
+      "sentence": "I have a peanut allergy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pear_0",
+      "sentence": "The pear was ripe and sweet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pear_1",
+      "sentence": "I picked a pear from the tree.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peas_0",
+      "sentence": "I ate peas with my dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "peas_1",
+      "sentence": "Peas grow in pods.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pen_0",
+      "sentence": "I signed my name with a pen.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pen_1",
+      "sentence": "The pen ran out of ink.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pencil_0",
+      "sentence": "I wrote with a pencil.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pencil_1",
+      "sentence": "The pencil needs to be sharpened.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "penguin_0",
+      "sentence": "The penguin slid on the ice.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "penguin_1",
+      "sentence": "The penguin waddled on ice.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pepper_0",
+      "sentence": "The pepper was very spicy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pepper_1",
+      "sentence": "I added pepper to my food.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "phone_0",
+      "sentence": "The phone rang loudly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "phone_1",
+      "sentence": "I answered the phone.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "piano_0",
+      "sentence": "She played a song on the piano.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "piano_1",
+      "sentence": "She plays piano beautifully.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pickaxe_0",
+      "sentence": "Miners use a pickaxe.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pickaxe_1",
+      "sentence": "The pickaxe broke the rock.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "picture_0",
+      "sentence": "There is a picture on the wall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "picture_1",
+      "sentence": "I took a picture of the sunset.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pie_0",
+      "sentence": "Grandma baked a delicious pie.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pie_1",
+      "sentence": "I had a slice of pie.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pig_0",
+      "sentence": "The pig rolled in the mud.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pig_1",
+      "sentence": "The pig lived on the farm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pill_0",
+      "sentence": "I took a pill for my headache.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pill_1",
+      "sentence": "The pill is small and easy to swallow.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pilot_0",
+      "sentence": "The pilot flew the plane.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pilot_1",
+      "sentence": "She wants to be a pilot.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pin_0",
+      "sentence": "I put a pin in the board.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pin_1",
+      "sentence": "Be careful, the pin is sharp.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "pineapple_0",
+      "sentence": "We put pineapple on the pizza.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pineapple_1",
+      "sentence": "The pineapple was sweet and juicy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pink_0",
+      "sentence": "The flower is pink.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pink_1",
+      "sentence": "Flamingos are pink.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pizza_0",
+      "sentence": "We ordered pizza for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pizza_1",
+      "sentence": "I like pepperoni pizza.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "plate_0",
+      "sentence": "I put food on my plate.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "plate_1",
+      "sentence": "The plate was clean and white.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "plug_0",
+      "sentence": "I put the plug in the socket.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "plug_1",
+      "sentence": "The plug has three pins.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "plunger_0",
+      "sentence": "I used a plunger to fix the toilet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "plunger_1",
+      "sentence": "The plunger is in the bathroom.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "police car_0",
+      "sentence": "The police car has flashing lights.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "police car_1",
+      "sentence": "The police car drove by.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "police officer_0",
+      "sentence": "The police officer helped direct traffic.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "police officer_1",
+      "sentence": "She is a police officer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "popcorn_0",
+      "sentence": "We ate popcorn at the movie.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "popcorn_1",
+      "sentence": "The popcorn smells delicious.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "potato_0",
+      "sentence": "I baked a potato for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "potato_1",
+      "sentence": "She dug up a potato.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pray_0",
+      "sentence": "I pray for good health.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pray_1",
+      "sentence": "I pray before bed.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pregnant_0",
+      "sentence": "She is pregnant with her first child.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pregnant_1",
+      "sentence": "The pregnant woman sat down.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pretzel_0",
+      "sentence": "I ate a salty pretzel.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pretzel_1",
+      "sentence": "A pretzel is twisted into knots.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "prince_0",
+      "sentence": "The prince rode a white horse.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "prince_1",
+      "sentence": "She married a prince.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "princess_0",
+      "sentence": "The princess lived in a castle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "princess_1",
+      "sentence": "She felt like a princess.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "printer_0",
+      "sentence": "I sent the document to the printer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "printer_1",
+      "sentence": "The printer needs more paper.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pudding_0",
+      "sentence": "I had chocolate pudding for dessert.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pudding_1",
+      "sentence": "The pudding was smooth and creamy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pumpkin_0",
+      "sentence": "We carved a pumpkin for Halloween.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pumpkin_1",
+      "sentence": "Pumpkin pie is delicious.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "purple_0",
+      "sentence": "Grapes are purple.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "purple_1",
+      "sentence": "Purple is a royal color.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "purse_0",
+      "sentence": "She put her money in her purse.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "purse_1",
+      "sentence": "The purse was in her bag.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pushpin_0",
+      "sentence": "I used a pushpin on the map.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pushpin_1",
+      "sentence": "The pushpin holds the note.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "puzzle_0",
+      "sentence": "The puzzle has many pieces.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "puzzle_1",
+      "sentence": "I finished the puzzle.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "rabbit_0",
+      "sentence": "The rabbit hopped across the garden.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rabbit_1",
+      "sentence": "The rabbit hopped away.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "raccoon_0",
+      "sentence": "The raccoon got into the trash.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "raccoon_1",
+      "sentence": "The raccoon has thumbs.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "radio_0",
+      "sentence": "I listened to music on the radio.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "radio_1",
+      "sentence": "I heard the news on the radio.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "railroad_0",
+      "sentence": "The train runs on the railroad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "railroad_1",
+      "sentence": "We crossed the railroad tracks.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rain_0",
+      "sentence": "The rain fell all day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rain_1",
+      "sentence": "I got wet in the rain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rainbow_0",
+      "sentence": "We saw a rainbow after the rain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rainbow_1",
+      "sentence": "The rainbow had all the colors.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ram_0",
+      "sentence": "The ram has big curved horns.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ram_1",
+      "sentence": "The ram butted heads with the other one.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "razor_0",
+      "sentence": "I shaved with a razor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "razor_1",
+      "sentence": "The razor is very sharp.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "receipt_0",
+      "sentence": "I kept the receipt for the return.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "receipt_1",
+      "sentence": "The receipt shows the price.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "red_0",
+      "sentence": "The apple is red.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "red_1",
+      "sentence": "She wore a red dress.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rhino_0",
+      "sentence": "The rhino has a big horn.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rhino_1",
+      "sentence": "A rhino has very thick skin.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rice_0",
+      "sentence": "I had rice with my dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rice_1",
+      "sentence": "Rice is a staple food in Asia.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ride_0",
+      "sentence": "I ride my bike to school.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ride_1",
+      "sentence": "I like to ride my horse.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ring_0",
+      "sentence": "She wore a ring on her finger.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ring_1",
+      "sentence": "He gave her a wedding ring.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "road_0",
+      "sentence": "The car drove down the road.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "road_1",
+      "sentence": "The road leads to town.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "robot_0",
+      "sentence": "The robot can clean the floor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "robot_1",
+      "sentence": "The robot has metal arms.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rock_0",
+      "sentence": "I sat on a big rock.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rock_1",
+      "sentence": "The rock was too heavy to lift.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rocket_0",
+      "sentence": "The rocket launched into space.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rocket_1",
+      "sentence": "The rocket flew to the moon.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "row_0",
+      "sentence": "We row the boat across the lake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "row_1",
+      "sentence": "I learned to row.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ruler_0",
+      "sentence": "I measured the line with a ruler.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ruler_1",
+      "sentence": "The ruler is twelve inches long.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "run_0",
+      "sentence": "I run every morning.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "run_1",
+      "sentence": "I don't run very fast.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "sad_0",
+      "sentence": "He felt sad when his friend left.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sad_1",
+      "sentence": "The movie made me sad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "safety pin_0",
+      "sentence": "I used a safety pin to fix my shirt.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "safety pin_1",
+      "sentence": "The safety pin has a clasp to protect the point.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "sailboat_0",
+      "sentence": "The sailboat glided across the water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sailboat_1",
+      "sentence": "We saw a sailboat on the lake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "salad_0",
+      "sentence": "I had a salad for lunch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "salad_1",
+      "sentence": "The salad had lots of vegetables.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "salt_0",
+      "sentence": "I added salt to my food.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "salt_1",
+      "sentence": "The soup needs more salt.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sandal_0",
+      "sentence": "I wore sandals to the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sandal_1",
+      "sentence": "The sandals were comfortable.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sandwich_0",
+      "sentence": "I made a sandwich for lunch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sandwich_1",
+      "sentence": "The sandwich had lettuce and tomato.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "santa_0",
+      "sentence": "Santa brought presents.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "santa_1",
+      "sentence": "Santa has a white beard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "satellite_0",
+      "sentence": "The satellite orbits the earth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "satellite_1",
+      "sentence": "The satellite sends signals to earth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "saw_0",
+      "sentence": "I cut the board with a saw.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "saw_1",
+      "sentence": "The saw has sharp teeth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "saxophone_0",
+      "sentence": "The saxophone played a smooth melody.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "saxophone_1",
+      "sentence": "The saxophone sounded smooth.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "scale_0",
+      "sentence": "I stepped on the scale.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scale_1",
+      "sentence": "The scale shows the weight.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scared_0",
+      "sentence": "The boy was scared of the dark.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scared_1",
+      "sentence": "The loud noise scared me.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scarf_0",
+      "sentence": "I wrapped a scarf around my neck.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scarf_1",
+      "sentence": "The scarf kept my neck warm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "school_0",
+      "sentence": "I walk to school every day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "school_1",
+      "sentence": "School starts at eight o'clock.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "scientist_0",
+      "sentence": "The scientist made a discovery.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scientist_1",
+      "sentence": "The scientist works in a lab.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scissors_0",
+      "sentence": "I cut the paper with scissors.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scissors_1",
+      "sentence": "The scissors are sharp.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "scooter_0",
+      "sentence": "I ride my scooter to the park.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scooter_1",
+      "sentence": "I pushed the scooter with my foot.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scorpion_0",
+      "sentence": "The scorpion raised its tail.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "scorpion_1",
+      "sentence": "The scorpion lived in the desert.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "screw_0",
+      "sentence": "I put a screw in the wall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "screw_1",
+      "sentence": "The screw holds the shelf in place.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "screwdriver_0",
+      "sentence": "I used a screwdriver to fix the door.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "screwdriver_1",
+      "sentence": "The screwdriver has a flat head.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "seal_0",
+      "sentence": "The seal balanced a ball on its nose.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "seal_1",
+      "sentence": "The seal ate a fish.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "seven_0",
+      "sentence": "There are seven days in a week.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "seven_1",
+      "sentence": "Seven is a lucky number.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sew_0",
+      "sentence": "I sew a button on my shirt.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sew_1",
+      "sentence": "She can sew her own clothes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shark_0",
+      "sentence": "The shark has sharp teeth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shark_1",
+      "sentence": "We saw a shark at the aquarium.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sheep_0",
+      "sentence": "The sheep has soft wool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sheep_1",
+      "sentence": "The farmer sheared the sheep.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ship_0",
+      "sentence": "The ship sailed across the ocean.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ship_1",
+      "sentence": "The ship arrived at the port.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shirt_0",
+      "sentence": "I put on a clean shirt.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shirt_1",
+      "sentence": "The shirt has blue stripes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shocked_0",
+      "sentence": "I was shocked by the news.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shocked_1",
+      "sentence": "He looked shocked.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "shoe_0",
+      "sentence": "I tied my shoe.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "shoe_1",
+      "sentence": "The shoe was too small.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shop_0",
+      "sentence": "I bought bread at the shop.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shop_1",
+      "sentence": "The shop is open every day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shopping cart_0",
+      "sentence": "I pushed the shopping cart through the store.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shopping cart_1",
+      "sentence": "The shopping cart is full of groceries.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shorts_0",
+      "sentence": "I wore shorts because it was hot.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shorts_1",
+      "sentence": "The shorts have big pockets.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shower_0",
+      "sentence": "I take a shower every morning.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shower_1",
+      "sentence": "The shower has hot water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shrimp_0",
+      "sentence": "I love to eat shrimp.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "shrimp_1",
+      "sentence": "Shrimp live in the ocean.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sick_0",
+      "sentence": "She stayed home because she was sick.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sick_1",
+      "sentence": "I feel sick to my stomach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sign_0",
+      "sentence": "I read the sign.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sign_1",
+      "sentence": "She held up a sign.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "silver_0",
+      "sentence": "He won the silver medal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "silver_1",
+      "sentence": "The ring is made of silver.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sing_0",
+      "sentence": "I sing in the shower.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sing_1",
+      "sentence": "She can sing beautifully.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "singer_0",
+      "sentence": "The singer has a beautiful voice.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "singer_1",
+      "sentence": "She is a famous singer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "six_0",
+      "sentence": "A dice has six sides.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "six_1",
+      "sentence": "Six is half a dozen.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skate_0",
+      "sentence": "I skate on the frozen lake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skate_1",
+      "sentence": "Can you skate very gracefully?",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skateboard_0",
+      "sentence": "I do tricks on my skateboard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skateboard_1",
+      "sentence": "The skateboard has four wheels.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skates_0",
+      "sentence": "I put on my skates.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skates_1",
+      "sentence": "She skates at the rink.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ski_0",
+      "sentence": "I ski down the mountain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ski_1",
+      "sentence": "I learned to ski last winter.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skull_0",
+      "sentence": "The skull protects your brain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skull_1",
+      "sentence": "Pirates use skull symbols.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "skunk_0",
+      "sentence": "The skunk sprayed a bad smell.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "skunk_1",
+      "sentence": "The skunk is black with a white stripe.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sled_0",
+      "sentence": "We rode the sled down the hill.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sled_1",
+      "sentence": "We rode the sled together.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sloth_0",
+      "sentence": "The sloth hung from the branch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sloth_1",
+      "sentence": "The sloth  moved very slowly.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "smoothie_0",
+      "sentence": "I made a strawberry smoothie.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "smoothie_1",
+      "sentence": "The smoothie was thick and creamy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snail_0",
+      "sentence": "The snail moved very slowly.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snail_1",
+      "sentence": "A snail carries its home on its back.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snake_0",
+      "sentence": "The snake slithered through the grass.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snake_1",
+      "sentence": "That snake is poisonous.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sneaker_0",
+      "sentence": "I wore sneakers to the gym.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sneaker_1",
+      "sentence": "My sneakers are white.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "snow_0",
+      "sentence": "Snow covered the ground.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "snow_1",
+      "sentence": "The snow is white and cold.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snowboard_0",
+      "sentence": "I learned to snowboard last year.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snowboard_1",
+      "sentence": "I snowboard at the resort.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snowflake_0",
+      "sentence": "Each snowflake is unique.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "snowflake_1",
+      "sentence": "A snowflake landed on my nose.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snowman_0",
+      "sentence": "We built a snowman in the yard.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "snowman_1",
+      "sentence": "The snowman has a carrot nose.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soap_0",
+      "sentence": "I washed my hands with soap.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soap_1",
+      "sentence": "The soap smells nice.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "soccer_0",
+      "sentence": "I play soccer after school.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soccer_1",
+      "sentence": "The soccer ball went into the goal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sock_0",
+      "sentence": "I put on my sock.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sock_1",
+      "sentence": "My sock has a hole in it.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soda_0",
+      "sentence": "The soda was cold and fizzy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soda_1",
+      "sentence": "I ordered a soda with my meal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soldier_0",
+      "sentence": "The soldier wore a uniform.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soldier_1",
+      "sentence": "The soldier is very brave.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "SOS_0",
+      "sentence": "The ship sent an SOS signal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "SOS_1",
+      "sentence": "SOS means help me.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "soup_0",
+      "sentence": "The soup was hot and delicious.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "soup_1",
+      "sentence": "I had chicken soup for lunch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "spaghetti_0",
+      "sentence": "We had spaghetti with meatballs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "spaghetti_1",
+      "sentence": "I twirled the spaghetti on my fork.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sparkle_0",
+      "sentence": "The stars sparkle at night.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sparkle_1",
+      "sentence": "Her eyes sparkle when she laughs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "speaker_0",
+      "sentence": "The speaker played music.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "speaker_1",
+      "sentence": "Turn up the speaker volume.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "speedboat_0",
+      "sentence": "The speedboat raced across the lake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "speedboat_1",
+      "sentence": "We rode in a fast speedboat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "spider_0",
+      "sentence": "The spider spun a web.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "spider_1",
+      "sentence": "The spider has eight legs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sponge_0",
+      "sentence": "I cleaned the dishes with a sponge.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sponge_1",
+      "sentence": "The sponge absorbed the water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "spoon_0",
+      "sentence": "I ate soup with a spoon.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "spoon_1",
+      "sentence": "She stirred her tea with a spoon.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "squid_0",
+      "sentence": "The squid squirted ink.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "squid_1",
+      "sentence": "Squid have ten arms.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "squirrel_0",
+      "sentence": "The squirrel buried a nut.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "squirrel_1",
+      "sentence": "The squirrels lived in the attic.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "stadium_0",
+      "sentence": "The stadium was full of fans.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "stadium_1",
+      "sentence": "We watched the game at the stadium.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "stand_0",
+      "sentence": "Please stand up.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "stand_1",
+      "sentence": "I stand at the bus stop.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "star_0",
+      "sentence": "The star twinkled in the sky.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "star_1",
+      "sentence": "I saw a shooting star.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "statue_0",
+      "sentence": "The statue is made of bronze.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "statue_1",
+      "sentence": "They built a statue of the hero.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "steak_0",
+      "sentence": "I ordered a steak at the restaurant.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "steak_1",
+      "sentence": "The steak was cooked perfectly.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "store_0",
+      "sentence": "I went to the store.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "store_1",
+      "sentence": "The store sells food.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "storm_0",
+      "sentence": "The storm was very loud.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "storm_1",
+      "sentence": "We stayed inside during the storm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "strawberry_0",
+      "sentence": "I ate strawberry jam on toast.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "strawberry_1",
+      "sentence": "Strawberry icecream is my favorite.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "stretch_0",
+      "sentence": "I stretch before I exercise.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "stretch_1",
+      "sentence": "Stretch your arms up high.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "student_0",
+      "sentence": "The student studied hard.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "student_1",
+      "sentence": "I am a student at the university.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "suitcase_0",
+      "sentence": "I packed my suitcase for the trip.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "suitcase_1",
+      "sentence": "The suitcase was heavy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sun_0",
+      "sentence": "The sun is shining brightly.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sun_1",
+      "sentence": "The sun rises in the east.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sunglasses_0",
+      "sentence": "I wore sunglasses at the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sunglasses_1",
+      "sentence": "The sunglasses blocked the bright light.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sunrise_0",
+      "sentence": "We watched the sunrise.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sunrise_1",
+      "sentence": "The sunrise was orange and pink.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sunset_0",
+      "sentence": "The sunset was beautiful.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sunset_1",
+      "sentence": "We watched the sunset on the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "superhero_0",
+      "sentence": "The superhero saved the day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "superhero_1",
+      "sentence": "She dressed as a superhero.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "surf_0",
+      "sentence": "I surf at the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "surf_1",
+      "sentence": "I love to surf.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "surprised_0",
+      "sentence": "She was surprised by the party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "surprised_1",
+      "sentence": "She looked surprised to see me.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sushi_0",
+      "sentence": "I love eating sushi.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sushi_1",
+      "sentence": "I used chopsticks to eat sushi.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "swan_0",
+      "sentence": "The swan glided across the lake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "swan_1",
+      "sentence": "The swan has a long, curved neck.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "swim_0",
+      "sentence": "I swim in the pool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "swim_1",
+      "sentence": "Fish swim in the ocean.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "swimmer_0",
+      "sentence": "The swimmer won the race.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "swimmer_1",
+      "sentence": "She is a fast swimmer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "swimsuit_0",
+      "sentence": "I packed my swimsuit for the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "swimsuit_1",
+      "sentence": "She changed into her swimsuit.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "syringe_0",
+      "sentence": "The nurse used a syringe for the shot.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "syringe_1",
+      "sentence": "The syringe has a thin needle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "taco_0",
+      "sentence": "I had a taco for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "taco_1",
+      "sentence": "I put salsa on my taco.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tag_0",
+      "sentence": "I checked the price tag.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tag_1",
+      "sentence": "The tag has the size on it.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "talk_0",
+      "sentence": "We talk on the phone.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "talk_1",
+      "sentence": "She likes to talk.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "target_0",
+      "sentence": "Hit the target!",
+      "difficulty": "easy"
+    },
+    {
+      "id": "target_1",
+      "sentence": "The arrow hit the target.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "taxi_0",
+      "sentence": "We took a taxi to the airport.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "taxi_1",
+      "sentence": "The taxi was yellow.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "tea_0",
+      "sentence": "Would you like a cup of tea?",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tea_1",
+      "sentence": "She added honey to her tea.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "teacher_0",
+      "sentence": "My teacher is very kind.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "teacher_1",
+      "sentence": "The teacher wrote on the board.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "teddy bear_0",
+      "sentence": "The child hugs her teddy bear.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "teddy bear_1",
+      "sentence": "My teddy bear is brown.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "telescope_0",
+      "sentence": "I looked at the moon through the telescope.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "telescope_1",
+      "sentence": "The telescope shows distant stars.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "television_0",
+      "sentence": "We watched television after dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "television_1",
+      "sentence": "The television is in the living room.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "temple_0",
+      "sentence": "The temple is very old.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "temple_1",
+      "sentence": "People pray at the temple.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "ten_0",
+      "sentence": "I have ten fingers.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "ten_1",
+      "sentence": "Ten is a round number.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tennis_0",
+      "sentence": "I play tennis on weekends.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tennis_1",
+      "sentence": "The tennis ball is yellow.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tent_0",
+      "sentence": "We set up the tent at the campsite.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tent_1",
+      "sentence": "The tent kept us dry.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "theater_0",
+      "sentence": "We went to the theater.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "theater_1",
+      "sentence": "The theater has a big stage.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "thinking_0",
+      "sentence": "I am thinking about the answer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "thinking_1",
+      "sentence": "She is thinking hard.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "three_0",
+      "sentence": "I see three birds.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "three_1",
+      "sentence": "Three is a lucky number.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "throw_0",
+      "sentence": "Throw the ball to me.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "throw_1",
+      "sentence": "She can throw very far.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "thumb_0",
+      "sentence": "I broke my thumb once.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "thumb_1",
+      "sentence": "The thumb is different from other fingers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tie_0",
+      "sentence": "He wore a tie to the meeting.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tie_1",
+      "sentence": "I learned how to tie a tie.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tiger_0",
+      "sentence": "The tiger has black stripes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tiger_1",
+      "sentence": "The tigers is an excellent hunter.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tired_0",
+      "sentence": "I feel tired after running.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tired_1",
+      "sentence": "The baby looks tired.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "toilet_0",
+      "sentence": "I flushed the toilet.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "toilet_1",
+      "sentence": "The toilet is in the bathroom.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "toilet paper_0",
+      "sentence": "We need more toilet paper.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "toilet paper_1",
+      "sentence": "The toilet paper is on the roll.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tomato_0",
+      "sentence": "I sliced a tomato for the salad.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tomato_1",
+      "sentence": "I sliced the tomato for my sandwich.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tongue_0",
+      "sentence": "I taste food with my tongue.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tongue_1",
+      "sentence": "The cat licked with its tongue.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "toolbox_0",
+      "sentence": "I got the hammer from the toolbox.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "toolbox_1",
+      "sentence": "The toolbox is heavy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "tooth_0",
+      "sentence": "My tooth fell out.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "tooth_1",
+      "sentence": "The tooth fairy took my tooth.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "toothbrush_0",
+      "sentence": "I brush my teeth with a toothbrush.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "toothbrush_1",
+      "sentence": "My toothbrush is blue.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "tornado_0",
+      "sentence": "The tornado destroyed many houses.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tornado_1",
+      "sentence": "We saw a tornado in the distance.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tower_0",
+      "sentence": "The tower was very tall.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tower_1",
+      "sentence": "We climbed to the top of the tower.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tractor_0",
+      "sentence": "The farmer drove the tractor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "tractor_1",
+      "sentence": "The tractor plowed the field.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "train_0",
+      "sentence": "The train arrived at the station.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "train_1",
+      "sentence": "The train runs on tracks.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "trash_0",
+      "sentence": "I took out the trash.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "trash_1",
+      "sentence": "Put the trash in the bin.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "trophy_0",
+      "sentence": "She won a trophy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "trophy_1",
+      "sentence": "The trophy is made of gold.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "truck_0",
+      "sentence": "The truck carried furniture.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "truck_1",
+      "sentence": "A big truck drove by.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "trumpet_0",
+      "sentence": "He played the trumpet in the band.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "trumpet_1",
+      "sentence": "The trumpet made a loud sound.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "turkey_0",
+      "sentence": "We ate turkey for dinner.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "turkey_1",
+      "sentence": "The turkey gobbled loudly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "turtle_0",
+      "sentence": "The turtle hid in its shell.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "turtle_1",
+      "sentence": "The turtle moved slowly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "two_0",
+      "sentence": "I have two hands.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "two_1",
+      "sentence": "Two comes after one.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "umbrella_0",
+      "sentence": "I opened my umbrella in the rain.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "umbrella_1",
+      "sentence": "The umbrella kept me dry.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "unicorn_0",
+      "sentence": "The unicorn had a golden horn.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "unicorn_1",
+      "sentence": "She dreamed of riding a unicorn.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "urn_0",
+      "sentence": "The ashes were kept in an urn.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "urn_1",
+      "sentence": "The urn was on the mantel.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "vest_0",
+      "sentence": "The worker wore a safety vest.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "vest_1",
+      "sentence": "He wore a vest over his shirt.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "violin_0",
+      "sentence": "She played the violin beautifully.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "violin_1",
+      "sentence": "The violin has four strings.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "volcano_0",
+      "sentence": "The volcano erupted with hot lava.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "volcano_1",
+      "sentence": "Lava flowed from the volcano.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "volleyball_0",
+      "sentence": "We play volleyball at the beach.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "volleyball_1",
+      "sentence": "Volleyball is a team sport.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "waffle_0",
+      "sentence": "The waffle was crispy and golden.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "waffle_1",
+      "sentence": "I put syrup on my waffle.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "walk_0",
+      "sentence": "I walk to school.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "walk_1",
+      "sentence": "Let's walk in the park.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "wallet_0",
+      "sentence": "I keep cash in my wallet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wallet_1",
+      "sentence": "He lost his wallet.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "watch_0",
+      "sentence": "I wear a watch on my wrist.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "watch_1",
+      "sentence": "My watch shows the time.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "water_0",
+      "sentence": "I drink water every day.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "water_1",
+      "sentence": "Water is essential for life.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "watermelon_0",
+      "sentence": "We ate watermelon at the picnic.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "watermelon_1",
+      "sentence": "Watermelon is full of juice.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wave_nature_0",
+      "sentence": "The wave crashed on the shore.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wave_nature_1",
+      "sentence": "I jumped over the wave.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wave_action_0",
+      "sentence": "I wave to my friend.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wave_action_1",
+      "sentence": "She waved at me.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "web_0",
+      "sentence": "The spider sat in its web.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web_1",
+      "sentence": "The web was covered in dew.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "whale_0",
+      "sentence": "The whale jumped out of the water.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "whale_1",
+      "sentence": "The whale swam in the ocean.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wheel_0",
+      "sentence": "The car was missing a wheel.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wheel_1",
+      "sentence": "The wheel turned quickly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "white_0",
+      "sentence": "Snow is white.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "white_1",
+      "sentence": "The clouds are white.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "win_0",
+      "sentence": "I want to win the race.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "win_1",
+      "sentence": "She will win the game.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "window_0",
+      "sentence": "I looked out the window.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "window_1",
+      "sentence": "Open the window for fresh air.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wine_0",
+      "sentence": "She had a glass of wine.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wine_1",
+      "sentence": "Red wine goes well with steak.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wolf_0",
+      "sentence": "The wolf howled at the moon.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wolf_1",
+      "sentence": "The wolf is a pack animal.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "woman_0",
+      "sentence": "The woman smiled warmly.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "woman_1",
+      "sentence": "She is a strong woman.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wood_0",
+      "sentence": "The table is made of wood.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wood_1",
+      "sentence": "We burned wood in the fireplace.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "worm_0",
+      "sentence": "The worm crawled through the dirt.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "worm_1",
+      "sentence": "The bird ate the worm.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "worried_0",
+      "sentence": "She was worried about the test.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "worried_1",
+      "sentence": "She looks worried.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "wrench_0",
+      "sentence": "I tightened the bolt with a wrench.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wrench_1",
+      "sentence": "The mechanic used a wrench.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wrestle_0",
+      "sentence": "The athletes wrestle on the mat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "wrestle_1",
+      "sentence": "Brothers often wrestle.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yellow_0",
+      "sentence": "The sun is yellow.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yellow_1",
+      "sentence": "Bananas are yellow.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yoga_0",
+      "sentence": "I do yoga every morning.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "yoga_1",
+      "sentence": "Yoga helps me relax.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yoyo_0",
+      "sentence": "I can do tricks with my yoyo.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "yoyo_1",
+      "sentence": "The yoyo goes up and down.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "zebra_0",
+      "sentence": "The zebra has black and white stripes.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "zebra_1",
+      "sentence": "We saw a zebra on the safari.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "zero_0",
+      "sentence": "Zero comes before one.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "zero_1",
+      "sentence": "The temperature is zero.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "laughing_0",
+      "sentence": "She was laughing at the joke.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "laughing_1",
+      "sentence": "The children were laughing in the park.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "funny_0",
+      "sentence": "That movie was so funny.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "funny_1",
+      "sentence": "He tells funny jokes.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "holy_0",
+      "sentence": "It was a holy place.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "holy_1",
+      "sentence": "The holy book was on the altar.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "emotional_0",
+      "sentence": "It was an emotional moment.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "emotional_1",
+      "sentence": "She is very emotional.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yummy_0",
+      "sentence": "This cake is yummy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yummy_1",
+      "sentence": "The yummy smell filled the kitchen.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rich_0",
+      "sentence": "He became rich.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "rich_1",
+      "sentence": "So rich, money was coming out of his ears.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "peek_0",
+      "sentence": "Don't peek at your presents.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "peek_1",
+      "sentence": "She took a peek through the window.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "quiet_0",
+      "sentence": "Please be quiet.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "quiet_1",
+      "sentence": "It was a quiet night.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "agreed_0",
+      "sentence": "They agreed on the plan.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "agreed_1",
+      "sentence": "We all agreed it was a good idea.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "secret_0",
+      "sentence": "Can you keep a secret?",
+      "difficulty": "medium"
+    },
+    {
+      "id": "secret_1",
+      "sentence": "It's a secret recipe.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sceptical_0",
+      "sentence": "I am sceptical about the claim.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sceptical_1",
+      "sentence": "She gave a sceptical look.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "foggy_0",
+      "sentence": "It was a foggy morning.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "foggy_1",
+      "sentence": "My memory is a bit foggy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "smirk_0",
+      "sentence": "He had a smirk on his face.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "smirk_1",
+      "sentence": "She couldn't hide her smirk.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "eyeroll_0",
+      "sentence": "She gave an eyeroll at his excuse.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "eyeroll_1",
+      "sentence": "The eyeroll said it all.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sneeze_0",
+      "sentence": "Cover your mouth when you sneeze.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sneeze_1",
+      "sentence": "The pepper made me sneeze.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "lie_0",
+      "sentence": "Don't tell a lie.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "lie_1",
+      "sentence": "That was a big lie.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "drool_0",
+      "sentence": "The baby started to drool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "drool_1",
+      "sentence": "The food made him drool.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sleepy_0",
+      "sentence": "I feel sleepy after lunch.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sleepy_1",
+      "sentence": "The sleepy town was quiet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "covid_0",
+      "sentence": "She tested positive for covid.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "covid_1",
+      "sentence": "Covid changed the world.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "fever_0",
+      "sentence": "He has a high fever.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "fever_1",
+      "sentence": "The fever made her feel weak.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "concussion_0",
+      "sentence": "The player suffered a concussion.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "concussion_1",
+      "sentence": "A concussion requires rest.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "vomit_0",
+      "sentence": "The motion made her vomit.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "vomit_1",
+      "sentence": "He felt like he might vomit.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "drunk_0",
+      "sentence": "He got drunk at the party.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "drunk_1",
+      "sentence": "Don't drive when you're drunk.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "wired_0",
+      "sentence": "I'm so wired from all that coffee.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "wired_1",
+      "sentence": "The kids were wired after the candy.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "adventure_0",
+      "sentence": "We had an amazing adventure.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "adventure_1",
+      "sentence": "Life is an adventure.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "nerd_0",
+      "sentence": "He's such a nerd about computers.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "nerd_1",
+      "sentence": "Being a nerd is cool now.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "embarrassed_0",
+      "sentence": "She felt embarrassed by the mistake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "embarrassed_1",
+      "sentence": "I was so embarrassed.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yawn_0",
+      "sentence": "The yawn was contagious.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "yawn_1",
+      "sentence": "A big yawn escaped her.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bath_0",
+      "sentence": "I took a warm bath.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bath_1",
+      "sentence": "The baby loves bath time.",
       "difficulty": "medium"
     }
   ]

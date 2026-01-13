@@ -39,6 +39,7 @@ class WorkingMemoryExercise extends BaseExercise {
         this.selectedSequence = [];
         this.phase = 'display';
         
+        // Pre-render both phases to avoid flicker during transition
         this.container.innerHTML = `
             <div class="exercise exercise--working-memory">
                 ${this.renderHeader()}
@@ -53,7 +54,7 @@ class WorkingMemoryExercise extends BaseExercise {
                             ${this.renderDisplayPhase()}
                         </div>
                         
-                        <div class="memory-selection-area" id="memory-selection" style="display: none;">
+                        <div class="memory-selection-area" id="memory-selection" style="display: none; visibility: hidden;">
                             ${this.renderSelectionPhase()}
                         </div>
                         
@@ -66,6 +67,13 @@ class WorkingMemoryExercise extends BaseExercise {
                 ${this.renderFooter()}
             </div>
         `;
+        
+        // Pre-render selection area to prevent flicker (make it visible but hidden)
+        const selectionArea = this.container.querySelector('#memory-selection');
+        if (selectionArea) {
+            // Force layout calculation
+            selectionArea.offsetHeight;
+        }
         
         // Start display sequence automatically
         setTimeout(() => this.startDisplaySequence(), 1000);
@@ -139,11 +147,15 @@ class WorkingMemoryExercise extends BaseExercise {
         const selectionArea = this.container.querySelector('#memory-selection');
         const feedback = this.container.querySelector('#memory-feedback');
         
-        displayArea.style.display = 'none';
-        selectionArea.style.display = 'block';
-        feedback.innerHTML = `<p class="memory-instruction">${t('exercises.workingMemory.yourSelection')}:</p>`;
-        
-        this.attachSelectionListeners();
+        // Use requestAnimationFrame to ensure smooth transition without flicker
+        requestAnimationFrame(() => {
+            displayArea.style.display = 'none';
+            selectionArea.style.display = 'block';
+            selectionArea.style.visibility = 'visible';
+            feedback.innerHTML = `<p class="memory-instruction">${t('exercises.workingMemory.selectInOrder')}</p>`;
+            
+            this.attachSelectionListeners();
+        });
     }
     
     attachSelectionListeners() {

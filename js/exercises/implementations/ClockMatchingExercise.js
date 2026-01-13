@@ -56,17 +56,8 @@ class ClockMatchingExercise extends SelectionExercise {
     renderPrompt() {
         const item = this.currentItem;
         
-        // If text-based options (from CSV), show timeWords as the prompt
-        if (item.options && item.options.length >= 4) {
-            return `
-                <p class="prompt-instruction">${t('exercises.clockMatching.selectClock')}</p>
-                <div class="digital-time-display">${item.digitalDisplay}</div>
-            `;
-        }
-        
-        // Otherwise show analog clocks
         return `
-            <p class="prompt-instruction">${t('exercises.clockMatching.selectClock')} ${item.digitalDisplay}</p>
+            <p class="prompt-instruction">${t('exercises.clockMatching.selectClock')}</p>
             <div class="digital-time-display">${item.digitalDisplay}</div>
         `;
     }

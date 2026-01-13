@@ -50,7 +50,7 @@
     },
     "typing": {
       "name": "Tippen",
-      "instruction": "Tippe was du siehst",
+      "instruction": "Tippe das Wort für:",
       "typeWord": "Tippe das Wort",
       "tapHereToType": "Hier tippen zum Schreiben",
       "typeKeyboardOrTap": "Tippe auf der Tastatur oder tippe auf das Feld oben",
@@ -63,30 +63,30 @@
     },
     "category": {
       "name": "Kategorien",
-      "instruction": "Wähle das Wort, das zur Kategorie passt",
+      "instruction": "Welches Wort ist ein/eine",
       "question": "Welches Wort ist ein/eine {category}?",
       "questionAudio": "Welches Wort ist ein oder eine {category}?"
     },
     "rhyming": {
       "name": "Reimende Wörter",
-      "instruction": "Welches Wort reimt sich mit:",
+      "instruction": "Welches Wort reimt sich mit",
       "rhymesWith": "reimt sich mit"
     },
     "firstSound": {
       "name": "Erste Laute",
-      "instruction": "Welches Wort beginnt mit demselben Laut wie:",
+      "instruction": "Welches Wort beginnt mit demselben Laut wie",
       "bothStartWith": "Beide beginnen mit",
       "startsWithSound": "beginnt mit dem Laut"
     },
     "association": {
       "name": "Wort-Assoziation",
-      "instruction": "Welches Wort passt zu:",
+      "instruction": "Welches Wort passt zu",
       "goesWithPhrase": "passt zu"
     },
     "synonyms": {
       "name": "Synonyme & Antonyme",
-      "synonymInstruction": "Welches Wort bedeutet dasselbe wie:",
-      "antonymInstruction": "Welches Wort bedeutet das Gegenteil von:",
+      "synonymInstruction": "Welches Wort bedeutet dasselbe wie",
+      "antonymInstruction": "Welches Wort bedeutet das Gegenteil von",
       "isOppositeOf": "ist das Gegenteil von",
       "meansSameAs": "bedeutet dasselbe wie"
     },
@@ -96,7 +96,7 @@
     },
     "scramble": {
       "name": "Satz Durcheinander",
-      "instruction": "Bringe diese Wörter in die richtige Reihenfolge",
+      "instruction": "Bringe diese Wörter in die richtige Reihenfolge:",
       "checkOrder": "Reihenfolge prüfen",
       "tapToSwap": "Tippe zwei Wörter an, um sie zu vertauschen",
       "theFirstWord": "Das erste Wort",
@@ -115,13 +115,14 @@
       "monthsAfter": "Welcher Monat kommt nach",
       "comesAfter": "kommt nach",
       "comesBefore": "kommt vor",
-      "inSequence": "in der Reihenfolge"
+      "inSequence": "in der Reihenfolge",
+      "questionFormat": "Welcher {type} kommt {direction}"
     },
     "clockMatching": {
       "name": "Uhren Zuordnen",
       "instruction": "Ordne die digitale Zeit der analogen Uhr zu",
       "whatTimeIs": "Wie spät ist es?",
-      "selectClock": "Wähle die Uhr aus, die zeigt",
+      "selectClock": "Wähle die Uhr aus, die zeigt:",
       "correctMatch": "Richtig! Die Zeit {time} passt zur ausgewählten Uhr.",
       "hourHandPoints": "Der Stundenzeiger zeigt auf {hour}",
       "hourHandBetween": "Der Stundenzeiger steht zwischen {hour1} und {hour2}",
@@ -140,7 +141,7 @@
       "instruction": "Beobachte die Reihenfolge, dann wähle die Elemente in derselben Reihenfolge aus",
       "watchSequence": "Beobachte die Reihenfolge sorgfältig",
       "memorize": "Merke dir die Reihenfolge",
-      "yourSelection": "Deine Auswahl",
+      "selectInOrder": "Wähle in der richtigen Reihenfolge",
       "clear": "Löschen",
       "alreadySelected": "Du hast dieses Emoji bereits ausgewählt",
       "sequenceFull": "Reihenfolge ist voll - lösche um zu ändern",

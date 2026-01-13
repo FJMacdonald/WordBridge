@@ -25,8 +25,7 @@ class RhymingExercise extends SelectionExercise {
     
     renderPrompt() {
         return `
-            <p class="prompt-instruction">${t('exercises.rhyming.instruction')}</p>
-            <div class="prompt-target-word">${this.currentItem.word}</div>
+            <p class="prompt-instruction">${t('exercises.rhyming.instruction')} <strong>${this.currentItem.word.toUpperCase()}</strong>?</p>
         `;
     }
     

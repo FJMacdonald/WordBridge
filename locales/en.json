@@ -50,7 +50,7 @@
     },
     "typing": {
       "name": "Typing",
-      "instruction": "Type what you see",
+      "instruction": "Type the word for:",
       "typeWord": "Type the word",
       "tapHereToType": "Tap here to type",
       "typeKeyboardOrTap": "Type on your keyboard or tap the box above to type",
@@ -63,30 +63,30 @@
     },
     "category": {
       "name": "Categories",
-      "instruction": "Select the word that matches the category",
+      "instruction": "Which word is {article}",
       "question": "Which word is {article} {category}?",
       "questionAudio": "Which word is {article} {category}?"
     },
     "rhyming": {
       "name": "Rhyming Words",
-      "instruction": "Which word rhymes with:",
+      "instruction": "Which word rhymes with",
       "rhymesWith": "rhymes with"
     },
     "firstSound": {
       "name": "First Sounds",
-      "instruction": "Which word starts with the same sound?",
+      "instruction": "Which word starts with the same sound as",
       "startsWithSound": "Starts with sound",
       "bothStartWith": "Both start with"
     },
     "association": {
       "name": "Word Association",
-      "instruction": "Which word goes with:",
+      "instruction": "Which word goes with",
       "goesWithPhrase": "goes with"
     },
     "synonyms": {
       "name": "Synonyms & Antonyms",
-      "synonymInstruction": "Which word means the same as:",
-      "antonymInstruction": "Which word means the opposite of:",
+      "synonymInstruction": "Which word means the same as",
+      "antonymInstruction": "Which word means the opposite of",
       "isOppositeOf": "is the opposite of",
       "meansSameAs": "means the same as"
     },
@@ -96,7 +96,7 @@
     },
     "scramble": {
       "name": "Sentence Scramble",
-      "instruction": "Put these words in the correct order",
+      "instruction": "Put these words in the correct order:",
       "checkOrder": "Check Order",
       "tapToSwap": "Tap two words to swap them",
       "theFirstWord": "The first word",
@@ -115,13 +115,14 @@
       "monthsAfter": "What month comes after",
       "comesAfter": "comes after",
       "comesBefore": "comes before",
-      "inSequence": "in the sequence"
+      "inSequence": "in the sequence",
+      "questionFormat": "What {type} comes {direction}"
     },
     "clockMatching": {
       "name": "Clock Matching",
       "instruction": "Match the digital time with the analog clock",
       "whatTimeIs": "What time is shown?",
-      "selectClock": "Select the clock that shows",
+      "selectClock": "Select the clock that shows:",
       "correctMatch": "Correct! The time {time} matches the selected clock.",
       "hourHandPoints": "The hour hand points to {hour}",
       "hourHandBetween": "The hour hand is between {hour1} and {hour2}",
@@ -140,7 +141,7 @@
       "instruction": "Watch the sequence, then select the items in the same order",
       "watchSequence": "Watch the sequence carefully",
       "memorize": "Memorize the sequence",
-      "yourSelection": "Your selection",
+      "selectInOrder": "Select in order",
       "clear": "Clear",
       "alreadySelected": "You already selected that emoji",
       "sequenceFull": "Sequence is full - clear to change",

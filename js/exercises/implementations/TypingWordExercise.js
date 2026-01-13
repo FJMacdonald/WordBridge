@@ -48,9 +48,9 @@ class TypingWordExercise extends TypingExercise {
         const altHint = item.alt ? `<p class="prompt-alt-hint">${item.alt}</p>` : '';
         
         return `
+            <p class="prompt-instruction">${t('exercises.typing.instruction')}</p>
             ${visual}
             ${altHint}
-            <p class="prompt-instruction">${t('exercises.typing.instruction')}</p>
         `;
     }
     

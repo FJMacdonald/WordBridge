@@ -25,8 +25,7 @@ class AssociationExercise extends SelectionExercise {
     
     renderPrompt() {
         return `
-            <p class="prompt-instruction">${t('exercises.association.instruction')}</p>
-            <div class="prompt-target-word">${this.currentItem.word}</div>
+            <p class="prompt-instruction">${t('exercises.association.instruction')} <strong>${this.currentItem.word.toUpperCase()}</strong>?</p>
         `;
     }
     

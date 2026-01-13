@@ -36,8 +36,7 @@ class SynonymExercise extends SelectionExercise {
         
         return `
             <div class="synonym-type-badge ${this.questionType}">${typeIcon} ${typeLabel}</div>
-            <p class="prompt-instruction">${typeText}</p>
-            <div class="prompt-target-word">${this.currentItem.word}</div>
+            <p class="prompt-instruction">${typeText} <strong>${this.currentItem.word.toUpperCase()}</strong>?</p>
         `;
     }
     

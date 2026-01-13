@@ -25,14 +25,10 @@ class CategoryExercise extends SelectionExercise {
     renderPrompt() {
         const category = this.currentItem.category;
         const article = this.getArticle(category);
-        const questionText = t('exercises.category.question', { 
-            article: article,
-            category: category 
-        });
+        const instructionText = t('exercises.category.instruction', { article: article });
         
         return `
-            <p class="prompt-instruction">${questionText}</p>
-            <div class="prompt-category">${category.toUpperCase()}</div>
+            <p class="prompt-instruction">${instructionText} <strong>${category.toUpperCase()}</strong>?</p>
         `;
     }
     
