@@ -25,13 +25,14 @@ class SpeakingExercise extends BaseExercise {
         const item = this.currentItem;
         
         // Determine what visual to show
+        // NOTE: Do NOT show the word/alt text - user should say what they see
         let visual = '';
         if (item.emoji) {
             visual = `<div class="prompt-visual">${item.emoji}</div>`;
         } else if (item.localImageId) {
             const imageData = await imageStorage.getImage(item.localImageId);
             if (imageData) {
-                visual = `<img src="${imageData}" alt="${item.alt || item.answer}" class="prompt-image" style="max-width: 200px; max-height: 200px;">`;
+                visual = `<img src="${imageData}" alt="Say this word" class="prompt-image" style="max-width: 200px; max-height: 200px;">`;
             } else {
                 visual = `<div class="prompt-visual">🗣️</div>`;
             }
@@ -39,19 +40,21 @@ class SpeakingExercise extends BaseExercise {
             if (item.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(item.imageUrl)) {
                 visual = `<div class="prompt-visual">${item.imageUrl}</div>`;
             } else {
-                visual = `<div class="image-container">
-                            <img src="${item.imageUrl}" alt="${item.alt || item.answer}" class="prompt-image" 
+                // Show attribution for images (required for licensing) but NOT the word
+                const attribution = item.attribution 
+                    ? `<div class="image-attribution" style="font-size: 10px; color: #999; margin-top: 4px; text-align: center;">${item.attribution}</div>` 
+                    : '';
+                visual = `<div class="image-container" style="text-align: center;">
+                            <img src="${item.imageUrl}" alt="" class="prompt-image" 
                                  style="max-width: 200px; max-height: 200px;"
                                  onerror="this.style.display='none'; this.parentNode.querySelector('.image-fallback').style.display='block';">
                             <div class="image-fallback prompt-visual" style="display:none;">🗣️</div>
+                            ${attribution}
                           </div>`;
             }
         } else {
             visual = `<div class="prompt-visual">🗣️</div>`;
         }
-        
-        // Alt text hint if provided
-        const altHint = item.alt ? `<p class="prompt-alt-hint">${item.alt}</p>` : '';
         
         this.container.innerHTML = `
             <div class="exercise exercise--speaking">
@@ -61,7 +64,6 @@ class SpeakingExercise extends BaseExercise {
                     <div class="exercise__prompt">
                         <p class="prompt-instruction">${t('exercises.speaking.instruction')}</p>
                         ${visual}
-                        ${altHint}
                     </div>
                     
                     <div class="speaking-actions">

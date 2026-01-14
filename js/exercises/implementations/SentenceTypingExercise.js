@@ -38,8 +38,15 @@ class SentenceTypingExercise extends TypingExercise {
             if (item.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(item.imageUrl)) {
                 visualHint = `<div class="prompt-visual sentence-visual-hint">${item.imageUrl}</div>`;
             } else {
-                visualHint = `<img src="${item.imageUrl}" alt="" class="prompt-image sentence-image-hint" 
-                              onerror="this.style.display='none'">`;
+                // Show attribution for images (required for licensing)
+                const attribution = item.attribution 
+                    ? `<div class="image-attribution" style="font-size: 10px; color: #999; margin-top: 4px; text-align: center;">${item.attribution}</div>` 
+                    : '';
+                visualHint = `<div class="image-container" style="text-align: center;">
+                                <img src="${item.imageUrl}" alt="" class="prompt-image sentence-image-hint" 
+                                     onerror="this.style.display='none'">
+                                ${attribution}
+                              </div>`;
             }
         }
         

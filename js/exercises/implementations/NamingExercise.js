@@ -24,7 +24,7 @@ class NamingExercise extends SelectionExercise {
             // Custom exercise with IndexedDB image
             const imageData = await imageStorage.getImage(item.localImageId);
             if (imageData) {
-                visual = `<img src="${imageData}" alt="${item.alt || 'Name this'}" class="prompt-image">`;
+                visual = `<img src="${imageData}" alt="" class="prompt-image">`;
             } else {
                 visual = `<div class="prompt-visual">🖼️</div>`;
             }
@@ -33,9 +33,13 @@ class NamingExercise extends SelectionExercise {
             if (item.imageUrl.length <= 4 && /[\u{1F300}-\u{1FAD6}]/u.test(item.imageUrl)) {
                 visual = `<div class="prompt-visual">${item.imageUrl}</div>`;
             } else {
-                visual = `<div class="image-container">
+                // Show attribution for images (required for licensing) but NOT the word
+                const attribution = item.attribution 
+                    ? `<div class="image-attribution" style="font-size: 10px; color: #999; margin-top: 4px; text-align: center;">${item.attribution}</div>` 
+                    : '';
+                visual = `<div class="image-container" style="text-align: center;">
                             <img src="${item.imageUrl}" 
-                                 alt="${item.alt || 'Name this'}" 
+                                 alt="" 
                                  class="prompt-image" 
                                  style="max-width: 200px; max-height: 200px;"
                                  crossorigin="anonymous"
@@ -43,19 +47,16 @@ class NamingExercise extends SelectionExercise {
                             <div class="image-fallback prompt-visual" style="display:none;">
                                 <div style="font-size: 48px;">🖼️</div>
                             </div>
+                            ${attribution}
                           </div>`;
             }
         } else {
             visual = `<div class="prompt-visual">🖼️</div>`;
         }
         
-        // Use alt text if provided for additional context
-        const altInfo = item.alt ? `<p class="prompt-alt-hint">${item.alt}</p>` : '';
-        
         return `
             <p class="prompt-instruction">${t('exercises.naming.instruction')}</p>
             ${visual}
-            ${altInfo}
         `;
     }
     

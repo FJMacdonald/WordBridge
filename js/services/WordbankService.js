@@ -39,17 +39,20 @@ class WordbankService {
                 this.wordbank = await response.json();
             }
             
-            // Load sentences
+            // Try to load sentences.json (optional - for backwards compatibility)
+            // Note: v2.0 wordbank uses sentences from word entries instead
             try {
                 const response = await fetch(`./data/${locale}/sentences.json`);
                 if (response.ok) {
                     this.sentences = await response.json();
                 } else {
-                    throw new Error('Locale sentences not found');
+                    // No sentences file - that's OK in v2.0 format
+                    this.sentences = { sentences: [] };
                 }
             } catch (e) {
-                const response = await fetch('./data/default/sentences.json');
-                this.sentences = await response.json();
+                // sentences.json is optional - sentences come from wordbank in v2.0
+                this.sentences = { sentences: [] };
+                console.log('No separate sentences.json found - using sentences from wordbank');
             }
             
             this.buildIndexes();
@@ -71,26 +74,41 @@ class WordbankService {
     
     /**
      * Build indexes for fast querying
+     * Supports both v1.0 (category as string) and v2.0 (category as array) formats
      */
     buildIndexes() {
         this.wordsByCategory = {};
-        this.wordsByDifficulty = { easy: [], medium: [], hard: [] };
+        this.wordsByDifficulty = { easy: [], medium: [], hard: [], difficult: [] };
         this.wordsByFirstSound = {};
         this.wordsByPartOfSpeech = {};
         
         for (const word of this.wordbank.words) {
-            // Calculate difficulty based on word length
-            const difficulty = this.calculateDifficulty(word.word);
+            // Use assigned difficulty if present (v2.0), otherwise calculate from word length (v1.0)
+            let difficulty;
+            if (word.difficulty) {
+                // Map 'difficult' to 'hard' for consistency
+                difficulty = word.difficulty === 'difficult' ? 'hard' : word.difficulty;
+            } else {
+                difficulty = this.calculateDifficulty(word.word);
+            }
             word.difficulty = difficulty;
             
+            // Extract category - support both v1.0 (string) and v2.0 (array of objects) formats
+            let category = this.extractCategory(word);
+            word.category = category; // Normalize to string for consistency
+            
             // By category
-            if (!this.wordsByCategory[word.category]) {
-                this.wordsByCategory[word.category] = [];
+            if (category) {
+                if (!this.wordsByCategory[category]) {
+                    this.wordsByCategory[category] = [];
+                }
+                this.wordsByCategory[category].push(word);
             }
-            this.wordsByCategory[word.category].push(word);
             
             // By difficulty
-            this.wordsByDifficulty[difficulty].push(word);
+            if (this.wordsByDifficulty[difficulty]) {
+                this.wordsByDifficulty[difficulty].push(word);
+            }
             
             // By first sound
             const sound = word.soundGroup || word.word.charAt(0).toLowerCase();
@@ -105,6 +123,66 @@ class WordbankService {
             }
             this.wordsByPartOfSpeech[word.partOfSpeech].push(word);
         }
+    }
+    
+    /**
+     * Extract category from word entry
+     * Supports v1.0 format (category as string) and v2.0 format (category as array of objects)
+     */
+    extractCategory(word) {
+        if (!word.category) return null;
+        
+        // v1.0 format: category is a string
+        if (typeof word.category === 'string') {
+            return word.category;
+        }
+        
+        // v2.0 format: category is an array of objects with { source, category }
+        if (Array.isArray(word.category) && word.category.length > 0) {
+            // Use the first category in the array
+            const firstCat = word.category[0];
+            if (typeof firstCat === 'object' && firstCat.category) {
+                return firstCat.category;
+            }
+            // In case it's just an array of strings
+            if (typeof firstCat === 'string') {
+                return firstCat;
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Get visual display info for a word (emoji or image URL)
+     * Supports both v1.0 and v2.0 formats
+     */
+    getVisualInfo(word) {
+        if (!word.visual) {
+            return { emoji: null, imageUrl: null, attribution: null };
+        }
+        
+        const visual = word.visual;
+        
+        // If emoji is present and not empty, use it
+        if (visual.emoji && visual.emoji.trim() !== '') {
+            return { 
+                emoji: visual.emoji, 
+                imageUrl: null, 
+                attribution: null 
+            };
+        }
+        
+        // Otherwise use imageUrl if available (v2.0 format)
+        if (visual.imageUrl) {
+            return { 
+                emoji: null, 
+                imageUrl: visual.imageUrl, 
+                attribution: visual.attribution || null 
+            };
+        }
+        
+        return { emoji: null, imageUrl: null, attribution: null };
     }
     
     /**
@@ -150,7 +228,15 @@ class WordbankService {
         }
         
         if (filters.hasEmoji) {
-            words = words.filter(w => w.visual && w.visual.emoji);
+            // Support both v1.0 (emoji only) and v2.0 (emoji or imageUrl)
+            words = words.filter(w => {
+                if (!w.visual) return false;
+                // Has emoji
+                if (w.visual.emoji && w.visual.emoji.trim() !== '') return true;
+                // Has imageUrl (v2.0 format)
+                if (w.visual.imageUrl && w.visual.imageUrl.trim() !== '') return true;
+                return false;
+            });
         }
         
         return words;
@@ -364,11 +450,15 @@ class WordbankService {
                 continue;
             }
             
+            // Get visual info (supports both v1.0 emoji and v2.0 imageUrl)
+            const visualInfo = this.getVisualInfo(word);
+            
             data.push({
                 id: word.id,
-                emoji: word.visual.emoji,
-                imageUrl: word.visual.imageUrl,
-                alt: word.visual.alt,
+                emoji: visualInfo.emoji,
+                imageUrl: visualInfo.imageUrl,
+                attribution: visualInfo.attribution,
+                alt: word.visual?.alt || word.word,
                 answer: word.word,
                 options: this.shuffleArray([word.word, ...distractors.slice(0, 3)]),
                 difficulty: word.difficulty,
@@ -662,15 +752,19 @@ class WordbankService {
     buildSpeakingData(filters = {}) {
         const words = this.getWords({ ...filters, hasEmoji: true });
         
-        return words.map(word => ({
-            id: word.id,
-            emoji: word.visual.emoji,
-            imageUrl: word.visual.imageUrl,
-            alt: word.visual.alt,
-            answer: word.word,
-            phrases: word.phrases || [],
-            difficulty: word.difficulty
-        }));
+        return words.map(word => {
+            const visualInfo = this.getVisualInfo(word);
+            return {
+                id: word.id,
+                emoji: visualInfo.emoji,
+                imageUrl: visualInfo.imageUrl,
+                attribution: visualInfo.attribution,
+                alt: word.visual?.alt || word.word,
+                answer: word.word,
+                phrases: word.phrases || [],
+                difficulty: word.difficulty
+            };
+        });
     }
     
     /**
@@ -682,6 +776,8 @@ class WordbankService {
         const data = [];
         
         for (const word of words) {
+            const visualInfo = this.getVisualInfo(word);
+            
             for (const sentence of word.sentences) {
                 // Create blank version by replacing the word
                 const blankSentence = this.createBlankSentence(sentence, word.word);
@@ -693,8 +789,9 @@ class WordbankService {
                         fullSentence: sentence,
                         difficulty: word.difficulty,
                         // Include visual info for context
-                        emoji: word.visual?.emoji || null,
-                        imageUrl: word.visual?.imageUrl || null,
+                        emoji: visualInfo.emoji,
+                        imageUrl: visualInfo.imageUrl,
+                        attribution: visualInfo.attribution,
                         alt: word.visual?.alt || word.word
                     });
                 }
@@ -720,23 +817,29 @@ class WordbankService {
     }
     
     /**
-     * Get sentences for scramble exercise
+     * Get sentences for scramble exercise from wordbank
+     * Uses sentences from word entries instead of separate sentences.json
      */
     getSentences(filters = {}) {
-        let sentences = [...this.sentences.sentences];
+        const words = this.getWords({ ...filters, hasSentences: true });
+        let sentences = [];
+        
+        // Extract sentences from wordbank entries
+        for (const word of words) {
+            for (const sentence of (word.sentences || [])) {
+                if (sentence && sentence.trim()) {
+                    sentences.push({
+                        id: `${word.id}_sentence_${sentences.length}`,
+                        sentence: sentence,
+                        difficulty: word.difficulty,
+                        wordId: word.id
+                    });
+                }
+            }
+        }
         
         if (filters.difficulty) {
-            sentences = sentences.filter(s => {
-                if (s.difficulty) {
-                    return s.difficulty === filters.difficulty;
-                }
-                // Calculate from average word length
-                const words = s.sentence.split(/\s+/);
-                const avgLength = words.reduce((sum, w) => sum + w.length, 0) / words.length;
-                const calculated = avgLength <= 4 ? 'easy' : 
-                                   avgLength <= 6 ? 'medium' : 'hard';
-                return calculated === filters.difficulty;
-            });
+            sentences = sentences.filter(s => s.difficulty === filters.difficulty);
         }
         
         return sentences;
@@ -744,20 +847,19 @@ class WordbankService {
     
     /**
      * Build exercise data for scramble exercise
+     * Now uses sentences from wordbank instead of separate sentences.json
      */
     buildScrambleData(filters = {}) {
         const sentences = this.getSentences(filters);
         
         return sentences.map(s => {
             const words = s.sentence.split(/\s+/);
-            const avgLength = words.reduce((sum, w) => sum + w.length, 0) / words.length;
-            const difficulty = s.difficulty || 
-                (avgLength <= 4 ? 'easy' : avgLength <= 6 ? 'medium' : 'hard');
             
             return {
                 id: s.id,
                 words: words,
-                difficulty: difficulty
+                difficulty: s.difficulty,
+                wordId: s.wordId
             };
         });
     }
@@ -840,7 +942,8 @@ class WordbankService {
             case 'sentenceTyping':
                 return this.getWords({ hasSentences: true }).length;
             case 'scramble':
-                return this.sentences?.sentences?.length || 0;
+                // Count sentences from wordbank (v2.0 format)
+                return this.getSentences().length;
             default:
                 return this.wordbank.words.length;
         }

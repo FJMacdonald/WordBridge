@@ -13,7 +13,16 @@ class TimeSequencingExercise extends SelectionExercise {
     
     prepareOptions() {
         const item = this.currentItem;
-        return item.options;
+        // Build options from answer + wrongOptions and shuffle
+        if (item.wrongOptions && item.wrongOptions.length > 0) {
+            const allOptions = [item.answer, ...item.wrongOptions];
+            return this.shuffleArray(allOptions);
+        }
+        // Fallback for legacy data format with pre-built options
+        if (item.options) {
+            return this.shuffleArray([...item.options]);
+        }
+        return [item.answer];
     }
     
     renderPrompt() {

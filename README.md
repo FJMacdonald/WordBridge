@@ -73,8 +73,7 @@ WordBridge/
 │   └── pages/          # Page layout styles
 ├── data/
 │   ├── en/             # English exercise data
-│   │   ├── wordbank.json
-│   │   ├── sentences.json
+│   │   ├── wordbank.json    # Main word database with sentences
 │   │   ├── clockMatching.js
 │   │   ├── timeOrdering.js
 │   │   ├── timeSequencing.js
@@ -123,7 +122,16 @@ WordBridge/
 - **Medium**: Quarter past (:15), quarter to (:45), and alternative phrases (noon, midday)
 - **Hard**: All other 5-minute intervals
 
+### Time Sequencing Data
+Format: `{ question, answer, wrongOptions, difficulty }`
+- Options are shuffled at runtime to ensure random answer placement
+- **Easy**: Days of the week, basic months
+- **Medium**: More months, seasons
+- **Hard**: Years, decades, centuries, multi-step questions
+
 ### Time Ordering Data
+Format: `{ id, scenario, description, correctOrder, difficulty }`
+- Items are scrambled at runtime from `correctOrder`
 - **Easy**: 4 steps (universally agreed sequences like seasons, life cycles)
 - **Medium**: 6 steps
 - **Hard**: More than 6 steps
@@ -133,8 +141,8 @@ WordBridge/
 - **Medium**: Random, unrelated emojis
 - **Hard**: Similar-looking emojis that could be confused
 
-### Sentences Data
-Automatically categorized from wordbank:
+### Sentences
+Sentences for the Sentence Scramble exercise are sourced directly from the wordbank's `sentences` field. They are categorized at runtime:
 - **Easy**: 4 words or fewer
 - **Medium**: 5-8 words without internal punctuation
 - **Hard**: More than 8 words or contains internal punctuation

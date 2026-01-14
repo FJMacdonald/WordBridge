@@ -39,7 +39,11 @@ class WorkingMemoryExercise extends BaseExercise {
         this.selectedSequence = [];
         this.phase = 'display';
         
-        // Pre-render both phases to avoid flicker during transition
+        // Inject global style to disable ALL animations for working memory exercise
+        // This prevents any CSS-based flicker/strobe effects
+        this.injectAntiFlickerStyles();
+        
+        // Render display phase first, then transition to selection
         this.container.innerHTML = `
             <div class="exercise exercise--working-memory">
                 ${this.renderHeader()}
@@ -50,12 +54,8 @@ class WorkingMemoryExercise extends BaseExercise {
                     </div>
                     
                     <div class="working-memory-container">
-                        <div class="memory-display-area" id="memory-display">
+                        <div class="memory-phase-container" id="memory-phase-container">
                             ${this.renderDisplayPhase()}
-                        </div>
-                        
-                        <div class="memory-selection-area" id="memory-selection" style="display: none; visibility: hidden;">
-                            ${this.renderSelectionPhase()}
                         </div>
                         
                         <div class="memory-feedback" id="memory-feedback">
@@ -68,27 +68,54 @@ class WorkingMemoryExercise extends BaseExercise {
             </div>
         `;
         
-        // Pre-render selection area to prevent flicker (make it visible but hidden)
-        const selectionArea = this.container.querySelector('#memory-selection');
-        if (selectionArea) {
-            // Force layout calculation
-            selectionArea.offsetHeight;
-        }
-        
-        // Start display sequence automatically
+        // Start display sequence automatically after a brief delay
         setTimeout(() => this.startDisplaySequence(), 1000);
     }
     
+    /**
+     * Inject styles to prevent any CSS animations that could cause flicker
+     */
+    injectAntiFlickerStyles() {
+        // Remove any existing anti-flicker styles
+        const existing = document.getElementById('working-memory-anti-flicker');
+        if (existing) {
+            existing.remove();
+        }
+        
+        // Create new style element
+        const style = document.createElement('style');
+        style.id = 'working-memory-anti-flicker';
+        style.textContent = `
+            .exercise--working-memory * {
+                animation: none !important;
+                -webkit-animation: none !important;
+                animation-duration: 0s !important;
+                -webkit-animation-duration: 0s !important;
+                animation-delay: 0s !important;
+                -webkit-animation-delay: 0s !important;
+                animation-iteration-count: 1 !important;
+                -webkit-animation-iteration-count: 1 !important;
+            }
+            .exercise--working-memory .sequence-item,
+            .exercise--working-memory .timer-bar {
+                transition: none !important;
+                -webkit-transition: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
     renderDisplayPhase() {
+        // Simple static display with explicit style overrides to prevent any CSS animations
         return `
-            <div class="sequence-display">
-                <div class="sequence-items">
+            <div class="sequence-display" id="sequence-display" style="animation: none !important; transition: none !important;">
+                <div class="sequence-items" style="animation: none !important; transition: none !important;">
                     ${this.targetSequence.map(emoji => `
-                        <div class="sequence-item">${emoji}</div>
+                        <div class="sequence-item" style="display: inline-block; font-size: 3rem; margin: 0.5rem; padding: 1rem; background: #f0f0f0; border-radius: 12px; animation: none !important; transition: none !important;">${emoji}</div>
                     `).join('')}
                 </div>
-                <div class="display-timer">
-                    <div class="timer-bar" id="timer-bar"></div>
+                <div class="display-timer" style="margin-top: 1rem; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; animation: none !important;">
+                    <div id="timer-bar" style="width: 100%; height: 100%; background: #4CAF50; border-radius: 3px; animation: none !important; transition: none !important;"></div>
                 </div>
             </div>
         `;
@@ -127,35 +154,48 @@ class WorkingMemoryExercise extends BaseExercise {
         const feedback = this.container.querySelector('#memory-feedback');
         feedback.innerHTML = `<p class="memory-instruction">${t('exercises.workingMemory.memorize')}</p>`;
         
-        // Animate the timer bar
+        // Animate the timer bar smoothly using JavaScript interval (more reliable than CSS)
         const timerBar = this.container.querySelector('#timer-bar');
+        const duration = 3000; // 3 seconds
+        const startTime = Date.now();
+        
         if (timerBar) {
-            timerBar.classList.add('timer-running');
+            const updateTimer = () => {
+                const elapsed = Date.now() - startTime;
+                const remaining = Math.max(0, 1 - (elapsed / duration));
+                timerBar.style.width = `${remaining * 100}%`;
+                
+                if (remaining > 0 && this.phase === 'display') {
+                    requestAnimationFrame(updateTimer);
+                }
+            };
+            requestAnimationFrame(updateTimer);
         }
         
         // Wait 3 seconds then switch to selection phase
         this.displayTimer = setTimeout(() => {
             this.switchToSelectionPhase();
-        }, 3000);
+        }, duration);
     }
     
     switchToSelectionPhase() {
         this.phase = 'selection';
         this.isSelectionPhase = true;
         
-        const displayArea = this.container.querySelector('#memory-display');
-        const selectionArea = this.container.querySelector('#memory-selection');
+        const phaseContainer = this.container.querySelector('#memory-phase-container');
         const feedback = this.container.querySelector('#memory-feedback');
         
-        // Use requestAnimationFrame to ensure smooth transition without flicker
-        requestAnimationFrame(() => {
-            displayArea.style.display = 'none';
-            selectionArea.style.display = 'block';
-            selectionArea.style.visibility = 'visible';
-            feedback.innerHTML = `<p class="memory-instruction">${t('exercises.workingMemory.selectInOrder')}</p>`;
-            
-            this.attachSelectionListeners();
-        });
+        // Simply replace the content - no fancy transitions that could flicker
+        if (phaseContainer) {
+            phaseContainer.innerHTML = this.renderSelectionPhase();
+        }
+        
+        // Clear the instruction text
+        if (feedback) {
+            feedback.innerHTML = '';
+        }
+        
+        this.attachSelectionListeners();
     }
     
     attachSelectionListeners() {
@@ -380,12 +420,17 @@ class WorkingMemoryExercise extends BaseExercise {
     
     async replaySequence() {        
         // Show the sequence again for 1 second only
-        const displayArea = this.container.querySelector('#memory-display');
-        const selectionArea = this.container.querySelector('#memory-selection');
+        const phaseContainer = this.container.querySelector('#memory-phase-container');
         const feedback = this.container.querySelector('#memory-feedback');
         
-        displayArea.style.display = 'block';
-        selectionArea.style.display = 'none';
+        // Store current selection state
+        const savedSelection = [...this.selectedSequence];
+        
+        // Show the display phase again
+        if (phaseContainer) {
+            phaseContainer.innerHTML = this.renderDisplayPhase();
+        }
+        
         if (feedback) {
             feedback.innerHTML = `<p class="memory-instruction">${t('exercises.workingMemory.memorize')}</p>`;
         }
@@ -393,11 +438,31 @@ class WorkingMemoryExercise extends BaseExercise {
         this.phase = 'display';
         this.isSelectionPhase = false;
         
-        // Show for only 1 second
-        await this.delay(1000);
+        // Animate timer for 1 second replay
+        const timerBar = this.container.querySelector('#timer-bar');
+        const duration = 1000;
+        const startTime = Date.now();
         
-        // Switch back to selection
+        if (timerBar) {
+            const updateTimer = () => {
+                const elapsed = Date.now() - startTime;
+                const remaining = Math.max(0, 1 - (elapsed / duration));
+                timerBar.style.width = `${remaining * 100}%`;
+                
+                if (remaining > 0 && this.phase === 'display') {
+                    requestAnimationFrame(updateTimer);
+                }
+            };
+            requestAnimationFrame(updateTimer);
+        }
+        
+        // Show for only 1 second
+        await this.delay(duration);
+        
+        // Restore selection state and switch back to selection
+        this.selectedSequence = savedSelection;
         this.switchToSelectionPhase();
+        this.updateSelectedDisplay();
     }
     
     showSequenceHint() {
@@ -431,12 +496,19 @@ class WorkingMemoryExercise extends BaseExercise {
         return this.currentItem.id;
     }
     
-    // Override cleanup to clear timers
+    // Override cleanup to clear timers and remove injected styles
     cleanup() {
         if (this.displayTimer) {
             clearTimeout(this.displayTimer);
             this.displayTimer = null;
         }
+        
+        // Remove anti-flicker styles
+        const antiFlicker = document.getElementById('working-memory-anti-flicker');
+        if (antiFlicker) {
+            antiFlicker.remove();
+        }
+        
         super.cleanup && super.cleanup();
     }
 }

@@ -23,7 +23,8 @@ class TimeOrderingExercise extends SequenceOrderingExercise {
     async render() {
         const item = this.currentItem;
         this.correctOrder = [...item.correctOrder];
-        this.currentOrder = this.scrambleSequence(item.items);
+        // Scramble from correctOrder (items field is deprecated)
+        this.currentOrder = this.scrambleSequence([...item.correctOrder]);
         this.hasUserInteracted = false;
         
         this.container.innerHTML = `
